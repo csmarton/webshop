@@ -1,0 +1,73 @@
+.header{
+    background: yellow;
+    height: 30px;
+    padding: 6px 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 6011;
+    top: 0;
+}
+
+.wrapper {
+    width: 980px;
+    margin: 0px auto;
+    position: relative;
+}
+
+.header .logo{
+    margin-top: 3px;
+    float: left;
+    margin-right: 10px;
+}
+
+
+
+.wideLabel .labelText{
+    width: 100% !important;
+    float: left;
+    line-height: 20px;
+}
+
+.content {
+    margin: 55px auto 0 auto;
+}
+
+.content .contentTop{
+    margin-bottom: 10px;
+    position: relative;
+	float: left;
+	width: 769px;
+}
+
+.sidebar{
+    width: 200px;
+    float: right;
+}
+.sidebar .sideFrame{
+    border-left: 1px solid #bed2d2;
+	padding: 0px 0px 0px 5px;
+}
+
+.sidebar .block{
+    border-top: 1px solid #bed2d2;
+    padding: 10px 0px;
+}
+
+.sidebar .block h2{
+    font-size: 15px;
+    font-weight: bold;
+    color: #cc0000;
+    margin-bottom: 5px;
+}
+
+
+.groupLeft{
+    position: relative;
+}
+.groupRight{
+    float: right;
+    position: relative;
+    color:yellow;
+}
+
+

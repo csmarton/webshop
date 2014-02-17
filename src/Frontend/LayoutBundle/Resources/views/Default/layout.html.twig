@@ -1,0 +1,37 @@
+{% extends 'FrontendLayoutBundle:Default:base.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/frontendlayout/css/shared_logged.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+	
+	{#<script type="text/javascript" src="{{ asset('bundles/frontendlayout/js/SharedLogged.js') }}"></script>
+   
+    <script type="text/javascript">		               
+        $(document).ready(function(){
+            //SharedLogged.init(); 
+            
+        });
+    </script>#}
+{% endblock %}
+
+{% block menu %}
+	{{ render(controller("FrontendLayoutBundle:Default:header"))}}
+{% endblock %}
+
+{% block mainContent%}   
+    <div class="content">
+        <div class="wrapper">
+            {% block main %}
+                MAIN
+            {% endblock %}
+            {% block sidebar %}
+                <div class="sidebar ">
+                    JOBB OLDAL
+                </div>
+            {% endblock %}            
+           
+        </div>
+    </div>	
+{% endblock %}

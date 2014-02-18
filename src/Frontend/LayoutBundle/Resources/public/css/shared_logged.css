@@ -140,3 +140,18 @@
 .header input[type="button"]:hover{
     border: 1px solid #A5A1A1;
 }
+
+
+.maincontent .wrapper .sidebar .taxonomy{
+    padding: 10px 10px 10px 25px;
+}
+
+.maincontent .wrapper .sidebar .taxon a,
+.maincontent .wrapper .sidebar .taxonomy a{
+    color: #333;
+    text-decoration: none;
+}
+
+.maincontent .wrapper .sidebar .taxon>li a{
+    font-weight: bold;
+}

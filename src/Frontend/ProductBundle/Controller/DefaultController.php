@@ -8,16 +8,19 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Taxonomy');
-        $taxonomy = $repo->findAll();
+        $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Taxon');
         
-        foreach($taxonomy as $tax){
-       //     var_dump($tax->getName());
+        $taxonWithTaxonomy = $repo
+                    ->createQueryBuilder('t')
+                    ->select('t, tt')                          
+                    ->leftJoin('t.taxonomy', 'tt')                    
+                    ->orderBy('tt.name,t.name')
+                    ->getQuery()->getResult();
+        
+        $leftMenu = array();
+        foreach($taxonWithTaxonomy as $t){
+            $leftMenu[$t->getTaxonomy()->getName()][] = $t;
         }
-        $productImages = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductImages')->findAll();
-        foreach($productImages as $tax){
-            var_dump($tax->getProduct()->getName());
-        }
-        return $this->render('FrontendProductBundle:Default:index.html.twig');
+        return $this->render('FrontendProductBundle:Default:index.html.twig', array('leftMenu'=>$leftMenu));
     }
 }

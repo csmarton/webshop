@@ -6,11 +6,17 @@
             <title>{% block title %}{% endblock %}</title>
 
             <link rel="stylesheet" href="{{ asset('bundles/frontendlayout/css/reset.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/accordion.css') }}"/>
             <link rel="stylesheet" href="{{ asset('bundles/frontendlayout/css/shared_logged.css') }}"/>
 
-            {% block stylesheets %}{% endblock %}
-            <script type="text/javascript" src="{{ asset('js/jquery-2.1.0.js') }}"></script>
-            
+            {% block stylesheets %}
+                <link rel="stylesheet" href="{{ asset('js/jquery-ui-1.10.4/css/smoothness/jquery-ui-1.10.4.custom.css') }}"/>
+            {% endblock %}
+               <script type="text/javascript" src="{{ asset('js/jquery-2.1.0.js') }}"></script>
+              <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js') }}"></script>
+              <script type="text/javascript" src="{{ asset('js/accordion.js') }}"></script>
+            {% block javascripts %}
+            {% endblock %}
             <link rel="shortcut icon" href="{{ asset('bundles/frontendlayout/images/favicon.ico') }}" />
         {% endblock %}
     </head>

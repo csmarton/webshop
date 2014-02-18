@@ -1,11 +1,12 @@
 .header{
-    background: yellow;
+    background-color: #f3f3f3;
     height: 30px;
-    padding: 6px 10px;
-    position: fixed;
     width: 100%;
     z-index: 6011;
-    top: 0;
+    top: 0;    
+    border-bottom: 1px solid #e8e8e8;
+    padding: 10px;
+    
 }
 
 .wrapper {
@@ -29,7 +30,7 @@
 }
 
 .content {
-    margin: 55px auto 0 auto;
+    margin: 0px auto 0 auto;
 }
 
 .content .contentTop{
@@ -39,9 +40,13 @@
 	width: 769px;
 }
 
+/*
+    JOBB OLDAL
+*/    
 .sidebar{
     width: 200px;
-    float: right;
+    float: left;
+    padding-top: 50px;
 }
 .sidebar .sideFrame{
     border-left: 1px solid #bed2d2;
@@ -59,15 +64,79 @@
     color: #cc0000;
     margin-bottom: 5px;
 }
-
-
-.groupLeft{
-    position: relative;
+.searcher_box{
 }
-.groupRight{
+.searcher_box input{
+    
+}
+.searcher{
+    padding: 3px;
+    border: 1px solid #CCCCCC;
+    background: #fcfcfc;
+    box-shadow: 1px 1px 0 #fff;
+    width: 300px;
+}
+
+.searcher:hover{
+    border: 1px solid #A5A1A1;
+}
+
+.search_button{
+    background: url("/Shop/web/bundles/frontendlayout/images/search.png") center no-repeat;
+    border: 1px solid #CCCCCC;
+    box-shadow: 1px 1px 0 #fff;
+    cursor: pointer;
+    width: 50px;
+    height: 24px;
+}
+
+.main {
+    float: right;
+    width: 740px;
+    border-left: 2px solid #e8e8e8;
+    padding-left: 30px;
+    min-height: 720px;
+    padding-top: 50px;
+}
+
+.footer {
+    clear: both;
+    padding: 10px;
+    background-color: #f3f3f3;
+    width: 100%;
+}
+.footer .wrapper{
+    padding: 20px;
+    text-align: center;
+
+}
+
+.footer .links a{
+    color: #666;
+}
+
+.header .wrapper .group_left{
+    position: relative;
+    float: left;
+}
+.header .wrapper .group_right{
     float: right;
     position: relative;
-    color:yellow;
 }
 
-
+.header .group_right .buttons input{
+    background: #f8f8f8;
+    border: 1px solid #CCCCCC;
+    box-shadow: 1px 1px 0 #fff;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    padding: 5px;
+}
+.header .group_right .buttons .cart_button{    
+    background: #f8f8f8 url("/Shop/web/bundles/frontendlayout/images/cart.png") center no-repeat;
+    width: 50px;
+}
+.header input[type="button"]:hover{
+    border: 1px solid #A5A1A1;
+}

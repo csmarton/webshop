@@ -9,8 +9,9 @@
                         <link rel="stylesheet" href="{{ asset('bundles/frontendlayout/css/shared_logged.css') }}"/>
 			
 			{% block stylesheets %}{% endblock %}
+                        <script type="text/javascript" src="{{ asset('js/jquery-2.1.0.js') }}"></script>
 		   	{#
-			<script type="text/javascript" src="{{ asset('bundles/frontendlayout/js/Shared.js') }}?v={{ random(2000) }}"></script>
+			<script type="text/javascript" src="{{ asset('bundles/frontendlayout/js/Shared.js') }}"></script>
 			<script type="text/javascript">		                
 				$(document).ready(function(){
 					(function() {
@@ -21,7 +22,7 @@
 			</script>
 			{% block javascripts %}{% endblock %}
 			#}
-			<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+			<link rel="shortcut icon" href="{{ asset('bundles/frontendlayout/images/favicon.ico') }}" />
 		{% endblock %}
 		<script>
 		</script>

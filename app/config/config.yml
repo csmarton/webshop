@@ -28,6 +28,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    cache:            "%kernel.cache_dir%/twig"
+    globals:
+        web_path: "%kernel.root_dir%/../web/"
 
 # Assetic Configuration
 assetic:

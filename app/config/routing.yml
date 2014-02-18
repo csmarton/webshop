@@ -1,3 +1,7 @@
+frontend_product:
+    resource: "@FrontendProductBundle/Resources/config/routing.yml"
+    prefix:   /
+
 frontend_layout:
     resource: "@FrontendLayoutBundle/Resources/config/routing.yml"
     prefix:   /

@@ -1,0 +1,3 @@
+frontend_product_homepage:
+    pattern:  /
+    defaults: { _controller: FrontendProductBundle:Default:index }

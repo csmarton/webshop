@@ -1,0 +1,70 @@
+<?php
+
+namespace Frontend\ProductBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Taxon
+ *
+ * @ORM\Table(name="taxon")
+ * @ORM\Entity
+ */
+class Taxon
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="taxonomy_id", type="integer", nullable=false)
+     */
+    private $taxonomyId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="parent_id", type="integer", nullable=true)
+     */
+    private $parentId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=30, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=30, nullable=false)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=100, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Taxonomy
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Taxonomy")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="taxonomy_id", referencedColumnName="id")
+     * })
+     */
+    private $taxonomy;
+
+
+}

@@ -8,7 +8,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			 $( "#leftMenu" ).accordion();
-                         console.log("OK");
 		});
 	</script>
   {% endblock %}
@@ -21,11 +20,11 @@
                 {% for val in t %}
                     {% if (not l)%}
                         {% set l = true %}                     
-                        <h3><a href="">{{val.getTaxonomy().getName()}}</a></h3>
-                        <ul class="taxonomy">
+                        <h3><a href="#">{{val.getTaxonomy().getName()}}</a></h3>
+                        <ul class="taxonomy"> 
                     {% endif %}
                    <li>
-                       <a href="#">
+                       <a href="{{val.getPermalinks()}}">
                         {{val.getName()}} 
                        </a>
                    </li>
@@ -35,3 +34,10 @@
         </div> 
     </div>
 {% endblock %} 
+        
+{% block main %}
+    <div class="main">
+        {% render (controller("FrontendProductBundle:Default:mainProduct")) %}
+    </div>
+{% endblock %}
+                        

@@ -1,0 +1,56 @@
+<div class="products_box">
+    {% for product in products %}
+    {% set i=loop.index0 %}
+    <div class="product_box">
+        <div class="product_name">{{product.name}}</div>
+        <div class="upper_box">
+            <div class="image_container">
+                <img src="
+                {% if (images[i]|length != 0 ) %}
+                      {{ asset('images/' ~ images[i][0].getPath())}}"/>
+                {% else %}     
+                    {{ asset('images/no_image.jpg')}}"/>
+                {% endif %}
+                     
+            </div>
+            <div class="right_box">
+                <div class="product_price">Ára: {{product.price}} Ft</div>
+                <input class="to_cart_button"type="button" value="Kosárba">
+            </div>    
+        </div>
+        <div class="bottom_box">
+            <ul>
+                {% for property in propertys[i]%}
+                    <li>{{property.getValue()}}</li>
+                {% endfor %}    
+            </ul>
+        </div>
+    </div> 
+    {% endfor %}    
+    
+    {% for i in range(1,50) %}
+    <div class="product_box">
+        <div class="product_name">Sony Vaio SVF1521B1EW White W8</div>
+        <div class="upper_box">
+            <div class="image_container">
+                <img src="{{ asset('images/laptop.jpg')}}"/>
+            </div>
+            <div class="right_box">
+                <div class="product_price">Ára: {{130000*i}} Ft</div>
+                <input class="to_cart_button"type="button" value="Kosárba">
+            </div>    
+        </div>
+        <div class="bottom_box">
+            <ul>
+                <li>nVidia® Tegra® 4 T40X (Quad-Core, 1.9 GHz)</li>
+                <li>2GB RAM</li>
+                <li>15,6" HD LED matt TFT 16:9 (1366 x 768)</li>
+                <li>500GB SATA 5400rpm</li>
+                <li>Intel® HD Graphics integrált VGA vezérlő</li>
+                <li>Windows® 8.1 operációs rendszer</li>
+                <li>Garancia: 2 év </li>
+            </ul>
+        </div>
+    </div> 
+    {% endfor %}    
+</div>

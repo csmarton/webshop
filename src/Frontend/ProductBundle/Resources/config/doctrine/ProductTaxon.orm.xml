@@ -6,15 +6,5 @@
     </id>
     <field name="productId" type="integer" column="product_id" nullable="false"/>
     <field name="taxonId" type="integer" column="taxon_id" nullable="false"/>
-	<many-to-one field="product" target-entity="Product">
-      <join-columns>
-        <join-column name="product_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-	<many-to-one field="taxonomy" target-entity="Taxonomy">
-      <join-columns>
-        <join-column name="taxonomy_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
   </entity>
 </doctrine-mapping>

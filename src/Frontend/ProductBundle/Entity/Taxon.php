@@ -48,6 +48,13 @@ class Taxon
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="permalinks", type="string", length=100, nullable=false)
+     */
+    private $permalinks;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -181,6 +188,29 @@ class Taxon
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set permalinks
+     *
+     * @param string $permalinks
+     * @return Taxon
+     */
+    public function setPermalinks($permalinks)
+    {
+        $this->permalinks = $permalinks;
+
+        return $this;
+    }
+
+    /**
+     * Get permalinks
+     *
+     * @return string 
+     */
+    public function getPermalinks()
+    {
+        return $this->permalinks;
     }
 
     /**

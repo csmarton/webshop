@@ -23,4 +23,31 @@ class DefaultController extends Controller
         }
         return $this->render('FrontendProductBundle:Default:index.html.twig', array('leftMenu'=>$leftMenu));
     }
+    public function mainProductAction(){
+        $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findAll();
+        $productsPropertys = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->createQueryBuilder('pp')
+                    ->select('pp, p')                          
+                    ->leftJoin('pp.property', 'p') 
+                    ->getQuery()->getResult();
+        $productsImages = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductImages')->findAll();
+        
+        
+        $propertys = array();
+        $images = array();
+        foreach($products as $i => $product){  
+            $propertys[$i] = array();
+            $images[$i] = array();
+            foreach($productsPropertys as $pp){
+                if($product->getId() == $pp->getProductId()){
+                    $propertys[$i][] = $pp;
+                }
+            }
+            foreach($productsImages as $img){
+                if($product->getId() == $img->getProductId()){
+                    $images[$i][] = $img;
+                }
+            }           
+        }
+        return $this->render('FrontendProductBundle:Default:products.html.twig',array('products'=>$products,'propertys'=>$propertys,'images'=>$images));
+    }
 }

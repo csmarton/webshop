@@ -48,6 +48,13 @@ class Taxon
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="permalinks", type="string", length=100, nullable=false)
+     */
+    private $permalinks;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")

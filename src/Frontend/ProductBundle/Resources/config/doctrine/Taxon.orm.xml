@@ -9,6 +9,7 @@
     <field name="name" type="string" column="name" length="30" nullable="false"/>
     <field name="slug" type="string" column="slug" length="30" nullable="false"/>
     <field name="description" type="string" column="description" length="100" nullable="true"/>
+    <field name="permalinks" type="string" column="permalinks" length="100" nullable="false"/>
 	<many-to-one field="taxonomy" target-entity="Taxonomy">
       <join-columns>
         <join-column name="taxonomy_id" referenced-column-name="id"/>

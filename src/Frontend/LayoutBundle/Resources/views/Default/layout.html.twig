@@ -3,6 +3,11 @@
 {% block javascripts %}
 {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/frontendproduct/css/product.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('js/jquery-ui-1.10.4/css/smoothness/jquery-ui-1.10.4.custom.css') }}"/>
+{% endblock %}
+                
 {% block menu %}
 	{{ render(controller("FrontendLayoutBundle:Default:header"))}}
 {% endblock %}
@@ -11,10 +16,7 @@
     <div class="content">
         <div class="wrapper">
             {% block main %}
-                <div class="main">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et malesuada felis. Donec elementum augue sapien, id dignissim nibh fermentum quis. Aliquam in massa ut magna auctor faucibus. Aenean consequat leo ac ullamcorper rhoncus. Duis sagittis lorem augue, ac ullamcorper leo dapibus eu. Suspendisse potenti. Vestibulum neque ligula, vulputate non interdum sit amet, euismod et nulla. Vestibulum convallis rhoncus luctus. Integer laoreet, magna ut pharetra consequat, sapien augue feugiat orci, dignissim dignissim velit nibh eget lacus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Suspendisse gravida, orci id tincidunt malesuada, orci massa mollis justo, a pulvinar massa elit sed dui. Phasellus semper libero ante, quis congue ipsum sollicitudin at. Praesent sapien tellus, lobortis eu tellus ut, ultricies cursus dolor.
-                   Nunc nec neque eu risus condimentum elementum. In fringilla massa tortor, eget accumsan dolor luctus iaculis. Sed eget imperdiet lectus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat elementum urna in porttitor. Pellentesque augue lorem, pulvinar eu euismod vitae, commodo sit amet est. Curabitur nunc nisl, rhoncus eu posuere vitae, tristique in ligula. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tristique varius magna, nec mollis tortor accumsan id. Nulla non ultricies mi. In fermentum auctor diam ac molestie.
-                </div>
+
             {% endblock %}
             {% block sidebar %}
                 <div class="sidebar ">

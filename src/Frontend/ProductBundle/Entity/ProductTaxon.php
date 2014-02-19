@@ -35,26 +35,6 @@ class ProductTaxon
      */
     private $id;
 
-    /**
-     * @var \Frontend\ProductBundle\Entity\Product
-     *
-     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     * })
-     */
-    private $product;
-
-    /**
-     * @var \Frontend\ProductBundle\Entity\Taxonomy
-     *
-     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Taxonomy")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxonomy_id", referencedColumnName="id")
-     * })
-     */
-    private $taxonomy;
-
 
 
     /**
@@ -111,51 +91,5 @@ class ProductTaxon
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set product
-     *
-     * @param \Frontend\ProductBundle\Entity\Product $product
-     * @return ProductTaxon
-     */
-    public function setProduct(\Frontend\ProductBundle\Entity\Product $product = null)
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    /**
-     * Get product
-     *
-     * @return \Frontend\ProductBundle\Entity\Product 
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    /**
-     * Set taxonomy
-     *
-     * @param \Frontend\ProductBundle\Entity\Taxonomy $taxonomy
-     * @return ProductTaxon
-     */
-    public function setTaxonomy(\Frontend\ProductBundle\Entity\Taxonomy $taxonomy = null)
-    {
-        $this->taxonomy = $taxonomy;
-
-        return $this;
-    }
-
-    /**
-     * Get taxonomy
-     *
-     * @return \Frontend\ProductBundle\Entity\Taxonomy 
-     */
-    public function getTaxonomy()
-    {
-        return $this->taxonomy;
     }
 }

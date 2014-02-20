@@ -35,5 +35,25 @@ class ProductTaxon
      */
     private $id;
 
+    /**
+     * @var \Frontend\ProductBundle\Entity\Product
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     */
+    private $product;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Taxon
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Taxon")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="taxon_id", referencedColumnName="id")
+     * })
+     */
+    private $taxon;
+
 
 }

@@ -35,6 +35,26 @@ class ProductTaxon
      */
     private $id;
 
+    /**
+     * @var \Frontend\ProductBundle\Entity\Product
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     */
+    private $product;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Taxon
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Taxon")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="taxon_id", referencedColumnName="id")
+     * })
+     */
+    private $taxon;
+
 
 
     /**
@@ -91,5 +111,51 @@ class ProductTaxon
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \Frontend\ProductBundle\Entity\Product $product
+     * @return ProductTaxon
+     */
+    public function setProduct(\Frontend\ProductBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \Frontend\ProductBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set taxon
+     *
+     * @param \Frontend\ProductBundle\Entity\Taxon $taxon
+     * @return ProductTaxon
+     */
+    public function setTaxon(\Frontend\ProductBundle\Entity\Taxon $taxon = null)
+    {
+        $this->taxon = $taxon;
+
+        return $this;
+    }
+
+    /**
+     * Get taxon
+     *
+     * @return \Frontend\ProductBundle\Entity\Taxon 
+     */
+    public function getTaxon()
+    {
+        return $this->taxon;
     }
 }

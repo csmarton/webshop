@@ -1,6 +1,11 @@
 {% extends 'FrontendLayoutBundle:Default:base.html.twig' %}
 
 {% block javascripts %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			 //$( "#leftMenu" ).accordion();
+		});
+	</script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -8,9 +13,7 @@
     <link rel="stylesheet" href="{{ asset('js/jquery-ui-1.10.4/css/smoothness/jquery-ui-1.10.4.custom.css') }}"/>
 {% endblock %}
                 
-{% block menu %}
-	{{ render(controller("FrontendLayoutBundle:Default:header"))}}
-{% endblock %}
+
 
 {% block mainContent%}   
     <div class="content">
@@ -19,9 +22,7 @@
 
             {% endblock %}
             {% block sidebar %}
-                <div class="sidebar ">
-                    BAL OLDAL
-                </div>
+                {% render (controller("FrontendProductBundle:Default:sidebar")) %}
             {% endblock %}            
            
         </div>

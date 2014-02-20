@@ -133,6 +133,22 @@ input[type="button"]{
     background: #f8f8f8 url("/Shop/web/bundles/frontendlayout/images/cart.png") center no-repeat;
     width: 50px;
 }
+.header .group_right #cart{
+    display: inline;
+}
+.header .group_right .cart_count{
+    display: inline;
+    position: absolute;
+    left: 30px;
+    top: -5px;
+    float: left;
+    background-color: rgba(255,0,0,1);
+    padding: 3px;
+    height: 14px;
+    width: 18px;
+    text-align: center;
+    color: white;
+}
 
 input[type="button"]:hover{
     border: 1px solid #A5A1A1;

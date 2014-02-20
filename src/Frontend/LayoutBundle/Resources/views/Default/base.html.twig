@@ -26,13 +26,12 @@
             {% block bodyStart %}
             {% endblock %}
 
-            {% block menu %}MENU{% endblock %}
+            {% block menu %}
+                {{ render(controller("FrontendLayoutBundle:Default:header"))}}
+            {% endblock %}
 
             <div class="maincontent cf">	
-                {% block mainContent %}
-                    <div class="header">
-                        HEADER
-                    </div>					
+                {% block mainContent %}				
                     <div class="content">
                         <div class="wrapper">
                             {% block leftSide %}

@@ -1,11 +1,13 @@
 {% extends 'FrontendLayoutBundle:Default:base.html.twig' %}
 
 {% block javascripts %}
-	<script type="text/javascript">
-		$(document).ready(function(){
-			 //$( "#leftMenu" ).accordion();
-		});
-	</script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendlayout/js/Shared.js') }}"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                Shared.init();
+                //$( "#leftMenu" ).accordion();
+            });
+    </script>
 {% endblock %}
 
 {% block stylesheets %}

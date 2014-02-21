@@ -1,3 +1,11 @@
+frontend_profile:
+    resource: "@FrontendProfileBundle/Resources/config/routing.yml"
+    prefix:   /
+
+frontend_user:
+    resource: "@FrontendUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 frontend_product:
     resource: "@FrontendProductBundle/Resources/config/routing.yml"
     prefix:   /

@@ -168,3 +168,7 @@ input[type="button"]:hover{
 .maincontent .wrapper .sidebar .taxon>li a{
     font-weight: bold;
 }
+
+.hide{
+    display:none;
+}

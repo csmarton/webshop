@@ -7,8 +7,10 @@ use Frontend\ProductBundle\Entity\ProductImages;
 class DefaultController extends Controller
 {
     public function indexAction()
-    {
-        
+    {        
+         $em = $this->getDoctrine()->getEntityManager();
+         $user = $this->get('security.context')->getToken()->getUser();
+         //var_dump($user);die;
         return $this->render('FrontendProductBundle:Default:index.html.twig');
     }
     

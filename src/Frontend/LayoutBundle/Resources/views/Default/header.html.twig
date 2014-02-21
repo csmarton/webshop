@@ -12,9 +12,23 @@
                     <input type="button" class="cart_button" value="&nbsp">
                     <div class="cart_count">4</div>
                 </div>    
-                <input type="button" class="login_button" value="Bejelentkezés">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {#{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>#}
+                    <input type="button" class="myprofile_button" value="Profilom">
+                {% else %}
+                    {#<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
+                    <input type="button" class="login_button" value="Bejelentkezés">
+                {% endif %}                
                 <input type="button" class="register_button" value="Regisztráció">
             </div>
+        </div>
+        <div id="myprofileDropDown" class="hide">
+            <a href="{{ path('fos_user_security_logout') }}">
+                Kijelentkezés
+            </a>
         </div>
     </div>
 </div>

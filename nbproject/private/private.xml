@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/Shop/app/Resources/FOSUserBundle/views/Security/login.html.twig</file>
             <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/header.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/products.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/vendor/bundles/FOS/UserBundle/Form/Type/RegistrationFormType.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/vendor/bundles/FOS/UserBundle/Resources/views/layout.html.twig</file>
             <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/sidebar.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/product.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/base.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/products_by_taxon.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/vendor/bundles/FOS/UserBundle/Controller/ProfileController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/app/Resources/FOSUserBundle/views/layout.html.twig</file>
             <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/css/shared_logged.css</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/js/Shared.js</file>
         </group>
     </open-files>
 </project-private>

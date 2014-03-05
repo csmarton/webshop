@@ -1,0 +1,52 @@
+<div class="header">
+    <div class="wrapper">
+        <div class="group_left">
+            <div class="searcher_box">
+                <input type="text" class="searcher" placeholder="Mit keresel?">
+                <input type="button" class="search_button" value="&nbsp">
+            </div>
+        </div>
+        <div class="group_right">
+            <div class="buttons">
+                <div id="cart">
+                    <input type="button" class="cart_button" value="&nbsp">
+                    <div class="cart_count">4</div>
+                </div>    
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {#{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>#}
+                    <input type="button" class="myprofile_button" value="Profilom">
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        <input type="button" class="logout_button" value="Kilépés">
+                    </a>
+                {% else %}
+                    {#<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
+                    <input type="button" class="login_button" rel="modal" value="Bejelentkezés">
+                    <input type="button" class="register_button" rel="modal" value="Regisztráció">
+                {% endif %}                
+                
+            </div>
+        </div>
+        <div id="myprofileDropDown" class="hide">
+            <div class="myprofileDropDownContent">
+                <ul>
+                    <li><a href="#">Személyes adatok</a></li>
+                    <li><a href="#">Címeim</a></li>
+                    <li><a href="#">Rendeléseim</a></li>
+                    <li class="menuDivider"></li>
+                    <li>
+                        <a href="{{ path('fos_user_security_logout') }}">Kijelentkezés</a>
+                    </li>                
+                </ul>
+            </div>    
+        </div>
+        <div id="registrationContent" class="hide">
+            {% render controller('FOSUserBundle:Registration:register') %}
+        </div>
+        <div id="loginContent" class="hide">
+            {% render controller('FOSUserBundle:Security:login') %}
+        </div>
+    </div>
+</div>

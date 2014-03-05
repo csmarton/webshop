@@ -1,0 +1,66 @@
+<?php
+
+namespace Frontend\ProductBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ProductProperty
+ *
+ * @ORM\Table(name="product_property")
+ * @ORM\Entity
+ */
+class ProductProperty
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="product_id", type="integer", nullable=false)
+     */
+    private $productId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="property_id", type="integer", nullable=false)
+     */
+    private $propertyId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="string", length=200, nullable=false)
+     */
+    private $value;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Product
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     */
+    private $product;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Property
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Property")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="property_id", referencedColumnName="id")
+     * })
+     */
+    private $property;
+
+
+}

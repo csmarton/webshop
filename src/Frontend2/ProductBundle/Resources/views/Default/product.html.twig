@@ -1,0 +1,44 @@
+{% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShop - Kezdőlap {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+        
+{% block main %}   
+    <div class="main">
+        <div class="products_box">
+            {% if (product.getSlug() is not null)%}
+                {% set product_link = product.getSlug() %}
+            {% else %}
+                {% set product_link = product.getId() %}
+            {% endif %}
+            <div class="current_product_box">
+                <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
+                <div class="upper_box">
+                    <div class="image_container">
+                        <img src="
+                        {% if (images|length != 0 ) %}
+                              {{ asset('images/' ~ images[0].getPath())}}"/>
+                        {% else %}     
+                            {{ asset('images/no_image.jpg')}}"/>
+                        {% endif %}
+
+                    </div>
+                    <div class="right_box">
+                        <div class="product_price">Ára: {{product.price}} Ft</div>
+                        <input class="to_cart_button"type="button" value="Kosárba">
+                    </div>    
+                </div>
+                <div class="bottom_box">
+                    <ul>
+                        {% for property in propertys %}
+                            <li>{{property.getValue()}}</li>
+                        {% endfor %}    
+                    </ul>
+                </div>
+            </div>   
+            
+            
+            
+        </div>
+    </div>
+{% endblock %}

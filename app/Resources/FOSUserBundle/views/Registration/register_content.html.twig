@@ -1,0 +1,43 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('registration') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    <table id="registration_table">
+        <tr>
+            <td>
+                <label for="fos_user_registration_form_username" class="labelText">Felhasználói név:</label>
+            </td>
+            <td>
+                {{ form_widget(form.username) }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                <label for="fos_user_registration_form_email" class="labelText">Email: </label>
+            </td>
+            <td>
+                {{ form_widget(form.email) }}
+            </td>    
+        </tr>   
+        <tr>
+            <td>
+                <label for="fos_user_registration_form_plainpassword_first" class="labelText">Jelszó: </label>
+            </td>
+            <td>
+                {{ form_widget(form.plainPassword.first) }}
+            </td>    
+        </tr>   
+        <tr>
+            <td>
+                <label for="fos_user_registration_form_plainpassword_second" class="labelText">Jelszó megerősítése: </label>
+            </td>
+            <td>
+                 {{ form_widget(form.plainPassword.second) }}
+            </td>    
+        </tr>   
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Regisztráció" />
+            </td> 
+        </tr> 
+    </table>
+</form>

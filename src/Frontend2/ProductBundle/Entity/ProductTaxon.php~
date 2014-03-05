@@ -1,0 +1,59 @@
+<?php
+
+namespace Frontend\ProductBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ProductTaxon
+ *
+ * @ORM\Table(name="product_taxon")
+ * @ORM\Entity
+ */
+class ProductTaxon
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="product_id", type="integer", nullable=false)
+     */
+    private $productId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="taxon_id", type="integer", nullable=false)
+     */
+    private $taxonId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Product
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     */
+    private $product;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Taxon
+     *
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Taxon")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="taxon_id", referencedColumnName="id")
+     * })
+     */
+    private $taxon;
+
+
+}

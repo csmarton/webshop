@@ -13,3 +13,7 @@ product_by_taxon:
 product:
     pattern:  /p/{slug}
     defaults: { _controller: FrontendProductBundle:Default:product }
+
+frontend_login:
+    pattern:  /bejelentkezes
+    defaults: { _controller: FrontendProductBundle:Default:login }

@@ -6,11 +6,11 @@
             {% for val in t %}
                 {% if (not l)%}
                     {% set l = true %}                     
-                    <h3>
-                        <a href="{{path('frontend_product_homepage')}}t/{{val.getTaxonomy().getName()}}/">
+                    <ul class="taxon">
+                        <li><a href="{{path('frontend_product_homepage')}}t/{{val.getTaxonomy().getName()}}/">
                             {{val.getTaxonomy().getName()}}
-                        </a>
-                    </h3>
+                        </a></li>
+                    </ul>
                     <ul class="taxonomy"> 
                 {% endif %}
                <li>

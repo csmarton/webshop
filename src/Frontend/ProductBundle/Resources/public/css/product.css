@@ -9,11 +9,26 @@
     margin: 5px;
     border: 1px solid #e8e8e8;
     background-color: #FFFFFF;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px; 
+	-webkit-box-shadow: 1px 3px 4px 0px rgba(7, 0, 0, 0.57);
+	-moz-box-shadow:    1px 3px 4px 0px rgba(7, 0, 0, 0.57);
+	box-shadow:         1px 3px 4px 0px rgba(7, 0, 0, 0.57);
 }
 
 .main .product_box .product_name{
     padding: 10px 0px 0px 10px;
     font-weight: bold;
+}
+
+.main .product_box .product_name a{
+	text-decoration: none;
+	color: black;
+	font-size: 1.2em;
+}
+.main .product_box .product_name a:hover{
+	text-decoration:underline;
 }
 
 .main .product_box .product_price{
@@ -48,15 +63,36 @@
 }
 
 .main .products_box .bottom_box{
-    clear: both;
-    font-size: 0.8em;
-    padding: 0px 10px;
-    margin: 0px 20px 0px 20px;
+	clear: both;
+	font-size: 0.8em;
+	padding: 0px 10px 0px 0px;
+	height: 190px;
 }
 .main .products_box .bottom_box ul{
     list-style: disc;
+	background-color: #CBD4DF;
+	color: black;
+	list-style-position: inside;
+	padding-left: 10px;
+	border-top-right-radius:2em;
+	-webkit-border-top-right-radius:2em;
+	border-bottom-right-radius:2em;
+	-webkit-border-bottom-right-radius:2em;
 }
 
 .main .products_box .bottom_box ul li{
     padding-bottom: 2px;
+	padding-right: 15px;
+}
+
+/*KERESŐ FORM*/
+.main #search_form{
+	height: 200px;
+	background-color: yellow;
+}
+
+#searcher #search_toggle_button{
+	text-align: center;
+	border-top: 3px solid #CBD4DF;
+	padding-top: 10px;
 }

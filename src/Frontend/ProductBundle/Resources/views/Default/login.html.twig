@@ -1,0 +1,13 @@
+{% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShop - Regisztráció {% endblock %}
+{% block bodyClass %}class="login_page"{% endblock%}
+ 
+{% block main %}  
+	<div class="main">
+		<div class="login_form">
+			{% render controller('FOSUserBundle:Security:login') %}
+		</div>	
+	</div>	
+{% endblock %}
+                        

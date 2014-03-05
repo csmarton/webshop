@@ -1,3 +1,6 @@
+/*body{
+	background-image: url(http://subtlepatterns.com/patterns/grey.png);
+}*/
 .header{
     background-color: #f3f3f3;
     height: 30px;
@@ -5,9 +8,22 @@
     z-index: 6011;
     top: 0;    
     border-bottom: 1px solid #e8e8e8;
-    padding: 10px;
+	padding: 10px 0px;
+    /*padding: 10px;*/
 }
 
+#logo{
+	background: url("/Shop/web/bundles/frontendlayout/images/logo.png") center no-repeat !important;
+	height: 30px;
+	width: 150px;
+	float: left;
+	padding: 0px 10px;
+}
+#logo a{
+	display:block;
+	width:100%;
+	height:100%;
+}
 .wrapper {
     width: 980px;
     margin: 0px auto;
@@ -38,7 +54,7 @@
     width: 200px;
     float: left;
     padding-top: 50px;
-    margin-left: 10px;
+	background-color: #f3f3f3;
 }
 .sidebar .sideFrame{
     border-left: 1px solid #bed2d2;
@@ -55,6 +71,32 @@
     font-weight: bold;
     color: #cc0000;
     margin-bottom: 5px;
+}
+
+.maincontent .wrapper .sidebar .taxonomy li a{
+	padding: 5px 0px 5px 20px;
+}
+
+.maincontent .wrapper .sidebar .taxon li a{
+	padding: 5px 0px 5px 10px;
+	font-weight: bold;
+}
+
+.maincontent .wrapper .sidebar .taxon a,
+.maincontent .wrapper .sidebar .taxonomy a{
+    color: #333;
+    text-decoration: none;
+	display:block;
+}
+
+.maincontent .wrapper .sidebar .taxon li a:hover,
+.maincontent .wrapper .sidebar .taxonomy li a:hover{
+	/*
+	background-color: #BEA9A9;
+	color:white !important;
+	*/
+	background-color:white;
+	
 }
 .searcher_box{
 }
@@ -85,19 +127,20 @@
 
 .main {
     float: right;
-    width: 760px;
-    border-left: 2px solid #e8e8e8;
-    padding-left: 10px;
+    width: 780px;
     min-height: 720px;
     padding-top: 50px;
     background-color: #F8F8F8;
-    margin-right: -10px;
+}
+
+.main .container{
+	padding: 0px 10px;
 }
 
 .footer {
     border-top: 1px solid #e8e8e8;
     clear: both;
-    padding: 10px;
+    /*padding: 10px;*/
     background-color: #f3f3f3;
     width: 100%;
 }
@@ -129,9 +172,24 @@ input[type="button"]{
     font-weight: bold;
     padding: 5px;
 }
-.header .group_right .buttons .cart_button{    
-    background: #f8f8f8 url("/Shop/web/bundles/frontendlayout/images/cart.png") center no-repeat;
-    width: 50px;
+
+.header .group_right  li{
+	float: left;
+	padding: 10px;	
+	margin-left: 5px;
+}
+
+.header .group_right  li:hover{
+	background-color: white;
+}
+.header .group_right  a{
+	display: inline;
+	text-decoration:none;
+	color:black;
+}
+.header .group_right #cart #cart_icon{    
+    background: url("/Shop/web/bundles/frontendlayout/images/cart.png") center no-repeat;
+	float: left;
 }
 .header .group_right #cart{
     display: inline;
@@ -155,20 +213,46 @@ input[type="button"]:hover{
 }
 
 
-.maincontent .wrapper .sidebar .taxonomy{
-    padding: 10px 10px 10px 25px;
-}
-
-.maincontent .wrapper .sidebar .taxon a,
-.maincontent .wrapper .sidebar .taxonomy a{
-    color: #333;
-    text-decoration: none;
-}
-
-.maincontent .wrapper .sidebar .taxon>li a{
-    font-weight: bold;
-}
-
 .hide{
     display:none;
+}
+
+.profileDropDownQTip ul .menuDivider{
+    background: #ddd;
+    font-size: 0;
+    height: 1px;
+    line-height: 0;
+    margin: 4px 0px;
+}
+
+.profileDropDownQTip ul{
+}
+
+.profileDropDownQTip li a{
+    padding: 5px;
+    color: #3276b1;
+    text-decoration: none;
+    display: block;
+}
+.profileDropDownQTip .qtip-content{
+}
+.profileDropDownQTip li a:hover{
+    color:grey;
+    text-decoration: underline;
+}
+
+#registration_table tr>td:last-child{
+    text-align:right;
+}
+#registration_table{
+    width: 100%;
+}
+
+#registration_table tr:last-child>td{
+    text-align: center;
+}
+
+.login_form form{
+	margin: 0px auto;
+	width: 400px;
 }

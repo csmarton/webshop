@@ -1,0 +1,25 @@
+<div class="sidebar ">
+    <div id="leftMenu">
+        {% for t in leftMenu %}
+
+            {% set l = false %}
+            {% for val in t %}
+                {% if (not l)%}
+                    {% set l = true %}                     
+                    <h3>
+                        <a href="{{path('frontend_product_homepage')}}t/{{val.getTaxonomy().getName()}}/">
+                            {{val.getTaxonomy().getName()}}
+                        </a>
+                    </h3>
+                    <ul class="taxonomy"> 
+                {% endif %}
+               <li>
+                   <a href="{{path('frontend_product_homepage')}}t/{{val.getPermalinks()}}">
+                    {{val.getName()}} 
+                   </a>
+               </li>
+            {% endfor %}
+            </ul>   
+        {% endfor %}
+    </div> 
+</div>

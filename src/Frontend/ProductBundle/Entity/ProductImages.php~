@@ -52,7 +52,7 @@ class ProductImages
     /**
      * @var \Frontend\ProductBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product", inversedBy="productImages")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      * })

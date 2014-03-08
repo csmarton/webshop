@@ -38,9 +38,9 @@ class ProductTaxon
     /**
      * @var \Frontend\ProductBundle\Entity\Product
      *
-     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product")
+     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\Product", inversedBy="productTaxon")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="taxon_id", referencedColumnName="id", unique=true)
      * })
      */
     private $product;

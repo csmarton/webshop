@@ -1,3 +1,3 @@
 registration:
-    pattern:  /registration/
-    defaults: { _controller: FrontendLayoutBundle:Default:header }
+    pattern:  /regisztracio
+    defaults: { _controller: FrontendLayoutBundle:Default:register}

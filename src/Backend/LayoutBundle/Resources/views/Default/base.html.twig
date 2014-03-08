@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>{% block title %}{% endblock %}</title>
+
+            <link rel="stylesheet" href="{{ asset('bundles/backendlayout/css/reset.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/backendlayout/css/shared_logged.css') }}"/>
+            
+            
+            <script type="text/javascript" src="{{ asset('js/jquery-2.1.0.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery.qtip.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/accordion.js') }}"></script>
+            {% block stylesheets %}                
+            {% endblock %}
+              
+            {% block javascripts %}
+            {% endblock %}
+            <link rel="shortcut icon" href="{{ asset('bundles/frontendlayout/images/favicon.ico') }}" />
+        {% endblock %}
+    </head>
+    <body {% block bodyClass %}{% endblock%}>
+        {% block body %}
+            {% block bodyStart %}
+            {% endblock %}
+
+            {% block menu %}
+                {{ render(controller("BackendLayoutBundle:Default:header"))}}
+            {% endblock %}
+
+            <div class="maincontent cf">	
+                {% block mainContent %}				
+                    <div class="content">
+                        <div class="wrapper">
+                            {% block leftSide %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>	
+            {{ render(controller('BackendLayoutBundle:Default:footer'))}}
+        {% endblock %}
+    </body>
+</html>

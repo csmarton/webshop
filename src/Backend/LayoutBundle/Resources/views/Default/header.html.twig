@@ -1,0 +1,33 @@
+<div class="header">
+    <div class="wrapper">
+		<div id="logo">
+				<a href="#"></a>
+		</div>
+        <div class="group_left">			
+            <div class="searcher_box">
+                <input type="text" class="searcher" placeholder="Mit keresel?">
+                <input type="button" class="search_button" value="&nbsp">
+            </div>
+        </div>
+        <div class="group_right">
+            <ul>				
+                {% if (is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
+                    <li>
+                        Bejelentkezve: {{app.user}}
+                    </li>
+                    <li>
+                        <a href="{{ path('frontend_product_homepage') }}">
+                                <span>Vissza az áruházba</span>
+                        </a>
+                    </li>
+                    <li id="logout">
+                        <a href="{{ path('fos_user_security_logout') }}">
+                                <div id="logout"></div>
+                                <span>Kilépés</span>
+                        </a>
+                    </li>
+                {% endif %}	
+            </ul>
+        </div>
+    </div>
+</div>

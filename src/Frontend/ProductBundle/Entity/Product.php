@@ -70,6 +70,20 @@ class Product
      */
     private $id;
 
+    /**
+     * @var \Frontend\ProductBundle\Entity\ProductTaxon
+     *
+     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\ProductTaxon", mappedBy="product")
+     */
+    private $productTaxon;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\ProductImages
+     *
+     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\ProductImages", mappedBy="product")
+     */
+    private $productImages;
+
 
 
     /**
@@ -241,5 +255,51 @@ class Product
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set productTaxon
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductTaxon $productTaxon
+     * @return Product
+     */
+    public function setProductTaxon(\Frontend\ProductBundle\Entity\ProductTaxon $productTaxon = null)
+    {
+        $this->productTaxon = $productTaxon;
+
+        return $this;
+    }
+
+    /**
+     * Get productTaxon
+     *
+     * @return \Frontend\ProductBundle\Entity\ProductTaxon 
+     */
+    public function getProductTaxon()
+    {
+        return $this->productTaxon;
+    }
+
+    /**
+     * Set productImages
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductImages $productImages
+     * @return Product
+     */
+    public function setProductImages(\Frontend\ProductBundle\Entity\ProductImages $productImages = null)
+    {
+        $this->productImages = $productImages;
+
+        return $this;
+    }
+
+    /**
+     * Get productImages
+     *
+     * @return \Frontend\ProductBundle\Entity\ProductImages 
+     */
+    public function getProductImages()
+    {
+        return $this->productImages;
     }
 }

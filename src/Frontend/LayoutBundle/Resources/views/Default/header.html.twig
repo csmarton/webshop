@@ -25,6 +25,13 @@
 							<span id="my_profile_text">Profilom</span>
 						</a>
 					</li>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <li id="admin">
+						<a href="{{ path('backend_admin_homepage') }}">
+							<span>Admin</span>
+						</a>
+                                            </li>
+                                        {% endif %}
 					<li id="logout">
 						<a href="{{ path('fos_user_security_logout') }}">
 							<div id="logout"></div>

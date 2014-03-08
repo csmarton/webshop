@@ -1,0 +1,312 @@
+/*body{
+	background-image: url(http://subtlepatterns.com/patterns/grey.png);
+}*/
+.header{
+    background-color: #f3f3f3;
+    height: 30px;
+    width: 100%;
+    z-index: 6011;
+    top: 0;    
+    border-bottom: 1px solid #e8e8e8;
+	padding: 10px 0px;
+    /*padding: 10px;*/
+}
+
+#logo{
+	background: url("/Shop/web/bundles/frontendlayout/images/logo.png") center no-repeat !important;
+	height: 30px;
+	width: 150px;
+	float: left;
+	padding: 0px 10px;
+}
+#logo a{
+	display:block;
+	width:100%;
+	height:100%;
+}
+.wrapper {
+    position: relative;
+}
+
+.wideLabel .labelText{
+    width: 100% !important;
+    float: left;
+    line-height: 20px;
+}
+
+.content .contentTop{
+    margin-bottom: 10px;
+    position: relative;
+	float: left;
+	width: 769px;
+}
+
+/*
+    JOBB OLDAL
+*/    
+.sidebar{
+    width: 200px;
+    float: left;
+    padding-top: 50px;
+	background-color: #f3f3f3;
+}
+.sidebar .sideFrame{
+    border-left: 1px solid #bed2d2;
+	padding: 0px 0px 0px 5px;
+}
+
+.sidebar .block{
+    border-top: 1px solid #bed2d2;
+    padding: 10px 0px;
+}
+
+.sidebar .block h2{
+    font-size: 15px;
+    font-weight: bold;
+    color: #cc0000;
+    margin-bottom: 5px;
+}
+
+.maincontent .wrapper .sidebar .taxonomy li a{
+	padding: 5px 0px 5px 20px;
+}
+
+.maincontent .wrapper .sidebar .taxon li a{
+	padding: 5px 0px 5px 10px;
+	font-weight: bold;
+}
+
+.maincontent .wrapper .sidebar .taxon a,
+.maincontent .wrapper .sidebar .taxonomy a{
+    color: #333;
+    text-decoration: none;
+	display:block;
+}
+
+.maincontent .wrapper .sidebar .taxon li a:hover,
+.maincontent .wrapper .sidebar .taxonomy li a:hover{
+	/*
+	background-color: #BEA9A9;
+	color:white !important;
+	*/
+	background-color:white;
+	
+}
+.searcher_box{
+}
+.searcher_box input{
+    
+}
+.searcher{
+    padding: 3px;
+    border: 1px solid #CCCCCC;
+    background: #fcfcfc;
+    box-shadow: 1px 1px 0 #fff;
+    width: 300px;
+}
+
+.searcher:hover{
+    border: 1px solid #A5A1A1;
+}
+
+.search_button{
+    background: url("/Shop/web/bundles/frontendlayout/images/search.png") center no-repeat !important;
+    border: 1px solid #CCCCCC;
+    box-shadow: 1px 1px 0 #fff;
+    cursor: pointer;
+    width: 50px;
+    height: 24px;
+    padding:0px !important;
+}
+
+.main {
+    min-height: 720px;
+    padding-top: 50px;
+    background-color: #F8F8F8;
+    margin-left:200px
+}
+
+.main .container{
+	padding: 0px 10px;
+}
+
+.footer {
+    border-top: 1px solid #e8e8e8;
+    clear: both;
+    /*padding: 10px;*/
+    background-color: #f3f3f3;
+    width: 100%;
+}
+.footer .wrapper{
+    padding: 20px;
+    text-align: center;
+
+}
+
+.footer .links a{
+    color: #666;
+}
+
+.header .wrapper .group_left{
+    position: relative;
+    float: left;
+}
+.header .wrapper .group_right{
+    float: right;
+    position: relative;
+}
+
+input[type="button"],input[type="submit"]{
+    background: #f8f8f8;
+    border: 1px solid #CCCCCC;
+    box-shadow: 1px 1px 0 #fff;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.header .group_right  li{
+	float: left;
+	padding: 10px;	
+	margin-left: 5px;
+}
+
+.header .group_right  li:hover{
+	background-color: white;
+}
+.header .group_right  a{
+	display: inline;
+	text-decoration:none;
+	color:black;
+}
+.header .group_right #cart #cart_icon{    
+    background: url("/Shop/web/bundles/frontendlayout/images/cart.png") center no-repeat;
+	float: left;
+}
+.header .group_right #cart{
+    display: inline;
+}
+.header .group_right .cart_count{
+    display: inline;
+    position: absolute;
+    left: 30px;
+    top: -5px;
+    float: left;
+    background-color: rgba(255,0,0,1);
+    padding: 3px;
+    height: 14px;
+    width: 18px;
+    text-align: center;
+    color: white;
+}
+
+input[type="button"]:hover,input[type="submit"]:hover{
+    border: 1px solid #A5A1A1;
+}
+
+
+.hide{
+    display:none;
+}
+
+.profileDropDownQTip ul .menuDivider{
+    background: #ddd;
+    font-size: 0;
+    height: 1px;
+    line-height: 0;
+    margin: 4px 0px;
+}
+
+.profileDropDownQTip ul{
+}
+
+.profileDropDownQTip li a{
+    padding: 5px;
+    color: #3276b1;
+    text-decoration: none;
+    display: block;
+}
+.profileDropDownQTip .qtip-content{
+}
+.profileDropDownQTip li a:hover{
+    color:grey;
+    text-decoration: underline;
+}
+
+#registration_table tr>td:last-child{
+    text-align:right;
+}
+#registration_table{
+    width: 100%;
+}
+
+#registration_table tr:last-child>td{
+    text-align: center;
+}
+
+.login_form form{
+    margin: 0px auto;
+    width: 400px;
+}
+
+.product_table{
+    overflow:hidden;
+    border:1px solid #d3d3d3;
+    background:#fefefe;
+    min-width:700px;
+    -moz-border-radius:5px; /* FF1+ */
+    -webkit-border-radius:5px; /* Saf3-4 */
+    border-radius:5px;
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+th, td {padding:18px 28px 18px; text-align:center; }
+	
+th {padding-top:22px; text-shadow: 1px 1px 1px #fff; background:#e8eaeb;}
+
+td {border-top:1px solid #e0e0e0; border-right:1px solid #e0e0e0;}
+
+tr.odd-row td {background:#f6f6f6;}
+
+td.first, th.first {text-align:left}
+
+td.last {border-right:none;}
+
+td {
+    background: -moz-linear-gradient(100% 25% 90deg, #fefefe, #f9f9f9);
+    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f9f9f9), to(#fefefe));
+}
+
+tr.odd-row td {
+    background: -moz-linear-gradient(100% 25% 90deg, #f6f6f6, #f1f1f1);
+    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f1f1f1), to(#f6f6f6));
+}
+
+th {
+    background: -moz-linear-gradient(100% 20% 90deg, #e8eaeb, #ededed);
+    background: -webkit-gradient(linear, 0% 0%, 0% 20%, from(#ededed), to(#e8eaeb));
+}
+
+
+
+tr:first-child th.first {
+    -moz-border-radius-topleft:5px;
+    -webkit-border-top-left-radius:5px;
+}
+
+tr:first-child th.last {
+    -moz-border-radius-topright:5px;
+    -webkit-border-top-right-radius:5px;
+}
+
+tr:last-child td.first {
+    -moz-border-radius-bottomleft:5px;
+    -webkit-border-bottom-left-radius:5px;
+}
+
+tr:last-child td.last {
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-bottom-right-radius:5px;
+}

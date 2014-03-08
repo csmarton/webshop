@@ -1,3 +1,0 @@
-frontend_profile_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: FrontendProfileBundle:Default:index }

@@ -70,5 +70,19 @@ class Product
      */
     private $id;
 
+    /**
+     * @var \Frontend\ProductBundle\Entity\ProductTaxon
+     *
+     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\ProductTaxon", mappedBy="product")
+     */
+    private $productTaxon;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\ProductImages
+     *
+     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\ProductImages", mappedBy="product")
+     */
+    private $productImages;
+
 
 }

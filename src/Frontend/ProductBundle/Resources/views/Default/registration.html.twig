@@ -1,0 +1,18 @@
+{% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShop - Regisztráció {% endblock %}
+{% block bodyClass %}class="login_page"{% endblock%}
+ 
+{% block main %}  
+	<div class="main">
+		<div class="login_form">
+                    <form action="{{ path('frontend_registration') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+                        {{ form_widget(form) }}
+                        <div>
+                            <input type="submit" value="Regisztráció" />
+                        </div>
+                    </form>
+		</div>	
+	</div>	
+{% endblock %}
+                        

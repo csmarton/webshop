@@ -1,0 +1,88 @@
+
+[TwigGenerator]
+    git=git://github.com/cedriclombardot/TwigGenerator.git
+    target=/twig-generator
+
+[twig-extensions]
+    git=git://github.com/fabpot/Twig-extensions.git
+    target=/twig-extensions
+
+[WhiteOctoberPagerfantaBundle]
+    git=git://github.com/whiteoctober/WhiteOctoberPagerfantaBundle.git
+    target=/bundles/WhiteOctober/PagerfantaBundle
+
+[KnpMenuBundle]
+    git=git://github.com/KnpLabs/KnpMenuBundle.git
+    target=/bundles/Knp/Bundle/MenuBundle
+
+[KnpMenu]
+    git=git://github.com/KnpLabs/KnpMenu.git
+    target=/KnpMenu
+
+[PropelBundle]
+    git=git://github.com/propelorm/PropelBundle.git
+    target=/bundles/Propel/PropelBundle
+
+[phing]
+    git=git://github.com/Xosofox/phing.git
+    target=/phing
+
+[propel]
+    git=git://github.com/propelorm/Propel.git
+    target=/propel
+
+[doctrine-common]
+    git=git://github.com/doctrine/common.git
+    target=/doctrine-common
+
+[doctrine-dbal]
+    git=git://github.com/doctrine/dbal.git
+    target=/doctrine-dbal
+
+[doctrine-fixtures]
+    git=git://github.com/doctrine/data-fixtures.git
+    target=/doctrine-fixtures
+
+[DoctrineFixturesBundle]
+    git=git://github.com/doctrine/DoctrineFixturesBundle.git
+    target=/bundles/Doctrine/Bundle/FixturesBundle
+
+[DoctrineBundle]
+    git=git://github.com/doctrine/DoctrineBundle.git
+    target=/bundles/Doctrine/Bundle/DoctrineBundle
+
+[doctrine-common]
+    git=git://github.com/doctrine/common.git
+    target=/doctrine-common
+
+[doctrine-dbal]
+    git=git://github.com/doctrine/dbal.git
+    target=/doctrine-dbal
+
+[doctrine-fixtures]
+    git=git://github.com/doctrine/data-fixtures.git
+    target=/doctrine-fixtures
+
+[DoctrineFixturesBundle]
+    git=git://github.com/doctrine/DoctrineFixturesBundle.git
+    target=/bundles/Doctrine/Bundle/FixturesBundle
+
+[DoctrineMongoDBBundle]
+    git=git://github.com/symfony/DoctrineMongoDBBundle.git
+    target=/bundles/Doctrine/Bundle/MongoDBBundle
+
+[doctrine-mongodb]
+    git=git://github.com/doctrine/mongodb.git
+    target=/doctrine-mongodb
+
+[doctrine-mongodb-odm]
+    git=git://github.com/doctrine/mongodb-odm.git
+    target=/doctrine-mongodb-odm
+
+[AsseticBundle]
+    git=git://github.com/symfony/AsseticBundle.git
+    target=/bundles/Symfony/Bundle/AsseticBundle
+
+[Assetic]
+    git=git://github.com/symfony/AsseticBundle.git
+    target=/assetic    version=v1.0.2

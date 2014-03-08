@@ -1,0 +1,15 @@
+backend_admin_homepage:
+    pattern:  /admin
+    defaults: { _controller: BackendAdminBundle:Default:index }
+    
+backend_admin_product:
+    pattern:  /admin/termekek
+    defaults: { _controller: BackendAdminBundle:Default:index }
+    
+backend_admin_product_new:
+    pattern:  /admin/termekek/uj
+    defaults: { _controller: BackendAdminBundle:Default:new }
+    
+backend_admin_product_remove:
+    pattern:  /admin/termekek/torles
+    defaults: { _controller: BackendAdminBundle:Default:remove }

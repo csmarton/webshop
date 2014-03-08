@@ -1,7 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
-
-<form action="{{ path('registration') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-    <table id="registration_table">
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+     <table id="registration_table">
         <tr>
             <td>
                 <label for="fos_user_registration_form_username" class="labelText">Felhasználói név:</label>

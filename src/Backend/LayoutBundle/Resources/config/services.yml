@@ -1,0 +1,7 @@
+parameters:
+#    backend_layout.example.class: Backend\LayoutBundle\Example
+
+services:
+#    backend_layout.example:
+#        class: %backend_layout.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

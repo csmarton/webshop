@@ -1,3 +1,18 @@
 [submodule "vendor/bundles/FOS/UserBundle"]
 	path = vendor/bundles/FOS/UserBundle
 	url = git://github.com/FriendsOfSymfony/FOSUserBundle.git
+[submodule "vendor/Admingenerator/UserBundle"]
+	path = vendor/Admingenerator/UserBundle
+	url = https://github.com/symfony2admingenerator/AdmingeneratorUserBundle
+[submodule "vendor/cedriclombardot/Admingenerator/UserBundle"]
+	path = vendor/cedriclombardot/Admingenerator/UserBundle
+	url = https://github.com/symfony2admingenerator/AdmingeneratorUserBundle
+[submodule "vendor/cedriclombardot/admingenerator-generator-bundle/Admingenerator/UserBundle"]
+	path = vendor/cedriclombardot/admingenerator-generator-bundle/Admingenerator/UserBundle
+	url = https://github.com/symfony2admingenerator/AdmingeneratorUserBundle
+[submodule "vendor/bundles/Symfony/Bundle/AsseticBundle"]
+	path = vendor/bundles/Symfony/Bundle/AsseticBundle
+	url = git://github.com/symfony/AsseticBundle.git
+[submodule "vendor/assetic"]
+	path = vendor/assetic
+	url = git://github.com/kriswallsmith/assetic.git

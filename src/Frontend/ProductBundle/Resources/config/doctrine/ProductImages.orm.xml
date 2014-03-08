@@ -8,7 +8,7 @@
     <field name="path" type="string" column="path" length="100" nullable="false"/>
     <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
-	<many-to-one field="product" target-entity="Product">
+    <many-to-one field="product" target-entity="Product" inversed-by="productImages">
       <join-columns>
         <join-column name="product_id" referenced-column-name="id"/>
       </join-columns>

@@ -1,0 +1,30 @@
+{% extends 'BackendLayoutBundle:Default:base.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/backendlayout/js/Shared.js') }}"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                Shared.init();
+                //$( "#leftMenu" ).accordion();
+            });
+    </script>
+{% endblock %}
+
+                
+
+
+{% block mainContent%}   
+    <div class="content">
+        <div class="wrapper">
+            {% block sidebar %}
+            <div class="sidebar">
+                SIDEBAR
+            </div>
+            {% endblock %} 
+            {% block main %}
+
+            {% endblock %}			
+           
+        </div>
+    </div>	
+{% endblock %}

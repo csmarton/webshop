@@ -1,7 +1,0 @@
-parameters:
-#    frontend_profile.example.class: Frontend\ProfileBundle\Example
-
-services:
-#    frontend_profile.example:
-#        class: %frontend_profile.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

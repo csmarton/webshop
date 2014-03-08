@@ -27,8 +27,12 @@ class DefaultController extends Controller
         return $this->render('FrontendLayoutBundle:Default:footer.html.twig');
     }
     
-     public function headerAction(Request $request) {
-          /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
+     public function headerAction() {
+        return $this->render('FrontendLayoutBundle:Default:header.html.twig');
+    }
+    
+    public function registerAction(Request $request){
+        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->container->get('fos_user.registration.form.factory');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
         $userManager = $this->container->get('fos_user.user_manager');
@@ -42,7 +46,7 @@ class DefaultController extends Controller
         if (null !== $event->getResponse()) {
             return $event->getResponse();
         }
-         $form = $formFactory->createForm();
+        $form = $formFactory->createForm();
         $form->setData($user);
         if ('POST' === $request->getMethod()) {
             $form->bind($request);
@@ -59,12 +63,18 @@ class DefaultController extends Controller
                 }
 
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
                 return $response;
             }
         }
-
-        return $this->render('FrontendLayoutBundle:Default:header.html.twig');
+        return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.'.$this->getEngine(), array(
+            'form' => $form->createView(),
+        ));
+        
+    }
+    
+    protected function getEngine()
+    {
+        return $this->container->getParameter('fos_user.template.engine');
     }
  
 }

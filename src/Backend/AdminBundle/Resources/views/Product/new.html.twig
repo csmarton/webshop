@@ -1,0 +1,48 @@
+{% extends "BackendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShopAdmin - Új Termék {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript">
+            $(document).ready(function(){
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %} 
+    <div class="main">        
+        <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }} name="newProduct"  class="newProduct">
+            <table class="new_product_table">
+                <tbody>
+                    <tr>
+                        <td>{{ form_label(form.name, 'Terméknév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.name) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.price, 'Ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.price) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.slug) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.shortDescription, 'Rövid leírás:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.shortDescription) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.description, 'Leírás:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.description) }}</td>
+                    </tr>
+                    <tr>
+                        <td collapse="2"><input type="submit" value="Ok"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            {{ form_widget(form._token) }}
+        </form>
+    </div>
+{% endblock %}

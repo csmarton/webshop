@@ -30,7 +30,8 @@ class DefaultController extends Controller
         return $this->render('FrontendProductBundle:Default:index.html.twig');
     }
     
-	public function loginAction(Request $request){
+	public function registrationAction(Request $request){
+            
 		  /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->container->get('fos_user.registration.form.factory');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
@@ -43,6 +44,7 @@ class DefaultController extends Controller
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
         if (null !== $event->getResponse()) {
+            
             return $event->getResponse();
         }
          $form = $formFactory->createForm();
@@ -66,8 +68,15 @@ class DefaultController extends Controller
                 return $response;
             }
         }
-		return $this->render('FrontendProductBundle:Default:login.html.twig');
+		//return $this->render('FrontendProductBundle:Default:registration.html.twig');
+                return $this->container->get('templating')->renderResponse('FrontendProductBundle:Default:registration.html.twig', array(
+                    'form' => $form->createView(),
+                ));
 	}
+        
+        public function loginAction(){
+            return $this->render('FrontendProductBundle:Default:login.html.twig');
+        }
     public function sidebarAction(){
         $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Taxon');
         

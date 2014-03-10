@@ -78,11 +78,18 @@ class Product
     private $productTaxon;
 
     /**
-     * @var \Frontend\ProductBundle\Entity\ProductImages
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\ProductImages", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="Frontend\ProductBundle\Entity\ProductImages", mappedBy="product")
      */
     private $productImages;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 }

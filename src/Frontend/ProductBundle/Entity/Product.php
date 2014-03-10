@@ -78,12 +78,19 @@ class Product
     private $productTaxon;
 
     /**
-     * @var \Frontend\ProductBundle\Entity\ProductImages
+     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\ProductImages", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="Frontend\ProductBundle\Entity\ProductImages", mappedBy="product")
      */
     private $productImages;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -281,22 +288,32 @@ class Product
     }
 
     /**
-     * Set productImages
+     * Add productImages
      *
      * @param \Frontend\ProductBundle\Entity\ProductImages $productImages
      * @return Product
      */
-    public function setProductImages(\Frontend\ProductBundle\Entity\ProductImages $productImages = null)
+    public function addProductImage(\Frontend\ProductBundle\Entity\ProductImages $productImages)
     {
-        $this->productImages = $productImages;
+        $this->productImages[] = $productImages;
 
         return $this;
     }
 
     /**
+     * Remove productImages
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductImages $productImages
+     */
+    public function removeProductImage(\Frontend\ProductBundle\Entity\ProductImages $productImages)
+    {
+        $this->productImages->removeElement($productImages);
+    }
+
+    /**
      * Get productImages
      *
-     * @return \Frontend\ProductBundle\Entity\ProductImages 
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getProductImages()
     {

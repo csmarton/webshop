@@ -13,7 +13,12 @@
     </script>
 {% endblock %}
  
-{% block main %}    
+{% block main %}
+    <div class="main">
+        {% block leftSide %}                        
+            {{parent()}}
+        {% endblock %}        
         {% render (controller("FrontendProductBundle:Default:mainProduct")) %}
+    </div>    
 {% endblock %}
                         

@@ -13,3 +13,19 @@ backend_admin_product_new:
 backend_admin_product_remove:
     pattern:  /admin/termekek/torles
     defaults: { _controller: BackendAdminBundle:Default:remove }
+    
+backend_admin_product_upload_image:
+    pattern:  /admin/termekek/uj-kep
+    defaults: { _controller: BackendAdminBundle:Image:upload }
+    
+backend_admin_category:
+    pattern:  /admin/kategoria
+    defaults: { _controller: BackendAdminBundle:Category:index }
+    
+backend_admin_category_new:
+    pattern:  /admin/kategoria/uj
+    defaults: { _controller: BackendAdminBundle:Category:new }
+    
+backend_admin_category_remove:
+    pattern:  /admin/kategoria/torles
+    defaults: { _controller: BackendAdminBundle:Category:remove }

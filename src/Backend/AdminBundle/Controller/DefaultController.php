@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Frontend\ProductBundle\Form\ProductType;
 use Frontend\ProductBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Frontend\ProductBundle\Entity\ProductTaxon;
 class DefaultController extends Controller
 {
     public function indexAction()
@@ -22,15 +22,16 @@ class DefaultController extends Controller
     public function newAction()
     {   
         $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById(1);
-        var_dump($product->getProductImages()->getPath());
         $request = $this->get('request');
         $productId = $request->query->get('productId');
+
         if($productId == null){
             $product = new Product();        
         }else{
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
         }
-        $form = $this->createForm(new ProductType(),$product);
+        $taxons = $this->getDoctrine()->getRepository('FrontendProductBundle:Taxon')->findAll();
+        $form = $this->createForm(new ProductType($taxons),$product);
         
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
@@ -41,6 +42,9 @@ class DefaultController extends Controller
                if (isset($form['price'])) {
                     $productPrice = $form['price']->getData();
                }
+
+               
+               
                $createdTime = new \DateTime("now");
                
                $product->setName($productName);
@@ -50,6 +54,16 @@ class DefaultController extends Controller
                $em = $this->getDoctrine()->getManager();
                $em->persist($product);
                $em->flush();
+               
+               $taxonId = $request->request->get('taxon');
+               $taxon = $this->getDoctrine()->getRepository('FrontendProductBundle:Taxon')->findOneById($taxonId);
+               $productTaxon = new ProductTaxon();
+               $productTaxon->setProductId($product->getId());
+               $productTaxon->setTaxon($taxon);      
+               
+               $em = $this->getDoctrine()->getManager();
+               $em->persist($productTaxon);
+               $em->flush();
                return $this->redirect($this->generateUrl('backend_admin_product'));
             }
         }    
@@ -57,7 +71,9 @@ class DefaultController extends Controller
         
         return $this->render('BackendAdminBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
-            'productId'=>$productId
+            'productId'=>$productId,
+            'product' => $product,
+            'taxons'=>$taxons
         ));
     }
     

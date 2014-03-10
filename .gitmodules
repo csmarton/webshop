@@ -16,3 +16,12 @@
 [submodule "vendor/assetic"]
 	path = vendor/assetic
 	url = git://github.com/kriswallsmith/assetic.git
+[submodule "vendor/bundles/Gregwar/ImageBundle"]
+	path = vendor/bundles/Gregwar/ImageBundle
+	url = git://github.com/Gregwar/ImageBundle.git
+[submodule "vendor/bundles/Gregwar/Image"]
+	path = vendor/bundles/Gregwar/Image
+	url = git://github.com/Gregwar/Image.git
+[submodule "vendor/bundles/Gregwar/cache"]
+	path = vendor/bundles/Gregwar/cache
+	url = git://github.com/Gregwar/Cache.git

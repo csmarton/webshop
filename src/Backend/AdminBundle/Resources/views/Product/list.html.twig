@@ -13,6 +13,10 @@
  
 {% block main %} 
     <div class="main">
+        <h2>Termékek</h2>
+        <div class="upperMenu">
+            <a href="{{path('backend_admin_product_new')}}" class="menu_btn">Új Termék</a>
+        </div>
         
         <table class="product_table">
             <thead>
@@ -36,19 +40,24 @@
                         <td>{{ product.getPrice() }}</td>
                         <td>{{ product.getSlug() }}</td>
                         <td>{{ product.getShortDescription()}}</td>
-                        <td>{{ product.getDescription()}}</td>
-
+                        <td>
+                            {% if (product.getDescription()|length <= 50 ) %}
+                                {{ product.getDescription()}}
+                            {% else %}
+                                {{ product.getDescription()|slice(0,50)}}...
+                            {% endif %}
+                        </td>    
                         <td>{{ product.getCreatedAt()|date('Y-m-d')}}</td>
                         <td>{{ product.getUpdatedAt()|date('Y-m-d')}}</td>
-                        <td>
-                            <a href="{{path('backend_admin_product_new',{'productId':product.getId()}) }}">Szerkesztés<a/>
-                            <a href="#" class="deleteProduct" productId="{{product.getId()}}">Törlése</a>
+                        <td class="product_edit_btn">
+                            <a href="{{path('backend_admin_product_new',{'productId':product.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
+                            <a href="#" class="deleteProduct menu_btn warning_btn delete_btn" productId="{{product.getId()}}">Törlés</a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{{path('backend_admin_product_new')}}">Új Termék<a/>
+        
     </div>
 <div class="deleteProductContent hide">
     Biztosan törölni szeretnéd ezt a terméket?

@@ -37,12 +37,36 @@
                         <td>{{ form_widget(form.description) }}</td>
                     </tr>
                     <tr>
-                        <td collapse="2"><input type="submit" value="Ok"></td>
+                        <td>Kategória:</td>
+                        <td>
+                            <select name="taxon" required="required">
+                                <option value="0"></option>
+                                {% for taxon in taxons %}
+                                    <option value="{{taxon.getId()}}">{{taxon.getName()}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr >
+                        <td colspan="2">
+                            <input type="submit" value="Mentés" class="menu_btn ok_btn">
+                            <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
+                        </td>
                     </tr>
                 </tbody>
-            </table>
-            
+            </table>            
             {{ form_widget(form._token) }}
         </form>
+        {% if (productId is defined and productId is not null)%}
+            <div class="image_container">
+                {% for img in product.getProductImages() %}
+                         <img src="{{image(img.getWebPath()).zoomCrop(60,60)}} "/>
+                {% endfor %}
+            </div>
+            <form class="uploadImageForm" method="POST" enctype="multipart/form-data" action="{{ path('backend_admin_product_upload_image',{'productId':productId}) }} ">            
+                <input type="file" accept="image/*" name="uploadedImage">
+                <button class="uploadImageButton" type="submit">Felföltés</button>
+            </form>
+        {% endif %}
     </div>
 {% endblock %}

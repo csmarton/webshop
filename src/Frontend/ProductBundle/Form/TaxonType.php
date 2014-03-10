@@ -15,13 +15,10 @@ class TaxonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('taxonomyId')
-            ->add('parentId')
             ->add('name')
             ->add('slug')
             ->add('description')
             ->add('permalinks')
-            ->add('taxonomy')
         ;
     }
     

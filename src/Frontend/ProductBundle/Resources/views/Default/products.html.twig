@@ -1,80 +1,42 @@
-<div class="main">
-	<div class="container">
-		<div id="searcher">
-			<div id="search_form" style="display:none"></div>
-			<div id="search_toggle_button">Részletes keresés</div>		
-		</div>
-		
-		<div class="products_box">
-			{% for product in products %}
-			{% set i=loop.index0 %}
-			{% if (product.getSlug() is not null)%}
-				{% set product_link = product.getSlug() %}
-			{% else %}
-				{% set product_link = product.getId() %}
-			{% endif %}
-			<div class="product_box">
-				<div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
-				<div class="upper_box">
-					<div class="image_container">
-						<img src="
-						{% if (images[i]|length != 0 ) %}
-							  {{ asset('images/' ~ images[i][0].getPath())}}"/>
-						{% else %}     
-							{{ asset('images/no_image.jpg')}}"/>
-						{% endif %}
+<div class="container">
+    <div id="searcher">
+            <div id="search_form" style="display:none"></div>
+            <div id="search_toggle_button">Részletes keresés</div>		
+    </div>
 
-					</div>
-					<div class="right_box">
-						<div class="product_price">Ára: {{product.price}} Ft</div>
-						<input class="to_cart_button"type="button" value="Kosárba">
-					</div>    
-				</div>
-				<div class="bottom_box">
-					<ul>
-						{% for property in propertys[i]%}
-							<li>{{property.getValue()}}</li>
-						{% endfor %}    
-					</ul>
-				</div>
-			</div> 
-			{% endfor %}    
+    <div class="products_box">
+        {% for product in products %}
+        {% set i=loop.index0 %}
+        {% if (product.getSlug() is not null)%}
+                {% set product_link = product.getSlug() %}
+        {% else %}
+                {% set product_link = product.getId() %}
+        {% endif %}
+        <div class="product_box">
+                <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
+                <div class="upper_box">
+                        <div class="image_container">
+                                <img src="
+                                {% if (images[i]|length != 0 ) %}
+                                          {{asset(images[i][0].getWebPath())}}"/>
+                                {% else %}     
+                                        {{ asset('images/no_image.jpg')}}"/>
+                                {% endif %}
 
-			{% for i in range(1,50) %}
-				{% for product in products %}
-				{% set i=loop.index0 %}
-				{% if (product.getSlug() is not null)%}
-					{% set product_link = product.getSlug() %}
-				{% else %}
-					{% set product_link = product.getId() %}
-				{% endif %}
-				<div class="product_box">
-					<div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
-					<div class="upper_box">
-						<div class="image_container">
-							<img src="
-							{% if (images[i]|length != 0 ) %}
-								  {{ asset('images/' ~ images[i][0].getPath())}}"/>
-							{% else %}     
-								{{ asset('images/no_image.jpg')}}"/>
-							{% endif %}
-
-						</div>
-						<div class="right_box">
-							<div class="product_price">Ára: {{product.price}} Ft</div>
-							<input class="to_cart_button"type="button" value="Kosárba">
-						</div>    
-					</div>
-					<div class="bottom_box">
-						<ul>
-							{% for property in propertys[i]%}
-								<li>{{property.getValue()}}</li>
-							{% endfor %}    
-						</ul>
-					</div>
-				</div> 
-				{% endfor %}   
-			{% endfor %}    
-		</div>
-	</div>	
-</div>    
+                        </div>
+                        <div class="right_box">
+                                <div class="product_price">Ára: {{product.price}} Ft</div>
+                                <input class="to_cart_button"type="button" value="Kosárba">
+                        </div>    
+                </div>
+                <div class="bottom_box">
+                        <ul>
+                                {% for property in propertys[i]%}
+                                        <li>{{property.getValue()}}</li>
+                                {% endfor %}    
+                        </ul>
+                </div>
+        </div> 
+        {% endfor %}    			
+    </div>
+</div>

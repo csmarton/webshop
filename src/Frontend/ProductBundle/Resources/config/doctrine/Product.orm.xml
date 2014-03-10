@@ -12,6 +12,6 @@
     <field name="shortDescription" type="string" column="short_description" length="100" nullable="true"/>
     <field name="price" type="float" column="price" precision="10" scale="0" nullable="false"/>
     <one-to-one field="productTaxon" target-entity="ProductTaxon" mapped-by="product" />
-    <one-to-one field="productImages" target-entity="ProductImages" mapped-by="product" />
+    <one-to-many field="productImages" target-entity="ProductImages" mapped-by="product" />
   </entity>
 </doctrine-mapping>

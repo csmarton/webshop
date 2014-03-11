@@ -55,7 +55,8 @@
     height: 100%;
     display: table-cell;
     position: relative;
-    background-color: #f3f3f3;
+    padding-top:30px;
+    border-right: 2px solid rgb(233, 233, 233);
 }
 .sidebar .sideFrame{
     border-left: 1px solid #bed2d2;
@@ -74,6 +75,11 @@
     margin-bottom: 5px;
 }
 
+#leftMenu{
+    width: 100%;
+    position: absolute;
+}
+
 .maincontent .wrapper .sidebar .taxonomy li a{
 	padding: 5px 0px 5px 20px;
 }
@@ -90,14 +96,11 @@
 	display:block;
 }
 
-.maincontent .wrapper .sidebar .taxon li a:hover,
+.maincontent .wrapper .sidebar .taxon li a:hover{
+    background-color: #428bca;
+}
 .maincontent .wrapper .sidebar .taxonomy li a:hover{
-	/*
-	background-color: #BEA9A9;
-	color:white !important;
-	*/
-	background-color:white;
-	
+    background-color: #428bca;	
 }
 .searcher_box{
 }
@@ -130,11 +133,11 @@
     float: right;
     width: 980px;
     min-height: 720px;
-    background-color: #F8F8F8;
 }
 
 .main .container{
     display: table-cell;
+    padding:5px;
 }
 
 .footer {
@@ -194,7 +197,7 @@ input[type="button"]{
 .header .group_right #cart{
     display: inline;
 }
-.header .group_right .cart_count{
+.header .group_right #cart_count{
     display: inline;
     position: absolute;
     left: 30px;
@@ -257,8 +260,3 @@ input[type="button"]:hover{
 	width: 400px;
 }
 
-#leftMenu{
-    width: 100%;
-    position: absolute;
-    top: 0px;
-}

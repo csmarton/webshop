@@ -17,6 +17,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class DefaultController extends Controller
 {
     public function indexAction()
@@ -24,9 +26,6 @@ class DefaultController extends Controller
          //$em = $this->getDoctrine()->getEntityManager();
         // $user = $this->get('security.context')->getToken()->getUser();
          //var_dump($user);die;
-        
-        
-        
         return $this->render('FrontendProductBundle:Default:index.html.twig');
     }
     

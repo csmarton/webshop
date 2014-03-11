@@ -21,3 +21,7 @@ frontend_registration:
 frontend_login:
     pattern:  /bejelentkezes
     defaults: { _controller: FrontendProductBundle:Default:login}
+   
+frontend_cart:
+    pattern:  /kosarba
+    defaults: { _controller: FrontendProductBundle:Cart:add}

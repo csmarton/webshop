@@ -10,7 +10,7 @@
             <ul>				
                 {% if (is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
                     <li>
-                        Bejelentkezve: {{app.user}}
+                        Bejelentkezve: {{app.user }}
                     </li>
                     <li>
                         <a href="{{ path('frontend_product_homepage') }}">

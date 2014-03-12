@@ -21,24 +21,45 @@
         <div class="container">
             <h2>Termékek</h2>
        
-            <table class="product_table">
+            <table class="cart_table">
                 <thead>
                     <tr>
                         <th scope="col">Terméknév</th>                        
                         <th scope="col">Rövid leírás</th>
                         <th scope="col">Mennyiség</th>
-                        <th scope="col">Ár</th>
+                        <th scope="col">Ár(Ft)</th>
+                        <th scope="col">Kijelölés törlése</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% set cartCount = 0 %}
+                    {% set cartPrice = 0 %}
                     {% for productWithCount in productsWithCount %}
+                         {% set cartCount = cartCount + productWithCount[1] %}
+                         {% set cartPrice = cartPrice + productWithCount[0].getPrice() %}
                         <tr>
                             <td>{{ productWithCount[0].getName() }}</td>                            
                             <td>{{ productWithCount[0].getShortDescription()}}</td>
-                            <td>{{ productWithCount[1] }}</td>
+                            <td><input type="number" value="{{ productWithCount[1] }}"/></td>
                             <td>{{ productWithCount[1]*productWithCount[0].getPrice() }}</td>
+                            <td><input type="checkbox" name="deleteProductFromCart" value="{{productWithCount[0].getId()}}"/></td>
                         </tr>
                     {% endfor %}
+                    <tfoot>
+                       <tr>
+                         <td>Összegezve</td>
+                         <td>-</td>
+                         <td>{{ cartCount }}</td>
+                         <td>{{ cartPrice }}</td>
+                         <td><input type="checkbox" name="deleteProductFromCart" value="all"/></td>
+                       </tr>
+                       <tr >
+                            <td colspan="5">
+                                <input type="submit" value="Megrendel" class="menu_btn ok_btn">
+                            </td>
+                       </tr>
+                     </tfoot>
+                    
                 </tbody>
             </table>
         

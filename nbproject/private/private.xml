@@ -3,15 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/LayoutBundle/Resources/public/css/shared_logged.css</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Entity/Product.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/LayoutBundle/Resources/views/Default/layout.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Entity/ProductTaxon.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Form/ProductType.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/config/routing.yml</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/list.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/new.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/app/config/config.yml</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/header.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/products.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/public/js/Product.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/CategoryController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Controller/CartController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/config/routing.yml</file>
         </group>
     </open-files>
 </project-private>

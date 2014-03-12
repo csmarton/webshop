@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
-
+use Gregwar\Image\Image;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class DefaultController extends Controller
@@ -26,6 +26,10 @@ class DefaultController extends Controller
          //$em = $this->getDoctrine()->getEntityManager();
         // $user = $this->get('security.context')->getToken()->getUser();
          //var_dump($user);die;
+
+        $request = $this->get('request');        
+        $session = $request->getSession();
+        $session->clear();
         return $this->render('FrontendProductBundle:Default:index.html.twig');
     }
     

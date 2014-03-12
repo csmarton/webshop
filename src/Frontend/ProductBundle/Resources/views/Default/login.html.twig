@@ -5,9 +5,15 @@
  
 {% block main %}  
 	<div class="main">
-		<div class="login_form">
-			{% render controller('FOSUserBundle:Security:login') %}
-		</div>	
+            {% block leftSide %}                    
+                  {{parent()}}
+            {% endblock %}
+            
+            <div class="container">
+                <div class="login_form">
+                {% render controller('FOSUserBundle:Security:login') %}
+                    </div>
+            </div>
 	</div>	
 {% endblock %}
                         

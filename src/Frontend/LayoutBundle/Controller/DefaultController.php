@@ -28,7 +28,9 @@ class DefaultController extends Controller
     }
     
      public function headerAction() {
-        return $this->render('FrontendLayoutBundle:Default:header.html.twig');
+        $service = $this->container->get('cart_service');
+        $cartCount = $service->getCartCount();
+        return $this->render('FrontendLayoutBundle:Default:header.html.twig',array('cartCount'=>$cartCount));
     }
     
     public function registerAction(Request $request){

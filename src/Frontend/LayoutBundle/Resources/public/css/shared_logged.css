@@ -138,6 +138,8 @@
 .main .container{
     display: table-cell;
     padding:5px;
+    height: 768px;
+    width: 780px;
 }
 
 .footer {

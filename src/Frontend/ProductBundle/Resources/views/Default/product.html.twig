@@ -3,9 +3,12 @@
 {% block title%} WebShop - Kezdőlap {% endblock %}
 {% block bodyClass %}class="index_page"{% endblock%}
         
-{% block main %}   
+{% block main %}
     <div class="main">
-        <div class="products_box">
+            {% block leftSide %}                        
+                {{parent()}}       
+            {% endblock %}
+        <div class="container">
             {% if (product.getSlug() is not null)%}
                 {% set product_link = product.getSlug() %}
             {% else %}
@@ -15,11 +18,11 @@
                 <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
                 <div class="upper_box">
                     <div class="image_container">
-                        <img src="
+                        
                         {% if (images|length != 0 ) %}
-                              {{ asset('images/' ~ images[0].getPath())}}"/>
+                            <img src="{{image(images[0].getWebPath()).resize(100,100)}} "/>
                         {% else %}     
-                            {{ asset('images/no_image.jpg')}}"/>
+                            <img src="{{ image('images/no_image.jpg').zoomCrop(100,100)}}"/>
                         {% endif %}
 
                     </div>
@@ -35,10 +38,7 @@
                         {% endfor %}    
                     </ul>
                 </div>
-            </div>   
-            
-            
-            
-        </div>
+            </div>
+        </div> 
     </div>
 {% endblock %}

@@ -22,6 +22,10 @@ frontend_login:
     pattern:  /bejelentkezes
     defaults: { _controller: FrontendProductBundle:Default:login}
    
-frontend_cart:
+frontend_add_cart:
     pattern:  /kosarba
     defaults: { _controller: FrontendProductBundle:Cart:add}
+    
+frontend_cart:
+    pattern:  /kosar
+    defaults: { _controller: FrontendProductBundle:Cart:cart}

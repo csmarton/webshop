@@ -13,19 +13,3 @@ product_by_taxon:
 product:
     pattern:  /p/{slug}
     defaults: { _controller: FrontendProductBundle:Default:product }
-
-frontend_registration:
-    pattern:  /regisztracio
-    defaults: { _controller: FrontendProductBundle:Default:registration}
-    
-frontend_login:
-    pattern:  /bejelentkezes
-    defaults: { _controller: FrontendProductBundle:Default:login}
-   
-frontend_add_cart:
-    pattern:  /kosarba
-    defaults: { _controller: FrontendProductBundle:Cart:add}
-    
-frontend_cart:
-    pattern:  /kosar
-    defaults: { _controller: FrontendProductBundle:Cart:cart}

@@ -1,0 +1,27 @@
+{% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShop - Személyi adatok {% endblock %}
+{% block bodyClass %}class="login_page"{% endblock%}
+ 
+{% block main %}  
+	<div class="main">
+            {% block leftSide %}                    
+                  {{parent()}}
+            {% endblock %}
+            
+            <div class="container">
+                 <form action="{{ path('frontend_profile_edit') }}" {{ form_enctype(form) }} method="POST">
+                        {{ form_widget(form) }}
+                        {% if (succesChanges is defined) %}
+                            <div>
+                                {{ succesChanges }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            <input type="submit" value="Mentés" />
+                        </div>
+                 </form>
+            </div>
+	</div>	
+{% endblock %}
+                        

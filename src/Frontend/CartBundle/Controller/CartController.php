@@ -1,16 +1,14 @@
 <?php
 
-namespace Frontend\ProductBundle\Controller;
+namespace Frontend\CartBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class CartController extends Controller
 {
-    public function addAction()
-    {        
+    public function addAction(){        
                 
         $request = $this->get('request');
         
@@ -51,7 +49,6 @@ class CartController extends Controller
         foreach((array)$products as $product){
             $productsWithCount[] = array($product,$inCart[$product->getId()]);
         }
-        return $this->render('FrontendProductBundle:Default:cart.html.twig',array('productsWithCount' => $productsWithCount));
+        return $this->render('FrontendCartBundle:Cart:cart.html.twig',array('productsWithCount' => $productsWithCount));
     }
-    
 }

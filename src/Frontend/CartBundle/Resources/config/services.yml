@@ -1,0 +1,7 @@
+parameters:
+     cart_service.class: Frontend\CartBundle\Services\CartServices
+
+services:
+     cart_service:
+        class: "%cart_service.class%"
+        arguments: [ @doctrine.orm.entity_manager, '@service_container', '@doctrine' ]

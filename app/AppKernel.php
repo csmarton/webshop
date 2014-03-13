@@ -23,7 +23,8 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Backend\AdminBundle\BackendAdminBundle(),
             new Backend\LayoutBundle\BackendLayoutBundle(),
-            new Gregwar\ImageBundle\GregwarImageBundle()
+            new Gregwar\ImageBundle\GregwarImageBundle(),
+            new Frontend\CartBundle\FrontendCartBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -3,11 +3,38 @@
 namespace Frontend\ProfileBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Frontend\ProfileBundle\Entity\Profile;
+use Frontend\ProfileBundle\Form\ProfileType;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
-    {
-        return $this->render('FrontendProfileBundle:Default:index.html.twig', array('name' => $name));
-    }
+     public function editAction(){
+             $request = $this->get('request');
+             $user = $this->get('security.context')->getToken()->getUser();
+             $profile = $user->getProfile();
+             $form = $this->createForm(new ProfileType(),$profile);
+        
+             if ($request->getMethod() == 'POST') {
+                $form->bind($request);
+                if ($form->isValid()) { 
+                   
+                if (isset($form['name'])) {
+                    $profile->setName($form['name']->getData());
+                }
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($profile);
+                $em->flush();
+                $html = "Sikeresen megváltoztattad az adataidat!";
+                    return $this->render('FrontendUserBundle:Default:edit.html.twig', array(
+                        'form' => $form->createView(),
+                        'succesChanges' => $html
+                        ));
+                }
+                
+             }    
+        
+            return $this->render('FrontendUserBundle:Default:edit.html.twig', array(
+                'form' => $form->createView())
+            );
+        }
 }

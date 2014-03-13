@@ -1,0 +1,7 @@
+frontend_add_cart:
+    pattern:  /kosar/betesz
+    defaults: { _controller: FrontendCartBundle:Cart:add}
+    
+frontend_cart:
+    pattern:  /kosar
+    defaults: { _controller: FrontendCartBundle:Cart:cart}

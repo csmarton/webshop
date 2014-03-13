@@ -28,12 +28,18 @@ class User extends BaseUser
      */
     public function __construct()
     {
-        
+         parent::__construct();
     }
 
-  
     protected $user;
+    
+    public function getUser(){
+            return $this->user;
+    }
 
+    public function setUser($user){
+            $this->user = $user;
+    }
 
     /**
      * Get id

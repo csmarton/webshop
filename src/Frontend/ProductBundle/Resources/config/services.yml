@@ -1,11 +1,7 @@
 parameters:
 #    frontend_product.example.class: Frontend\ProductBundle\Example
-     cart_service.class: Frontend\ProductBundle\Services\CartServices
 
 services:
 #    frontend_product.example:
 #        class: %frontend_product.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
-     cart_service:
-        class: "%cart_service.class%"
-        arguments: [ @doctrine.orm.entity_manager, '@service_container', '@doctrine' ]

@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\ProductBundle\Services;
+namespace Frontend\CartBundle\Services;
 
 
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;

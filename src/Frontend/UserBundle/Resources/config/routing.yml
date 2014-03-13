@@ -16,3 +16,11 @@ fos_user_resetting:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
+    
+frontend_registration:
+    pattern:  /profil/regisztracio
+    defaults: { _controller: FrontendUserBundle:Default:registration}
+    
+frontend_login:
+    pattern:  /profil/bejelentkezes
+    defaults: { _controller: FrontendUserBundle:Default:login}    

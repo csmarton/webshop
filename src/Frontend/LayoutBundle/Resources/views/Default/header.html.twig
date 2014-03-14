@@ -33,12 +33,12 @@
 						</a>
                                             </li>
                                         {% endif %}
-					<li id="logout">
+					{#<li id="logout">
 						<a href="{{ path('fos_user_security_logout') }}">
 							<div id="logout"></div>
 							<span>Kilépés</span>
 						</a>
-					</li>
+					</li>#}
 				{% else %}
 					<li id="login_sign_in">
 						<a href="{{ path('frontend_login') }}">
@@ -52,8 +52,7 @@
         <div id="myprofileDropDown" class="hide">
             <div class="myprofileDropDownContent">
                 <ul>
-                    <li><a href="{{ path('frontend_profile_edit') }}">Személyes adatok</a></li>
-                    <li><a href="#">Címeim</a></li>
+                    <li><a href="{{ path('frontend_profile_edit') }}">Személyes adataim</a></li>
                     <li><a href="#">Rendeléseim</a></li>
                     <li class="menuDivider"></li>
                     <li>

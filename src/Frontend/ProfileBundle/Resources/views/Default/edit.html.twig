@@ -1,0 +1,130 @@
+{% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShop - Személyi adatok {% endblock %}
+{% block bodyClass %}class="login_page"{% endblock%}
+
+ {% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/frontendprofile/css/profile.css') }}"/>
+{% endblock %}
+    
+{% block main %}  
+	<div class="main">
+            {% block leftSide %}                    
+                  {{parent()}}
+            {% endblock %}
+            
+            <div class="container">
+                <div class="page_title">Személyes adatok</div>
+                 <form action="{{ path('frontend_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="profile_edit_form">
+                     <div class="profile_edit_box_header">
+                         <h2>Általános adatok:</h2>
+                     </div>
+                     <div class="profile_edit_header_box">
+                        <div class="profile_edit_line_left">
+                            <div class="label_text">
+                                {{ form_label(form.name, 'Név:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.name) }}
+                            </div>
+                        </div>
+                         <div class="profile_edit_line_right">
+                            <div class="label_text">
+                                {{ form_label(form.telephone, 'Telefonszám:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.telephone) }}
+                            </div>
+                        </div>
+                    </div>
+                     <div class="profile_edit_box_header">
+                         <h2>Számlázási cím:</h2>
+                     </div>
+                    <div class="profile_billing_information_box">
+                        <div class="profile_edit_line_left">
+                            <div class="label_text">
+                                {{ form_label(form.billingAddressCity, 'Település:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.billingAddressCity) }}
+                            </div>
+                        </div>
+                        <div class="profile_edit_line_right">
+                            <div class="label_text">
+                                {{ form_label(form.billingAddressStreet, 'Útca/út:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.billingAddressStreet) }}
+                            </div>
+                        </div>
+                        <div class="profile_edit_line_left">
+                            <div class="label_text">
+                                {{ form_label(form.billingAddressStreetNumber, 'Házszám:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.billingAddressStreetNumber) }}
+                            </div>
+                        </div>
+                        <div class="profile_edit_line_right">
+                            <div class="label_text">
+                                {{ form_label(form.billingAddressZipCode, 'Irányítószám:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.billingAddressZipCode) }}
+                            </div>
+                        </div>
+                    </div>
+                     <div class="profile_edit_box_header">
+                         <h2>Szállítási cím:</h2>
+                     </div>
+                    <div class="profile_shipping_information_box"> 
+                        <div class="profile_edit_line_left">
+                            <div class="label_text">
+                                {{ form_label(form.shippingAddressCity, 'Település:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.shippingAddressCity) }}
+                            </div>
+                        </div>
+                        <div class="profile_edit_line_right">
+                            <div class="label_text">
+                                {{ form_label(form.shippingAddressStreet, 'Útca/út:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.shippingAddressStreet) }}
+                            </div>
+                        </div>
+                        <div class="profile_edit_line_left">
+                            <div class="label_text">
+                                {{ form_label(form.shippingAddressStreetNumber, 'Házszám:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.shippingAddressStreetNumber) }}
+                            </div>
+                        </div>
+                        <div class="profile_edit_line_right">
+                            <div class="label_text">
+                                {{ form_label(form.shippingAddressZipCode, 'Irányítószám:', { 'label_attr': {'class': 'labelText'}}) }}
+                            </div>
+                            <div class="input_box">
+                                {{ form_widget(form.shippingAddressZipCode) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile_edit_bottom_box"> 
+                        {% if (succesChanges is defined) %}
+                            <div class="profile_edit_error_line">
+                                {{ succesChanges }}
+                            </div>
+                        {% endif %} 
+                        <div class="profile_edit_bottom_menu">
+                                <input type="submit" value="Mentés" />
+                        </div>
+                    </div>    
+                     {{ form_widget(form._token) }}
+                 </form>
+            </div>
+	</div>	
+{% endblock %}
+                        

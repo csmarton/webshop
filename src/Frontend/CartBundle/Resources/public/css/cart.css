@@ -75,9 +75,7 @@
     text-align: center;
 }
 
-.cart_edit_btn{
-    width:250px;
-}
+
 
 .menu_btn{
     text-transform: uppercase;
@@ -98,6 +96,12 @@
     -o-user-select: none;
     user-select: none;
     text-decoration: none;
+    font-weight: bold;
+}
+
+.cart_update_btn{
+    background-color: #47a447;
+    border-color: #398439;
 }
 .menu_btn:hover{
     text-decoration: underline;
@@ -106,4 +110,25 @@
 .warning_btn{
     background-color: #d9534f;
     border-color: #d43f3a;
+}
+
+.header .group_right #cart #cart_icon{    
+    background: url("/Shop/web/bundles/frontendlayout/images/cart.png") center no-repeat;
+	float: left;
+}
+.header .group_right #cart{
+    display: inline;
+}
+.header .group_right #cart_count{
+    display: inline;
+    position: absolute;
+    left: 30px;
+    top: -5px;
+    float: left;
+    background-color: rgba(255,0,0,1);
+    padding: 3px;
+    height: 14px;
+    width: 18px;
+    text-align: center;
+    color: white;
 }

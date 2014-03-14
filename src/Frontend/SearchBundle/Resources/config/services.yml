@@ -1,0 +1,7 @@
+parameters:
+#    frontend_search.example.class: Frontend\SearchBundle\Example
+
+services:
+#    frontend_search.example:
+#        class: %frontend_search.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

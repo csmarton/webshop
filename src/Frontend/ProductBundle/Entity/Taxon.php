@@ -19,12 +19,6 @@ class Taxon
      */
     private $taxonomyId;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="parent_id", type="integer", nullable=true)
-     */
-    private $parentId;
 
     /**
      * @var string
@@ -98,29 +92,7 @@ class Taxon
         return $this->taxonomyId;
     }
 
-    /**
-     * Set parentId
-     *
-     * @param integer $parentId
-     * @return Taxon
-     */
-    public function setParentId($parentId)
-    {
-        $this->parentId = $parentId;
-
-        return $this;
-    }
-
-    /**
-     * Get parentId
-     *
-     * @return integer 
-     */
-    public function getParentId()
-    {
-        return $this->parentId;
-    }
-
+ 
     /**
      * Set name
      *

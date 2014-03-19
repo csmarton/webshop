@@ -12,7 +12,8 @@
 {% endblock %}
  
 {% block main %} 
-    <div class="main">        
+    <div class="main">   
+        <h2>Termékek szerkesztése</h2>
         <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }} name="newProduct"  class="newProduct">
             <table class="new_product_table">
                 <tbody>
@@ -58,16 +59,25 @@
             </table>            
             {{ form_widget(form._token) }}
         </form>
+        
         {% if (productId is defined and productId is not null)%}
-            <div class="image_container">
-                {% for img in product.getProductImages() %}
-                         <img src="{{image(img.getWebPath()).zoomCrop(60,60)}} "/>
-                {% endfor %}
-            </div>
-            <form class="uploadImageForm" method="POST" enctype="multipart/form-data" action="{{ path('backend_admin_product_upload_image',{'productId':productId}) }} ">            
-                <input type="file" accept="image/*" name="uploadedImage">
-                <button class="uploadImageButton" type="submit">Felföltés</button>
-            </form>
+            <div>
+                <h2>Képek</h2>
+                <div class="image_container">
+                    {% for img in product.getProductImages() %}
+                             <img src="{{image(img.getWebPath()).zoomCrop(60,60)}} "/>
+                    {% endfor %}
+                </div>
+                <form class="uploadImageForm" method="POST" enctype="multipart/form-data" action="{{ path('backend_admin_product_upload_image',{'productId':productId}) }} ">            
+                    <input type="file" accept="image/*" name="uploadedImage">
+                    <button class="uploadImageButton" type="submit">Felföltés</button>
+                </form>
+            </div>  
         {% endif %}
+          
+        <div>
+            {{ render(controller("BackendAdminBundle:Product:propertyList" , {'productId':productId}))}}
+        </div>
     </div>
+    
 {% endblock %}

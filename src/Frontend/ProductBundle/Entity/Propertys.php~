@@ -29,13 +29,6 @@ class Propertys
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="presentation", type="string", length=100, nullable=false)
-     */
-    private $presentation;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -48,6 +41,13 @@ class Propertys
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="main_category", type="integer", nullable=true)
+     */
+    private $mainCategory;
 
 
 }

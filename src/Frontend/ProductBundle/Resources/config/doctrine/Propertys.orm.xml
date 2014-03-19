@@ -5,8 +5,12 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="name" type="string" column="name" length="60" nullable="false"/>
-    <field name="presentation" type="string" column="presentation" length="100" nullable="false"/>
     <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
+    <many-to-one field="mainCategory" target-entity="MainCategory" inversed-by="category">
+      <join-columns>
+        <join-column name="main_category" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

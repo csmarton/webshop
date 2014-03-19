@@ -15,7 +15,7 @@
     <div class="main">
         <h2>Felhasználók</h2>
         <div class="upperMenu">
-            <a href="{{path('backend_admin_category_new')}}" class="menu_btn">Új Felhasználó</a>
+            <a href="{{path('backend_admin_user_new')}}" class="menu_btn">Új Felhasználó</a>
         </div>
         
         <table class="product_table">
@@ -44,7 +44,7 @@
                             {% endfor %}
                         </td> 
                         <td class="product_edit_btn">
-                            <a href="{{path('backend_admin_category_new',{'userId':user.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
+                            <a href="{{path('backend_admin_user_new',{'userId':user.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
                             <a href="#" class="deleteUser menu_btn warning_btn delete_btn" userId="{{user.getId()}}">Törlés</a>
                         </td>
                     </tr>

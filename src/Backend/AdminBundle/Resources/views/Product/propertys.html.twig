@@ -1,0 +1,39 @@
+<h2>Tulajdonságok</h2>    
+<a name="propertytable"></a>
+{#<div class="upperMenu">
+    <a href="{{path('backend_admin_product_property_edit',{'productId' : productId})}}" class="menu_btn">Új Tulajdonság</a>
+</div>#}
+
+<table class="property_table" name=>
+
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Tulajdonság</th>
+            <th scope="col">Érték</th>
+            <th scope="col">Műveletek</th>
+        </tr>
+    </thead>
+    <tbody>
+        <form action="{{ path('backend_admin_product_property_edit',{'productId' : productId})}}" method="post" {{ form_enctype(form) }} name="newProperty"  class="newProperty">
+            <tr>
+                <td>*</td>
+                <td>{{ form_widget(form.property) }}</td>
+                <td>{{ form_widget(form.value) }}</td>
+                <td><input type="submit" value="Mentés" class="menu_btn ok_btn"></td>
+            </tr>
+            {{ form_widget(form._token) }}
+        </form> 
+        {% for productProperty in productPropertys %}
+            <tr>
+                <td>{{ productProperty.getId() }}</td>
+                <td>{{ productProperty.getProperty().getName() }}</td> 
+                <td>{{ productProperty.getValue() }}</td> 
+                <td class="product_edit_btn">
+                    <a href="{{path('backend_admin_product_property_edit',{'productId' : productId,'productPropertyId':productProperty.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
+                    <a href="#" class="deleteProperty menu_btn warning_btn delete_btn" propertyId="{{productProperty.getId()}}">Törlés</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

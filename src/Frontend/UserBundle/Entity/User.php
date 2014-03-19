@@ -23,12 +23,24 @@ class User extends BaseUser
      * @ORM\OneToOne(targetEntity="\Frontend\ProfileBundle\Entity\Profile", mappedBy="user")
      */
     protected $profile;
+    
+    private $isAdmin;
+    
+    public function getIsAdmin(){
+            return in_array("ROLE_ADMIN",$this->roles);
+    }
+
+    public function setIsAdmin(){            
+        $this->isAdmin = in_array("ROLE_ADMIN",$this->roles);
+    }
+    
     /**
      * Constructor
      */
     public function __construct()
     {
          parent::__construct();
+         $this->isAdmin = in_array("ROLE_ADMIN",$this->roles);
     }
 
     protected $user;

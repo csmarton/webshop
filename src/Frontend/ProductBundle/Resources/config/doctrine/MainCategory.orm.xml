@@ -6,5 +6,6 @@
     </id>
     <field name="name" type="string" column="name" length="30" nullable="false"/>
     <one-to-many field="category" target-entity="Category" mapped-by="mainCategory" />
+    
   </entity>
 </doctrine-mapping>

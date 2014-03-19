@@ -1,23 +1,39 @@
 backend_admin_homepage:
     pattern:  /admin
-    defaults: { _controller: BackendAdminBundle:Default:index }
-    
+    defaults: { _controller: BackendAdminBundle:Product:list }
+#
+# termékek szerkesztése   
+#
 backend_admin_product:
     pattern:  /admin/termekek
-    defaults: { _controller: BackendAdminBundle:Default:index }
+    defaults: { _controller: BackendAdminBundle:Product:list }
     
 backend_admin_product_new:
     pattern:  /admin/termekek/uj
-    defaults: { _controller: BackendAdminBundle:Default:new }
+    defaults: { _controller: BackendAdminBundle:Product:new }
     
 backend_admin_product_remove:
     pattern:  /admin/termekek/torles
-    defaults: { _controller: BackendAdminBundle:Default:remove }
+    defaults: { _controller: BackendAdminBundle:Product:remove }
     
 backend_admin_product_upload_image:
     pattern:  /admin/termekek/uj-kep
     defaults: { _controller: BackendAdminBundle:Image:upload }
     
+backend_admin_product_property_list:
+    pattern:  /admin/termekek/tulajdonsagok
+    defaults: { _controller: BackendAdminBundle:Product:propertyList }    
+    
+backend_admin_product_property_edit:
+    pattern:  /admin/termekek/tulajdonsagok/szerkesztes
+    defaults: { _controller: BackendAdminBundle:Product:propertyEdit }    
+
+backend_admin_product_property_remove:
+    pattern:  /admin/termekek/tulajdonsagok/torles
+    defaults: { _controller: BackendAdminBundle:Product:propertyRemove }        
+#
+# kategóriák szerkesztése    
+#
 backend_admin_category:
     pattern:  /admin/kategoria
     defaults: { _controller: BackendAdminBundle:Category:index }
@@ -29,7 +45,17 @@ backend_admin_category_new:
 backend_admin_category_remove:
     pattern:  /admin/kategoria/torles
     defaults: { _controller: BackendAdminBundle:Category:remove }
-    
+# 
+# felhasználók szerkesztése
+#
 backend_admin_user:
     pattern:  /admin/felhasznalaok
     defaults: { _controller: BackendAdminBundle:User:list }    
+    
+backend_admin_user_new:
+    pattern:  /admin/felhasznalok/uj
+    defaults: { _controller: BackendAdminBundle:User:new }
+    
+backend_admin_user_remove:
+    pattern:  /admin/felhasznalok/torles
+    defaults: { _controller: BackendAdminBundle:User:remove }    

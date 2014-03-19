@@ -267,7 +267,6 @@ body{
     color: grey;
     font-size: 2em;
     padding-bottom: 10px;
-    float:left;
 }
 
 .main .upperMenu{
@@ -379,34 +378,34 @@ tr:last-child td.last {
 
 
 
-.new_product_table{
+table{
     width: 100%;
 }
 
-.new_product_table tr>td:first-child{
+table tr>td:first-child{
     width: 200px;
     text-align: right;
     font-weight: bold;
     font-size: 1.3em;
 }
-.new_product_table tr:last-child td{
+/*table tr:last-child td{
     text-align: center;
-}
+}*/
 
-.new_product_table input,.new_product_table textarea,.new_product_table select{
-    width:100%;
+table input,table textarea,table select{
+    width: 98%;
     font-size: 1.5em;
-    padding: 0px 10px;
+    padding: 0px 5px;
 }
 
-.new_product_table input:focus,.new_product_table textarea:focus, .new_product_table select:focus{
+table input:focus,table textarea:focus, table select:focus{
     color:#10AC8E;
 }
-.new_product_table input{
+table input, table select{
     height:40px;
 }
 
-.new_product_table textarea{
+table textarea{
     height:200px;
 }
 

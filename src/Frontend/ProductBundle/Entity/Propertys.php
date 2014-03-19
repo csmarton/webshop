@@ -29,13 +29,6 @@ class Propertys
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="presentation", type="string", length=100, nullable=false)
-     */
-    private $presentation;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
@@ -48,6 +41,13 @@ class Propertys
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="main_category", type="integer", nullable=true)
+     */
+    private $mainCategory;
 
 
 
@@ -72,29 +72,6 @@ class Propertys
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set presentation
-     *
-     * @param string $presentation
-     * @return Propertys
-     */
-    public function setPresentation($presentation)
-    {
-        $this->presentation = $presentation;
-
-        return $this;
-    }
-
-    /**
-     * Get presentation
-     *
-     * @return string 
-     */
-    public function getPresentation()
-    {
-        return $this->presentation;
     }
 
     /**
@@ -151,5 +128,28 @@ class Propertys
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set mainCategory
+     *
+     * @param \Frontend\ProductBundle\Entity\MainCategory $mainCategory
+     * @return Propertys
+     */
+    public function setMainCategory(\Frontend\ProductBundle\Entity\MainCategory $mainCategory = null)
+    {
+        $this->mainCategory = $mainCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get mainCategory
+     *
+     * @return \Frontend\ProductBundle\Entity\MainCategory 
+     */
+    public function getMainCategory()
+    {
+        return $this->mainCategory;
     }
 }

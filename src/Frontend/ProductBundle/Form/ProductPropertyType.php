@@ -15,11 +15,9 @@ class ProductPropertyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('productId')
-            ->add('propertyId')
             ->add('value')
-            ->add('product')
             ->add('property')
+            ->add('product')
         ;
     }
     

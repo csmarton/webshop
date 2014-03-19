@@ -9,9 +9,17 @@
     <field name="description" type="text" column="description" nullable="true"/>
     <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
-    <field name="shortDescription" type="string" column="short_description" length="100" nullable="true"/>
-    <field name="price" type="float" column="price" precision="10" scale="0" nullable="false"/>
-    <one-to-one field="productTaxon" target-entity="ProductTaxon" mapped-by="product" />
+    <field name="grossSalary" type="float" column="gross_salary" precision="10" scale="0" nullable="false"/>
+    <field name="netSalary" type="float" column="net_salary" precision="10" scale="0" nullable="false"/>
+    <field name="category" type="integer" column="category" nullable="false"/>
+    <field name="isActive" type="boolean" column="is_active" nullable="false"/>
+    <field name="inStock" type="boolean" column="in_stock" nullable="false"/>
     <one-to-many field="productImages" target-entity="ProductImages" mapped-by="product" />
+    <one-to-many field="productPropertys" target-entity="ProductProperty" mapped-by="product" />
+    <many-to-one field="categorys" target-entity="Category">
+      <join-columns>
+        <join-column name="category" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

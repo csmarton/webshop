@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=30, nullable=false)
@@ -48,41 +57,55 @@ class Product
     private $updatedAt;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="short_description", type="string", length=100, nullable=true)
+     * @ORM\Column(name="gross_salary", type="float", precision=10, scale=0, nullable=false)
      */
-    private $shortDescription;
+    private $grossSalary;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="net_salary", type="float", precision=10, scale=0, nullable=false)
      */
-    private $price;
+    private $netSalary;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="category", type="integer", nullable=false)
      */
-    private $id;
+    private $category;
 
     /**
-     * @var \Frontend\ProductBundle\Entity\ProductTaxon
+     * @var boolean
      *
-     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\ProductTaxon", mappedBy="product")
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
      */
-    private $productTaxon;
+    private $isActive;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="in_stock", type="boolean", nullable=false)
+     */
+    private $inStock;
+
 
     /**
      * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Frontend\ProductBundle\Entity\ProductImages", mappedBy="product")
      */
     private $productImages;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $productPropertys;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Category
+     */
+    private $categorys;
 
     /**
      * Constructor
@@ -90,8 +113,8 @@ class Product
     public function __construct()
     {
         $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->productPropertys = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Set name
@@ -209,49 +232,118 @@ class Product
     }
 
     /**
-     * Set shortDescription
+     * Set grossSalary
      *
-     * @param string $shortDescription
+     * @param float $grossSalary
      * @return Product
      */
-    public function setShortDescription($shortDescription)
+    public function setGrossSalary($grossSalary)
     {
-        $this->shortDescription = $shortDescription;
+        $this->grossSalary = $grossSalary;
 
         return $this;
     }
 
     /**
-     * Get shortDescription
-     *
-     * @return string 
-     */
-    public function getShortDescription()
-    {
-        return $this->shortDescription;
-    }
-
-    /**
-     * Set price
-     *
-     * @param float $price
-     * @return Product
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
+     * Get grossSalary
      *
      * @return float 
      */
-    public function getPrice()
+    public function getGrossSalary()
     {
-        return $this->price;
+        return $this->grossSalary;
+    }
+
+    /**
+     * Set netSalary
+     *
+     * @param float $netSalary
+     * @return Product
+     */
+    public function setNetSalary($netSalary)
+    {
+        $this->netSalary = $netSalary;
+
+        return $this;
+    }
+
+    /**
+     * Get netSalary
+     *
+     * @return float 
+     */
+    public function getNetSalary()
+    {
+        return $this->netSalary;
+    }
+
+    /**
+     * Set category
+     *
+     * @param integer $category
+     * @return Product
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return integer 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Product
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set inStock
+     *
+     * @param boolean $inStock
+     * @return Product
+     */
+    public function setInStock($inStock)
+    {
+        $this->inStock = $inStock;
+
+        return $this;
+    }
+
+    /**
+     * Get inStock
+     *
+     * @return boolean 
+     */
+    public function getInStock()
+    {
+        return $this->inStock;
     }
 
     /**
@@ -262,29 +354,6 @@ class Product
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set productTaxon
-     *
-     * @param \Frontend\ProductBundle\Entity\ProductTaxon $productTaxon
-     * @return Product
-     */
-    public function setProductTaxon(\Frontend\ProductBundle\Entity\ProductTaxon $productTaxon = null)
-    {
-        $this->productTaxon = $productTaxon;
-
-        return $this;
-    }
-
-    /**
-     * Get productTaxon
-     *
-     * @return \Frontend\ProductBundle\Entity\ProductTaxon 
-     */
-    public function getProductTaxon()
-    {
-        return $this->productTaxon;
     }
 
     /**
@@ -318,5 +387,65 @@ class Product
     public function getProductImages()
     {
         return $this->productImages;
+    }
+
+    /**
+     * Add productPropertys
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductProperty $productPropertys
+     * @return Product
+     */
+    public function addProductProperty(\Frontend\ProductBundle\Entity\ProductProperty $productPropertys)
+    {
+        $this->productPropertys[] = $productPropertys;
+
+        return $this;
+    }
+
+    /**
+     * Remove productPropertys
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductProperty $productPropertys
+     */
+    public function removeProductProperty(\Frontend\ProductBundle\Entity\ProductProperty $productPropertys)
+    {
+        $this->productPropertys->removeElement($productPropertys);
+    }
+
+    /**
+     * Get productPropertys
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductPropertys()
+    {
+        return $this->productPropertys;
+    }
+
+    /**
+     * Set categorys
+     *
+     * @param \Frontend\ProductBundle\Entity\Category $categorys
+     * @return Product
+     */
+    public function setCategorys(\Frontend\ProductBundle\Entity\Category $categorys = null)
+    {
+        $this->categorys = $categorys;
+
+        return $this;
+    }
+
+    /**
+     * Get categorys
+     *
+     * @return \Frontend\ProductBundle\Entity\Category 
+     */
+    public function getCategorys()
+    {
+        if($this->category == 0){
+            return null;
+        }else{
+            return $this->categorys;
+        }    
     }
 }

@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Frontend\ProductBundle\Form\ProductType;
 use Frontend\ProductBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Frontend\ProductBundle\Entity\ProductTaxon;
+
 class DefaultController extends Controller
 {
     public function indexAction()
@@ -30,63 +30,57 @@ class DefaultController extends Controller
         }else{
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
         }
-        $taxons = $this->getDoctrine()->getRepository('FrontendProductBundle:Taxon')->findAll();
-        $form = $this->createForm(new ProductType($taxons),$product);
+        $form = $this->createForm(new ProductType(),$product);
         
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
-            if ($form->isValid()) {     
+            if ($form->isValid()) { 
                if (isset($form['name'])) {
                         $productName = $form['name']->getData();
                }
-               if (isset($form['price'])) {
-                    $productPrice = $form['price']->getData();
+               if (isset($form['grossSalary'])) {
+                    $grossSalary = $form['grossSalary']->getData();
                }
-
+               if (isset($form['categorys'])) {
+                    $categorys = $form['categorys']->getData();
+               }
                
-               
-               $createdTime = new \DateTime("now");
-               
+               $createdTime = new \DateTime("now");               
                $product->setName($productName);
-               $product->setPrice($productPrice);
+               $product->setCategory($categorys->getId());
+               $product->setGrossSalary($grossSalary);
                $product->setCreatedAt($createdTime);
                $product->setUpdatedAt($createdTime);
+               
                $em = $this->getDoctrine()->getManager();
                $em->persist($product);
-               $em->flush();
+               $em->flush();               
                
-               $taxonId = $request->request->get('taxon');
-               $taxon = $this->getDoctrine()->getRepository('FrontendProductBundle:Taxon')->findOneById($taxonId);
-               $productTaxon = new ProductTaxon();
-               $productTaxon->setProductId($product->getId());
-               $productTaxon->setTaxon($taxon);      
-               
-               $em = $this->getDoctrine()->getManager();
-               $em->persist($productTaxon);
-               $em->flush();
                return $this->redirect($this->generateUrl('backend_admin_product'));
             }
         }    
-        
+                
+
         
         return $this->render('BackendAdminBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
             'productId'=>$productId,
-            'product' => $product,
-            'taxons'=>$taxons
+            'product' => $product
         ));
     }
     
      public function removeAction(){
+         $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
             $request = $this->get('request');
-            $productId = $request->query->get('productId');
-            if($productId == null){
-                $product = new Product();        
-            }else{
-                $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
-            }
-            return new JsonResponse(array('success' => true));
+            $productId = $request->request->get('productId');
+            
+            $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->remove($product);
+            $em->flush();
+    
+            return new JsonResponse(array('success' => true,'productName'=>$product->getName()));
          }else{
              return new JsonResponse(array('success' => false));
          }   

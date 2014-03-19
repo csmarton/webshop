@@ -1,3 +1,7 @@
-frontend_search_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: FrontendSearchBundle:Default:index }
+frontend_header_search_autocomplete:
+    pattern: /kereses/autocomplete/
+    defaults: { _controller: FrontendSearchBundle:Default:mainSearchAutocomplete }
+    
+frontend_header_search:
+    pattern: /kereses/
+    defaults: { _controller: FrontendSearchBundle:Default:mainSearch }

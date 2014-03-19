@@ -6,18 +6,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
-use Frontend\ProductBundle\Entity\Taxon;
+
 class ProductType extends AbstractType
 {
-    public $taxons;
-    
         /**
      * @param FormBuilderInterface $builder
      * @param array $options
-     */    
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
         $builder
             ->add('name', 'text', array('label' => 'Termék neve:', 'required'  => true))
             ->add('slug', 'text', array('label' => 'Slug:', 'required'  => false))
@@ -26,30 +23,36 @@ class ProductType extends AbstractType
 		  array('label' => 'Létrehozás dátuma::','empty_value' => array('year' => 'év', 'month' => 'hó', 'day' => 'nap')))
             ->add('updatedAt', 'date',
 		  array('label' => 'Frissítés dátuma:','empty_value' => array('year' => 'év', 'month' => 'hó', 'day' => 'nap')))
-            ->add('shortDescription', 'text', array('label' => 'Termék rövid leírása:', 'required'  => false))
-            ->add('price', 'integer', array('max_length'=>15,'label' => 'Ár:', 'required'  => false))
+            ->add('grossSalary', 'integer', array('max_length'=>15,'label' => 'Bruttó ár:', 'required'  => false))    
+            ->add('netSalary', 'integer', array('max_length'=>15,'label' => 'Nettó ár:', 'required'  => false))
+            ->add('category', 'entity', array('label' => 'Kategória:',  'required'  => false, 
+                                'class' => 'FrontendProductBundle:Category', 'property' => 'name',
+                                'query_builder' => function(EntityRepository $er) {return $er->createQueryBuilder('c');}
+                                ))
+            ->add('isActive', 'checkbox', array('label' => "Aktív -e?", 'required'  => false))
+            ->add('inStock', 'checkbox', array('label' => "Raktáron van -e?", 'required'  => false))
+            ->add('categorys','entity', array('label' => 'Kategória:',  'required'  => false, 
+                                'class' => 'FrontendProductBundle:Category', 'property' => 'name',
+                                'query_builder' => function(EntityRepository $er) {return $er->createQueryBuilder('c');}
+                                ))
         ;
-
     }
     
     /**
      * @param OptionsResolverInterface $resolver
      */
-    /*public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => array(
-                'Frontend\ProductBundle\Entity\Product',
-                'Frontend\ProductBundle\Entity\ProductTaxon'
-                )
+            'data_class' => 'Frontend\ProductBundle\Entity\Product'
         ));
-    }*/
+    }
 
     /**
      * @return string
      */
     public function getName()
     {
-        return 'product_type';
+        return 'frontend_productbundle_product';
     }
 }

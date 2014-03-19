@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Frontend\ProductBundle\Entity\Property" table="property">
+  <entity name="Frontend\ProductBundle\Entity\MainCategory" table="main_category">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="name" type="string" column="name" length="60" nullable="false"/>
-    <field name="presentation" type="string" column="presentation" length="100" nullable="false"/>
-    <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
-    <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
+    <field name="name" type="string" column="name" length="30" nullable="false"/>
+    <one-to-many field="category" target-entity="Category" mapped-by="mainCategory" />
   </entity>
 </doctrine-mapping>

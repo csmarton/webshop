@@ -21,31 +21,32 @@
                         <td>{{ form_widget(form.name) }}</td>
                     </tr>
                     <tr>
-                        <td>{{ form_label(form.price, 'Ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.price) }}</td>
+                        <td>{{ form_label(form.grossSalary, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.grossSalary) }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ form_label(form.netSalary, 'Nettó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.netSalary) }}</td>
                     </tr>
                     <tr>
                         <td>{{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
                         <td>{{ form_widget(form.slug) }}</td>
                     </tr>
                     <tr>
-                        <td>{{ form_label(form.shortDescription, 'Rövid leírás:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.shortDescription) }}</td>
-                    </tr>
-                    <tr>
                         <td>{{ form_label(form.description, 'Leírás:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
                         <td>{{ form_widget(form.description) }}</td>
                     </tr>
-                    <tr>
-                        <td>Kategória:</td>
-                        <td>
-                            <select name="taxon" required="required">
-                                <option value="0"></option>
-                                {% for taxon in taxons %}
-                                    <option value="{{taxon.getId()}}">{{taxon.getName()}}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
+                     <tr>
+                        <td>{{ form_label(form.categorys, 'Kategóra:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.categorys) }}</td>
+                    </tr>
+                     <tr>
+                        <td>{{ form_label(form.isActive, 'Aktív -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.isActive) }}</td>
+                    </tr>
+                     <tr>
+                        <td>{{ form_label(form.inStock, 'Raktáron van -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.inStock) }}</td>
                     </tr>
                     <tr >
                         <td colspan="2">

@@ -9,17 +9,22 @@
             <link rel="stylesheet" href="{{ asset('css/accordion.css') }}"/>
             <link rel="stylesheet" href="{{ asset('bundles/frontendlayout/css/shared_logged.css') }}"/>
             <link rel="stylesheet" href="{{ asset('bundles/frontendcart/css/cart.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/frontendsearch/css/SharedSearch.css') }}"/>
             <link rel="stylesheet" href="{{ asset('js/jquery-ui-1.10.4/css/smoothness/jquery-ui-1.10.4.custom.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/jquery-autocomplete.min.css') }}"/>
             
             <script type="text/javascript" src="{{ asset('js/jquery-2.1.0.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/jquery.qtip.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery-autocomplete.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/accordion.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/frontendlayout/js/Shared.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/frontendsearch/js/SharedSearch.js') }}"></script>
             <link rel="stylesheet" href="{{ asset('bundles/frontendproduct/css/product.css') }}"/>
             <script type="text/javascript">
                     $(document).ready(function(){
                         Shared.init();
+                        SharedSearch.init();
                         //$( "#leftMenu" ).accordion();
                     });
             </script>

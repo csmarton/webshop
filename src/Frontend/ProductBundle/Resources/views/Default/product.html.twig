@@ -19,23 +19,24 @@
                 <div class="upper_box">
                     <div class="image_container">
                         
-                        {% if (images|length != 0 ) %}
-                            <img src="{{image(images[0].getWebPath()).resize(100,100)}} "/>
-                        {% else %}     
-                            <img src="{{ image('images/no_image.jpg').zoomCrop(100,100)}}"/>
-                        {% endif %}
+                        <img src="
+                            {% if (product.getProductImages()|length != 0 ) %}
+                                      {{asset(product.getProductImages()[0].getWebPath())}}"/>
+                            {% else %}     
+                                    {{ asset('images/no_image.jpg')}}"/>
+                            {% endif %}
 
                     </div>
                     <div class="right_box">
-                        <div class="product_price">Ára: {{product.price}} Ft</div>
+                        <div class="product_price">Ára: {{product.getGrossSalary()}} Ft</div>
                         <input class="to_cart_button"type="button" value="Kosárba">
                     </div>    
                 </div>
                 <div class="bottom_box">
                     <ul>
-                        {% for property in propertys %}
-                            <li>{{property.getValue()}}</li>
-                        {% endfor %}    
+                        {% for property in product.getProductPropertys()%}
+                                    <li>{{property.getValue()}}</li>
+                            {% endfor %}       
                     </ul>
                 </div>
             </div>

@@ -5,13 +5,22 @@ namespace Frontend\ProductBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Property
+ * Propertys
  *
- * @ORM\Table(name="property")
+ * @ORM\Table(name="propertys")
  * @ORM\Entity
  */
-class Property
+class Propertys
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
     /**
      * @var string
      *
@@ -40,22 +49,13 @@ class Property
      */
     private $updatedAt;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
 
 
     /**
      * Set name
      *
      * @param string $name
-     * @return Property
+     * @return Propertys
      */
     public function setName($name)
     {
@@ -78,7 +78,7 @@ class Property
      * Set presentation
      *
      * @param string $presentation
-     * @return Property
+     * @return Propertys
      */
     public function setPresentation($presentation)
     {
@@ -101,7 +101,7 @@ class Property
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Property
+     * @return Propertys
      */
     public function setCreatedAt($createdAt)
     {
@@ -124,7 +124,7 @@ class Property
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return Property
+     * @return Propertys
      */
     public function setUpdatedAt($updatedAt)
     {

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductTaxonType extends AbstractType
+class PropertysType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,10 +15,10 @@ class ProductTaxonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('productId')
-            ->add('taxonId')
-            ->add('product')
-            ->add('taxon')
+            ->add('name')
+            ->add('presentation')
+            ->add('createdAt')
+            ->add('updatedAt')
         ;
     }
     
@@ -28,7 +28,7 @@ class ProductTaxonType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Frontend\ProductBundle\Entity\ProductTaxon'
+            'data_class' => 'Frontend\ProductBundle\Entity\Propertys'
         ));
     }
 
@@ -37,6 +37,6 @@ class ProductTaxonType extends AbstractType
      */
     public function getName()
     {
-        return 'frontend_productbundle_producttaxon';
+        return 'frontend_productbundle_propertys';
     }
 }

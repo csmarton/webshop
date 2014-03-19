@@ -5,13 +5,22 @@ namespace Frontend\ProductBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Property
+ * Propertys
  *
- * @ORM\Table(name="property")
+ * @ORM\Table(name="propertys")
  * @ORM\Entity
  */
-class Property
+class Propertys
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
     /**
      * @var string
      *
@@ -39,15 +48,6 @@ class Property
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
     private $updatedAt;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
 
 
 }

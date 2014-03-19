@@ -3,46 +3,46 @@
 namespace Backend\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Frontend\ProductBundle\Form\TaxonType;
-use Frontend\ProductBundle\Entity\Taxon;
+use Frontend\ProductBundle\Form\CategoryType;
+use Frontend\ProductBundle\Entity\Category;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class CategoryController extends Controller
 {
     public function indexAction()
     {   
-        $taxons = $this->getDoctrine()->getRepository('FrontendProductBundle:Taxon')->findAll();
+        $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findAll();
         //$form = $this->createForm(new ProductType());
         return $this->render('BackendAdminBundle:Category:list.html.twig', array(
             //'form' => $form->createView(),
-            'taxons' => $taxons
+            'categorys' => $categorys
         ));
     }
     
     public function newAction()
     {   
         $request = $this->get('request');
-        $taxonId = $request->query->get('taxonId');
+        $categoryId = $request->query->get('categoryId');
 
-        if($taxonId == null){
-            $taxon = new Taxon();        
+        if($categoryId == null){
+            $category = new Category();        
         }else{
-            $taxon = $this->getDoctrine()->getRepository('FrontendProductBundle:Taxon')->findOneById($taxonId);
+            $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categoryId);
         }
        
-        $form = $this->createForm(new TaxonType(),$taxon);
+        $form = $this->createForm(new CategoryType(),$category);
         
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) {     
                if (isset($form['name'])) {
-                        $productName = $form['name']->getData();
+                    $productName = $form['name']->getData();
                }
 
                
-               $taxon->setName($productName);
+               $category->setName($productName);
                $em = $this->getDoctrine()->getManager();
-               $em->persist($taxon);
+               $em->persist($category);
                $em->flush();
                
                return $this->redirect($this->generateUrl('backend_admin_category'));
@@ -51,21 +51,25 @@ class CategoryController extends Controller
         
         return $this->render('BackendAdminBundle:Category:new.html.twig', array(
             'form' => $form->createView(),
-            'taxonId'=>$taxonId,
-            'taxon' => $taxon,
+            'categoryId'=>$categoryId,
+            'category' => $category,
         ));
     }
     
      public function removeAction(){
+         $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
             $request = $this->get('request');
-            $productId = $request->query->get('productId');
-            if($productId == null){
-                $product = new Product();        
-            }else{
-                $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
-            }
-            return new JsonResponse(array('success' => true));
+            $categoryId = $request->request->get('categoryId');
+            
+            $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categoryId);
+            $categoryName = $category->getName();
+            
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->remove($category);
+            $em->flush();
+            
+            return new JsonResponse(array('success' => true,'categoryName' => $categoryName));
          }else{
              return new JsonResponse(array('success' => false));
          }   

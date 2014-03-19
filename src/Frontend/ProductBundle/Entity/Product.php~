@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=30, nullable=false)
@@ -48,48 +57,39 @@ class Product
     private $updatedAt;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="short_description", type="string", length=100, nullable=true)
+     * @ORM\Column(name="gross_salary", type="float", precision=10, scale=0, nullable=false)
      */
-    private $shortDescription;
+    private $grossSalary;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="net_salary", type="float", precision=10, scale=0, nullable=false)
      */
-    private $price;
+    private $netSalary;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="category", type="integer", nullable=false)
      */
-    private $id;
+    private $category;
 
     /**
-     * @var \Frontend\ProductBundle\Entity\ProductTaxon
+     * @var boolean
      *
-     * @ORM\OneToOne(targetEntity="Frontend\ProductBundle\Entity\ProductTaxon", mappedBy="product")
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
      */
-    private $productTaxon;
+    private $isActive;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var boolean
      *
-     * @ORM\OneToMany(targetEntity="Frontend\ProductBundle\Entity\ProductImages", mappedBy="product")
+     * @ORM\Column(name="in_stock", type="boolean", nullable=false)
      */
-    private $productImages;
+    private $inStock;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
 }

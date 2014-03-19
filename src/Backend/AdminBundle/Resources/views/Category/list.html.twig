@@ -24,22 +24,20 @@
                     <th scope="col">Id</th>
                     <th scope="col">Kategórianév</th>
                     <th scope="col">Slug</th>
-                    <th scope="col">Leírás</th>
-                    <th scope="col">Hivatkozási link</th>
+                    <th scope="col">Fő kategória</th>
                     <th scope="col">Műveletek</th>
                 </tr>
             </thead>
             <tbody>
-                {% for taxon in taxons %}
+                {% for category in categorys %}
                     <tr>
-                        <td>{{ taxon.getId() }}</td>
-                        <td>{{ taxon.getName() }}</td>  
-                        <td>{{ taxon.getSlug() }}</td>     
-                        <td>{{ taxon.getDescription() }}</td>     
-                        <td>{{ taxon.getPermalinks() }}</td>     
+                        <td>{{ category.getId() }}</td>
+                        <td>{{ category.getName() }}</td>  
+                        <td>{{ category.getSlug() }}</td>   
+                        <td>{{ category.mainCategory().getName() }}</td>                    
                         <td class="product_edit_btn">
-                            <a href="{{path('backend_admin_category_new',{'taxonId':taxon.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
-                            <a href="#" class="deleteTaxon menu_btn warning_btn delete_btn" taxonId="{{taxon.getId()}}">Törlés</a>
+                            <a href="{{path('backend_admin_category_new',{'categoryId':category.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
+                            <a href="#" class="deleteCategory menu_btn warning_btn delete_btn" categoryId="{{category.getId()}}">Törlés</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -47,8 +45,20 @@
         </table>
         
     </div>
-<div class="deleteTaxonContent hide">
-    Biztosan törölni szeretnéd ezt a terméket?
-</div>     
+<div id="modal-delete-category" class="reveal-modal">
+    <div class="formContent">
+        <div class="topSection">
+            <div class="modal-content">
+                <h2>Biztosan törölni szeretnéd ezt a kategóriát? </h2>
+            </div>
+        </div>
+        <div class="bottomSection">
+            <div class="inputs">
+                <input type="button" class="delete-category-button" value="Törlés" href="{{path('backend_admin_category_remove')}}">
+                <input type="button" class="cancel exit-reveal-modal" value="Mégse">                        
+            </div>
+        </div>
+    </div>
+</div>    
 {% endblock %}
                   

@@ -15,7 +15,6 @@ class ProductImagesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('productId')
             ->add('path')
             ->add('createdAt')
             ->add('updatedAt')

@@ -18,7 +18,48 @@
         {% block leftSide %}                        
             {{parent()}}
         {% endblock %}        
-        {% render (controller("FrontendProductBundle:Default:mainProduct")) %}
+        <div class="container">
+            <div id="searcher">
+                    <div id="search_form" style="display:none"></div>
+                    <div id="search_toggle_button">Részletes keresés</div>		
+            </div>
+
+            <div class="products_box">
+                {% for product in products %}
+                {% set i=loop.index0 %}
+                {% if (product.getSlug() is not null)%}
+                        {% set product_link = product.getSlug() %}
+                {% else %}
+                        {% set product_link = product.getId() %}
+                {% endif %}
+                <div class="product_box">
+                        <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
+                        <div class="upper_box">
+                                <div class="image_container">
+                                        <img src="
+                                        {% if (product.getProductImages()|length != 0 ) %}
+                                                  {{asset(product.getProductImages()[0].getWebPath())}}"/>
+                                        {% else %}     
+                                                {{ asset('images/no_image.jpg')}}"/>
+                                        {% endif %}
+
+                                </div>
+                                <div class="right_box">
+                                        <div class="product_price">Ára: {{product.getGrossSalary()}} Ft</div>
+                                        <input class="to_cart_button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
+                                </div>    
+                        </div>
+                        <div class="bottom_box">
+                                <ul>
+                                    {% for property in product.getProductPropertys()%}
+                                            <li>{{property.getValue()}}</li>
+                                    {% endfor %}    
+                                </ul>
+                        </div>
+                </div> 
+                {% endfor %}    			
+            </div>
+        </div>
     </div>    
 {% endblock %}
                         

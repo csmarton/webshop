@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ProductProperty
  *
- * @ORM\Table(name="product_property")
+ * @ORM\Table(name="product_property", indexes={@ORM\Index(name="IDX_404276494584665A", columns={"product_id"}), @ORM\Index(name="IDX_40427649549213EC", columns={"property_id"})})
  * @ORM\Entity
  */
 class ProductProperty
@@ -15,16 +15,11 @@ class ProductProperty
     /**
      * @var integer
      *
-     * @ORM\Column(name="product_id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $productId;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="property_id", type="integer", nullable=false)
-     */
-    private $propertyId;
+    private $id;
 
     /**
      * @var string
@@ -34,18 +29,9 @@ class ProductProperty
     private $value;
 
     /**
-     * @var integer
+     * @var \Product
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
-    /**
-     * @var \Frontend\ProductBundle\Entity\Product
-     *
-     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="Product")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      * })
@@ -53,9 +39,9 @@ class ProductProperty
     private $product;
 
     /**
-     * @var \Frontend\ProductBundle\Entity\Property
+     * @var \Propertys
      *
-     * @ORM\ManyToOne(targetEntity="Frontend\ProductBundle\Entity\Property")
+     * @ORM\ManyToOne(targetEntity="Propertys")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="property_id", referencedColumnName="id")
      * })
@@ -63,52 +49,6 @@ class ProductProperty
     private $property;
 
 
-
-    /**
-     * Set productId
-     *
-     * @param integer $productId
-     * @return ProductProperty
-     */
-    public function setProductId($productId)
-    {
-        $this->productId = $productId;
-
-        return $this;
-    }
-
-    /**
-     * Get productId
-     *
-     * @return integer 
-     */
-    public function getProductId()
-    {
-        return $this->productId;
-    }
-
-    /**
-     * Set propertyId
-     *
-     * @param integer $propertyId
-     * @return ProductProperty
-     */
-    public function setPropertyId($propertyId)
-    {
-        $this->propertyId = $propertyId;
-
-        return $this;
-    }
-
-    /**
-     * Get propertyId
-     *
-     * @return integer 
-     */
-    public function getPropertyId()
-    {
-        return $this->propertyId;
-    }
 
     /**
      * Set value
@@ -144,6 +84,29 @@ class ProductProperty
     }
 
     /**
+     * Set property
+     *
+     * @param \Frontend\ProductBundle\Entity\Propertys $property
+     * @return ProductProperty
+     */
+    public function setProperty(\Frontend\ProductBundle\Entity\Propertys $property = null)
+    {
+        $this->property = $property;
+
+        return $this;
+    }
+
+    /**
+     * Get property
+     *
+     * @return \Frontend\ProductBundle\Entity\Propertys 
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
+
+    /**
      * Set product
      *
      * @param \Frontend\ProductBundle\Entity\Product $product
@@ -164,28 +127,5 @@ class ProductProperty
     public function getProduct()
     {
         return $this->product;
-    }
-
-    /**
-     * Set property
-     *
-     * @param \Frontend\ProductBundle\Entity\Property $property
-     * @return ProductProperty
-     */
-    public function setProperty(\Frontend\ProductBundle\Entity\Property $property = null)
-    {
-        $this->property = $property;
-
-        return $this;
-    }
-
-    /**
-     * Get property
-     *
-     * @return \Frontend\ProductBundle\Entity\Property 
-     */
-    public function getProperty()
-    {
-        return $this->property;
     }
 }

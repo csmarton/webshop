@@ -23,12 +23,15 @@
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Terméknév</th>
-                    <th scope="col">Ár</th>
+                    <th scope="col">Bruttó ár</th>
+                    <th scope="col">Nettó ár</th>
                     <th scope="col">Slug</th>
-                    <th scope="col">Rövid leírás</th>
                     <th scope="col">Hosszabb leírás</th>
                     <th scope="col">Létrehozás dátuma</th>
                     <th scope="col">Frissítve</th>
+                    <th scope="col">Kategória</th>
+                    <th scope="col">Aktív?</th>
+                    <th scope="col">Raktáron</th>
                     <th scope="col">Műveletek</th>
                 </tr>
             </thead>
@@ -37,9 +40,9 @@
                     <tr>
                         <td>{{ product.getId() }}</td>
                         <td>{{ product.getName() }}</td>
-                        <td>{{ product.getPrice() }}</td>
+                        <td>{{ product.getGrossSalary() }}</td>
+                        <td>{{ product.getNetSalary() }}</td>
                         <td>{{ product.getSlug() }}</td>
-                        <td>{{ product.getShortDescription()}}</td>
                         <td>
                             {% if (product.getDescription()|length <= 50 ) %}
                                 {{ product.getDescription()}}
@@ -49,6 +52,25 @@
                         </td>    
                         <td>{{ product.getCreatedAt()|date('Y-m-d')}}</td>
                         <td>{{ product.getUpdatedAt()|date('Y-m-d')}}</td>
+                        <td>
+                            {% if (product.getCategorys() is not null and product.getCategorys().getId() != 0)%}
+                                {{ product.getCategorys().getName()}}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if (product.getIsActive() == 1)%}
+                                Igen
+                            {% else %}
+                                Nem
+                            {% endif %}
+                        </td>
+                        <td>
+                             {% if (product.getInStock() == 1)%}
+                                Igen
+                            {% else %}
+                                Nem
+                            {% endif %}
+                        </td>
                         <td class="product_edit_btn">
                             <a href="{{path('backend_admin_product_new',{'productId':product.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
                             <a href="#" class="deleteProduct menu_btn warning_btn delete_btn" productId="{{product.getId()}}">Törlés</a>
@@ -59,8 +81,22 @@
         </table>
         
     </div>
-<div class="deleteProductContent hide">
-    Biztosan törölni szeretnéd ezt a terméket?
-</div>     
+    
+<div id="modal-delete-product" class="reveal-modal">
+    <div class="formContent">
+        <div class="topSection">
+            <div class="modal-content">
+                <h2>Biztosan törölni szeretnéd ezt a terméket? </h2>
+            </div>
+        </div>
+        <div class="bottomSection">
+            <div class="inputs">
+                <input type="button" class="delete-product-button" value="Törlés" href="{{path('backend_admin_product_remove')}}">
+                <input type="button" class="cancel exit-reveal-modal" value="Mégse">                        
+            </div>
+        </div>
+    </div>
+</div>
+    
 {% endblock %}
                   

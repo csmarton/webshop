@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Frontend\ProductBundle\Entity\Taxonomy" table="taxonomy">
+  <entity name="Frontend\ProductBundle\Entity\Propertys" table="propertys">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="name" type="string" column="name" length="30" nullable="false"/>
+    <field name="name" type="string" column="name" length="60" nullable="false"/>
+    <field name="presentation" type="string" column="presentation" length="100" nullable="false"/>
+    <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
+    <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
   </entity>
 </doctrine-mapping>

@@ -2,14 +2,16 @@ frontend_product_homepage:
     pattern:  /
     defaults: { _controller: FrontendProductBundle:Default:index }
 
-product_by_taxonomy:
-    pattern:  /t/{taxon}/{taxonomy}
-    defaults: { _controller: FrontendProductBundle:Default:productByTaxonomy }
+product_by_category:
+    pattern:  /t/{main_category}/{category}
+    defaults: { _controller: FrontendProductBundle:Default:productByCategory }
 
-product_by_taxon:
-    pattern:  /t/{taxon}/
-    defaults: { _controller: FrontendProductBundle:Default:productByTaxonomy }
+product_by_main_category:
+    pattern:  /t/{main_category}/
+    defaults: { _controller: FrontendProductBundle:Default:productByCategory }
 
 product:
     pattern:  /p/{slug}
     defaults: { _controller: FrontendProductBundle:Default:product }
+    
+

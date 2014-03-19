@@ -1,0 +1,49 @@
+<?php
+
+namespace Frontend\ProductBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Category
+ *
+ * @ORM\Table(name="category", indexes={@ORM\Index(name="IDX_5B6723AB9557E6F6", columns={"main_category_id"})})
+ * @ORM\Entity
+ */
+class Category
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=30, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=30, nullable=false)
+     */
+    private $slug;
+
+    /**
+     * @var \MainCategory
+     *
+     * @ORM\ManyToOne(targetEntity="MainCategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="main_category_id", referencedColumnName="id")
+     * })
+     */
+    private $mainCategory;
+
+
+}

@@ -12,7 +12,7 @@ class DefaultController extends Controller
              $request = $this->get('request');
              $user = $this->get('security.context')->getToken()->getUser();
              if( $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY') )
-                 return $this->redirect($this->generateUrl('frontend_product_homepage'));
+                 //return $this->redirect($this->generateUrl('frontend_product_homepage'));
                  
              $profile = $user->getProfile();
              
@@ -21,9 +21,6 @@ class DefaultController extends Controller
              if ($request->getMethod() == 'POST') {
                 $form->bind($request);
                 if ($form->isValid()) { 
-                    /*if (isset($form['name'])) {
-                        $profile->setName($form['name']->getData());
-                    }*/
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($profile);
                     $em->flush();

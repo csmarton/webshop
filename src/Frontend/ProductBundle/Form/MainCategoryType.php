@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PropertyType extends AbstractType
+class MainCategoryType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -16,9 +16,6 @@ class PropertyType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('presentation')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
     
@@ -28,7 +25,7 @@ class PropertyType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Frontend\ProductBundle\Entity\Property'
+            'data_class' => 'Frontend\ProductBundle\Entity\MainCategory'
         ));
     }
 
@@ -37,6 +34,6 @@ class PropertyType extends AbstractType
      */
     public function getName()
     {
-        return 'frontend_productbundle_property';
+        return 'frontend_productbundle_maincategory';
     }
 }

@@ -42,6 +42,24 @@ class ImageController extends Controller
             
         }
         return new JsonResponse(array('success' => false));
-    }  
+    }
+    
+    public function removeAction(){
+        $request = $this->get('request');
+        
+        if ($request->getMethod() == 'POST') {
+            $productImageId = $request->request->get('productImageId');
+            
+            $productImage = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductImages')->findOneById($productImageId);
+            
+            unlink($productImage->getAbsolutePath());
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->remove($productImage);
+            $em->flush();
+            
+            return new JsonResponse(array('success' => true));               
+        }
+        return new JsonResponse(array('success' => false));
+    }
     
 }

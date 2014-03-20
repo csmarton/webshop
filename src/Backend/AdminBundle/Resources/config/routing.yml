@@ -49,7 +49,7 @@ backend_admin_category_remove:
 # felhasználók szerkesztése
 #
 backend_admin_user:
-    pattern:  /admin/felhasznalaok
+    pattern:  /admin/felhasznalok
     defaults: { _controller: BackendAdminBundle:User:list }    
     
 backend_admin_user_new:
@@ -59,3 +59,14 @@ backend_admin_user_new:
 backend_admin_user_remove:
     pattern:  /admin/felhasznalok/torles
     defaults: { _controller: BackendAdminBundle:User:remove }    
+
+backend_admin_profile_edit:
+    pattern:  /admin/felhasznalok/profil/szerkesztes
+    defaults: { _controller: BackendAdminBundle:User:profileEdit }
+    
+#
+# képek szerkesztése
+#
+backend_admin_product_image_remove:
+    pattern:  /admin/termekek/kepek/torles
+    defaults: { _controller: BackendAdminBundle:Image:remove }   

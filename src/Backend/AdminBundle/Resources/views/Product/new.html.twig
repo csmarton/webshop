@@ -3,69 +3,93 @@
 {% block title%} WebShopAdmin - Új Termék {% endblock %}
 {% block bodyClass %}class="index_page"{% endblock%}
  
+{% block stylesheets %}  
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Image.css') }}"/>
+{% endblock %}
+    
 {% block javascripts %}
 	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/ProductValidation.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
+                ProductValidation.init();
             });
     </script>
 {% endblock %}
  
 {% block main %} 
-    <div class="main">   
-        <h2>Termékek szerkesztése</h2>
-        <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }} name="newProduct"  class="newProduct">
-            <table class="new_product_table">
-                <tbody>
-                    <tr>
-                        <td>{{ form_label(form.name, 'Terméknév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.name) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.grossSalary, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.grossSalary) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.netSalary, 'Nettó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.netSalary) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.slug) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.description, 'Leírás:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.description) }}</td>
-                    </tr>
-                     <tr>
-                        <td>{{ form_label(form.categorys, 'Kategóra:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.categorys) }}</td>
-                    </tr>
-                     <tr>
-                        <td>{{ form_label(form.isActive, 'Aktív -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.isActive) }}</td>
-                    </tr>
-                     <tr>
-                        <td>{{ form_label(form.inStock, 'Raktáron van -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.inStock) }}</td>
-                    </tr>
-                    <tr >
-                        <td colspan="2">
-                            <input type="submit" value="Mentés" class="menu_btn ok_btn">
-                            <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>            
-            {{ form_widget(form._token) }}
-        </form>
+    <div class="main">
+         <div class="upperMenu">
+            <a href="{{path('backend_admin_product_new')}}" class="menu_btn">Új Termék</a>
+        </div>
+        <div class="product-edit-box"
+             {% if (productId is not defined or productId is null)%}
+                style='width:100%'
+            {% endif %}
+             >
+            <h2>Termékek szerkesztése</h2>
+            <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }} name="newProduct"  class="newProduct" autocomplete="off">
+                <table class="new_product_table">
+                    <tbody>
+                        <tr>
+                            <td>{{ form_label(form.name, 'Terméknév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.name, { 'attr': {'class': 'validate[required] profileName'} } ) }}</td>
+                        </tr>                        
+                        <tr>
+                            <td>{{ form_label(form.netSalary, 'Nettó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.netSalary, { 'attr': {'class': 'validate[required, custom[number]] ] netSalary'} }) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(form.grossSalary, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.grossSalary, { 'attr': {'class': 'validate[required, custom[number]] grossSalary'} }) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.slug) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(form.description, 'Leírás:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.description) }}</td>
+                        </tr>
+                         <tr>
+                            <td>{{ form_label(form.categorys, 'Kategóra:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.categorys, { 'attr': {'class': 'validate[required] ] productCategory'} }) }}</td>
+                        </tr>
+                         <tr>
+                            <td>{{ form_label(form.isActive, 'Aktív -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.isActive) }}</td>
+                        </tr>
+                         <tr>
+                            <td>{{ form_label(form.inStock, 'Raktáron van -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.inStock) }}</td>
+                        </tr>
+                        <tr >
+                            <td colspan="2">
+                                <input type="submit" value="Mentés" class="menu_btn ok_btn">
+                                <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>            
+                {{ form_widget(form._token) }}
+            </form>
+        </div>      
         
         {% if (productId is defined and productId is not null)%}
-            <div>
+            <div class="product-property-list-box">
+               {{ render(controller("BackendAdminBundle:Product:propertyList" , {'productId':productId}))}}
+           </div>
+            <div class="product-image-box">
                 <h2>Képek</h2>
                 <div class="image_container">
                     {% for img in product.getProductImages() %}
-                             <img src="{{image(img.getWebPath()).zoomCrop(60,60)}} "/>
+                        <div class="imageBox">
+                            <a href="{{image(img.getWebPath())}}"> 
+                                <img src="{{image(img.getWebPath()).resize(60,60)}} " class="product-image"/>
+                            </a>
+                            <img src="{{image('images/close_button.png')}}" image="{{img.getWebPath()}}" productImageId="{{img.getId()}}" class="delete-product-image-x-button" />
+                        </div>
                     {% endfor %}
                 </div>
                 <form class="uploadImageForm" method="POST" enctype="multipart/form-data" action="{{ path('backend_admin_product_upload_image',{'productId':productId}) }} ">            
@@ -75,9 +99,23 @@
             </div>  
         {% endif %}
           
-        <div>
-            {{ render(controller("BackendAdminBundle:Product:propertyList" , {'productId':productId}))}}
+        
+    </div>
+
+<div id="modal-delete-product-image" class="reveal-modal">
+    <div class="formContent">
+        <div class="topSection">
+            <div class="modal-content">
+                <h2>Biztosan törölni szeretnéd ezt a képet? </h2>
+            </div>
+        </div>
+        <div class="bottomSection">
+            <div class="inputs">
+                <input type="button" class="delete-product-image-button" value="Törlés" href="{{path('backend_admin_product_image_remove')}}">
+                <input type="button" class="cancel exit-reveal-modal" value="Mégse">                        
+            </div>
         </div>
     </div>
-    
+</div>    
 {% endblock %}
+    

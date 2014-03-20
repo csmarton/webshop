@@ -15,7 +15,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
+            ->add('username', 'text', array('label' => 'Felhasználói név:', 'required'  => true))
             ->add('usernameCanonical')
             ->add('email')
             ->add('emailCanonical')

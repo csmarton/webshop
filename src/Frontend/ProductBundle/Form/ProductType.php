@@ -16,7 +16,7 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array('label' => 'Termék neve:', 'required'  => true))
+            ->add('name', 'text', array('label' => 'Termék neve:', 'required'  => false))
             ->add('slug', 'text', array('label' => 'Slug:', 'required'  => false))
             ->add('description', 'textarea', array('label' => 'Termék leírása:', 'required'  => false))
             ->add('createdAt', 'date',

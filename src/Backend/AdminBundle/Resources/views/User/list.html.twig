@@ -53,8 +53,20 @@
         </table>
         
     </div>
-<div class="deleteUserContent hide">
-    Biztosan törölni szeretnéd ezt a terméket?
-</div>     
+<div id="modal-delete-user" class="reveal-modal">
+    <div class="formContent">
+        <div class="topSection">
+            <div class="modal-content">
+                <h2>Biztosan törölni szeretnéd ezt a felhasználót? </h2>
+            </div>
+        </div>
+        <div class="bottomSection">
+            <div class="inputs">
+                <input type="button" class="delete-user-button" value="Törlés" href="{{path('backend_admin_user_remove')}}">
+                <input type="button" class="cancel exit-reveal-modal" value="Mégse">                        
+            </div>
+        </div>
+    </div>
+</div>    
 {% endblock %}
                   

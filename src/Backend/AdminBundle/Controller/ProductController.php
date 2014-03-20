@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProductController extends Controller
 {
+    /*
+     * Termékek listázása
+     */
     public function listAction()
     {   
         $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findAll();
@@ -21,6 +24,9 @@ class ProductController extends Controller
         ));
     }
     
+    /*
+     * Új termék vagy meglévő szerkesztése
+     */
     public function newAction()
     {   
         $request = $this->get('request');
@@ -35,28 +41,28 @@ class ProductController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) { 
-               if (isset($form['name'])) {
+               /*if (isset($form['name'])) {
                         $productName = $form['name']->getData();
                }
                if (isset($form['grossSalary'])) {
                     $grossSalary = $form['grossSalary']->getData();
-               }
+               }*/
                if (isset($form['categorys'])) {
                     $categorys = $form['categorys']->getData();
                }
                
                $createdTime = new \DateTime("now");               
-               $product->setName($productName);
+               //$product->setName($productName);
                $product->setCategory($categorys->getId());
-               $product->setGrossSalary($grossSalary);
+              // $product->setGrossSalary($grossSalary);
                $product->setCreatedAt($createdTime);
                $product->setUpdatedAt($createdTime);
                
                $em = $this->getDoctrine()->getManager();
                $em->persist($product);
-               $em->flush();               
+               $em->flush();              
                
-               return $this->redirect($this->generateUrl('backend_admin_product'));
+               return $this->redirect($this->generateUrl('backend_admin_product_new').'?productId='.$product->getId());
             }
         }    
                 
@@ -69,10 +75,12 @@ class ProductController extends Controller
         ));
     }
     
+    /*
+     * Termékek törlése
+     */
      public function removeAction(){
          $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
-            $request = $this->get('request');
             $productId = $request->request->get('productId');
             
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
@@ -86,6 +94,9 @@ class ProductController extends Controller
          }   
     }
     
+    /*
+     * Tulajdonságok listázása
+     */
     public function propertyListAction($productId){
         $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
         $productPropertys = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->findByProduct($product);
@@ -103,7 +114,7 @@ class ProductController extends Controller
                $em->persist($productProperty);
                $em->flush();               
                
-               return $this->redirect($this->generateUrl('backend_admin_product').'?productId='.$productId. "#propertytable");
+               return $this->redirect($this->generateUrl('backend_admin_product').'?productId='.$productId);
             }
         }    
         
@@ -114,6 +125,9 @@ class ProductController extends Controller
         ));
     }
     
+    /*
+     * Új termék tulajdonság, vagy meglévő tulajdonság szerkesztése
+     */
     public function propertyEditAction(){
         $request = $this->get('request');
         $productId = $request->query->get('productId');
@@ -125,13 +139,13 @@ class ProductController extends Controller
             $productProperty = new ProductProperty(); 
             $productProperty->setProduct($product);
             
-        }else{
+        }else{ //tulajdonság szerkesztése
             $productProperty = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->findOneById($productPropertyId);            
         } 
         
         $form = $this->createForm(new ProductPropertyType(), $productProperty);
         
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() == 'POST') {//form küldése során
             $form->bind($request);
             if ($form->isValid()) { 
               
@@ -139,7 +153,7 @@ class ProductController extends Controller
                $em->persist($productProperty);
                $em->flush();               
                
-               return $this->redirect($this->generateUrl('backend_admin_product_new').'?productId='.$productId . '#propertytable');
+               return $this->redirect($this->generateUrl('backend_admin_product_new').'?productId='.$productId);
             }
         }    
         
@@ -149,6 +163,28 @@ class ProductController extends Controller
             'product' => $product,
             //'productPropertys' => $productPropertys
         ));
+    }
+    
+    /*
+     * Termék tulajdonságok törlése
+     */
+     public function propertyRemoveAction(){
+         $request = $this->get('request');
+         if ($request->getMethod() == 'POST') {
+            $request = $this->get('request');
+            $productPropertyId = $request->request->get('productPropertyId');
+            
+            $productProperty = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->findOneById($productPropertyId);
+            $property = $productProperty->getProperty()->getName(). "  = ". $productProperty->getValue();
+            
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->remove($productProperty);
+            $em->flush();
+    
+            return new JsonResponse(array('success' => true,'productProperty'=> $property));
+         }else{
+             return new JsonResponse(array('success' => false));
+         }   
     }
     
 }

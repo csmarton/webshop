@@ -12,40 +12,45 @@
 {% endblock %}
  
 {% block main %} 
-    <div class="main">        
-        <form action="{{ path('backend_admin_user_new',{'userId':userId})}}" method="post" {{ form_enctype(form) }} name="newUser"  class="newUser">
-            {% set disabled = (myUser.getId() != userId ) %}
-            <table class="new_product_table">
-                <tbody>
-                    <tr>
-                        <td>{{ form_label(form.username, 'Felhasználóinév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.username) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.email, 'Email:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.email) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.password, 'Jelszó:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.password, {'attr': {'disabled': disabled }}) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.enabled, 'Engedélyezve:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.enabled) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(form.isAdmin, 'Admin jog:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.isAdmin) }}</td>
-                    </tr>    
-                    <tr >
-                        <td colspan="2">
-                            <input type="submit" value="Mentés" class="menu_btn ok_btn">
-                            <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>            
-            {{ form_widget(form._token) }}
-        </form>        
+    <div class="main">  
+        <div class="user-edit-box">
+            <form action="{{ path('backend_admin_user_new',{'userId':userId})}}" method="post" {{ form_enctype(form) }} name="newUser"  class="newUser" autocomplete="off">
+                {% set disabled =( userId is defined and userId is not null and myUser.getId() != userId ) %}
+                <table class="new_product_table">
+                    <tbody>
+                        <tr>
+                            <td>{{ form_label(form.username, 'Felhasználóinév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.username) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(form.email, 'Email:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.email) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(form.password, 'Jelszó:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.password, {'attr': {'disabled': disabled }}) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(form.enabled, 'Engedélyezve:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.enabled) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(form.isAdmin, 'Admin jog:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.isAdmin) }}</td>
+                        </tr>    
+                        <tr >
+                            <td colspan="2">
+                                <input type="submit" value="Mentés" class="menu_btn ok_btn">
+                                <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>            
+                {{ form_widget(form._token) }}
+            </form>
+        </div>
+        <div class="user-profile-edit-box">
+               {{ render(controller("BackendAdminBundle:User:profileEdit" , {'userId':userId}))}}
+        </div>
     </div>
 {% endblock %}

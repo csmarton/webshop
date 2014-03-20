@@ -16,13 +16,14 @@ class ProductPropertyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('value')
+            ->add('value', 'text', array('label' => 'Tulajdonság értéke:', 'required'  => false))
             //->add('property')
             ->add('property','entity', array('label' => 'Tulajdonság:',  'required'  => false, 
                             'class' => 'FrontendProductBundle:Propertys', 'property' => 'name',
                             'query_builder' => function(EntityRepository $er) {
                                 return $er->createQueryBuilder('c')
                                         ->select('c')
+                                        ->orderBy('c.mainCategory, c.name')
                                 ;
                                 
                             }

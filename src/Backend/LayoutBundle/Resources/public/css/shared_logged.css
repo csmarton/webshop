@@ -373,7 +373,7 @@ tr:last-child td.last {
 }
 
 .edit_btn{
-    
+    background-color: green;
 }
 
 
@@ -382,8 +382,10 @@ table{
     width: 100%;
 }
 
+.new_product_table tr>td:first-child{
+    width:200px;
+}
 table tr>td:first-child{
-    width: 200px;
     text-align: right;
     font-weight: bold;
     font-size: 1.3em;
@@ -447,4 +449,30 @@ table textarea{
 }
 .modal-content{
     padding-bottom: 10px;
+}
+
+.product-edit-box{
+    width: 50%;
+    float: left;
+    padding-right: 40px;
+}
+
+.product-property-list-box{
+    width: 47%;
+    float: left;
+}
+
+.product-image-box{
+    clear:both;
+}
+
+.user-edit-box{
+    width: 50%;
+    float: left;
+    padding-right: 40px;
+}
+
+.user-profile-edit-box{
+    width: 47%;
+    float: left;
 }

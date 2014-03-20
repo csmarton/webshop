@@ -1,0 +1,25 @@
+.imageBox{
+    float: left;
+    position: relative;
+    margin: 5px;
+    border: 1px solid grey;
+}
+.imageBox:hover{
+    -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+}
+.product-image:hover{
+    opacity:0.6;
+}
+
+.delete-product-image-x-button{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    cursor: pointer;
+}
+
+.delete-product-image-x-button:hover{
+    opacity:0.8;
+}

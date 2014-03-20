@@ -8,18 +8,22 @@
             <link rel="stylesheet" href="{{ asset('bundles/backendlayout/css/reset.css') }}"/>
             <link rel="stylesheet" href="{{ asset('bundles/backendlayout/css/shared_logged.css') }}"/>
             <link rel="stylesheet" href="{{ asset('css/reveal.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/validationEngine-jquery.css') }}"/>
             
             <script type="text/javascript" src="{{ asset('js/jquery-2.1.0.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/jquery.reveal.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/JqueryValidationEngine-hu.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/JqueryValidationEngine.js') }}"></script>
+            
             {% block stylesheets %}                
             {% endblock %}
               
             {% block javascripts %}
-                    <script type="text/javascript" src="{{ asset('bundles/backendlayout/js/Shared.js') }}"></script>
+                    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/SharedModal.js') }}"></script>
                     <script type="text/javascript" src="{{ asset('bundles/backendlayout/js/ImageUpload.js') }}"></script>
                     <script type="text/javascript">
                             $(document).ready(function(){
-                                Shared.init();
+                                SharedModal.init();
                                 ImageUpload.init();
                             });
                     </script>

@@ -19,11 +19,11 @@
                 <tbody>
                     <tr>
                         <td>{{ form_label(form.property, 'Tulajdonság neve:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.property) }}</td>
+                        <td>{{ form_widget(form.property, { 'attr': {'class': 'validate[required] ] propertyName'} }) }}</td>
                     </tr>  
                     <tr>
                         <td>{{ form_label(form.value, 'Tulajdonság értéke:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.value) }}</td>
+                        <td>{{ form_widget(form.value, { 'attr': {'class': 'validate[required] ] propertyValue'} }) }}</td>
                     </tr>
                     <tr >
                         <td colspan="2">

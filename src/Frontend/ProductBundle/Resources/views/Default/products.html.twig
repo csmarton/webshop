@@ -15,7 +15,12 @@
         <div class="product_box">
                 <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
                 <div class="upper_box">
-                        <div class="image_container">
+
+                        <div class="right_box">
+                                <div class="product_price">{{product.getGrossSalary()}} Ft</div>
+                                <input class="to_cart_button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
+                        </div>  
+                                            <div class="image_container">
                                 <img src="
                                     {% if (product.getProductImages()|length != 0 ) %}
                                               {{asset(product.getProductImages()[0].getWebPath())}}"/>
@@ -24,10 +29,6 @@
                                     {% endif %}
 
                         </div>
-                        <div class="right_box">
-                                <div class="product_price">Ára: {{product.getGrossSalary()}} Ft</div>
-                                <input class="to_cart_button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
-                        </div>    
                 </div>
                 <div class="bottom_box">
                         <ul>

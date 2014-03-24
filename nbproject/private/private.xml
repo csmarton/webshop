@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/LayoutBundle/Resources/public/css/shared_logged.css</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/propertys.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Form/ProductPropertyType.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Entity/ProductProperty.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Category/new.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Form/ProductType.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/config/routing.yml</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/ProductController.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/new_property.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/new.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/products.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/public/css/product.css</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/product.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/css/shared_logged.css</file>
         </group>
     </open-files>
 </project-private>

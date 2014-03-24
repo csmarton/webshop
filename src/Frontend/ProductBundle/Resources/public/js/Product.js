@@ -22,6 +22,7 @@ Product = {
             }).fail(function(thrownError) {
                 console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
             });
-        });
+        });        
+        
     },
 };	

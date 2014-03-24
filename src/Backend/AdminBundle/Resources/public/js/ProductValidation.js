@@ -38,6 +38,16 @@ ProductValidation = {
             'required': {
                 'message': "Adj meg egy értéket!"
             }
+        },
+        '#main-category-type': {
+            'required': {
+                'message': "Válassz egy fő kategóriát!"
+            }
+        },
+        '#category-type': {
+            'required': {
+                'message': "Válassz egy kategóriát!"
+            }
         }, 
         
     },

@@ -4,8 +4,8 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="name" type="string" column="name" length="30" nullable="false"/>
-    <field name="slug" type="string" column="slug" length="30" nullable="true"/>
+    <field name="name" type="string" column="name" length="100" nullable="false"/>
+    <field name="slug" type="string" column="slug" length="100" nullable="true"/>
     <field name="description" type="text" column="description" nullable="true"/>
     <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>

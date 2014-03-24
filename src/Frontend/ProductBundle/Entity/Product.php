@@ -24,14 +24,14 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=30, nullable=false)
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=30, nullable=true)
+     * @ORM\Column(name="slug", type="string", length=100, nullable=true)
      */
     private $slug;
 
@@ -431,7 +431,7 @@ class Product
     public function setCategorys(\Frontend\ProductBundle\Entity\Category $categorys = null)
     {
         $this->categorys = $categorys;
-
+        $this->category = $categorys->getId();
         return $this;
     }
 

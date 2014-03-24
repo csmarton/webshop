@@ -2,26 +2,30 @@
 
 {% block title%} WebShop - Kezdőlap {% endblock %}
 {% block bodyClass %}class="index_page"{% endblock%}
-        
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jquery-organictabs.js') }}"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                $("#productTabs").organicTabs();
+            });
+    </script>
+{% endblock %}
+    
 {% block main %}
     <div class="main">
             {% block leftSide %}                        
                 {{parent()}}       
             {% endblock %}
         <div class="container">
-            {% if (product.getSlug() is not null)%}
-                {% set product_link = product.getSlug() %}
-            {% else %}
-                {% set product_link = product.getId() %}
-            {% endif %}
-            <div class="current_product_box">
-                <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
+            <div id="current-product-box">
+                <div class="product_name">{{product.name}}</div>
                 <div class="upper_box">
                     <div class="image_container">
-                        
+
                         <img src="
                             {% if (product.getProductImages()|length != 0 ) %}
-                                      {{asset(product.getProductImages()[0].getWebPath())}}"/>
+                                      {{image(product.getProductImages()[0].getWebPath()).resize(200,200)}}"/>
                             {% else %}     
                                     {{ asset('images/no_image.jpg')}}"/>
                             {% endif %}
@@ -29,17 +33,34 @@
                     </div>
                     <div class="right_box">
                         <div class="product_price">Ára: {{product.getGrossSalary()}} Ft</div>
-                        <input class="to_cart_button"type="button" value="Kosárba">
+                        <input class="to_cart_button" type="button" value="Kosárba">
                     </div>    
                 </div>
-                <div class="bottom_box">
-                    <ul>
-                        {% for property in product.getProductPropertys()%}
-                                    <li>{{property.getValue()}}</li>
-                            {% endfor %}       
-                    </ul>
+            </div> 
+            <div id="productTabs">
+                <ul class="nav">
+                    <li class="nav-one"><a href="#tabProductInformation" class="current">Specifikáció</a></li>
+                    <li class="nav-two"><a href="#tabDescription">Leírás</a></li>
+                    <li class="nav-two"><a href="#tabGuarantee">Garancia</a></li>
+                    <li class="nav-two"><a href="#tabQuestions">Kérdésem van</a></li>
+                </ul> 
+                <div class="list-wrap">
+                    <div class="tabContent" id="tabProductInformation">
+                        {% include 'FrontendProductBundle:Default:tabProductInformation.html.twig' with {'product' : product} %}
+                    </div>
+                    <div class="tabContent hide" id="tabDescription">
+                        {% include 'FrontendProductBundle:Default:tabProductDescription.html.twig' with {'product' : product} %}
+                    </div>
+                    <div class="tabContent hide" id="tabGuarantee">
+                        {% include 'FrontendProductBundle:Default:tabGuarantee.html.twig' with {'product' : product} %}
+                    </div>
+                    <div class="tabContent hide" id="tabQuestions">
+                        Kérdések
+                    </div>
                 </div>
             </div>
+            
+            
         </div> 
     </div>
 {% endblock %}

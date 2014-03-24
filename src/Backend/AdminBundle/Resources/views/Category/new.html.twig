@@ -5,8 +5,10 @@
  
 {% block javascripts %}
 	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/CategoryValidation.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
+                CategoryValidation.init();
             });
     </script>
 {% endblock %}
@@ -18,7 +20,7 @@
                 <tbody>
                     <tr>
                         <td>{{ form_label(form.name, 'Kategórianév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.name) }}</td>
+                        <td>{{ form_widget(form.name, { 'attr': {'class': 'validate[required] categoryName'} } ) }}</td>
                     </tr>
                     <tr>
                         <td>{{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
@@ -27,7 +29,7 @@
                     
                     <tr>
                         <td>{{ form_label(form.mainCategory, 'Fő kategória:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                        <td>{{ form_widget(form.mainCategory) }}</td>
+                        <td>{{ form_widget(form.mainCategory, { 'attr': {'class': 'validate[required] mainCategory'} } ) }}</td>
                     </tr>    
                     <tr >
                         <td colspan="2">

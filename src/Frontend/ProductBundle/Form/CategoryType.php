@@ -16,8 +16,8 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('slug')
+            ->add('name', 'text', array('label' => 'Kategória neve:', 'required'  => false))
+            ->add('slug', 'text', array('label' => 'Slug:', 'required'  => false))    
             ->add('mainCategory','entity', array('label' => 'Fő kategória:',  'required'  => false, 
                             'class' => 'FrontendProductBundle:MainCategory', 'property' => 'name',
                             'query_builder' => function(EntityRepository $er) {return $er->createQueryBuilder('c');}

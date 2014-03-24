@@ -5,15 +5,23 @@
  
 {% block stylesheets %}  
     {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/summernote.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/font-awesome.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Image.css') }}"/>
 {% endblock %}
     
 {% block javascripts %}
 	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/summernote.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/ProductValidation.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/Product.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
                 ProductValidation.init();
+                Product.init();
             });
     </script>
 {% endblock %}
@@ -43,18 +51,37 @@
                         <tr>
                             <td>{{ form_label(form.grossSalary, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
                             <td>{{ form_widget(form.grossSalary, { 'attr': {'class': 'validate[required, custom[number]] grossSalary'} }) }}</td>
-                        </tr>
+                        </tr>                        
                         <tr>
                             <td>{{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
                             <td>{{ form_widget(form.slug) }}</td>
                         </tr>
-                        <tr>
+                        <tr>                            
                             <td>{{ form_label(form.description, 'Leírás:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.description) }}</td>
+                            <td>{{ form_widget(form.description, { 'attr': {'class': 'textEditor'} }) }}</td>
                         </tr>
-                         <tr>
-                            <td>{{ form_label(form.categorys, 'Kategóra:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.categorys, { 'attr': {'class': 'validate[required] ] productCategory'} }) }}</td>
+                        <tr>
+                           {# <td>{{ form_label(form.categorys, 'Kategóra:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(form.categorys, { 'attr': {'class': 'validate[required] ] productCategory'} }) }}</td>#}
+                            <td>Fő kategória</td>
+                            <td>
+                                <select id="main-category-type" href="{{path('backend_admin_product_select_category_ajax')}}" class="validate[required]">
+                                    <option value=""></option>
+                                    {% for mainCategory in mainCategorys %}
+                                        <option value="{{mainCategory.getId() }}"
+                                            {% if currentMainCategoryId is not null and currentMainCategoryId == mainCategory.getId() %}
+                                                selected
+                                            {% endif %}>
+                                            {{mainCategory.getName()}}
+                                        </option>
+                                    {% endfor%}
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="category-box">
+                            {% if currentMainCategoryId is not null%}                            
+                                {% include 'BackendAdminBundle:Product:categorys_ajax.html.twig' with {'categorys' : categorys, 'currentCategoryId' : currentCategoryId} %}
+                            {% endif %}
                         </tr>
                          <tr>
                             <td>{{ form_label(form.isActive, 'Aktív -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>

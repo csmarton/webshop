@@ -1,9 +1,12 @@
+.bold{
+    font-weight: bold;
+}
 .main .products_box img{
     width: 120px;
     height: 120px;
 }
 .main .product_box{
-    width: 244px;
+    width: 258px;
     height: 350px;
     float: left;
     margin: 5px;
@@ -35,33 +38,34 @@
     color: #D1466F;
     font-weight: bold;
     padding-bottom: 10px;
+    font-size: 1.3em;
 }
 
-.main .products_box .upper_box{
-    position: relative;
+
+.to_cart_button:hover {
+    text-decoration: underline;
 }
 
-.main .products_box .image_container{
-    float:left;
-    padding-right: 5px;
-}
-
-.main .products_box .right_box{
-    position: absolute;
-    top: 20px;
-    right: 10px;
+.to_cart_button {
+    text-transform: uppercase;
+    border-radius: 3px;
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #357ebd;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    line-height: 1.5;
     text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    text-decoration: none;
 }
-
-.main .products_box .right_box .to_cart_button:hover {
-    border: 1px solid #3276b1;
-}
-
-.main .products_box .right_box .to_cart_button {
-    background:#3276b1;
-    color:white;
-}
-
 .main .products_box .bottom_box{
 	clear: both;
 	font-size: 0.8em;
@@ -70,7 +74,7 @@
 }
 .main .products_box .bottom_box ul{
     list-style: disc;
-	background-color: #CBD4DF;
+	background-color: #C9DEF8;;
 	color: black;
 	list-style-position: inside;
 	padding-left: 10px;
@@ -95,4 +99,85 @@
 	text-align: center;
 	border-top: 3px solid #CBD4DF;
 	padding-top: 10px;
+}
+
+.main #productTabs{
+    clear:both;
+}
+
+.main #productTabs .nav{
+    background-color: #428bca;
+    padding: 10px;
+}
+
+.main #productTabs .nav li{
+    display: inline-block;
+    padding: 10px;
+    border-right: 3px solid white;
+}
+
+.main #productTabs .nav li:last-child{
+    border-right:none;
+}
+
+.main #productTabs .nav li>a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.main #productTabs .nav li>a:hover{
+    text-decoration: underline;
+}
+
+.main #productTabs .list-wrap{
+    padding-top:20px;
+}
+
+#tabProductInformation .property-name{
+    font-weight:bold;
+    width:200px;
+    display: inline-block;
+}
+
+.main .tabContent{
+    padding:10px;
+}
+
+#current-product-box .bottom_box li{
+    padding: 5px 0px;
+}
+
+#current-product-box .product_name{
+    font-weight: bold;
+    font-size: 1.5em;
+    border-bottom: 2px solid grey;
+    padding: 10px;
+}
+
+
+.main #current-product-box .upper_box{
+    position: relative;
+}
+#current-product-box .image_container{
+    float: left;
+    width: 250px;
+    height: 300px;
+}
+
+.main #current-product-box .right_box{
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    text-align: center;
+}
+
+.main #tabGuarantee{
+    line-height: 1.4em;
+    text-align: justify;
+}
+
+.main #tabGuarantee p{
+    padding:10px;
 }

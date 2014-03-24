@@ -32,46 +32,55 @@ class ProductController extends Controller
         $request = $this->get('request');
         $productId = $request->query->get('productId');
 
+        $currentMainCategoryId = null;
+        $currentCategoryId = null;
+        $categorys = null;
         if($productId == null){
             $product = new Product();        
         }else{
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
+            
+            $categoryId = $product->getCategory();
+            
+            $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categoryId);   
+            $mainCategory = $category->getMainCategory();
+            $currentMainCategoryId = $mainCategory->getId();
+            $currentCategoryId = $product->getCategorys()->getId();
+            $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($mainCategory);
         }
         $form = $this->createForm(new ProductType(),$product);
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) { 
-               /*if (isset($form['name'])) {
-                        $productName = $form['name']->getData();
-               }
-               if (isset($form['grossSalary'])) {
-                    $grossSalary = $form['grossSalary']->getData();
-               }*/
-               if (isset($form['categorys'])) {
-                    $categorys = $form['categorys']->getData();
-               }
                
-               $createdTime = new \DateTime("now");               
-               //$product->setName($productName);
-               $product->setCategory($categorys->getId());
-              // $product->setGrossSalary($grossSalary);
+               $categorysId = (int)$request->request->get('categorys');
+               
+               $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categorysId);
+               
+               $createdTime = new \DateTime("now"); 
+               $product->setCategorys($category);
                $product->setCreatedAt($createdTime);
                $product->setUpdatedAt($createdTime);
-               
                $em = $this->getDoctrine()->getManager();
                $em->persist($product);
                $em->flush();              
                
                return $this->redirect($this->generateUrl('backend_admin_product_new').'?productId='.$product->getId());
             }
-        }    
+        }
+        
+        $mainCategorys = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
                 
 
         
         return $this->render('BackendAdminBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
             'productId'=>$productId,
-            'product' => $product
+            'product' => $product,
+            'mainCategorys' => $mainCategorys,
+            'currentMainCategoryId' => $currentMainCategoryId,      
+            'currentCategoryId'=>$currentCategoryId,
+            'categorys'=>$categorys
         ));
     }
     
@@ -185,6 +194,22 @@ class ProductController extends Controller
          }else{
              return new JsonResponse(array('success' => false));
          }   
+    }
+    
+    public function selectCategoryAjaxAction(){
+        $request = $this->get('request');
+         if ($request->getMethod() == 'POST') {
+            $request = $this->get('request');
+            $mainCategoryId = $request->request->get('mainCategoryId');
+            $mainCategory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findOneById($mainCategoryId);
+            
+            $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($mainCategory);
+            
+            $html = $this->renderView('BackendAdminBundle:Product:categorys_ajax.html.twig', array('categorys' => $categorys));
+            return new JsonResponse(array('success' => true,'html'=> $html));
+         }else{
+             return new JsonResponse(array('success' => false));
+         }  
     }
     
 }

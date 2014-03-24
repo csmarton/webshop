@@ -30,7 +30,11 @@ backend_admin_product_property_edit:
 
 backend_admin_product_property_remove:
     pattern:  /admin/termekek/tulajdonsagok/torles
-    defaults: { _controller: BackendAdminBundle:Product:propertyRemove }        
+    defaults: { _controller: BackendAdminBundle:Product:propertyRemove }
+    
+backend_admin_product_select_category_ajax:
+    pattern:  /admin/termekek/kategoria/select
+    defaults: { _controller: BackendAdminBundle:Product:selectCategoryAjax }           
 #
 # kategóriák szerkesztése    
 #

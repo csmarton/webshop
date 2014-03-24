@@ -1,0 +1,7 @@
+<div class="bottom_box">
+    <ul>
+        {% for property in product.getProductPropertys()%}
+                    <li><span class="property-name">{{property.getProperty().getName()}}:</span> {{property.getValue()}}</li>
+            {% endfor %}       
+    </ul>
+</div>

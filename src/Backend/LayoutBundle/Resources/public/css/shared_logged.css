@@ -3,9 +3,9 @@ body{
 }
 .header{
     background-color: #333;
-    height: 30px;
+    height: 50px;
     width: 100%;
-    z-index: 6011;
+    z-index: 100;
     top: 0;    
     padding: 10px 0px;
     position: fixed;
@@ -398,6 +398,10 @@ table input,table textarea,table select{
     width: 98%;
     font-size: 1.5em;
     padding: 0px 5px;
+}
+
+.textEditor{
+    width:400px;
 }
 
 table input:focus,table textarea:focus, table select:focus{

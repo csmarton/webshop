@@ -43,11 +43,7 @@
                         <tr>
                             <td>{{ form_label(form.name, 'Terméknév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
                             <td>{{ form_widget(form.name, { 'attr': {'class': 'validate[required] profileName'} } ) }}</td>
-                        </tr>                        
-                        <tr>
-                            <td>{{ form_label(form.netSalary, 'Nettó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.netSalary, { 'attr': {'class': 'validate[required, custom[number]] ] netSalary'} }) }}</td>
-                        </tr>
+                        </tr>       
                         <tr>
                             <td>{{ form_label(form.grossSalary, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
                             <td>{{ form_widget(form.grossSalary, { 'attr': {'class': 'validate[required, custom[number]] grossSalary'} }) }}</td>

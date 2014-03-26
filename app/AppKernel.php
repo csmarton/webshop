@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Gregwar\ImageBundle\GregwarImageBundle(),
             new Frontend\CartBundle\FrontendCartBundle(),
             new Frontend\SearchBundle\FrontendSearchBundle(),
+            new Frontend\OrderBundle\FrontendOrderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -66,6 +66,24 @@
     user-select: none;
     text-decoration: none;
 }
+
+.main .product_box .right_box{
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    text-align: center;
+}
+
+.main .product_box .image_container{
+    float: left;
+    width: 150px;
+    height: 150px;
+}
+
+.main .product_box .upper_box{
+    position: relative;
+}
+
 .main .products_box .bottom_box{
 	clear: both;
 	font-size: 0.8em;

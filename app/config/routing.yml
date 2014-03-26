@@ -1,3 +1,7 @@
+frontend_order:
+    resource: "@FrontendOrderBundle/Resources/config/routing.yml"
+    prefix:   /
+
 frontend_search:
     resource: "@FrontendSearchBundle/Resources/config/routing.yml"
     prefix:   /

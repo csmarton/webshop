@@ -59,16 +59,10 @@ class Product
     /**
      * @var float
      *
-     * @ORM\Column(name="gross_salary", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
      */
-    private $grossSalary;
+    private $price;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="net_salary", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $netSalary;
 
     /**
      * @var integer
@@ -232,49 +226,26 @@ class Product
     }
 
     /**
-     * Set grossSalary
+     * Set price
      *
-     * @param float $grossSalary
+     * @param float $price
      * @return Product
      */
-    public function setGrossSalary($grossSalary)
+    public function setPrice($price)
     {
-        $this->grossSalary = $grossSalary;
+        $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get grossSalary
+     * Get price
      *
      * @return float 
      */
-    public function getGrossSalary()
+    public function getPrice()
     {
-        return $this->grossSalary;
-    }
-
-    /**
-     * Set netSalary
-     *
-     * @param float $netSalary
-     * @return Product
-     */
-    public function setNetSalary($netSalary)
-    {
-        $this->netSalary = $netSalary;
-
-        return $this;
-    }
-
-    /**
-     * Get netSalary
-     *
-     * @return float 
-     */
-    public function getNetSalary()
-    {
-        return $this->netSalary;
+        return $this->price;
     }
 
     /**

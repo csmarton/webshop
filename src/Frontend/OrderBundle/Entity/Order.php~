@@ -1,0 +1,102 @@
+<?php
+
+namespace Frontend\OrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Order
+ *
+ * @ORM\Table(name="order")
+ * @ORM\Entity
+ */
+class Order
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     */
+    private $userId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="items_total", type="integer", nullable=false)
+     */
+    private $itemsTotal;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="items_total_price", type="integer", nullable=false)
+     */
+    private $itemsTotalPrice;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="text", nullable=false)
+     */
+    private $comment;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     */
+    private $updatedAt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="payment_option_id", type="integer", nullable=false)
+     */
+    private $paymentOptionId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="shipping_option_id", type="integer", nullable=false)
+     */
+    private $shippingOptionId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_state", type="string", length=60, nullable=false)
+     */
+    private $paymentState;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shipping_state", type="string", length=60, nullable=false)
+     */
+    private $shippingState;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="accept_conditions", type="boolean", nullable=false)
+     */
+    private $acceptConditions;
+
+
+}

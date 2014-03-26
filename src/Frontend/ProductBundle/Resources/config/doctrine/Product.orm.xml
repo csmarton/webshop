@@ -9,8 +9,7 @@
     <field name="description" type="text" column="description" nullable="true"/>
     <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
-    <field name="grossSalary" type="float" column="gross_salary" precision="10" scale="0" nullable="false"/>
-    <field name="netSalary" type="float" column="net_salary" precision="10" scale="0" nullable="false"/>
+    <field name="price" type="float" column="price" precision="10" scale="0" nullable="false"/>
     <field name="category" type="integer" column="category" nullable="false"/>
     <field name="isActive" type="boolean" column="is_active" nullable="false"/>
     <field name="inStock" type="boolean" column="in_stock" nullable="false"/>

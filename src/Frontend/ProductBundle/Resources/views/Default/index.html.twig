@@ -45,7 +45,14 @@
 
                                 </div>
                                 <div class="right_box">
-                                        <div class="product_price">Ára: {{product.getPrice()}} Ft</div>
+                                        <div class="product_price">
+                                            {% if product.getSpecialOffer() is not null %}
+                                                Ára*: {{product.getSpecialOffer().getNewPrice}} Ft
+                                            {% else%}
+                                                Ára: {{product.getPrice()}}  Ft
+                                            {% endif %}
+                                               
+                                        </div>
                                         <input class="to_cart_button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
                                 </div>    
                         </div>

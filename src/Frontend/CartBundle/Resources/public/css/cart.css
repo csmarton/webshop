@@ -118,6 +118,7 @@
 }
 .header .group_right #cart{
     display: inline;
+    position: relative;
 }
 .header .group_right #cart_count{
     display: inline;

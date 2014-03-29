@@ -1,0 +1,28 @@
+ <form action="{{path('frontend_product_questions')}}"  method="post" {{ form_enctype(form) }} id="newQuestions" autocomplete="off">
+    <table id="questions-table">
+        <tbody>
+            <tr>
+                <td>{{ form_label(form.name, 'Név:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                <td>{{ form_widget(form.name, { 'attr': {'class': 'questionerName validate[required] name'} } ) }}</td>
+            </tr>  
+            <tr>
+                <td>{{ form_label(form.email, 'Email:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                <td>{{ form_widget(form.email, { 'attr': {'class': 'questionerEmail validate[required] email'} } ) }}</td>
+            </tr>  
+            <tr>
+                <td>{{ form_label(form.question, 'Kérdés:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                <td>{{ form_widget(form.question, { 'attr': {'class': 'questionerQuestion validate[required] question'} } ) }}</td>
+            </tr> 
+            <tr >
+                <td colspan="2">
+                    <input type="submit" value="Elküld" class="menu_btn sendQuestion" link="{{path('frontend_product_questions')}}" productId="{{product.getId()}}">
+                    <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
+                </td>
+            </tr>
+            {{ form_widget(form._token) }}
+        </tbody>
+    </table>
+ </form>
+<div id="questions-box">
+    {% include 'FrontendProductBundle:Tabs:questions.html.twig' with {'productQuestions' : productQuestions} %}
+</div>

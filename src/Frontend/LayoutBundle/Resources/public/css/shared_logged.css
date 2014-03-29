@@ -1,3 +1,6 @@
+body,html{
+    height:100%;
+}
 body{
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
 }
@@ -25,11 +28,6 @@ body{
 	width:100%;
 	height:100%;
 }
-.wrapper {
-    width: 980px;
-    margin: 0px auto;
-    position: relative;
-}
 
 .wideLabel .labelText{
     width: 100% !important;
@@ -51,14 +49,7 @@ body{
 /*
     JOBB OLDAL
 */    
-.sidebar{
-    width: 200px;
-    height: 100%;
-    display: table-cell;
-    position: relative;
-    padding-top:30px;
-    border-right: 2px solid rgb(233, 233, 233);
-}
+
 .sidebar .sideFrame{
     border-left: 1px solid #bed2d2;
 	padding: 0px 0px 0px 5px;
@@ -78,42 +69,42 @@ body{
 
 #leftMenu{
     width: 200px;
+    display: block;
+    margin-bottom: 15px;
+    background-color: #F7F7F7;
+    border: 1px solid #d8d8d8;
+    box-shadow: 1px 2px 0px rgba(197,197,197,.4);
+    -moz-box-shadow: 1px 2px 0px rgba(197,197,197,.4);
+    -webkit-box-shadow: 1px 2px 0px rgba(197,197,197,.4);
 }
 
-.maincontent .wrapper .sidebar .taxonomy li a{
+.main .sidebar .taxonomy li a{
 	padding: 5px 0px 5px 20px;
 }
 
-.maincontent .wrapper .sidebar .taxon li a{
+.main .sidebar .taxon li a{
 	padding: 5px 0px 5px 10px;
 	font-weight: bold;
 }
 
-.maincontent .wrapper .sidebar .taxon a,
-.maincontent .wrapper .sidebar .taxonomy a{
+.main .sidebar .taxon a,
+.main .sidebar .taxonomy a{
     color: #333;
     text-decoration: none;
 	display:block;
 }
 
-.maincontent .wrapper .sidebar .taxon li a:hover{
+.main  .sidebar .taxon li a:hover{
     background-color: #428bca;
 }
-.maincontent .wrapper .sidebar .taxonomy li a:hover{
+.main .sidebar .taxonomy li a:hover{
     background-color: #428bca;	
 }
 
 .main {
-    float: right;
-    width: 1024px;
     min-height: 720px;
 }
 
-.main .container{
-    display: table-cell;
-    height: 768px;
-    width: 810px;
-}
 
 .footer {
     border-top: 1px solid #e8e8e8;
@@ -200,3 +191,32 @@ body{
 	width: 400px;
 }
 
+
+.wrapper {
+width: 1024px;
+margin: 0px auto;
+min-height: 100%;
+}
+
+.main{
+min-height: 100%;
+margin: 0 auto;
+width: 1024px;
+position: relative;
+}
+
+.sidebar{
+float: left;
+width: 200px;
+padding-top: 30px;
+}
+
+.container{
+    width: 810px;
+    float: right;
+}
+
+.clear{
+    clear: both;
+    display: table;
+}

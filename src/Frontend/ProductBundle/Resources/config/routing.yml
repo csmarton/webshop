@@ -14,4 +14,6 @@ product:
     pattern:  /p/{slug}
     defaults: { _controller: FrontendProductBundle:Default:product }
     
-
+frontend_product_questions:
+    pattern:  /kerdesek/uj
+    defaults: { _controller: FrontendProductBundle:Default:tabQuestions }

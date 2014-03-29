@@ -101,6 +101,16 @@ class Product
      */
     private $categorys;
 
+     /**
+     * @var \Frontend\ProductBundle\Entity\SpecialOffers
+     */
+    private $specialOffer;
+    
+     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $productQuestions;
+    
     /**
      * Constructor
      */
@@ -108,6 +118,7 @@ class Product
     {
         $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->productPropertys = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->productQuestions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -418,5 +429,61 @@ class Product
         }else{
             return $this->categorys;
         }    
+    }
+
+    /**
+     * Set specialOffer
+     *
+     * @param \Frontend\ProductBundle\Entity\SpecialOffers $specialOffer
+     * @return Product
+     */
+    public function setSpecialOffer(\Frontend\ProductBundle\Entity\SpecialOffers $specialOffer = null)
+    {
+        $this->specialOffer = $specialOffer;
+
+        return $this;
+    }
+
+    /**
+     * Get specialOffer
+     *
+     * @return \Frontend\ProductBundle\Entity\SpecialOffers 
+     */
+    public function getSpecialOffer()
+    {
+        return $this->specialOffer;
+    }
+
+    /**
+     * Add productQuestions
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductQuestions $productQuestions
+     * @return Product
+     */
+    public function addProductQuestion(\Frontend\ProductBundle\Entity\ProductQuestions $productQuestions)
+    {
+        $this->productQuestions[] = $productQuestions;
+
+        return $this;
+    }
+
+    /**
+     * Remove productQuestions
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductQuestions $productQuestions
+     */
+    public function removeProductQuestion(\Frontend\ProductBundle\Entity\ProductQuestions $productQuestions)
+    {
+        $this->productQuestions->removeElement($productQuestions);
+    }
+
+    /**
+     * Get productQuestions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductQuestions()
+    {
+        return $this->productQuestions;
     }
 }

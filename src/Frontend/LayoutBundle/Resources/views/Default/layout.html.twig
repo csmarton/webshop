@@ -12,7 +12,9 @@
             <link rel="stylesheet" href="{{ asset('bundles/frontendsearch/css/SharedSearch.css') }}"/>
             <link rel="stylesheet" href="{{ asset('js/jquery-ui-1.10.4/css/smoothness/jquery-ui-1.10.4.custom.css') }}"/>
             <link rel="stylesheet" href="{{ asset('css/jquery-autocomplete.min.css') }}"/>
-            
+            <link rel="stylesheet" href="{{ asset('bundles/frontendproduct/css/product.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/validationEngine-jquery.css') }}"/>
+             
             <script type="text/javascript" src="{{ asset('js/jquery-2.1.0.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/jquery.qtip.min.js') }}"></script>
@@ -20,7 +22,9 @@
             <script type="text/javascript" src="{{ asset('js/accordion.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/frontendlayout/js/Shared.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/frontendsearch/js/SharedSearch.js') }}"></script>
-            <link rel="stylesheet" href="{{ asset('bundles/frontendproduct/css/product.css') }}"/>
+            <script type="text/javascript" src="{{ asset('js/JqueryValidationEngine-hu.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/JqueryValidationEngine.js') }}"></script>           
+            
             <script type="text/javascript">
                     $(document).ready(function(){
                         Shared.init();
@@ -45,19 +49,14 @@
                 {{ render(controller("FrontendLayoutBundle:Default:header"))}}
             {% endblock %}
             	
-            {% block mainContent %}
-                <div class="maincontent">
-                    <div class="wrapper">
-                        
-                        
-                        {% block main %}
-                            {% block leftSide %}                        
-                                {% render (controller("FrontendProductBundle:Default:sidebar")) %}
-                            {% endblock %}
-                        {% endblock %}
-                    </div>
-                </div>
+            {% block mainContent %} 
+                {% block main %}
+                    {% block leftSide %}                        
+                        {% render (controller("FrontendProductBundle:Default:sidebar")) %}
+                    {% endblock %}
+                {% endblock %}
             {% endblock %}
+            <div class="clear"></div>
             {% block footer %}	
                 {{ render(controller('FrontendLayoutBundle:Default:footer'))}}
             {% endblock %}

@@ -5,9 +5,11 @@
 {% block javascripts %}
 	{{ parent() }}
     <script type="text/javascript" src="{{ asset('js/jquery-organictabs.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/ProductTabs.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
                 $("#productTabs").organicTabs();
+                ProductTabs.init();
             });
     </script>
 {% endblock %}
@@ -46,16 +48,17 @@
                 </ul> 
                 <div class="list-wrap">
                     <div class="tabContent" id="tabProductInformation">
-                        {% include 'FrontendProductBundle:Default:tabProductInformation.html.twig' with {'product' : product} %}
+                        {% include 'FrontendProductBundle:Tabs:tabProductInformation.html.twig' with {'product' : product} %}
                     </div>
                     <div class="tabContent hide" id="tabDescription">
-                        {% include 'FrontendProductBundle:Default:tabProductDescription.html.twig' with {'product' : product} %}
+                        {% include 'FrontendProductBundle:Tabs:tabProductDescription.html.twig' with {'product' : product} %}
                     </div>
                     <div class="tabContent hide" id="tabGuarantee">
-                        {% include 'FrontendProductBundle:Default:tabGuarantee.html.twig' with {'product' : product} %}
+                        {% include 'FrontendProductBundle:Tabs:tabGuarantee.html.twig' with {'product' : product} %}
                     </div>
                     <div class="tabContent hide" id="tabQuestions">
-                        Kérdések
+                        {#{% include 'FrontendProductBundle:Default:tabQuestions.html.twig' with {'product' : product} %}#}
+                        {{ render(controller("FrontendProductBundle:Default:tabQuestions", {'productId' : product.getId()} ))}}
                     </div>
                 </div>
             </div>

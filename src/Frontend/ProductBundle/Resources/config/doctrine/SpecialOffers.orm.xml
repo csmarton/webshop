@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Frontend\OrderBundle\Entity\OrderItem" table="order_item">
+  <entity name="Frontend\ProductBundle\Entity\SpecialOffers" table="special_offers">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="orderId" type="integer" column="order_id" nullable="false"/>
     <field name="productId" type="integer" column="product_id" nullable="false"/>
-    <field name="unitQuantity" type="integer" column="unit_quantity" nullable="false"/>
-    <field name="unitPrice" type="integer" column="unit_price" nullable="false"/>
-    <many-to-one field="product" target-entity="Frontend\ProductBundle\Entity\Product">
+    <field name="newPrice" type="integer" column="new_price" nullable="false"/>
+     <many-to-one field="product" target-entity="Product"  inversed-by="specialOffer">
       <join-columns>
         <join-column name="product_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="order" target-entity="Order">
-      <join-columns>
-        <join-column name="order_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

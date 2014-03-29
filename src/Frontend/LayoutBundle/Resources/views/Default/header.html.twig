@@ -8,34 +8,40 @@
         </div>
         <div class="group_right">
 			<ul>
+                                <li id="compare-product">
+                                    <a href="">
+                                        <div id="compare-product-icon"></div>
+                                        <span>Összehasonlítás</span>
+                                    </a>
+				</li>
 				<li id="cart">
-					<a href="{{path('frontend_cart')}}">
-						<div id="cart_icon"></div>
-						<span>Kosár</span>
-                                                <div id="cart_count">{{cartCount}}</div>
-					</a>
+                                    <a href="{{path('frontend_cart')}}">
+                                        <div id="cart_icon"></div>
+                                        <span>Kosár</span>
+                                        <div id="cart_count">{{cartCount}}</div>
+                                    </a>
 				</li>
 				
 				{% if (is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
-					<li id="my_profile">
-						<a href="#">
-							<div id="profile_icon"></div>
-							<span id="my_profile_text">Profilom</span>
-						</a>
-					</li>
-                                        {% if is_granted('ROLE_ADMIN') %}
-                                            <li id="admin">
-						<a href="{{ path('backend_admin_homepage') }}">
-							<span>Admin</span>
-						</a>
-                                            </li>
-                                        {% endif %}
-					{#<li id="logout">
-						<a href="{{ path('fos_user_security_logout') }}">
-							<div id="logout"></div>
-							<span>Kilépés</span>
-						</a>
-					</li>#}
+                                    <li id="my_profile">
+                                        <a href="#">
+                                                <div id="profile_icon"></div>
+                                                <span id="my_profile_text">Profilom</span>
+                                        </a>
+                                    </li>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <li id="admin">
+                                            <a href="{{ path('backend_admin_homepage') }}">
+                                                    <span>Admin</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    {#<li id="logout">
+                                            <a href="{{ path('fos_user_security_logout') }}">
+                                                    <div id="logout"></div>
+                                                    <span>Kilépés</span>
+                                            </a>
+                                    </li>#}
 				{% else %}
 					<li id="login_sign_in">
 						<a href="{{ path('frontend_login') }}">

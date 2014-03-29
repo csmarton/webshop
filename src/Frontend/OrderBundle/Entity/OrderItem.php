@@ -166,10 +166,10 @@ class OrderItem
     /**
      * Set product
      *
-     * @param \Frontend\OrderBundle\Entity\Product $product
+     * @param \Frontend\ProductBundle\Entity\Product $product
      * @return OrderItem
      */
-    public function setProduct(\Frontend\OrderBundle\Entity\Product $product = null)
+    public function setProduct(\Frontend\ProductBundle\Entity\Product $product = null)
     {
         $this->product = $product;
 
@@ -179,7 +179,7 @@ class OrderItem
     /**
      * Get product
      *
-     * @return \Frontend\OrderBundle\Entity\Product 
+     * @return \Frontend\ProductBundle\Entity\Product 
      */
     public function getProduct()
     {

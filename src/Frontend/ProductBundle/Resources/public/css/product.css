@@ -150,7 +150,7 @@
 }
 
 .main #productTabs .list-wrap{
-    padding-top:20px;
+    padding: 10px;
 }
 
 #tabProductInformation .property-name{
@@ -160,7 +160,6 @@
 }
 
 .main .tabContent{
-    padding:10px;
 }
 
 #current-product-box .bottom_box li{
@@ -199,3 +198,32 @@
 .main #tabGuarantee p{
     padding:10px;
 }
+
+/*KÉRDÉSEK TAB*/
+#questions-table{
+    width:600px;
+    border-collapse:separate; 
+    border-spacing:1em;
+}
+
+#questions-table tbody> tr:last-of-type{
+    text-align: center !important;
+}
+#questions-table td:first-child{
+    width:100px;
+    font-weight:bold;
+    vertical-align: top;
+}
+
+#questions-table .questionerName, .questionerEmail{
+    width: 400px;
+    height: 25px;
+}
+
+#questions-table textarea{
+    width:400px;
+    height:200px;
+}
+
+
+

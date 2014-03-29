@@ -3,10 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/products.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/public/css/product.css</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Tabs/tabQuestions.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/config/doctrine/ProductQuestions.orm.xml</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Entity/Product.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/config/doctrine/Product.orm.xml</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Tabs/questions.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/ProductController.php</file>
             <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/product.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/css/shared_logged.css</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Form/ProductQuestionsType.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/public/js/ProductTabs.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Entity/ProductQuestions.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/new.html.twig</file>
         </group>
     </open-files>
 </project-private>

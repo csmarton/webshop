@@ -15,6 +15,8 @@
     <field name="inStock" type="boolean" column="in_stock" nullable="false"/>
     <one-to-many field="productImages" target-entity="ProductImages" mapped-by="product" />
     <one-to-many field="productPropertys" target-entity="ProductProperty" mapped-by="product" />
+    <one-to-one field="specialOffer" target-entity="SpecialOffers" mapped-by="product" />
+    <one-to-many field="productQuestions" target-entity="ProductQuestions" mapped-by="product" />
     <many-to-one field="categorys" target-entity="Category">
       <join-columns>
         <join-column name="category" referenced-column-name="id"/>

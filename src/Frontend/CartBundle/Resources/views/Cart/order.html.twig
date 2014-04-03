@@ -26,117 +26,67 @@
             {{parent()}}
         {% endblock %}        
         <div class="container">
-            <div>
-                <h2 class="page-title">Személyes adatok</h2>
-                <form action="{{ path('frontend_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="profile_edit_form">
-                     <div class="profile_edit_box_header">
-                         <h2>Általános adatok:</h2>
-                     </div>
-                     <div class="profile_edit_header_box">
-                        <div class="profile_edit_line_left">
-                            <div class="label_text">
-                                {{ form_label(form.name, 'Név:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.name) }}
-                            </div>
-                        </div>
-                         <div class="profile_edit_line_right">
-                            <div class="label_text">
-                                {{ form_label(form.telephone, 'Telefonszám:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.telephone) }}
-                            </div>
-                        </div>
+            <div id="order-information">
+                <h2 class="box-title">Személyes adatok</h2>
+                <form action="{{ path('frontend_profile_edit') }}" {{ form_enctype(ProfileForm) }} method="POST" class="profile_edit_form" novalidate>
+                    <div id="order-profile-data">
+                        <h2 class="box-title">Személyes adatok</h2>
+                        {{ form_label(ProfileForm.name, 'Név:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.name) }}
+                        {{ form_label(ProfileForm.telephone, 'Telefonszám:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.telephone) }}
                     </div>
-                     <div class="profile_edit_box_header">
-                         <h2>Számlázási cím:</h2>
-                     </div>
-                    <div class="profile_billing_information_box">
-                        <div class="profile_edit_line_left">
-                            <div class="label_text">
-                                {{ form_label(form.billingAddressCity, 'Település:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.billingAddressCity) }}
-                            </div>
-                        </div>
-                        <div class="profile_edit_line_right">
-                            <div class="label_text">
-                                {{ form_label(form.billingAddressStreet, 'Útca/út:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.billingAddressStreet) }}
-                            </div>
-                        </div>
-                        <div class="profile_edit_line_left">
-                            <div class="label_text">
-                                {{ form_label(form.billingAddressStreetNumber, 'Házszám:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.billingAddressStreetNumber) }}
-                            </div>
-                        </div>
-                        <div class="profile_edit_line_right">
-                            <div class="label_text">
-                                {{ form_label(form.billingAddressZipCode, 'Irányítószám:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.billingAddressZipCode) }}
-                            </div>
-                        </div>
+                    
+                    <div id="order-shipping-address">
+                        <h2 class="box-title">Szállítási cím</h2>
+                        {{ form_label(ProfileForm.shippingAddressCity, 'Település:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.shippingAddressCity) }}
+                        {{ form_label(ProfileForm.shippingAddressStreet, 'Útca/út:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.shippingAddressStreet) }}
+                        {{ form_label(ProfileForm.shippingAddressStreetNumber, 'Házszám:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.shippingAddressStreetNumber) }}
+                        {{ form_label(ProfileForm.shippingAddressZipCode, 'Irányítószám:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.shippingAddressZipCode) }}
                     </div>
-                     <div class="profile_edit_box_header">
-                         <h2>Szállítási cím:</h2>
-                     </div>
-                    <div class="profile_shipping_information_box"> 
-                        <div class="profile_edit_line_left">
-                            <div class="label_text">
-                                {{ form_label(form.shippingAddressCity, 'Település:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.shippingAddressCity) }}
-                            </div>
-                        </div>
-                        <div class="profile_edit_line_right">
-                            <div class="label_text">
-                                {{ form_label(form.shippingAddressStreet, 'Útca/út:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.shippingAddressStreet) }}
-                            </div>
-                        </div>
-                        <div class="profile_edit_line_left">
-                            <div class="label_text">
-                                {{ form_label(form.shippingAddressStreetNumber, 'Házszám:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.shippingAddressStreetNumber) }}
-                            </div>
-                        </div>
-                        <div class="profile_edit_line_right">
-                            <div class="label_text">
-                                {{ form_label(form.shippingAddressZipCode, 'Irányítószám:', { 'label_attr': {'class': 'labelText'}}) }}
-                            </div>
-                            <div class="input_box">
-                                {{ form_widget(form.shippingAddressZipCode) }}
-                            </div>
-                        </div>
+                    
+                    <div id="order-billing-address">
+                        <h2 class="box-title">Számlázási cím</h2>
+                        {{ form_label(ProfileForm.billingAddressCity, 'Település:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.billingAddressCity) }}
+                        {{ form_label(ProfileForm.billingAddressStreet, 'Útca/út:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.billingAddressStreet) }}
+                        {{ form_label(ProfileForm.billingAddressStreetNumber, 'Házszám:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.billingAddressStreetNumber) }}
+                        {{ form_label(ProfileForm.billingAddressZipCode, 'Irányítószám:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(ProfileForm.billingAddressZipCode) }}
                     </div>
-                    <div class="profile_edit_bottom_box"> 
-                        {% if (succesChanges is defined) %}
-                            <div class="profile_edit_error_line">
-                                {{ succesChanges }}
-                            </div>
-                        {% endif %} 
-                        <div class="profile_edit_bottom_menu">
-                                <input type="submit" value="Tovább" class="ok-button"/>
-                        </div>
-                    </div>    
-                     {{ form_widget(form._token) }}
+                    
+                    <div id="shipping-option-box">
+                        <h2 class="box-title">Szállítási mód</h2>
+                        {{ form_widget(orderForm.shippingOption) }}
+                    </div>
+                    <div id="payment-option-box">
+                        <h2 class="box-title">Fizetési mód</h2>
+                        {{ form_widget(orderForm.paymentOption) }}
+                    </div>
+                    <div id="order-comment-box">
+                        <h2 class="box-title">Megjegyzés</h2>
+                        {{ form_widget(orderForm.comment) }}
+                    </div>
+                    <div id="order-conditions-box">
+                        <h2 class="box-title">Vásárlási feltételek</h2>
+                        {% include "FrontendCartBundle:Cart:orderConditions.html.twig" %}
+                        {{ form_widget(orderForm.acceptConditions) }}
+                        {{ form_label(orderForm.acceptConditions, 'Feltételeket elfogadom', { 'label_attr': {'class': 'labelText'}}) }}
+                    </div>
+                                
+                    <input type="submit" value="Tovább" class="ok-button"/>
+                    
+                    {{ form_widget(orderForm._token) }}
+                    {{ form_widget(ProfileForm._token) }}
                  </form>
-        </div>
+            </div>
+            
         </div>
     </div>    
 {% endblock %}

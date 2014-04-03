@@ -102,12 +102,12 @@ class Order
     /**
      * @var \Frontend\OrderBundle\Entity\ShippingOption
      */
-    private $shipping_option;
+    private $shippingOption;
 
     /**
      * @var \Frontend\OrderBundle\Entity\PaymentOption
      */
-    private $payment_option;
+    private $paymentOption;
 
 
     /**
@@ -374,48 +374,48 @@ class Order
     }
 
     /**
-     * Set shipping_option
+     * Set shippingOption
      *
      * @param \Frontend\OrderBundle\Entity\ShippingOption $shippingOption
      * @return Order
      */
     public function setShippingOption(\Frontend\OrderBundle\Entity\ShippingOption $shippingOption = null)
     {
-        $this->shipping_option = $shippingOption;
+        $this->shippingOption = $shippingOption;
 
         return $this;
     }
 
     /**
-     * Get shipping_option
+     * Get shippingOption
      *
      * @return \Frontend\OrderBundle\Entity\ShippingOption 
      */
     public function getShippingOption()
     {
-        return $this->shipping_option;
+        return $this->shippingOption;
     }
 
     /**
-     * Set payment_option
+     * Set paymentOption
      *
      * @param \Frontend\OrderBundle\Entity\PaymentOption $paymentOption
      * @return Order
      */
     public function setPaymentOption(\Frontend\OrderBundle\Entity\PaymentOption $paymentOption = null)
     {
-        $this->payment_option = $paymentOption;
+        $this->paymentOption = $paymentOption;
 
         return $this;
     }
 
     /**
-     * Get payment_option
+     * Get paymentOption
      *
      * @return \Frontend\OrderBundle\Entity\PaymentOption 
      */
     public function getPaymentOption()
     {
-        return $this->payment_option;
+        return $this->paymentOption;
     }
 }

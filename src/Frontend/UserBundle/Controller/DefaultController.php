@@ -97,8 +97,7 @@ class DefaultController extends Controller
                     $encoded_pass = $encoder->encodePassword($password, $user->getSalt());
                     if($encoded_pass == $user->getPassword()){  
                             $token = new UsernamePasswordToken($user, null, "secured_area", $user->getRoles());
-                            $this->get("security.context")->setToken($token); //now the user is logged in
-
+                            $this->get("security.context")->setToken($token); 
                             //now dispatch the login event
                             $request = $this->get("request");
                             $event = new InteractiveLoginEvent($request, $token);

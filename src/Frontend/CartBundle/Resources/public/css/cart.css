@@ -134,10 +134,46 @@
     color: white;
 }
 
-.page-title{
+.box-title{
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 1.5em;
-    text-align: center;
     text-decoration: none;
+    color: #428bca;
+}
+
+#order-profile-data label,
+#order-shipping-address label,
+#order-billing-address label{
+    float: left;
+    width: 150px;
+}
+
+#order-profile-data input,
+#order-shipping-address input,
+#order-billing-address input{
+    display:block;
+    width: 250px;
+    height: 25px;
+    margin: 10px;
+    background-color: #F7F9FD;
+    border: 1px solid #D5D5D5;
+    padding: 5px;
+    font-weight: bold;
+}
+
+#shipping-option-box input,
+#payment-option-box input{
+    float: left;
+}
+
+#shipping-option-box label,
+#payment-option-box label{
+    display:block;
+    margin: 10px;
+}
+
+#order-comment-box textarea{
+    width: 100%;
+    height:100px;
 }

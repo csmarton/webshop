@@ -15,15 +15,21 @@ security:
         secured_area:
             pattern:    ^/
             form_login:
-                check_path: /login_check
-                login_path: /bejelentkezes
                 provider: fos_userbundle
+                csrf_provider: form.csrf_provider
             logout:
                 path:   /logout
                 target: /
+                invalidate_session: false
             anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
+            remember_me:
+                key: %secret%
+                lifetime: 31536000
+                path: ~
+                domain: ~
+                always_remember_me: true
 
     access_control:
          #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

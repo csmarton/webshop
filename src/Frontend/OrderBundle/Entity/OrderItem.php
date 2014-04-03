@@ -51,7 +51,7 @@ class OrderItem
 
 
     /**
-     * @var \Frontend\OrderBundle\Entity\Product
+     * @var \Frontend\ProductBundle\Entity\Product
      */
     private $product;
 

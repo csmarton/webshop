@@ -26,7 +26,7 @@
                                     <li id="my_profile">
                                         <a href="#">
                                                 <div id="profile_icon"></div>
-                                                <span id="my_profile_text">Profilom</span>
+                                                <span id="my-profile-text">Profilom</span>
                                         </a>
                                     </li>
                                     {% if is_granted('ROLE_ADMIN') %}
@@ -43,8 +43,8 @@
                                             </a>
                                     </li>#}
 				{% else %}
-					<li id="login_sign_in">
-						<a href="{{ path('frontend_login') }}">
+					<li id="login-sign-in">
+						<a href="javascript:void(0)">
 							<div id="sign_in"></div>
 							<span>Bejelentkezés/Regisztráció</span>
 						</a>
@@ -64,11 +64,20 @@
                 </ul>
             </div>    
         </div>
-        <div id="registrationContent" class="hide">
-            {% render controller('FOSUserBundle:Registration:register') %}
+        
+        <div id="modal-sign-in" class="reveal-modal">
+            <div class="formContent">
+                {% render controller('FOSUserBundle:Security:login') %}
+                 
+            </div>
         </div>
-        <div id="loginContent" class="hide">
-            {% render controller('FOSUserBundle:Security:login') %}
+        
+        <div id="modal-registration" class="reveal-modal">
+            <div class="formContent">
+                {% render controller('FOSUserBundle:Registration:register') %}               
+            </div>
         </div>
+                
+
     </div>
 </div>

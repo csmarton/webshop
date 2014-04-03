@@ -1,0 +1,22 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('frontend_registration') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register" autocomplete="off" id="registration-form">
+        <div class="topSection">
+        <div class="modal-content">
+            <h2>Regisztráció</h2>
+                <div>
+                    {{ form_widget(form) }}
+                </div>
+        </div>
+    </div>
+    <div class="bottomSection">
+        <div class="inputs">
+            <input type="submit" value="{{ 'registration.submit'|trans }}" class="ok-button" />       
+        </div>
+    </div>
+    
+
+    <div>
+        
+    </div>
+</form>

@@ -133,7 +133,7 @@
 			  modal.trigger('reveal:close')
 			});
 			
-			/*if(options.closeonbackgroundclick) {
+			if(options.closeonbackgroundclick) {
 				modalBG.css({"cursor":"pointer"})
 				modalBG.bind('click.modalEvent', function () {
 				  modal.trigger('reveal:close')
@@ -141,7 +141,7 @@
 			}
 			$('body').keyup(function(e) {
         		if(e.which===27){ modal.trigger('reveal:close'); } // 27 is the keycode for the Escape key
-			});*/
+			});
 			
 			
 /*---------------------------

@@ -15,13 +15,13 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', 'text', array('label' => 'Felhasználói név:', 'required'  => true))
+            ->add('username', 'text', array('label' => 'Felhasználói név:', 'required'  => false))
             ->add('usernameCanonical')
-            ->add('email')
+            ->add('email', 'text', array('label' => 'Email cím:', 'required'  => false))
             ->add('emailCanonical')
             ->add('enabled')
             //->add('salt')
-            ->add('password','password')
+            ->add('password','password', array('label' => 'Jelszó:', 'required'  => false))
            // ->add('lastLogin')
             //->add('locked')
             //->add('expired')

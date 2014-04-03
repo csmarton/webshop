@@ -14,14 +14,17 @@
             <link rel="stylesheet" href="{{ asset('css/jquery-autocomplete.min.css') }}"/>
             <link rel="stylesheet" href="{{ asset('bundles/frontendproduct/css/product.css') }}"/>
             <link rel="stylesheet" href="{{ asset('css/validationEngine-jquery.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/reveal.css') }}"/>
              
             <script type="text/javascript" src="{{ asset('js/jquery-2.1.0.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery.reveal.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/jquery.qtip.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/jquery-autocomplete.min.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/accordion.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/frontendlayout/js/Shared.js') }}"></script>
             <script type="text/javascript" src="{{ asset('bundles/frontendsearch/js/SharedSearch.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/frontendprofile/js/Profile.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/JqueryValidationEngine-hu.js') }}"></script>
             <script type="text/javascript" src="{{ asset('js/JqueryValidationEngine.js') }}"></script>           
             
@@ -29,6 +32,7 @@
                     $(document).ready(function(){
                         Shared.init();
                         SharedSearch.init();
+                        Profile.init();
                         //$( "#leftMenu" ).accordion();
                     });
             </script>

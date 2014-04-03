@@ -5,6 +5,8 @@ namespace Frontend\CartBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Frontend\ProfileBundle\Entity\Profile;
+use Frontend\ProfileBundle\Form\ProfileType;
 
 class CartController extends Controller
 {
@@ -50,5 +52,33 @@ class CartController extends Controller
             $productsWithCount[] = array($product,$inCart[$product->getId()]);
         }
         return $this->render('FrontendCartBundle:Cart:cart.html.twig',array('productsWithCount' => $productsWithCount));
+    }
+    
+    public function orderAction(){
+        $request = $this->get('request');
+             $user = $this->get('security.context')->getToken()->getUser();
+             if( $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY') )
+                 return $this->redirect($this->generateUrl('frontend_cart'));
+                 
+             $profile = $user->getProfile();
+             
+             $form = $this->createForm(new ProfileType(),$profile);
+        
+             if ($request->getMethod() == 'POST') {
+                $form->bind($request);
+                if ($form->isValid()) { 
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($profile);
+                    $em->flush();
+                    $html = "Sikeresen megváltoztattad az adataidat!";
+                        return $this->render('FrontendProfileBundle:Default:edit.html.twig', array(
+                            'form' => $form->createView(),
+                            'succesChanges' => $html
+                            ));
+                    }                
+             }    
+        return $this->render('FrontendCartBundle:Cart:order.html.twig',array(
+            'form' => $form->createView()
+        ));
     }
 }

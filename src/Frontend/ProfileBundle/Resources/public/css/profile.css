@@ -13,7 +13,7 @@
 .profile_edit_form .label_text{
     float: left;
     font-weight: bold;
-    width: 100px;
+    width: 120px;
 }
 
 .profile_edit_form .input_box{
@@ -48,13 +48,4 @@ h2{
     font-weight: bold;
     text-decoration: underline;
     font-size: 1.2em;
-}
-
-.page_title{
-    padding: 10px;
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: 1.5em;
-    text-align: center;
-    border-bottom: 2px solid rgb(233, 233, 233);
 }

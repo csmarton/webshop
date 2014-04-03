@@ -1,0 +1,81 @@
+<?php
+
+namespace Frontend\ProductBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ProductQuestions
+ *
+ * @ORM\Table(name="product_questions")
+ * @ORM\Entity
+ */
+class ProductQuestions
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="product_id", type="integer", nullable=false)
+     */
+    private $productId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=50, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="question", type="text", nullable=false)
+     */
+    private $question;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="answer", type="text", nullable=true)
+     */
+    private $answer;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="question_time", type="datetime", nullable=false)
+     */
+    private $questionTime = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="answer_time", type="datetime", nullable=false)
+     */
+    private $answerTime;
+
+
+}

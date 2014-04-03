@@ -21,6 +21,10 @@ frontend_registration:
     pattern:  /profil/regisztracio
     defaults: { _controller: FrontendUserBundle:Default:registration}
     
-frontend_login:
-    pattern:  /profil/bejelentkezes
-    defaults: { _controller: FrontendUserBundle:Default:login}    
+#frontend_login:
+#    pattern:  /profil/bejelentkezes
+#    defaults: { _controller: FrontendUserBundle:Default:login}   
+    
+frontend_login_check:
+    pattern:  /profil/bejelentkezes/ellenorzed
+    defaults: { _controller: FrontendUserBundle:Default:checkLogin}        

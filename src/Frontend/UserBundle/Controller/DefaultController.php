@@ -16,7 +16,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Frontend\ProfileBundle\Entity\Profile;
 use Frontend\ProfileBundle\Form\ProfileType;
+use Frontend\UserBundle\Entity\User;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class DefaultController extends Controller
 {
     public function registrationAction(Request $request){
@@ -27,7 +32,7 @@ class DefaultController extends Controller
         $userManager = $this->container->get('fos_user.user_manager');
         /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
         $dispatcher = $this->container->get('event_dispatcher');
-         $user = $userManager->createUser();
+        $user = $userManager->createUser();
         $user->setEnabled(true);
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
@@ -68,7 +73,44 @@ class DefaultController extends Controller
 	}
         
         public function loginAction(){
+            
             return $this->render('FrontendUserBundle:Default:login.html.twig');
+        }
+        
+        public function checkLoginAction() {
+           $request = $this->get('request');
+            if('POST' === $request->getMethod()){
+                $em = $this->getDoctrine()->getEntityManager();		
+                $email = $request->request->get('email');
+                $password = $request->request->get('password');
+                
+                $user = $this->getDoctrine()->getRepository('FrontendUserBundle:User')
+                    ->createQueryBuilder('u')
+                    ->where('u.email = :email')
+                    ->setParameter(':email', $email)
+                    ->getQuery()
+                    ->getOneOrNullResult();                        
+
+                if (count($user) != 0){
+                    $encoder_service = $this->get('security.encoder_factory');
+                    $encoder = $encoder_service->getEncoder($user);
+                    $encoded_pass = $encoder->encodePassword($password, $user->getSalt());
+                    if($encoded_pass == $user->getPassword()){  
+                            $token = new UsernamePasswordToken($user, null, "secured_area", $user->getRoles());
+                            $this->get("security.context")->setToken($token); //now the user is logged in
+
+                            //now dispatch the login event
+                            $request = $this->get("request");
+                            $event = new InteractiveLoginEvent($request, $token);
+                            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+    
+                        return new JsonResponse(array('success' => true, 'exists' => true));
+                    }    
+                }
+                return new JsonResponse(array('success' => true,'exists' => false));
+                
+            }
+            return new JsonResponse(array ('success'=>false));
         }
         
         

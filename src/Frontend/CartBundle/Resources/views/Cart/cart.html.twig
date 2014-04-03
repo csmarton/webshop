@@ -6,9 +6,11 @@
 {% block javascripts %}
 	{{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/Product.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendcart/js/Cart.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
                 Product.init();
+                Cart.init();
             });
     </script>
 {% endblock %}
@@ -19,13 +21,13 @@
             {{parent()}}
         {% endblock %}        
         <div class="container">
-            <h2>Termékek</h2>
+            <h2 class="page-title">Termékek</h2>
        
             <table class="cart_table">
                 <thead>
                     <tr>
                         <th scope="col">Terméknév</th>                        
-                        <th scope="col">Rövid leírás</th>
+                        <th scope="col">Leírás</th>
                         <th scope="col">Mennyiség</th>
                         <th scope="col">Ár(Ft)</th>
                         <th scope="col">Kijelölés törlése</th>
@@ -39,7 +41,7 @@
                          {% set cartPrice = cartPrice + productWithCount[0].getPrice() %}
                         <tr>
                             <td>{{ productWithCount[0].getName() }}</td>                            
-                            <td>{{ productWithCount[0].getShortDescription()}}</td>
+                            <td></td>
                             <td><input type="number" value="{{ productWithCount[1] }}"/></td>
                             <td>{{ productWithCount[1]*productWithCount[0].getPrice() }}</td>
                             <td><input type="checkbox" name="deleteProductFromCart" value="{{productWithCount[0].getId()}}"/></td>
@@ -54,9 +56,14 @@
                          <td><input type="checkbox" name="deleteProductFromCart" value="all"/></td>
                        </tr>
                        <tr >
-                            <td colspan="5">
-                                <input type="submit" value="Megrendel" class="menu_btn ok_btn">
-                                <input type="button" value="Kosár frissítése" class="menu_btn cart_update_btn">
+                            <td colspan="5">   
+                                {% if (is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
+                                    {% set isLoggedIn = 1 %}
+                                {% else %}
+                                    {% set isLoggedIn = 0 %}
+                                {% endif %}    
+                                <a href="{{path('frontend_cart_order')}}" class="menu_btn ok_btn" id="order-button" isLoggedIn = {{isLoggedIn}}>Megrendel</a>
+                                <a href="" class="menu_btn ok_btn" id="cart_update_btn">Kosár frissítése</a>
                             </td>
                        </tr>
                      </tfoot>

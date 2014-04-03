@@ -99,7 +99,7 @@
     font-weight: bold;
 }
 
-.cart_update_btn{
+#cart_update_btn{
     background-color: #47a447;
     border-color: #398439;
 }
@@ -132,4 +132,12 @@
     width: 18px;
     text-align: center;
     color: white;
+}
+
+.page-title{
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+    text-decoration: none;
 }

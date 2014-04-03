@@ -4,35 +4,33 @@
 {% endblock fos_user_content %}
 
 
-<form action="{{ path("fos_user_security_check") }}"  method="POST">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    <table id="registration_table">
-        <tr>
-            <td>
-                <label for="username">{{ 'security.login.username'|trans }}</label>
-            </td>
-            <td>
-                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
-            </td>    
-        </tr>
-        <tr>
-            <td>
-                <label for="password">{{ 'security.login.password'|trans }}</label>
-            </td>
-            <td>
-                <input type="password" id="password" name="_password" required="required" />
-            </td>    
-        </tr>   
-        <tr>
-            <td>
-                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-            </td>   
-        </tr>   
-        <tr>
-            <td colspan="2">
-                <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-            </td> 
-        </tr> 
-    </table>
-</form>
+
+<form action="{{ path("fos_user_security_check") }}"  method="POST" id="sign-in-form" checklink="{{path('frontend_login_check')}}" autocomplete="off">
+    <div class="topSection">
+        <div class="modal-content">
+            <h2>Bejelentkezés</h2>
+                <div>
+                    <label for="email">Email cím</label>                        
+                    <input type="text" id="email" name="_email"/>
+                    <label for="password">Jelszó</label>
+                    <input type="password" id="password" name="_password"/>
+                </div>
+                <div>
+                    Elfelejtetted a jelszavadat? Kattints <a href="#" id="forger-password-link">ide</a>
+                </div>
+                <div>
+                    Még nem regisztráltál? <a href="#" id="registration-password-link">Ide</a> kattintva megteheted
+                </div>
+                {#<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />#}
+                
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        </div>
+    </div>
+    <div class="bottomSection">
+        <div class="inputs">
+            <input type="button" value="Bejelentkezés" id="submit-login-form-button" class="ok-button">                    
+        </div>
+    </div>
+</form>    
+

@@ -79,9 +79,9 @@ class Product
     private $isActive;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="in_stock", type="boolean", nullable=false)
+     * @ORM\Column(name="in_stock", type="integer", nullable=false)
      */
     private $inStock;
 
@@ -308,7 +308,7 @@ class Product
     /**
      * Set inStock
      *
-     * @param boolean $inStock
+     * @param integer $inStock
      * @return Product
      */
     public function setInStock($inStock)
@@ -321,7 +321,7 @@ class Product
     /**
      * Get inStock
      *
-     * @return boolean 
+     * @return integer 
      */
     public function getInStock()
     {

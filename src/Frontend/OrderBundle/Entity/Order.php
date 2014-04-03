@@ -99,6 +99,16 @@ class Order
     private $acceptConditions;
 
 
+    /**
+     * @var \Frontend\OrderBundle\Entity\ShippingOption
+     */
+    private $shipping_option;
+
+    /**
+     * @var \Frontend\OrderBundle\Entity\PaymentOption
+     */
+    private $payment_option;
+
 
     /**
      * Set userId
@@ -361,5 +371,51 @@ class Order
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set shipping_option
+     *
+     * @param \Frontend\OrderBundle\Entity\ShippingOption $shippingOption
+     * @return Order
+     */
+    public function setShippingOption(\Frontend\OrderBundle\Entity\ShippingOption $shippingOption = null)
+    {
+        $this->shipping_option = $shippingOption;
+
+        return $this;
+    }
+
+    /**
+     * Get shipping_option
+     *
+     * @return \Frontend\OrderBundle\Entity\ShippingOption 
+     */
+    public function getShippingOption()
+    {
+        return $this->shipping_option;
+    }
+
+    /**
+     * Set payment_option
+     *
+     * @param \Frontend\OrderBundle\Entity\PaymentOption $paymentOption
+     * @return Order
+     */
+    public function setPaymentOption(\Frontend\OrderBundle\Entity\PaymentOption $paymentOption = null)
+    {
+        $this->payment_option = $paymentOption;
+
+        return $this;
+    }
+
+    /**
+     * Get payment_option
+     *
+     * @return \Frontend\OrderBundle\Entity\PaymentOption 
+     */
+    public function getPaymentOption()
+    {
+        return $this->payment_option;
     }
 }

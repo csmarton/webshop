@@ -214,9 +214,80 @@ padding-top: 30px;
 .container{
     width: 810px;
     float: right;
+    padding-top: 30px;
 }
 
 .clear{
     clear: both;
     display: table;
+}
+
+.ok-button:hover {
+    text-decoration: underline;
+}
+
+.ok-button {
+    text-transform: uppercase;
+    border-radius: 3px;
+    color: #ffffff;
+    background-color: #428bca;
+    border:none;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+//REGISZTRÁCIÓS/BEJELENTKEZÉS MODÁLIS ABLAK
+#modal-sign-in .formContent,
+#modal-registration .formContent{
+    padding:10px;
+}
+
+#modal-sign-in .topSection,
+#modal-registration .topSection{
+    padding: 10px;
+}
+
+#modal-sign-in .bottomSection,
+#modal-registration .bottomSection{
+    padding-top: 5px;
+    text-align: center;
+}
+
+#modal-sign-in h2,
+#modal-registration h2{
+    color: black;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+#modal-sign-in #sign-in-form .modal-content div
+#modal-registration #registration-form .modal-content div{
+    padding-top: 5px;
+}
+
+#modal-sign-in #sign-in-form .modal-content label,
+#modal-registration #registration-form .modal-content label{
+    float: left;
+    margin-right: 10px;
+    width: 150px;
+}
+
+#modal-sign-in #sign-in-form .modal-content input,
+#modal-registration #registration-form .modal-content input{
+    width: 200px;
+    display: block;
+    padding: 5px;
+    margin: 10px;
 }

@@ -5,12 +5,12 @@ namespace Frontend\OrderBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrderItem
+ * OrdersItem
  *
- * @ORM\Table(name="order_item")
+ * @ORM\Table(name="orders_item")
  * @ORM\Entity
  */
-class OrderItem
+class OrdersItem
 {
     /**
      * @var integer
@@ -42,13 +42,6 @@ class OrderItem
      */
     private $unitQuantity;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="unit_price", type="integer", nullable=false)
-     */
-    private $unitPrice;
-
 
     /**
      * @var \Frontend\ProductBundle\Entity\Product
@@ -56,16 +49,16 @@ class OrderItem
     private $product;
 
     /**
-     * @var \Frontend\OrderBundle\Entity\Order
+     * @var \Frontend\OrderBundle\Entity\Orders
      */
-    private $order;
+    private $orders;
 
 
     /**
      * Set orderId
      *
      * @param integer $orderId
-     * @return OrderItem
+     * @return OrdersItem
      */
     public function setOrderId($orderId)
     {
@@ -88,7 +81,7 @@ class OrderItem
      * Set productId
      *
      * @param integer $productId
-     * @return OrderItem
+     * @return OrdersItem
      */
     public function setProductId($productId)
     {
@@ -111,7 +104,7 @@ class OrderItem
      * Set unitQuantity
      *
      * @param integer $unitQuantity
-     * @return OrderItem
+     * @return OrdersItem
      */
     public function setUnitQuantity($unitQuantity)
     {
@@ -131,29 +124,6 @@ class OrderItem
     }
 
     /**
-     * Set unitPrice
-     *
-     * @param integer $unitPrice
-     * @return OrderItem
-     */
-    public function setUnitPrice($unitPrice)
-    {
-        $this->unitPrice = $unitPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get unitPrice
-     *
-     * @return integer 
-     */
-    public function getUnitPrice()
-    {
-        return $this->unitPrice;
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -167,7 +137,7 @@ class OrderItem
      * Set product
      *
      * @param \Frontend\ProductBundle\Entity\Product $product
-     * @return OrderItem
+     * @return OrdersItem
      */
     public function setProduct(\Frontend\ProductBundle\Entity\Product $product = null)
     {
@@ -187,25 +157,25 @@ class OrderItem
     }
 
     /**
-     * Set order
+     * Set orders
      *
-     * @param \Frontend\OrderBundle\Entity\Order $order
-     * @return OrderItem
+     * @param \Frontend\OrderBundle\Entity\Orders $orders
+     * @return OrdersItem
      */
-    public function setOrder(\Frontend\OrderBundle\Entity\Order $order = null)
+    public function setOrders(\Frontend\OrderBundle\Entity\Orders $orders = null)
     {
-        $this->order = $order;
+        $this->orders = $orders;
 
         return $this;
     }
 
     /**
-     * Get order
+     * Get orders
      *
-     * @return \Frontend\OrderBundle\Entity\Order 
+     * @return \Frontend\OrderBundle\Entity\Orders 
      */
-    public function getOrder()
+    public function getOrders()
     {
-        return $this->order;
+        return $this->orders;
     }
 }

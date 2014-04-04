@@ -10,12 +10,15 @@
     
 {% block javascripts %}
 	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jquery.slimscrol.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/Product.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/frontendcart/js/Cart.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendorder/js/OrderValidation.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
                 Product.init();
                 Cart.init();
+                OrderValidation.init();
             });
     </script>
 {% endblock %}
@@ -27,29 +30,29 @@
         {% endblock %}        
         <div class="container">
             <div id="order-information">
-                <h2 class="box-title">Személyes adatok</h2>
-                <form action="{{ path('frontend_profile_edit') }}" {{ form_enctype(ProfileForm) }} method="POST" class="profile_edit_form" novalidate>
-                    <div id="order-profile-data">
+                <h2 class="page-title">Rendelés leadása</h2>
+                <form action="{{ path('frontend_cart_orders') }}" {{ form_enctype(ProfileForm) }} {{ form_enctype(orderForm) }} method="POST" id="order_edit_form" novalidate>
+                    <div id="order-profile-data" class="order-information-boxes">
                         <h2 class="box-title">Személyes adatok</h2>
                         {{ form_label(ProfileForm.name, 'Név:', { 'label_attr': {'class': 'labelText'}}) }}
-                        {{ form_widget(ProfileForm.name) }}
+                        {{ form_widget(ProfileForm.name, { 'attr': {'class': 'validate[required] name'} } ) }}
                         {{ form_label(ProfileForm.telephone, 'Telefonszám:', { 'label_attr': {'class': 'labelText'}}) }}
-                        {{ form_widget(ProfileForm.telephone) }}
+                        {{ form_widget(ProfileForm.telephone, { 'attr': {'class': 'validate[required] telephone'}} ) }}
                     </div>
                     
-                    <div id="order-shipping-address">
+                    <div id="order-shipping-address" class="order-information-boxes">
                         <h2 class="box-title">Szállítási cím</h2>
                         {{ form_label(ProfileForm.shippingAddressCity, 'Település:', { 'label_attr': {'class': 'labelText'}}) }}
-                        {{ form_widget(ProfileForm.shippingAddressCity) }}
+                        {{ form_widget(ProfileForm.shippingAddressCity, { 'attr': {'class': 'validate[required] shippingAddressCity'}} ) }}
                         {{ form_label(ProfileForm.shippingAddressStreet, 'Útca/út:', { 'label_attr': {'class': 'labelText'}}) }}
-                        {{ form_widget(ProfileForm.shippingAddressStreet) }}
+                        {{ form_widget(ProfileForm.shippingAddressStreet, { 'attr': {'class': 'validate[required] shippingAddressStreet'}} ) }}
                         {{ form_label(ProfileForm.shippingAddressStreetNumber, 'Házszám:', { 'label_attr': {'class': 'labelText'}}) }}
-                        {{ form_widget(ProfileForm.shippingAddressStreetNumber) }}
+                        {{ form_widget(ProfileForm.shippingAddressStreetNumber, { 'attr': {'class': 'validate[required] shippingAddressStreetNumber'}} ) }}
                         {{ form_label(ProfileForm.shippingAddressZipCode, 'Irányítószám:', { 'label_attr': {'class': 'labelText'}}) }}
-                        {{ form_widget(ProfileForm.shippingAddressZipCode) }}
+                        {{ form_widget(ProfileForm.shippingAddressZipCode, { 'attr': {'class': 'validate[required] shippingAddressZipCode'}} ) }}
                     </div>
                     
-                    <div id="order-billing-address">
+                    <div id="order-billing-address" class="order-information-boxes">
                         <h2 class="box-title">Számlázási cím</h2>
                         {{ form_label(ProfileForm.billingAddressCity, 'Település:', { 'label_attr': {'class': 'labelText'}}) }}
                         {{ form_widget(ProfileForm.billingAddressCity) }}
@@ -61,27 +64,34 @@
                         {{ form_widget(ProfileForm.billingAddressZipCode) }}
                     </div>
                     
-                    <div id="shipping-option-box">
+                    <div id="shipping-option-box" class="order-information-boxes">
                         <h2 class="box-title">Szállítási mód</h2>
-                        {{ form_widget(orderForm.shippingOption) }}
+                        {% for option in orderForm.shippingOption%}										
+                            {{ form_widget(option,{'attr': {'class': 'shippingOption  validate[required]'}}) }}
+                            {{ form_label(option)}}										
+                        {% endfor %}
                     </div>
-                    <div id="payment-option-box">
+                    <div id="payment-option-box" class="order-information-boxes">
                         <h2 class="box-title">Fizetési mód</h2>
-                        {{ form_widget(orderForm.paymentOption) }}
+                        {% for option in orderForm.paymentOption%}										
+                                {{ form_widget(option,{'attr': {'class': 'paymentOption  validate[required]'}}) }}
+                                {{ form_label(option)}}										
+                        {% endfor %}	
                     </div>
-                    <div id="order-comment-box">
+                    <div id="order-comment-box" class="order-information-boxes">
                         <h2 class="box-title">Megjegyzés</h2>
                         {{ form_widget(orderForm.comment) }}
                     </div>
-                    <div id="order-conditions-box">
+                    <div id="order-conditions-box" class="order-information-boxes">
                         <h2 class="box-title">Vásárlási feltételek</h2>
-                        {% include "FrontendCartBundle:Cart:orderConditions.html.twig" %}
-                        {{ form_widget(orderForm.acceptConditions) }}
+                        <div id="order-conditions">
+                            {% include "FrontendOrderBundle:Order:orderConditions.html.twig" %}
+                        </div>    
+                        {{ form_widget(orderForm.acceptConditions, { 'attr': {'class': 'validate[required] acceptConditions'}} ) }}
                         {{ form_label(orderForm.acceptConditions, 'Feltételeket elfogadom', { 'label_attr': {'class': 'labelText'}}) }}
                     </div>
                                 
                     <input type="submit" value="Tovább" class="ok-button"/>
-                    
                     {{ form_widget(orderForm._token) }}
                     {{ form_widget(ProfileForm._token) }}
                  </form>

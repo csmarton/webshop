@@ -5,12 +5,12 @@ namespace Frontend\OrderBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Order
+ * Orders
  *
- * @ORM\Table(name="order")
+ * @ORM\Table(name="orders")
  * @ORM\Entity
  */
-class Order
+class Orders
 {
     /**
      * @var integer
@@ -31,37 +31,37 @@ class Order
     /**
      * @var integer
      *
-     * @ORM\Column(name="items_total", type="integer", nullable=false)
+     * @ORM\Column(name="items_total", type="integer", nullable=true)
      */
     private $itemsTotal;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="items_total_price", type="integer", nullable=false)
+     * @ORM\Column(name="items_total_price", type="integer", nullable=true)
      */
     private $itemsTotalPrice;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", nullable=false)
+     * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @ORM\Column(name="ordered_at", type="datetime", nullable=false)
      */
-    private $createdAt;
+    private $orderedAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @ORM\Column(name="performed_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private $performedAt;
 
     /**
      * @var integer
@@ -80,14 +80,14 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(name="payment_state", type="string", length=60, nullable=false)
+     * @ORM\Column(name="payment_state", type="string", length=60, nullable=true)
      */
     private $paymentState;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="shipping_state", type="string", length=60, nullable=false)
+     * @ORM\Column(name="shipping_state", type="string", length=60, nullable=true)
      */
     private $shippingState;
 
@@ -100,6 +100,11 @@ class Order
 
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $orderItems;
+
+    /**
      * @var \Frontend\OrderBundle\Entity\ShippingOption
      */
     private $shippingOption;
@@ -109,12 +114,24 @@ class Order
      */
     private $paymentOption;
 
+    /**
+     * @var \Frontend\UserBundle\Entity\User
+     */
+    private $user;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Set userId
      *
      * @param integer $userId
-     * @return Order
+     * @return Orders
      */
     public function setUserId($userId)
     {
@@ -137,7 +154,7 @@ class Order
      * Set itemsTotal
      *
      * @param integer $itemsTotal
-     * @return Order
+     * @return Orders
      */
     public function setItemsTotal($itemsTotal)
     {
@@ -160,7 +177,7 @@ class Order
      * Set itemsTotalPrice
      *
      * @param integer $itemsTotalPrice
-     * @return Order
+     * @return Orders
      */
     public function setItemsTotalPrice($itemsTotalPrice)
     {
@@ -183,7 +200,7 @@ class Order
      * Set comment
      *
      * @param string $comment
-     * @return Order
+     * @return Orders
      */
     public function setComment($comment)
     {
@@ -203,56 +220,56 @@ class Order
     }
 
     /**
-     * Set createdAt
+     * Set orderedAt
      *
-     * @param \DateTime $createdAt
-     * @return Order
+     * @param \DateTime $orderedAt
+     * @return Orders
      */
-    public function setCreatedAt($createdAt)
+    public function setOrderedAt($orderedAt)
     {
-        $this->createdAt = $createdAt;
+        $this->orderedAt = $orderedAt;
 
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get orderedAt
      *
      * @return \DateTime 
      */
-    public function getCreatedAt()
+    public function getOrderedAt()
     {
-        return $this->createdAt;
+        return $this->orderedAt;
     }
 
     /**
-     * Set updatedAt
+     * Set performedAt
      *
-     * @param \DateTime $updatedAt
-     * @return Order
+     * @param \DateTime $performedAt
+     * @return Orders
      */
-    public function setUpdatedAt($updatedAt)
+    public function setPerformedAt($performedAt)
     {
-        $this->updatedAt = $updatedAt;
+        $this->performedAt = $performedAt;
 
         return $this;
     }
 
     /**
-     * Get updatedAt
+     * Get performedAt
      *
      * @return \DateTime 
      */
-    public function getUpdatedAt()
+    public function getPerformedAt()
     {
-        return $this->updatedAt;
+        return $this->performedAt;
     }
 
     /**
      * Set paymentOptionId
      *
      * @param integer $paymentOptionId
-     * @return Order
+     * @return Orders
      */
     public function setPaymentOptionId($paymentOptionId)
     {
@@ -275,7 +292,7 @@ class Order
      * Set shippingOptionId
      *
      * @param integer $shippingOptionId
-     * @return Order
+     * @return Orders
      */
     public function setShippingOptionId($shippingOptionId)
     {
@@ -298,7 +315,7 @@ class Order
      * Set paymentState
      *
      * @param string $paymentState
-     * @return Order
+     * @return Orders
      */
     public function setPaymentState($paymentState)
     {
@@ -321,7 +338,7 @@ class Order
      * Set shippingState
      *
      * @param string $shippingState
-     * @return Order
+     * @return Orders
      */
     public function setShippingState($shippingState)
     {
@@ -344,7 +361,7 @@ class Order
      * Set acceptConditions
      *
      * @param boolean $acceptConditions
-     * @return Order
+     * @return Orders
      */
     public function setAcceptConditions($acceptConditions)
     {
@@ -374,10 +391,43 @@ class Order
     }
 
     /**
+     * Add orderItems
+     *
+     * @param \Frontend\OrderBundle\Entity\OrdersItem $orderItems
+     * @return Orders
+     */
+    public function addOrderItem(\Frontend\OrderBundle\Entity\OrdersItem $orderItems)
+    {
+        $this->orderItems[] = $orderItems;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderItems
+     *
+     * @param \Frontend\OrderBundle\Entity\OrdersItem $orderItems
+     */
+    public function removeOrderItem(\Frontend\OrderBundle\Entity\OrdersItem $orderItems)
+    {
+        $this->orderItems->removeElement($orderItems);
+    }
+
+    /**
+     * Get orderItems
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderItems()
+    {
+        return $this->orderItems;
+    }
+
+    /**
      * Set shippingOption
      *
      * @param \Frontend\OrderBundle\Entity\ShippingOption $shippingOption
-     * @return Order
+     * @return Orders
      */
     public function setShippingOption(\Frontend\OrderBundle\Entity\ShippingOption $shippingOption = null)
     {
@@ -400,7 +450,7 @@ class Order
      * Set paymentOption
      *
      * @param \Frontend\OrderBundle\Entity\PaymentOption $paymentOption
-     * @return Order
+     * @return Orders
      */
     public function setPaymentOption(\Frontend\OrderBundle\Entity\PaymentOption $paymentOption = null)
     {
@@ -417,5 +467,28 @@ class Order
     public function getPaymentOption()
     {
         return $this->paymentOption;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Frontend\UserBundle\Entity\User $user
+     * @return Orders
+     */
+    public function setUser(\Frontend\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Frontend\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

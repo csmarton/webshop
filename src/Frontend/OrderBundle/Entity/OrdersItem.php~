@@ -1,0 +1,46 @@
+<?php
+
+namespace Frontend\OrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * OrdersItem
+ *
+ * @ORM\Table(name="orders_item")
+ * @ORM\Entity
+ */
+class OrdersItem
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order_id", type="integer", nullable=false)
+     */
+    private $orderId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="product_id", type="integer", nullable=false)
+     */
+    private $productId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="unit_quantity", type="integer", nullable=false)
+     */
+    private $unitQuantity;
+
+
+}

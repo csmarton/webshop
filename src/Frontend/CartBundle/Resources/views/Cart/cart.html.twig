@@ -50,10 +50,10 @@
                     <tfoot>
                        <tr>
                          <td>Összegezve</td>
-                         <td>-</td>
+                         <td></td>
                          <td>{{ cartCount }}</td>
                          <td>{{ cartPrice }}</td>
-                         <td><input type="checkbox" name="deleteProductFromCart" value="all"/></td>
+                         <td></td>
                        </tr>
                        <tr >
                             <td colspan="5">   
@@ -62,7 +62,7 @@
                                 {% else %}
                                     {% set isLoggedIn = 0 %}
                                 {% endif %}    
-                                <a href="{{path('frontend_cart_order')}}" class="menu_btn ok_btn" id="order-button" isLoggedIn = {{isLoggedIn}}>Megrendel</a>
+                                <a href="{{path('frontend_cart_orders')}}" class="menu_btn ok_btn" id="order-button" isLoggedIn = {{isLoggedIn}}>Megrendel</a>
                                 <a href="" class="menu_btn ok_btn" id="cart_update_btn">Kosár frissítése</a>
                             </td>
                        </tr>

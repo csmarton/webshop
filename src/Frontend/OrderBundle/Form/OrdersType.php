@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class OrderType extends AbstractType
+class OrdersType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -17,11 +17,11 @@ class OrderType extends AbstractType
     {
         $builder
             ->add('userId')
-            ->add('itemsTotal')
-            ->add('itemsTotalPrice')
+            ->add('itemsTotal', 'hidden')
+            ->add('itemsTotalPrice', 'hidden')
             ->add('comment')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('orderedAt')
+            ->add('performedAt')
             ->add('paymentOptionId')
             ->add('shippingOptionId')
             ->add('paymentState')
@@ -39,8 +39,6 @@ class OrderType extends AbstractType
                 'multiple' => false,
                 'query_builder' => function(EntityRepository $er) {return $er->createQueryBuilder('c');}
                 ))    
-            //->add('shippingOption')
-            //->add('paymentOption')
         ;
     }
     
@@ -50,7 +48,7 @@ class OrderType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Frontend\OrderBundle\Entity\Order'
+            'data_class' => 'Frontend\OrderBundle\Entity\Orders'
         ));
     }
 
@@ -59,6 +57,6 @@ class OrderType extends AbstractType
      */
     public function getName()
     {
-        return 'frontend_orderbundle_order';
+        return 'frontend_orderbundle_orders';
     }
 }

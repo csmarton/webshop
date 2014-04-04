@@ -5,12 +5,12 @@ namespace Frontend\OrderBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Order
+ * Orders
  *
- * @ORM\Table(name="order")
+ * @ORM\Table(name="orders")
  * @ORM\Entity
  */
-class Order
+class Orders
 {
     /**
      * @var integer

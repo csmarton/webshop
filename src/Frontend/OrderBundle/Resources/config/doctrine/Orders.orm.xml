@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Frontend\OrderBundle\Entity\Order" table="order">
+  <entity name="Frontend\OrderBundle\Entity\Orders" table="orders">
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
@@ -8,8 +8,8 @@
     <field name="itemsTotal" type="integer" column="items_total" nullable="true"/>
     <field name="itemsTotalPrice" type="integer" column="items_total_price" nullable="true"/>
     <field name="comment" type="text" column="comment" nullable="true"/>
-    <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
-    <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
+    <field name="orderedAt" type="datetime" column="ordered_at" nullable="false"/>
+    <field name="performedAt" type="datetime" column="performed_at" nullable="true"/>
     <field name="paymentOptionId" type="integer" column="payment_option_id" nullable="false"/>
     <field name="shippingOptionId" type="integer" column="shipping_option_id" nullable="false"/>
     <field name="paymentState" type="string" column="payment_state" length="60" nullable="true"/>
@@ -25,5 +25,11 @@
         <join-column name="payment_option_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
+    <many-to-one field="user" target-entity="Frontend\UserBundle\Entity\User">
+      <join-columns>
+        <join-column name="user_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <one-to-many field="orderItems" target-entity="OrdersItem" mapped-by="orderItems" />
   </entity>
 </doctrine-mapping>

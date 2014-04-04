@@ -199,10 +199,11 @@ min-height: 100%;
 }
 
 .main{
-min-height: 100%;
-margin: 0 auto;
-width: 1024px;
-position: relative;
+    min-height: 100%;
+    margin: 0 auto;
+    width: 1024px;
+    position: relative;
+    overflow: hidden;
 }
 
 .sidebar{
@@ -290,4 +291,13 @@ padding-top: 30px;
     display: block;
     padding: 5px;
     margin: 10px;
+}
+
+
+.page-title{
+    font-weight: bold;
+    font-size: 1.5em;
+    border-bottom: 2px solid grey;
+    padding: 0px 10px 10px 10px;
+    text-decoration: none;
 }

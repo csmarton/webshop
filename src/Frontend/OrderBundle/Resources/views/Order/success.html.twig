@@ -1,0 +1,40 @@
+{% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShop - Rendelés {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+ {% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/frontendprofile/css/profile.css') }}"/>
+{% endblock %}
+    
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jquery.slimscrol.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/Product.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendcart/js/Cart.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendorder/js/OrderValidation.js') }}"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                Product.init();
+                Cart.init();
+                OrderValidation.init();
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %}
+    <div class="main">
+        {% block leftSide %}                        
+            {{parent()}}
+        {% endblock %}        
+        <div class="container">
+            <div id="order-information">
+                <h2 class="page-title">Rendelés leadása</h2>
+                Rendelés sikeresen teljesítve!
+            </div>
+            
+        </div>
+    </div>    
+{% endblock %}
+                        

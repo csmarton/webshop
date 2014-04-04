@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class OrderItemType extends AbstractType
+class OrdersItemType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -18,7 +18,6 @@ class OrderItemType extends AbstractType
             ->add('orderId')
             ->add('productId')
             ->add('unitQuantity')
-            ->add('unitPrice')
             ->add('product')
             ->add('order')
         ;
@@ -30,7 +29,7 @@ class OrderItemType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Frontend\OrderBundle\Entity\OrderItem'
+            'data_class' => 'Frontend\OrderBundle\Entity\OrdersItem'
         ));
     }
 
@@ -39,6 +38,6 @@ class OrderItemType extends AbstractType
      */
     public function getName()
     {
-        return 'frontend_orderbundle_orderitem';
+        return 'frontend_orderbundle_ordersitem';
     }
 }

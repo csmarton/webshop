@@ -21,57 +21,41 @@
             {{parent()}}
         {% endblock %}        
         <div class="container">
-            <h2 class="page-title">Termékek</h2>
+            <h2 class="page-title">Kosár</h2>
        
-            <table class="cart_table">
-                <thead>
-                    <tr>
-                        <th scope="col">Terméknév</th>                        
-                        <th scope="col">Leírás</th>
-                        <th scope="col">Mennyiség</th>
-                        <th scope="col">Ár(Ft)</th>
-                        <th scope="col">Kijelölés törlése</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% set cartCount = 0 %}
-                    {% set cartPrice = 0 %}
-                    {% for productWithCount in productsWithCount %}
-                         {% set cartCount = cartCount + productWithCount[1] %}
-                         {% set cartPrice = cartPrice + productWithCount[0].getPrice() %}
-                        <tr>
-                            <td>{{ productWithCount[0].getName() }}</td>                            
-                            <td></td>
-                            <td><input type="number" value="{{ productWithCount[1] }}"/></td>
-                            <td>{{ productWithCount[1]*productWithCount[0].getPrice() }}</td>
-                            <td><input type="checkbox" name="deleteProductFromCart" value="{{productWithCount[0].getId()}}"/></td>
-                        </tr>
-                    {% endfor %}
-                    <tfoot>
-                       <tr>
-                         <td>Összegezve</td>
-                         <td></td>
-                         <td>{{ cartCount }}</td>
-                         <td>{{ cartPrice }}</td>
-                         <td></td>
-                       </tr>
-                       <tr >
-                            <td colspan="5">   
-                                {% if (is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
-                                    {% set isLoggedIn = 1 %}
-                                {% else %}
-                                    {% set isLoggedIn = 0 %}
-                                {% endif %}    
-                                <a href="{{path('frontend_cart_orders')}}" class="menu_btn ok_btn" id="order-button" isLoggedIn = {{isLoggedIn}}>Megrendel</a>
-                                <a href="" class="menu_btn ok_btn" id="cart_update_btn">Kosár frissítése</a>
-                            </td>
-                       </tr>
-                     </tfoot>
-                    
-                </tbody>
-            </table>
+            <div id="cart-box">          
+                <div class="top-section">
+                    {% include 'FrontendCartBundle:Cart:cartItems.html.twig' with {'productsWithCount' : productsWithCount, 'cartCount': cartCount} %}
+                            
+                </div>
+                <div class="bottom-section">                          
+  
+                    {% if (is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
+                        {% set isLoggedIn = 1 %}
+                    {% else %}
+                        {% set isLoggedIn = 0 %}
+                    {% endif %}    
+                    <a href="{{path('frontend_cart_orders')}}" class="menu_btn ok_btn" id="order-button" isLoggedIn="{{isLoggedIn}}" cartCount="{{cartCount}}">Megrendel</a>
+                    <a href="" class="menu_btn ok_btn" id="cart_update_btn">Kosár frissítése</a>
+                </div>
+                           
+            </div>
         
         </div>
     </div>    
+            <div id="modal-empty-cart" class="reveal-modal">
+                <div class="formContent">
+                    <div class="topSection">
+                        <div class="modal-content">
+                            <h2>A kosarad üres!</h2>
+                        </div>
+                    </div>
+                    <div class="bottomSection">
+                        <div class="inputs">
+                            <input type="button" class="cancel exit-reveal-modal" value="Ok">
+                        </div>
+                    </div>
+                </div>
+            </div>
 {% endblock %}
                         

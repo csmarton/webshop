@@ -1,0 +1,39 @@
+<div class="cart-items">
+    {% set cartPrice = 0 %}
+    {% for productWithCount in productsWithCount %}
+        <div class="cart-item">
+             {% set cartPrice = cartPrice + productWithCount[0].getPrice() %}
+            <div class="column-0">
+                        {% if ( productWithCount[0].getProductImages()|length != 0 ) %}
+                            <img src="{{image( productWithCount[0].getProductImages()[0].getWebPath()).resize(100,100)}}"/>
+                        {% else %}     
+                            <img src="{{ asset('images/no_image.jpg')}}"/>
+                        {% endif %}
+            </div>
+            <div class="column-1">
+                <div class="product-information">
+                    <div class="product-name">
+                        {{ productWithCount[0].getName() }}
+                    </div>
+                    <div class="product-propertys">
+                        <ul>
+                            {% for productProperty in productWithCount[0].getProductPropertys()%}
+                            <li>{{productProperty.getProperty().getName()}} : <span class="bold">{{productProperty.getValue()}}</span></li>
+                            {% endfor %}   
+                        </ul>
+                    </div>
+                </div>                                
+            </div>
+            <div class="column-2">
+                {{ productWithCount[0].getPrice()|priceFormat }}
+            </div>
+            <div class="column-3">
+                <input type="number" value="{{ productWithCount[1] }}" class="change-product-cart-count"/>
+                <a href="javascript:void(0)" productId="{{productWithCount[0].getId()}}" class="delete-product-from-cart" link="{{path('frontend_remov_from_cart')}}">Törlés</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="cart-sum">
+    Összesen: <span class="bold">{{cartCount}}</span> termék, ára: <span class="bold">{{cartPrice|priceFormat}} Ft</span>
+</div>

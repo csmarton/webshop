@@ -1,82 +1,76 @@
-.cart_table{
-    clear: both;
-    overflow: hidden;
-    min-width: 700px;
-    width: 100%;
-}
-
-.cart_table thead{
-    font-weight: bold;
-    text-transform: uppercase;
-    color: grey;
-}
-.cart_table th, .cart_table td {padding:18px 28px 18px; text-align:center; }
-	
-.cart_table th {padding-top:22px; text-shadow: 1px 1px 1px #fff; background:#e8eaeb;}
-
-.cart_table td {border-top:1px solid #e0e0e0; border-right:1px solid #e0e0e0;}
-
-.cart_table tr.odd-row td {background:#f6f6f6;}
-
-.cart_table td.first, th.first {text-align:left}
-
-.cart_table td.last {border-right:none;}
-
-.cart_table td {
-    background: -moz-linear-gradient(100% 25% 90deg, #fefefe, #f9f9f9);
-    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f9f9f9), to(#fefefe));
-}
-
-.cart_table tr.odd-row td {
-    background: -moz-linear-gradient(100% 25% 90deg, #f6f6f6, #f1f1f1);
-    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f1f1f1), to(#f6f6f6));
-}
-
-.cart_table th {
-    background: -moz-linear-gradient(100% 20% 90deg, #e8eaeb, #ededed);
-    background: -webkit-gradient(linear, 0% 0%, 0% 20%, from(#ededed), to(#e8eaeb));
-}
-
-
-
-.cart_table tr:first-child th.first {
-    -moz-border-radius-topleft:5px;
-    -webkit-border-top-left-radius:5px;
-}
-
-.cart_table tr:first-child th.last {
-    -moz-border-radius-topright:5px;
-    -webkit-border-top-right-radius:5px;
-}
-
-.cart_table tr:last-child td.first {
-    -moz-border-radius-bottomleft:5px;
-    -webkit-border-bottom-left-radius:5px;
-}
-
-.cart_table tr:last-child td.last {
-    -moz-border-radius-bottomright:5px;
-    -webkit-border-bottom-right-radius:5px;
-}
-
-.cart_table tr>td:first-child{
-    width: 200px;
+.bold{
     font-weight: bold;
 }
-
-.cart_table tbody tr td:first-child,
-.cart_table tfoot tr:first-child td:first-child{
-    text-align: left;
+#cart-box{
+    
 }
+#cart-box .top-section{
+    
+}
+#cart-box .cart-items{
 
-.cart_table tbody input{
-    width: 35px;
-    height: 30px;
-    background-color: #F7F9FD;
-    border: 1px solid #D5D5D5;
+}
+#cart-box .cart-item{
+    border-bottom: 1px dashed #428bca;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+#cart-box .cart-item div{
+    display:inline-block;
+        vertical-align: top;
+}
+#cart-box .cart-item .change-product-cart-count{
+    width: 40px;
     padding: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+#cart-box .cart-item .column-0{
+    width: 108px;
+}
+#cart-box .cart-item .column-1{
+    width: 550px;
+    margin-top: 10px;
+}
+#cart-box .cart-item .column-1 .product-information{
+    width:100%;
+}
+#cart-box .cart-item .column-1 .product-information div{
+    display:block;
+    width:100%;
+}
+#cart-box .cart-item .column-1 .product-information .product-name{
+    font-weight:bold;
+    font-size: 1.3em;
+    color: #428bca;
+}
+#cart-box .cart-item .column-1 .product-information .product-propertys ul>li{
+    float:left;
+    padding: 5px 10px 0px 0px;
+}
+#cart-box .cart-item .column-2{
+    width: 70px;
+    text-align: right;
+    margin-top: 10px;
+    color: #D1466F;
+    font-weight: bold;
+}
+#cart-box .cart-item .column-3{
+    width: 70px;
+    text-align: right;
 }
 
+
+#cart-box .cart-sum{
+    text-align: right;
+    padding-bottom: 10px;
+    margin-top: 5px;
+}
+#cart-box .bottom-section{
+    padding-top: 5px;
+    border-top: 5px double #428bca;
+    text-align: right;
+}
 
 
 .menu_btn{
@@ -122,7 +116,7 @@
     display: inline;
     position: relative;
 }
-.header .group_right #cart_count{
+.header .group_right #cart-count{
     display: inline;
     position: absolute;
     left: 30px;
@@ -194,4 +188,24 @@
     width: 770px;
     padding: 10px 10px;
     margin: 10px 0px;
+}
+
+//MODÁLIS ABLAK ÜRES KOSÁRNÁL
+#modal-empty-cart .formContent{
+    padding:10px;
+}
+
+#modal-empty-cart .topSection{
+    padding: 10px;
+}
+
+#modal-empty-cart .bottomSection{
+    padding-top: 5px;
+    text-align: center;
+}
+
+#modal-empty-cart h2{
+    color: black;
+    font-weight: bold;
+    font-size: 1.3em;
 }

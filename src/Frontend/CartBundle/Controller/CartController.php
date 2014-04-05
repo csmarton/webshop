@@ -30,7 +30,7 @@ class CartController extends Controller
         $service = $this->container->get('cart_service');
         $cartCount = $service->getCartCount();
         $html = $cartCount;
-        return new JsonResponse(array('success' => true,'html' => $html));
+        return new JsonResponse(array('success' => true,'html' => $html, 'cartCount' => $cartCount));
     }
     
     public function cartAction(){
@@ -52,7 +52,53 @@ class CartController extends Controller
         foreach((array)$products as $product){
             $productsWithCount[] = array($product,$inCart[$product->getId()]);
         }
-        return $this->render('FrontendCartBundle:Cart:cart.html.twig',array('productsWithCount' => $productsWithCount));
+        $service = $this->container->get('cart_service');
+        $cartCount = $service->getCartCount();
+        return $this->render('FrontendCartBundle:Cart:cart.html.twig',array('productsWithCount' => $productsWithCount,
+                'cartCount'=>$cartCount));
+    }
+    
+        public function removeAction(){        
+                
+        $request = $this->get('request');
+         if ($request->getMethod() == 'POST') {
+            $productId = $request->request->get('productId');
+
+            $session = $request->getSession();
+            $inCart = $session->get('cart');
+            unset($inCart[$productId]);
+            
+            $session->set('cart', $inCart);
+            
+            $productIds[] = array();
+            foreach((array)$inCart as $key=>$value){
+                $productIds[] = $key;
+            }
+        
+            $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
+            $products = array();
+            if(count($productIds) != 0){
+                $products = $repo
+                            ->createQueryBuilder('p')                   
+                            ->where('p.id IN (:productIds)')
+                            ->setParameter('productIds',$productIds)
+                            ->getQuery()->getResult();
+            }    
+            $productsWithCount = array();
+            foreach((array)$products as $product){
+                $productsWithCount[] = array($product,$inCart[$product->getId()]);
+            }
+            $service = $this->container->get('cart_service');
+            $cartCount = $service->getCartCount();
+        
+            $html = $this->renderView('FrontendCartBundle:Cart:cartItems.html.twig', array(
+                        'productsWithCount' => $productsWithCount,
+                        'cartCount'=>$cartCount));
+            
+            return new JsonResponse(array('success' => true,'html' => $html, 'cartCount' => $cartCount));
+         }else{
+             return new JsonResponse(array('success' => false));
+         }   
     }
 
 }

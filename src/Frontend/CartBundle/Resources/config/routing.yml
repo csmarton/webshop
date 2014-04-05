@@ -2,6 +2,10 @@ frontend_add_cart:
     pattern:  /kosar/betesz
     defaults: { _controller: FrontendCartBundle:Cart:add}
     
+frontend_remov_from_cart:
+    pattern:  /kosar/kivesz
+    defaults: { _controller: FrontendCartBundle:Cart:remove}
+    
 frontend_cart:
     pattern:  /kosar
     defaults: { _controller: FrontendCartBundle:Cart:cart}

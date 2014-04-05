@@ -42,11 +42,11 @@
 }
 
 
-.to_cart_button:hover {
+.to-cart-button:hover {
     text-decoration: underline;
 }
 
-.to_cart_button {
+.to-cart-button {
     text-transform: uppercase;
     border-radius: 3px;
     color: #ffffff;

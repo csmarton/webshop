@@ -17,8 +17,14 @@
                 <div class="upper_box">
 
                         <div class="right_box">
-                                <div class="product_price">{{product.getPrice()}} Ft</div>
-                                <input class="to_cart_button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
+                            <div class="product_price">
+                                {% if product.getSpecialOffer() is not null %}
+                                    {{product.getSpecialOffer().getNewPrice|priceFormat}} Ft
+                                {% else%}
+                                    {{product.getPrice()|priceFormat}}  Ft
+                                {% endif %}
+                            </div>
+                                <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
                         </div>  
                                             <div class="image_container">
                                 <img src="

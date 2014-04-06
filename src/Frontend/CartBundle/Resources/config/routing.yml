@@ -6,6 +6,10 @@ frontend_remov_from_cart:
     pattern:  /kosar/kivesz
     defaults: { _controller: FrontendCartBundle:Cart:remove}
     
+frontend_cart_update:
+    pattern:  /kosar/frissites
+    defaults: { _controller: FrontendCartBundle:Cart:update}    
+    
 frontend_cart:
     pattern:  /kosar
     defaults: { _controller: FrontendCartBundle:Cart:cart}

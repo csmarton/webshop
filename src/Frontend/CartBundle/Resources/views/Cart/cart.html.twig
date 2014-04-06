@@ -6,11 +6,9 @@
 {% block javascripts %}
 	{{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/Product.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/frontendcart/js/Cart.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
                 Product.init();
-                Cart.init();
             });
     </script>
 {% endblock %}
@@ -35,8 +33,8 @@
                     {% else %}
                         {% set isLoggedIn = 0 %}
                     {% endif %}    
-                    <a href="{{path('frontend_cart_orders')}}" class="menu_btn ok_btn" id="order-button" isLoggedIn="{{isLoggedIn}}" cartCount="{{cartCount}}">Megrendel</a>
-                    <a href="" class="menu_btn ok_btn" id="cart_update_btn">Kosár frissítése</a>
+                    <a href="{{path('frontend_cart_orders')}}" class="menu_btn ok_btn" id="order-button" isLoggedIn="{{isLoggedIn}}" cartCount="{{cartCount}}" >Megrendel</a>
+                    {#<a href="" class="menu_btn ok_btn" id="cart_update_btn">Kosár frissítése</a>#}
                 </div>
                            
             </div>
@@ -48,11 +46,14 @@
                     <div class="topSection">
                         <div class="modal-content">
                             <h2>A kosarad üres!</h2>
+                            <div>
+                                Kosarad jelenleg üres! <a href="{{path('frontend_product_homepage')}}">Ide</a> kattintva új terméket rakhatsz a kosárba.
+                            </div>
                         </div>
                     </div>
                     <div class="bottomSection">
                         <div class="inputs">
-                            <input type="button" class="cancel exit-reveal-modal" value="Ok">
+                            <input type="button" class="cancel exit-reveal-modal ok-button" value="Ok">
                         </div>
                     </div>
                 </div>

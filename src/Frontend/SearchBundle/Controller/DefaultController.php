@@ -49,6 +49,10 @@ class DefaultController extends Controller
             return $this->render('FrontendProductBundle:Default:index.html.twig',array('products'=>$products));
         }
         
-    }   
+    }  
+    
+    public function mainSearchFormAction(){
+        return $this->render('FrontendProductBundle:Default:index.html.twig');
+    }
     
 }

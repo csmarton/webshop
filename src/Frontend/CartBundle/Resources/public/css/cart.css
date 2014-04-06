@@ -1,14 +1,12 @@
 .bold{
     font-weight: bold;
 }
-#cart-box{
-    
-}
-#cart-box .top-section{
-    
-}
-#cart-box .cart-items{
 
+#cart-box .cart-items .empty-cart-messages{
+    padding-top:10px;
+}
+#cart-box .cart-items .empty-cart-messages a{
+    color:#428bca;
 }
 #cart-box .cart-item{
     border-bottom: 1px dashed #428bca;

@@ -5,7 +5,7 @@ namespace Frontend\ProfileBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Frontend\ProfileBundle\Entity\Profile;
 use Frontend\ProfileBundle\Form\ProfileType;
-
+use Frontend\OrderBundle\Entity\Orders;
 class DefaultController extends Controller
 {
      public function editAction(){
@@ -36,4 +36,13 @@ class DefaultController extends Controller
                 'form' => $form->createView())
             );
         }
+        
+     public function myOrdersAction(){
+         $user = $this->get('security.context')->getToken()->getUser();
+         $profile = $user->getProfile();
+         $myOrders =  $this->getDoctrine()->getRepository('FrontendOrderBundle:Orders')->findByUser($user);
+         return $this->render('FrontendProfileBundle:MyOrders:myOrders.html.twig', array(
+             'myOrders'=>$myOrders
+         ));
+     }   
 }

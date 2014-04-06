@@ -1,0 +1,91 @@
+{% extends "BackendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShopAdmin - Rendelések {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript">
+            $(document).ready(function(){
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %} 
+    <div class="main">
+        <h2>Rendelések</h2>
+        <div class="upperMenu">
+        </div>
+        <div>
+            <table id="my-order-table">
+                    <thead>
+                        <th>Rendelési azonosító</th>
+                        <th>Rendelés dátuma</th>
+                        <th>Ár</th>
+                        <th>Teljesítés</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{order.getId()}}
+                            </td>
+                            <td>
+                                {{order.getOrderedAt|date('Y-m-d')}}
+                            </td>
+                            <td>
+                                {{order.getItemsTotalPrice|priceFormat}}Ft
+                            </td>
+                            <td>
+                                {% if order.getPerformedAt() == NULL %}
+                                    Feldolgozás alatt
+                                {% else %}
+                                    Teljesítve
+                                {% endif %}
+                            </td> 
+                        </tr>
+                    </tbody>
+                </table>
+            
+                <div class="order-items">
+                    <div class="page-title">Termékek</div>
+                    {% for orderItem in order.getOrderItems() %}
+                        {% set product = orderItem.getProduct() %}
+                        <div class="cart-item">
+                            <div class="column-0">
+                                        {% if ( product.getProductImages()|length != 0 ) %}
+                                            <img src="{{image( product.getProductImages()[0].getWebPath()).resize(100,100)}}"/>
+                                        {% else %}     
+                                            <img src="{{ asset('images/no_image.jpg')}}"/>
+                                        {% endif %}
+                            </div>
+                            <div class="column-1">
+                                <div class="product-information">
+                                    <div class="product-name">
+                                        {{ product.getName() }}
+                                    </div>
+                                    <div class="product-propertys">
+                                        <ul>
+                                            {% for productProperty in product.getProductPropertys()%}
+                                                <li>{{productProperty.getProperty().getName()}} : <span class="bold">{{productProperty.getValue()}}</span></li>
+                                            {% endfor %}   
+                                        </ul>
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="column-2">
+                                {{ product.getPrice()|priceFormat }}
+                            </div>
+                            <div class="column-3">
+                                <div class="product-cart-count">{{ orderItem.getUnitQuantity() }} db</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="cart-sum">
+                    Összesen: <span class="bold">{{order.getItemsTotal()}}</span> termék, ára: <span class="bold">{{order.getItemsTotalPrice()|priceFormat}} Ft</span>
+                </div> 
+        </div>
+        
+    </div>
+{% endblock %}
+                  

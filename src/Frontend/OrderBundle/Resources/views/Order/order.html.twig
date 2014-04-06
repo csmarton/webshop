@@ -17,6 +17,11 @@
     <script type="text/javascript" src="{{ asset('bundles/frontendorder/js/OrderValidation.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
+                $('#order-conditions').slimScroll({
+                    height: '200px',
+                    width: '770px',
+                    disableFadeOut : true
+                });
                 Product.init();
                 Cart.init();
                 Order.init();

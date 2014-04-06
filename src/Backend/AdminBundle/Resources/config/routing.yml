@@ -74,3 +74,14 @@ backend_admin_profile_edit:
 backend_admin_product_image_remove:
     pattern:  /admin/termekek/kepek/torles
     defaults: { _controller: BackendAdminBundle:Image:remove }   
+    
+#
+# rendelések
+#
+backend_admin_order_list:
+    pattern:  /admin/rendelesek
+    defaults: { _controller: BackendAdminBundle:Order:list }
+    
+backend_admin_order_list_more:
+    pattern:  /admin/rendelesek/{orderId}/bovebben
+    defaults: { _controller: BackendAdminBundle:Order:listMore }    

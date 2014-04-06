@@ -30,6 +30,6 @@
         <join-column name="user_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
-    <one-to-many field="orderItems" target-entity="OrdersItem" mapped-by="orderItems" />
+    <one-to-many field="orderItems" target-entity="OrdersItem" mapped-by="orders" />
   </entity>
 </doctrine-mapping>

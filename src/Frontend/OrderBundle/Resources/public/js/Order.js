@@ -4,10 +4,11 @@ Order = {
     },
 
     bindUIActions: function(){
-        $('#order-conditions').slimScroll({
-            height: '200px',
-            width: '770px',
-            disableFadeOut : true
+        $('body').on('click', '#my-order-table .ok-button', function(){
+            $(this).parents('tr').next().toggle('slow');
+            ($(this).val() == "+")?$(this).val("-"):$(this).val("+");
         });
+        
+
     },
 };	

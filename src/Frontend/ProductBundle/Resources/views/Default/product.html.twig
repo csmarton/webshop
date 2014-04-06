@@ -35,7 +35,7 @@
                     </div>
                     <div class="right_box">
                         <div class="product_price">Ára: {{product.getPrice()|priceFormat}} Ft</div>
-                        <input class="to-cart-button" type="button" value="Kosárba">
+                        <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
                     </div>    
                 </div>
             </div> 

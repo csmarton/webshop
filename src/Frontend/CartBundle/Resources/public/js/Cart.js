@@ -17,9 +17,36 @@ Cart = {
                 dataType: 'json'
             }).done(function(returnData) {
                $('#cart-count').html(returnData.html);
+               $('#cart-count').effect('shake');
             }).fail(function(thrownError) {
                 console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
             });
+        });
+        
+        $('body').on("focus", ".change-product-cart-count", function(e){
+            e.preventDefault();
+            productId = $(this).attr('productId');
+            $this = $(this);
+            beforeChangeValue = $(this).val();
+        }).change(function(){
+            if($this.val() < 0 || $this.val() == ""){
+               $this.val(beforeChangeValue);
+            }else{
+                $.ajax({
+                    url: $this.attr("link"),
+                    data: {'productId' : productId, 'changeValue' : $this.val()},
+                    type: 'POST',
+                    dataType: 'json'
+                }).done(function(data) {
+                    $('#cart-box .top-section').html(data.html);
+                    $('#cart-count').html(data.cartCount);
+                    $('#order-button').attr('cartCount',data.cartCount);
+                    Cart.initOrderButtons();
+                    $('#cart-count').effect('shake');
+                }).fail(function(thrownError) {
+                    console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+                });
+            }
         });
         
         $('body').on("click", ".delete-product-from-cart", function(e){ //Rendelés gombra kattintás
@@ -36,6 +63,7 @@ Cart = {
                     $('#cart-count').html(data.cartCount);
                     $('#order-button').attr('cartCount',data.cartCount);
                     Cart.initOrderButtons();
+                    $('#cart-count').effect('shake');
                 } else {							  
                     console.error('HIBA a szervertől:' + data.err);
                 }

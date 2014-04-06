@@ -11,8 +11,8 @@
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
     <field name="price" type="float" column="price" precision="10" scale="0" nullable="false"/>
     <field name="category" type="integer" column="category" nullable="false"/>
-    <field name="isActive" type="integer" column="is_active" nullable="false"/>
-    <field name="inStock" type="boolean" column="in_stock" nullable="false"/>
+    <field name="isActive" type="boolean" column="is_active" nullable="false"/>
+    <field name="inStock" type="integer" column="in_stock" nullable="false"/>
     <one-to-many field="productImages" target-entity="ProductImages" mapped-by="product" />
     <one-to-many field="productPropertys" target-entity="ProductProperty" mapped-by="product" />
     <one-to-one field="specialOffer" target-entity="SpecialOffers" mapped-by="product" />

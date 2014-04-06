@@ -29,7 +29,7 @@ class ProductType extends AbstractType
                                 'query_builder' => function(EntityRepository $er) {return $er->createQueryBuilder('c');}
                                 ))
             ->add('isActive', 'checkbox', array('label' => "Aktív -e?", 'required'  => false))
-            ->add('inStock', 'checkbox', array('label' => "Raktáron van -e?", 'required'  => false))
+            ->add('inStock', 'integer', array('label' => "Raktáron van -e?", 'required'  => false))
             ->add('categorys','entity', array('label' => 'Kategória:',  'required'  => false, 
                                 'class' => 'FrontendProductBundle:Category', 'property' => 'name',
                                 'query_builder' => function(EntityRepository $er) {return $er->createQueryBuilder('c');}

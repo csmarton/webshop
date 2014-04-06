@@ -100,5 +100,54 @@ class CartController extends Controller
              return new JsonResponse(array('success' => false));
          }   
     }
+    
+    public function updateAction(){        
+                
+        $request = $this->get('request');
+         if ($request->getMethod() == 'POST') {
+            $productId = $request->request->get('productId');
+            $changeValue = $request->request->get('changeValue');
+            
+            $session = $request->getSession();
+            $inCart = $session->get('cart');
+            if($changeValue == 0){
+                unset($inCart[$productId]);
+            }else{
+                $inCart[$productId] = $changeValue;
+            }
+            
+            
+            $session->set('cart', $inCart);
+            
+            $productIds[] = array();
+            foreach((array)$inCart as $key=>$value){
+                $productIds[] = $key;
+            }
+        
+            $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
+            $products = array();
+            if(count($productIds) != 0){
+                $products = $repo
+                    ->createQueryBuilder('p')                   
+                    ->where('p.id IN (:productIds)')
+                    ->setParameter('productIds',$productIds)
+                    ->getQuery()->getResult();
+            }    
+            $productsWithCount = array();
+            foreach((array)$products as $product){
+                $productsWithCount[] = array($product,$inCart[$product->getId()]);
+            }
+            $service = $this->container->get('cart_service');
+            $cartCount = $service->getCartCount();
+        
+            $html = $this->renderView('FrontendCartBundle:Cart:cartItems.html.twig', array(
+                        'productsWithCount' => $productsWithCount,
+                        'cartCount'=>$cartCount));
+            
+            return new JsonResponse(array('success' => true,'html' => $html, 'cartCount' => $cartCount));
+         }else{
+             return new JsonResponse(array('success' => false));
+         }   
+    }
 
 }

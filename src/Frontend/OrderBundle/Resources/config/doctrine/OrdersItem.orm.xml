@@ -7,15 +7,5 @@
     <field name="orderId" type="integer" column="order_id" nullable="false"/>
     <field name="productId" type="integer" column="product_id" nullable="false"/>
     <field name="unitQuantity" type="integer" column="unit_quantity" nullable="false"/>
-    <many-to-one field="product" target-entity="Frontend\ProductBundle\Entity\Product">
-      <join-columns>
-        <join-column name="product_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
-    <many-to-one field="orders" target-entity="Orders" inversed-by="orderItems">
-      <join-columns>
-        <join-column name="order_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
   </entity>
 </doctrine-mapping>

@@ -26,4 +26,29 @@ class OrderController extends Controller
             'order' => $order
         ));
     }
+    
+    public function fulfillOrderAction($orderId){
+        $request = $this->get('request');
+         if ($request->getMethod() == 'POST') {
+            
+            $order = $this->getDoctrine()->getRepository('FrontendOrderBundle:Orders')->findOneById($orderId);
+            $orderItems = $order->getOrderItems();
+            
+            $cantFullfillProduct = array();
+            $canFulfill = true;
+            foreach($orderItems as $orderItem){
+                if($orderItem->getProduct()->getInStock() < $orderItem->getUnitQuantity()){
+                    $cantFullfillProduct[] = $orderItem->getProduct()->getId();
+                    $canFulfill = false;
+                }
+            }
+            /*$em = $this->getDoctrine()->getEntityManager();
+            $em->remove($product);
+            $em->flush();*/
+    
+            return new JsonResponse(array('success' => true,'canFulfill'=>$canFulfill, 'cantFullfillProduct'=>$cantFullfillProduct ));
+         }else{
+             return new JsonResponse(array('success' => false));
+         }   
+    }
 }

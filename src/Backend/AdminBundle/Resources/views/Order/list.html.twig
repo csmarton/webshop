@@ -5,12 +5,16 @@
  
 {% block javascripts %}
 	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/Order.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
+                Order.init();
             });
     </script>
 {% endblock %}
- 
+{% block stylesheets %}   
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Order.css') }}"/>
+{% endblock %}
 {% block main %} 
     <div class="main">
         <h2>Rendelések</h2>
@@ -51,7 +55,7 @@
                         <td>{{order.getPaymentOption().getName()}}</td>
                         <td>{{order.getShippingOption().getName()}}</td>
                         <td>
-                            <a href="" class="menu_btn cancel_btn">Teljesítés</a>
+                            <a href="javascript:void(0)" class="menu_btn cancel_btn fulfill-button" link="{{path('backend_admin_order_fulfill', {'orderId':order.getId()})}}">Teljesítés</a>
                             <a href="{{path('backend_admin_order_list_more',{'orderId':order.getId()})}}" class="menu_btn edit_btn">Bővebben</a>                            
                         </td>
                     </tr>                    
@@ -59,5 +63,21 @@
             </tbody>
         </table>        
     </div>
+    
+<div id="modal-fulfill-order" class="reveal-modal">
+    <div class="formContent">
+        <div class="topSection">
+            <div class="modal-content">
+                <h2></h2>
+                <div class="modal-information"></div>
+            </div>
+        </div>
+        <div class="bottomSection">
+            <div class="inputs">
+                <input type="button" class="cancel exit-reveal-modal cancel_btn menu_btn" value="Ok">                        
+            </div>
+        </div>
+    </div>
+</div>   
 {% endblock %}
                   

@@ -92,12 +92,24 @@ class Orders
     private $shippingState;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="order_profile_information_id", type="integer", nullable=false)
+     */
+    private $orderProfileInformationId;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="accept_conditions", type="boolean", nullable=false)
      */
     private $acceptConditions;
 
+
+    /**
+     * @var \Frontend\OrderBundle\Entity\OrdersProfileInformation
+     */
+    private $orderProfileInformation;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -358,6 +370,29 @@ class Orders
     }
 
     /**
+     * Set orderProfileInformationId
+     *
+     * @param integer $orderProfileInformationId
+     * @return Orders
+     */
+    public function setOrderProfileInformationId($orderProfileInformationId)
+    {
+        $this->orderProfileInformationId = $orderProfileInformationId;
+
+        return $this;
+    }
+
+    /**
+     * Get orderProfileInformationId
+     *
+     * @return integer 
+     */
+    public function getOrderProfileInformationId()
+    {
+        return $this->orderProfileInformationId;
+    }
+
+    /**
      * Set acceptConditions
      *
      * @param boolean $acceptConditions
@@ -388,6 +423,29 @@ class Orders
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set orderProfileInformation
+     *
+     * @param \Frontend\OrderBundle\Entity\OrdersProfileInformation $orderProfileInformation
+     * @return Orders
+     */
+    public function setOrderProfileInformation(\Frontend\OrderBundle\Entity\OrdersProfileInformation $orderProfileInformation = null)
+    {
+        $this->orderProfileInformation = $orderProfileInformation;
+
+        return $this;
+    }
+
+    /**
+     * Get orderProfileInformation
+     *
+     * @return \Frontend\OrderBundle\Entity\OrdersProfileInformation 
+     */
+    public function getOrderProfileInformation()
+    {
+        return $this->orderProfileInformation;
     }
 
     /**

@@ -3,7 +3,15 @@
             <div id="search_form" style="display:none"></div>
             <div id="search_toggle_button">Részletes keresés</div>		
     </div>
-
+    {% if category is not null %}
+        <div id="upper-menu" href="{{path('product_by_category', {'main_category':mainCategory, 'category':category})}}">
+    {% else %}
+        <div id="upper-menu" href="{{path('product_by_main_category', {'main_category':mainCategory})}}">
+    {% endif %}
+       {% if (pageCount != 0)%}
+            {% include "FrontendProductBundle:Default:upperMenu.html.twig" %}
+       {% endif %}
+    </div>
     <div class="products_box">
         {% for product in products %}
         {% set i=loop.index0 %}

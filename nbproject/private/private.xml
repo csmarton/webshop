@@ -3,17 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProfileBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/views/Cart/cart.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Controller/CartController.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/public/js/Product.js</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Controller/OrderController.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/views/Cart/cartItems.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Resources/public/css/Order.css</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/public/css/cart.css</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/js/Shared.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/LayoutBundle/Resources/public/css/shared_logged.css</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/LayoutBundle/Resources/views/Default/sidebar.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/OrderController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/ProductController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/list.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/config/routing.yml</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Order/list.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Order/listMore.html.twig</file>
             <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProfileBundle/Resources/views/MyOrders/myOrders.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/public/js/Cart.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/new.html.twig</file>
         </group>
     </open-files>
 </project-private>

@@ -43,16 +43,6 @@ class OrdersItem
     private $unitQuantity;
 
 
-    /**
-     * @var \Frontend\ProductBundle\Entity\Product
-     */
-    private $product;
-
-    /**
-     * @var \Frontend\OrderBundle\Entity\Orders
-     */
-    private $orders;
-
 
     /**
      * Set orderId
@@ -131,51 +121,5 @@ class OrdersItem
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set product
-     *
-     * @param \Frontend\ProductBundle\Entity\Product $product
-     * @return OrdersItem
-     */
-    public function setProduct(\Frontend\ProductBundle\Entity\Product $product = null)
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    /**
-     * Get product
-     *
-     * @return \Frontend\ProductBundle\Entity\Product 
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    /**
-     * Set orders
-     *
-     * @param \Frontend\OrderBundle\Entity\Orders $orders
-     * @return OrdersItem
-     */
-    public function setOrders(\Frontend\OrderBundle\Entity\Orders $orders = null)
-    {
-        $this->orders = $orders;
-
-        return $this;
-    }
-
-    /**
-     * Get orders
-     *
-     * @return \Frontend\OrderBundle\Entity\Orders 
-     */
-    public function getOrders()
-    {
-        return $this->orders;
     }
 }

@@ -92,6 +92,13 @@ class Orders
     private $shippingState;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="order_profile_information_id", type="integer", nullable=false)
+     */
+    private $orderProfileInformationId;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="accept_conditions", type="boolean", nullable=false)

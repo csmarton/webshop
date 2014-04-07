@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Frontend\OrderBundle\Entity\OrdersProfileInformation" table="orders_profile_information">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="100" nullable="false"/>
+    <field name="email" type="string" column="email" length="100" nullable="false"/>
+    <field name="telephone" type="string" column="telephone" length="30" nullable="false"/>
+    <field name="billingAddressCity" type="string" column="billing_address_city" length="60" nullable="false"/>
+    <field name="billingAddressStreet" type="integer" column="billing_address_street" nullable="false"/>
+    <field name="billingAddressStreetNumber" type="integer" column="billing_address_street_number" nullable="false"/>
+    <field name="billingAddressZipCode" type="integer" column="billing_address_zip_code" nullable="false"/>
+    <field name="shippingAddressCity" type="string" column="shipping_address_city" length="60" nullable="true"/>
+    <field name="shippingAddressStreet" type="integer" column="shipping_address_street" nullable="true"/>
+    <field name="shippingAddressStreetNumber" type="integer" column="shipping_address_street_number" nullable="true"/>
+    <field name="shippingAddressZipCode" type="integer" column="shipping_address_zip_code" nullable="true"/>
+  </entity>
+</doctrine-mapping>

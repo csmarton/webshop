@@ -1,6 +1,9 @@
 .bold{
     font-weight: bold;
 }
+.main .products_box{
+    clear:both;
+}
 .main .products_box img{
     width: 120px;
     height: 120px;
@@ -219,5 +222,43 @@
     height:200px;
 }
 
+//OLDALAK
+#upper-menu{
+    height:40px;
+}
 
+#upper-menu .left-side{
+    float:left;
+}
+
+#upper-menu .left-side ul>li{
+    display: inline-block;
+    background-color: #F7F7F7;
+    border: 1px solid #d8d8d8;
+    box-shadow: 1px 2px 0px rgba(197,197,197,.4);
+    -moz-box-shadow: 1px 2px 0px rgba(197,197,197,.4);
+    -webkit-box-shadow: 1px 2px 0px rgba(197,197,197,.4);
+}
+#upper-menu .left-side ul>li a{
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+#upper-menu .left-side ul>li a:hover{
+    background-color: #428bca;
+    color:white;    
+}
+#upper-menu .left-side .actual-page a{
+    background-color: #428bca;
+    color:white;    
+}
+#upper-menu .left-side{
+    
+}
+
+#upper-menu .right-side{
+    float:right;
+}
 

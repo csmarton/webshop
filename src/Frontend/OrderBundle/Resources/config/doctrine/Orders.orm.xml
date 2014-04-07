@@ -14,7 +14,13 @@
     <field name="shippingOptionId" type="integer" column="shipping_option_id" nullable="false"/>
     <field name="paymentState" type="string" column="payment_state" length="60" nullable="true"/>
     <field name="shippingState" type="string" column="shipping_state" length="60" nullable="true"/>
+    <field name="orderProfileInformationId" type="integer" column="order_profile_information_id" nullable="false"/>
     <field name="acceptConditions" type="boolean" column="accept_conditions" nullable="false"/>
+    <one-to-one field="orderProfileInformation" target-entity="OrdersProfileInformation">
+      <join-columns>
+        <join-column name="order_profile_information_id" referenced-column-name="id"/>
+      </join-columns>
+    </one-to-one>
     <many-to-one field="shippingOption" target-entity="ShippingOption">
       <join-columns>
         <join-column name="shipping_option_id" referenced-column-name="id"/>

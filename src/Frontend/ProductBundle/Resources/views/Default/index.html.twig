@@ -23,7 +23,9 @@
                     <div id="search_form" style="display:none"></div>
                     <div id="search_toggle_button">Részletes keresés</div>		
             </div>
-
+            <div id="upper-menu"  href="{{path('frontend_product_homepage')}}">
+                {% include "FrontendProductBundle:Default:upperMenu.html.twig" %}
+            </div>
             <div class="products_box">
                 {% for product in products %}
                 {% set i=loop.index0 %}

@@ -1,0 +1,102 @@
+<?php
+
+namespace Frontend\OrderBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * OrdersProfileInformation
+ *
+ * @ORM\Table(name="orders_profile_information")
+ * @ORM\Entity
+ */
+class OrdersProfileInformation
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=100, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telephone", type="string", length=30, nullable=false)
+     */
+    private $telephone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="billing_address_city", type="string", length=60, nullable=false)
+     */
+    private $billingAddressCity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="billing_address_street", type="integer", nullable=false)
+     */
+    private $billingAddressStreet;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="billing_address_street_number", type="integer", nullable=false)
+     */
+    private $billingAddressStreetNumber;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="billing_address_zip_code", type="integer", nullable=false)
+     */
+    private $billingAddressZipCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shipping_address_city", type="string", length=60, nullable=true)
+     */
+    private $shippingAddressCity;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="shipping_address_street", type="integer", nullable=true)
+     */
+    private $shippingAddressStreet;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="shipping_address_street_number", type="integer", nullable=true)
+     */
+    private $shippingAddressStreetNumber;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="shipping_address_zip_code", type="integer", nullable=true)
+     */
+    private $shippingAddressZipCode;
+
+
+}

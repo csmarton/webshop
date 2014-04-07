@@ -10,7 +10,10 @@
             });
     </script>
 {% endblock %}
- 
+ {% block stylesheets %}   
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Order.css') }}"/>
+{% endblock %}
+    
 {% block main %} 
     <div class="main">
         <h2>Rendelések</h2>
@@ -18,33 +21,33 @@
         </div>
         <div>
             <table id="my-order-table">
-                    <thead>
-                        <th>Rendelési azonosító</th>
-                        <th>Rendelés dátuma</th>
-                        <th>Ár</th>
-                        <th>Teljesítés</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                {{order.getId()}}
-                            </td>
-                            <td>
-                                {{order.getOrderedAt|date('Y-m-d')}}
-                            </td>
-                            <td>
-                                {{order.getItemsTotalPrice|priceFormat}}Ft
-                            </td>
-                            <td>
-                                {% if order.getPerformedAt() == NULL %}
-                                    Feldolgozás alatt
-                                {% else %}
-                                    Teljesítve
-                                {% endif %}
-                            </td> 
-                        </tr>
-                    </tbody>
-                </table>
+                <thead>
+                    <th>Rendelési azonosító</th>
+                    <th>Rendelés dátuma</th>
+                    <th>Ár</th>
+                    <th>Teljesítés</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            {{order.getId()}}
+                        </td>
+                        <td>
+                            {{order.getOrderedAt|date('Y-m-d')}}
+                        </td>
+                        <td>
+                            {{order.getItemsTotalPrice|priceFormat}}Ft
+                        </td>
+                        <td>
+                            {% if order.getPerformedAt() == NULL %}
+                                Feldolgozás alatt
+                            {% else %}
+                                Teljesítve
+                            {% endif %}
+                        </td> 
+                    </tr>
+                </tbody>
+            </table>
             
                 <div class="order-items">
                     <div class="page-title">Termékek</div>

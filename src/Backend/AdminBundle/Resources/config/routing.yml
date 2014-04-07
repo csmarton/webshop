@@ -85,3 +85,7 @@ backend_admin_order_list:
 backend_admin_order_list_more:
     pattern:  /admin/rendelesek/{orderId}/bovebben
     defaults: { _controller: BackendAdminBundle:Order:listMore }    
+    
+backend_admin_order_fulfill:
+    pattern:  /admin/rendelesek/{orderId}/teljesites
+    defaults: { _controller: BackendAdminBundle:Order:fulfillOrder }        

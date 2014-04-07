@@ -29,7 +29,7 @@ Cart = {
             $this = $(this);
             beforeChangeValue = $(this).val();
         }).change(function(){
-            if($this.val() < 0 || $this.val() == ""){
+            /*if($this.val() < 0 || $this.val() == ""){
                $this.val(beforeChangeValue);
             }else{
                 $.ajax({
@@ -46,7 +46,7 @@ Cart = {
                 }).fail(function(thrownError) {
                     console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
                 });
-            }
+            }*/
         });
         
         $('body').on("click", ".delete-product-from-cart", function(e){ //Rendelés gombra kattintás

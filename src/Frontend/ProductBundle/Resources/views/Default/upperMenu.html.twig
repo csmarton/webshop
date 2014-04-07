@@ -1,0 +1,41 @@
+<div class="left-side">    
+    {% if(actualPage-1<=0) %}
+        {% set prevPage = actualPage %}
+    {% else %}
+        {% set prevPage = actualPage-1 %}
+    {% endif %}
+    
+    {% if(actualPage+1 > pageCount) %}
+        {% set nextPage = actualPage %}
+    {% else %}
+        {% set nextPage = actualPage+1 %}
+    {% endif %}
+    
+    <ul class="pages">
+        <li>
+            <a href="?order={{order}}&by={{by}}&page={{prevPage}}"><</a>
+        </li>
+        {% for i in range(1,pageCount)%}
+            <li
+                {%if actualPage == i %}
+                    class="actual-page"
+                {% endif %}>
+                <a href="?order={{order}}&by={{by}}&page={{i}}">{{i}}</a>
+            </li>
+
+        {% endfor %} 
+        <li>
+            <a href="?order={{order}}&by={{by}}&page={{nextPage}}">></a>
+        </li>
+    </ul>
+</div>
+<div class="right-side">
+    <select class="set-filter">    
+        <option value="?order=promotion&by=asc">akciós elől</option>
+        <option value="?order=price&by=asc">leolcsóbb elől</option>
+        <option value="?order=price&by=desc">legdrágább elől</option>
+        <option value="?order=date&by=desc">legújabb elől</option>
+        <option value="?order=name&by=asc">név szerint növekvő</option>
+        <option value="?order=name&by=desc">név szerint növekvő</option>
+    </select>
+</div>    

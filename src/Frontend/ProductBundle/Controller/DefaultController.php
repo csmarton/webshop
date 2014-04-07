@@ -14,9 +14,58 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {        
-       
-        $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findAll();
-        return $this->render('FrontendProductBundle:Default:index.html.twig',array('products'=>$products));
+        $request = $this->get('request');
+        $page = (int)$request->query->get('page');
+        $order = $request->query->get('order');
+        $by = $request->query->get('by');
+        
+        if($page == null){
+            $page = 1;
+        }
+        $maxResult = 5;        
+        $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
+                    ->select('p');                     
+        
+        if($order == "promotion" && $by=="asc"){
+            //$products = $products
+                       // ->orderBy();
+            $products = $products
+                        ->orderBy('p.price', 'desc'); //TODO
+            
+        }else if($order == "price" && $by=="asc"){
+            $products = $products
+                        ->orderBy('p.price', 'asc');
+        }else if($order == "price" && $by=="desc"){
+            $products = $products
+                        ->orderBy('p.price', 'desc');
+        }else if($order == "date"  && $by=="desc"){
+            $products = $products
+                        ->orderBy('p.createdAt', 'desc');
+        }else if($order == "name"  && $by=="asc"){
+            $products = $products
+                        ->orderBy('p.name', 'asc');
+        }else if($order == "name"  && $by=="desc"){
+            $products = $products
+                        ->orderBy('p.name', 'desc');
+        }else{
+           $order = "promotion"; 
+           $by ="asc";
+           $products = $products
+                ->orderBy('p.price', 'desc'); //TODO
+        }
+                    $products = $products
+                                ->setFirstResult($page*$maxResult - $maxResult)
+                                ->setMaxResults($maxResult)
+                                ->getQuery()->getResult(); 
+        
+        $allProduct = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findAll();
+        $pageCount = ceil(count($allProduct)/ 5);       
+        return $this->render('FrontendProductBundle:Default:index.html.twig',array(
+                    'products'=>$products,
+                    'actualPage' => $page, 
+                    'pageCount' => $pageCount,
+                    'order' => $order,
+                    'by' => $by));
     }   
     
 	
@@ -28,22 +77,75 @@ class DefaultController extends Controller
     
     public function productByCategoryAction($main_category, $category=null){
         $permalinks = $main_category . "/". $category;
+        $request = $this->get('request');
+        $page = (int)$request->query->get('page');
+        $order = $request->query->get('order');
+        $by = $request->query->get('by');
+        
+        if($page == null){
+            $page = 1;
+        }
+        $maxResult = 5;        
         $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
-                    ->select('p')  
+                    ->select('p')
                     ->leftJoin('p.categorys', 'c')
                     ->leftJoin('c.mainCategory','mc')
                     ->where('mc.name = :main_category OR mc.id = :main_category ')     
-                    ->setParameter('main_category',$main_category);
+                    ->setParameter('main_category',$main_category);                    
         if($category != null){
              $products = $products
                 ->andWhere('c.slug = :category OR c.id = :category')     
                 ->setParameter('category',$category);
         }
-        $products = $products
-            ->getQuery()->getResult();       
         
-        return $this->render('FrontendProductBundle:Default:products_by_category.html.twig',array('products'=>$products));
+        if($order == "promotion" && $by=="asc"){
+            //$products = $products
+                       // ->orderBy();
+            $products = $products
+                        ->orderBy('p.price', 'desc'); //TODO
+            
+        }else if($order == "price" && $by=="asc"){
+            $products = $products
+                        ->orderBy('p.price', 'asc');
+        }else if($order == "price" && $by=="desc"){
+            $products = $products
+                        ->orderBy('p.price', 'desc');
+        }else if($order == "date"  && $by=="desc"){
+            $products = $products
+                        ->orderBy('p.createdAt', 'desc');
+        }else if($order == "name"  && $by=="asc"){
+            $products = $products
+                        ->orderBy('p.name', 'asc');
+        }else if($order == "name"  && $by=="desc"){
+            $products = $products
+                        ->orderBy('p.name', 'desc');
+        }else{
+           $order = "promotion"; 
+           $by ="asc";
+           $products = $products
+                ->orderBy('p.price', 'desc'); //TODO
+        }
+                    $allProduct = $products
+                            ->getQuery()->getResult(); 
+                    $products = $products
+                                ->setFirstResult($page*$maxResult - $maxResult)
+                                ->setMaxResults($maxResult)
+                                ->getQuery()->getResult(); 
+        
+        
+        $pageCount = ceil(count($allProduct)/ 5);
+        return $this->render('FrontendProductBundle:Default:products_by_category.html.twig',array(
+                    'products'=>$products,
+                    'actualPage' => $page, 
+                    'pageCount' => $pageCount,
+                    'order' => $order,
+                    'by' => $by,
+                    'mainCategory' =>$main_category,
+                    'category' => $category
+                    ));
     }
+    
+    
     
     public function productAction($slug){
         if(!is_numeric($slug)){//slug alapján
@@ -101,6 +203,7 @@ class DefaultController extends Controller
             'productQuestions' => $productQuestions,
             ));
     }
+
     
     
 }

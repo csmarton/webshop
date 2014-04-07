@@ -60,7 +60,7 @@ SharedModal = {
     deleteCategoryModalInit : function(categoryId){        
         $('#modal-delete-category').reveal();
             $('body').on('click', '.exit-reveal-modal', function(){ //Kilépés gombra a modális ablak bezárása
-                    $("#modal-delete-category").trigger('reveal:close');
+                    $(".exit-reveal-modal").trigger('reveal:close');
             }); 
             $('body').on('click', '.delete-category-button', function(){ //Törlés gombra kattintás után ajax kéréssel töröljük a kategóriát
                 $.ajax({

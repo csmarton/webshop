@@ -1,0 +1,40 @@
+<table class="product_table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Rendelő neve</th>
+            <th scope="col">Db</th>
+            <th scope="col">Ár</th>
+            <th scope="col">Rendelési idő</th>
+            <th scope="col">Teljesítési idő</th>
+            <th scope="col">Fizetési opció</th>
+            <th scope="col">Szállítási opció</th>
+            <th scope="col">Műveletek</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{order.getId()}}</td>
+                <td>{{order.getUser().getProfile().getName()}}</td>
+                <td>{{order.getItemsTotal()}}</td>
+                <td>{{order.getItemsTotalPrice()|priceFormat}}</td>
+                <td>{{order.getOrderedAt()|date('Y:m:d')}}</td>
+                <td>
+                    {% if(order.getPerformedAt() == NULL )%}
+                        -
+                    {% else %}
+                        {{order.getPerformedAt()|date('Y:m:d')}}
+                    {% endif %}
+
+                </td>
+                <td>{{order.getPaymentOption().getName()}}</td>
+                <td>{{order.getShippingOption().getName()}}</td>
+                <td>
+                    <a href="javascript:void(0)" class="menu_btn cancel_btn fulfill-button" link="{{path('backend_admin_order_fulfill', {'orderId':order.getId()})}}">Teljesítés</a>
+                    <a href="{{path('backend_admin_order_list_more',{'orderId':order.getId()})}}" class="menu_btn edit_btn">Bővebben</a>                            
+                </td>
+            </tr>                    
+        {% endfor %}
+    </tbody>
+</table>   

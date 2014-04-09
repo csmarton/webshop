@@ -1,17 +1,29 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path('frontend_registration') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register" autocomplete="off" id="registration-form">
+<form action="{{ path('frontend_registration') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register" autocomplete="off" id="registration-form" novalidate>
     <div class="topSection">
         <div class="modal-content">
             <h2>Regisztráció</h2>
                 <div>
-                    {{ form_widget(form) }}
+                    {{ form_label(form.username, 'Felhasználói név', { 'label_attr': {'class': 'labelText'}}) }}       
+                    {{ form_widget(form.username, { 'attr': {'class': 'validate[required] regUserName'} }) }}
+                    
+                    {{ form_label(form.email, 'Email cím', { 'label_attr': {'class': 'labelText'}}) }}       
+                   {{ form_widget(form.email, { 'attr': {'class': ' validate[required, custom[email],funcCall[RegEmailCheck]] regEmail'} }) }}
+                    
+                    {{ form_label(form.plainPassword.first, 'Jelszó', { 'label_attr': {'class': 'labelText'}}) }}       
+                    {{ form_widget(form.plainPassword.first, { 'attr': {'class': ' validate[required] regPass1'} }) }}
+                    
+                    {{ form_label(form.plainPassword.second, 'Jelszó megerősítése', { 'label_attr': {'class': 'labelText'}}) }}       
+                    {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'validate[required,funcCall[RegSamePassword]] regPass2'} }) }}
+                    
+                    {{ form_widget(form._token) }}
                 </div>
         </div>
     </div>
     <div class="bottomSection">
         <div class="inputs">
-            <input type="submit" value="{{ 'registration.submit'|trans }}" class="ok-button" />       
+            <input type="submit" value="{{ 'registration.submit'|trans }}" class="ok-button" id="registration-form-button" checkLink="{{path('frontend_registration_email_check')}}"/>       
         </div>
     </div>
 </form>

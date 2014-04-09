@@ -20,6 +20,12 @@
                     "regex": /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                     "alertText": "Hibás E-mail cím"
                 },
+                "emailExists": {                    
+                    "alertText": "Foglalt email cím"
+                },
+                "differentPass": {                    
+                    "alertText": "A megadott jelszavak eltérőek"
+                },
                 "integer": {
                     "regex": /^[\-\+]?\d+$/,
                     "alertText": "Nem érvényes (egész) szám"

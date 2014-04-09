@@ -5,50 +5,10 @@ Shared = {
 
     bindUIActions: function(){
        this.qtipInit();
-       this.modalInit();
-       
        
     },
     
-    modalInit:function(){
-        $('body').on('click', '#login-sign-in', function(){
-            $("#modal-sign-in").reveal();
-        });
-        
-        
-        //Bejelentkezési form elküldése
-        $('body').on('click', '#submit-login-form-button', function(e) {
-            email = $('#sign-in-form #email').last().val();
-            password = $('#sign-in-form #password').last().val();
-            $.ajax({
-                url: $('#sign-in-form').last().attr('checklink'),
-                data:{'email': email, 'password' : password},
-                type: 'POST',
-                dataType: 'json'
-            }).done(function(data) {
-                if (data.success) { 
-                    if(data.exists){
-                        window.location.reload();
-                    }
-                } else {							  
-                    console.error('HIBA a szervertől:' + data.err);
-                    return false;
-                }
-            }).fail(function(thrownError) {
-                console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
-            });
-            return false;
-            
-        });
 
-        $('body').on('click', '#registration-password-link', function(e) {
-            $("#modal-sign-in").trigger('reveal:close');
-            $("#modal-registration").reveal();
-        });
-        
-        
-        
-    },
     qtipInit : function(){
         $('#my-profile-text').qtip({
             content: $("#myprofileDropDown").html(),

@@ -12,6 +12,8 @@ use Frontend\OrderBundle\Form\ShippingOptionType;
 use Frontend\OrderBundle\Form\PaymentOptionType;
 use Frontend\ProfileBundle\Entity\Profile;
 use Frontend\ProfileBundle\Form\ProfileType;
+use Frontend\OrderBundle\Entity\OrdersProfileInformation;
+use Frontend\OrderBundle\Form\OrdersProfileInformationType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OrderController extends Controller
@@ -28,8 +30,21 @@ class OrderController extends Controller
             return $this->redirect($this->generateUrl('frontend_cart'));
 
         $profile = $user->getProfile();
-
-        $ProfileForm = $this->createForm(new ProfileType(),$profile);
+        
+        $ordersProfileInformation = new OrdersProfileInformation();
+        $ordersProfileInformation->setName($profile->getName());
+        $ordersProfileInformation->setEmail($user->getUserName());
+        $ordersProfileInformation->setTelephone($profile->getTelephone());
+        $ordersProfileInformation->setBillingAddressCity($profile->getBillingAddressCity());
+        $ordersProfileInformation->setBillingAddressStreet($profile->getBillingAddressStreet());
+        $ordersProfileInformation->setBillingAddressStreetNumber($profile->getBillingAddressStreetNumber());
+        $ordersProfileInformation->setBillingAddressZipCode($profile->getBillingAddressZipCode());
+        $ordersProfileInformation->setShippingAddressCity($profile->getShippingAddressCity());
+        $ordersProfileInformation->setShippingAddressStreet($profile->getShippingAddressStreet());
+        $ordersProfileInformation->setShippingAddressStreetNumber($profile->getShippingAddressStreetNumber());
+        $ordersProfileInformation->setShippingAddressZipCode($profile->getShippingAddressZipCode());
+        
+        $ProfileForm = $this->createForm(new OrdersProfileInformationType(),$ordersProfileInformation);
         $order = new Orders();             
         $orderForm = $this->createForm(new OrdersType(), $order);   
         
@@ -62,7 +77,8 @@ class OrderController extends Controller
                $order->setItemsTotalPrice($orderPrice);
                $order->setItemsTotal($itemsTotal);                    
 
-               $em->persist($profile);
+               $em->persist($ordersProfileInformation);
+               $order->setOrderProfileInformation($ordersProfileInformation);
                $em->persist($order);                    
                $em->flush();   
 

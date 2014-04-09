@@ -49,6 +49,10 @@ backend_admin_category_new:
 backend_admin_category_remove:
     pattern:  /admin/kategoria/torles
     defaults: { _controller: BackendAdminBundle:Category:remove }
+    
+backend_admin_main_category:
+    pattern:  /admin/fokategoria
+    defaults: { _controller: BackendAdminBundle:Category:mainCategory }    
 # 
 # felhasználók szerkesztése
 #

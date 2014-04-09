@@ -28,3 +28,7 @@ frontend_registration:
 frontend_login_check:
     pattern:  /profil/bejelentkezes/ellenorzed
     defaults: { _controller: FrontendUserBundle:Default:checkLogin}        
+    
+frontend_registration_email_check:
+    pattern:  /profil/regisztracio/email/ellenorzes
+    defaults: { _controller: FrontendUserBundle:Default:registrationEmailCheck}           

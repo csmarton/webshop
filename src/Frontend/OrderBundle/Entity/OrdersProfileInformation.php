@@ -50,9 +50,9 @@ class OrdersProfileInformation
     private $billingAddressCity;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="billing_address_street", type="integer", nullable=false)
+     * @ORM\Column(name="billing_address_street", type="string", length=40, nullable=false)
      */
     private $billingAddressStreet;
 
@@ -78,9 +78,9 @@ class OrdersProfileInformation
     private $shippingAddressCity;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="shipping_address_street", type="integer", nullable=true)
+     * @ORM\Column(name="shipping_address_street", type="string", length=40, nullable=true)
      */
     private $shippingAddressStreet;
 
@@ -195,7 +195,7 @@ class OrdersProfileInformation
     /**
      * Set billingAddressStreet
      *
-     * @param integer $billingAddressStreet
+     * @param string $billingAddressStreet
      * @return OrdersProfileInformation
      */
     public function setBillingAddressStreet($billingAddressStreet)
@@ -208,7 +208,7 @@ class OrdersProfileInformation
     /**
      * Get billingAddressStreet
      *
-     * @return integer 
+     * @return string 
      */
     public function getBillingAddressStreet()
     {
@@ -287,7 +287,7 @@ class OrdersProfileInformation
     /**
      * Set shippingAddressStreet
      *
-     * @param integer $shippingAddressStreet
+     * @param string $shippingAddressStreet
      * @return OrdersProfileInformation
      */
     public function setShippingAddressStreet($shippingAddressStreet)
@@ -300,7 +300,7 @@ class OrdersProfileInformation
     /**
      * Get shippingAddressStreet
      *
-     * @return integer 
+     * @return string 
      */
     public function getShippingAddressStreet()
     {

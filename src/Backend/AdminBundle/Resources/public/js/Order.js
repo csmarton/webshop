@@ -35,6 +35,29 @@ Order = {
         $('body').on('click', '.exit-reveal-modal', function(){ //Kilépés gombra a modális ablak bezárása
             $(".exit-reveal-modal").trigger('reveal:close');
         }); 
+        
+        $('#filter-date').datepicker({ dateFormat: 'yy-mm-dd'});
+        
+         $('body').on('click', '#filter-order-button', function(){
+             filterName = $('#filter-name').val();
+             filterDate = $('#filter-date').val();
+             filterFulfill = $('#filter-fulfill').val();
+              $.ajax({
+                url: $(this).attr('link'),
+                data:{'filterName':filterName, 'filterDate':filterDate, 'filterFulfill':filterFulfill},
+                type: 'POST',
+                dataType: 'json'
+            }).done(function(data) {
+                if (data.success) {    
+                    $('#order-table').html(data.html);
+                    console.log("SIKER");
+                } else {							  
+                    console.error('HIBA a szervertől:' + data.err);
+                }
+            }).fail(function(thrownError) {
+                console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+            });
+         });
     },
 }	
 

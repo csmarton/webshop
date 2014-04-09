@@ -24,6 +24,11 @@ OrderValidation = {
                 'message': "Addj meg nevet!"
             }
         },
+        '.email': {
+            'required': {
+                'message': "Addj meg egy email címet!"
+            }
+        },
         '.telephone': {
             'required': {
                 'message': "Addj meg egy telefonszámot!"

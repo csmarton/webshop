@@ -3,16 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/LayoutBundle/Resources/public/css/shared_logged.css</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/LayoutBundle/Resources/views/Default/sidebar.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/OrderController.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/ProductController.php</file>
             <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/list.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/config/routing.yml</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Order/list.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Order/listMore.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProfileBundle/Resources/views/MyOrders/myOrders.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/new.html.twig</file>
         </group>
     </open-files>
 </project-private>

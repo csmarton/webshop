@@ -298,6 +298,15 @@ padding-top: 30px;
 }
 
 
+#modal-sign-in #sign-in-form .errorSection{
+    background-color: red;
+    color: white;
+    width: 100%;
+    padding: 10px 0px;
+    text-align: center;
+    font-size:1.2em;
+}
+
 .page-title{
     font-weight: bold;
     font-size: 1.5em;

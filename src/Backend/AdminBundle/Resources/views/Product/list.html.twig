@@ -27,7 +27,6 @@
                     <th scope="col">Bruttó ár</th>
                     <th scope="col">Nettó ár</th>
                     <th scope="col">Slug</th>
-                    <th scope="col">Hosszabb leírás</th>
                     <th scope="col">Létrehozás dátuma</th>
                     <th scope="col">Frissítve</th>
                     <th scope="col">Kategória</th>
@@ -43,14 +42,7 @@
                         <td>{{ product.getName() }}</td>
                         <td>{{ product.getPrice() }}</td>
                         <td>{{ (product.getPrice()/1.27)|round(0, 'floor') }}</td>
-                        <td>{{ product.getSlug() }}</td>
-                        <td>
-                            {% if (product.getDescription()|length <= 50 ) %}
-                                {{ product.getDescription()}}
-                            {% else %}
-                                {{ product.getDescription()|slice(0,50)}}...
-                            {% endif %}
-                        </td>    
+                        <td>{{ product.getSlug() }}</td>  
                         <td>{{ product.getCreatedAt()|date('Y-m-d')}}</td>
                         <td>{{ product.getUpdatedAt()|date('Y-m-d')}}</td>
                         <td>
@@ -66,11 +58,7 @@
                             {% endif %}
                         </td>
                         <td>
-                             {% if (product.getInStock() == 1)%}
-                                Igen
-                            {% else %}
-                                Nem
-                            {% endif %}
+                             {{product.getInStock()}} db
                         </td>
                         <td class="product_edit_btn">
                             <a href="{{path('backend_admin_product_new',{'productId':product.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>

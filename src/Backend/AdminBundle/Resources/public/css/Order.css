@@ -65,3 +65,28 @@
     border-top: 5px double #428bca;
     text-align: right;
 }
+
+.filter-order-menu{
+    float:none !important;
+    height: 50px;
+}
+
+#filter-name,
+#filter-date,
+#filter-fulfill{
+    width: 200px;
+    height: 30px;
+    margin-right:20px;
+    font-size: 1.2em;
+    padding: 0px 5px;
+}
+#filter-name:focus,
+#filter-date:focus,
+#filter-fulfill{
+    color:#10AC8E;
+}
+
+.filter-order-menu .ok_btn{
+    height:auto !important;
+    padding:5px;
+}

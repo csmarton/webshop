@@ -8,11 +8,11 @@
     <field name="email" type="string" column="email" length="100" nullable="false"/>
     <field name="telephone" type="string" column="telephone" length="30" nullable="false"/>
     <field name="billingAddressCity" type="string" column="billing_address_city" length="60" nullable="false"/>
-    <field name="billingAddressStreet" type="integer" column="billing_address_street" nullable="false"/>
+    <field name="billingAddressStreet" type="string" column="billing_address_street" length="40" nullable="false"/>
     <field name="billingAddressStreetNumber" type="integer" column="billing_address_street_number" nullable="false"/>
     <field name="billingAddressZipCode" type="integer" column="billing_address_zip_code" nullable="false"/>
     <field name="shippingAddressCity" type="string" column="shipping_address_city" length="60" nullable="true"/>
-    <field name="shippingAddressStreet" type="integer" column="shipping_address_street" nullable="true"/>
+    <field name="shippingAddressStreet" type="string" column="shipping_address_street" length="40" nullable="true"/>
     <field name="shippingAddressStreetNumber" type="integer" column="shipping_address_street_number" nullable="true"/>
     <field name="shippingAddressZipCode" type="integer" column="shipping_address_zip_code" nullable="true"/>
   </entity>

@@ -11,9 +11,9 @@
             <h2>Bejelentkezés</h2>
                 <div>
                     <label for="email">Email cím</label>                        
-                    <input type="text" id="email" name="_email"/>
+                    <input type="text" id="email" name="_email" class="validate[required, custom[email]]"/>
                     <label for="password">Jelszó</label>
-                    <input type="password" id="password" name="_password"/>
+                    <input type="password" id="password" name="_password" class="validate[required]"/>
                 </div>
                 <div>
                     Elfelejtetted a jelszavadat? Kattints <a href="#" id="forger-password-link">ide</a>
@@ -27,9 +27,10 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         </div>
     </div>
+    <div class="errorSection hide"></div>
     <div class="bottomSection">
         <div class="inputs">
-            <input type="button" value="Bejelentkezés" id="submit-login-form-button" class="ok-button">                    
+            <input type="submit" value="Bejelentkezés" id="submit-login-form-button" class="ok-button">                    
         </div>
     </div>
 </form>    

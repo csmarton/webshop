@@ -112,5 +112,22 @@ class DefaultController extends Controller
             return new JsonResponse(array ('success'=>false));
         }
         
+        public function registrationEmailCheckAction(){
+            $request = $this->get('request');
+            if('POST' === $request->getMethod()){
+                $email = $request->request->get('email');
+                $user = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->findByEmail($email);
+                
+                if(count($user) == 0){
+                    return new JsonResponse(array ('success'=>true,'userExists' => false));
+                }else{
+                    return new JsonResponse(array ('success'=>true,'userExists' => true));
+                }
+            }
+            return new JsonResponse(array ('success'=>false));
+            
+            
+        }
+        
         
 }

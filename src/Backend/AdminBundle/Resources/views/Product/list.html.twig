@@ -16,7 +16,30 @@
     <div class="main">
         <h2>Termékek</h2>
         <div class="upperMenu">
-            <a href="{{path('backend_admin_product_new')}}" class="menu_btn">Új Termék</a>
+            <div class="left-side">
+                <div class="upperMenu filter-order-menu">
+                    <label for="filter-product-id">Azonosító:</label>
+                    <input type="text" id="filter-product-name" name="filter-product-name">
+                    <label for="filter-product-name">Terméknév:</label>
+                    <input type="text" id="filter-product-name" name="filter-product-name">
+                    <label for="filter-product-active">Aktív:</label>
+                    <select id="filter-product-active" name="filter-product-active">
+                        <option value=""></option>
+                        <option value="yes">Aktív</option>
+                        <option value="no">Inaktív</option>
+                    </select>
+                    <label for="filter-product-categroy">Kategória:</label>
+                    <select id="filter-product-categroy" name="filter-product-categroy">
+                        <option value=""></option>
+                        <option value="asus">Asus</option>
+                    </select>   
+                    <a href="javascript:void(0)" type="button"class="menu_btn ok_btn" id="filter-order-button" link="{{path('backend_admin_order_list')}}"/>Szűrés</a>
+                </div>
+            </div>
+            <div class="right-side">                
+                <a href="{{path('backend_admin_product_new')}}" class="menu_btn">Új Termék</a>
+            </div>
+            
         </div>
         
         <table class="product_table">

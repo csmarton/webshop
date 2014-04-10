@@ -111,18 +111,6 @@
 	padding-right: 15px;
 }
 
-/*KERESŐ FORM*/
-.main #search_form{
-	height: 200px;
-	background-color: yellow;
-}
-
-#searcher #search_toggle_button{
-	text-align: center;
-	border-top: 3px solid #CBD4DF;
-	padding-top: 10px;
-}
-
 .main #productTabs{
     clear:both;
 }

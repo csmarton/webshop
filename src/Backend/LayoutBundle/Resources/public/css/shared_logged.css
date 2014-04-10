@@ -270,7 +270,13 @@ body{
 }
 
 .main .upperMenu{
-    float: right;
+    display: block;
+}
+.main .upperMenu .left-side{
+    float:left;
+}
+.main .upperMenu .right-side{
+    float:right;
 }
 .product_table{
     clear:both;

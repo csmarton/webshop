@@ -20,7 +20,9 @@
         {% endblock %}        
         <div class="container">
             <div id="searcher">
-                    <div id="search_form" style="display:none"></div>
+                <div id="search_form">
+                    {% include "FrontendSearchBundle:Search:laptopSearch.html.twig" %}
+                </div>
                     <div id="search_toggle_button">Részletes keresés</div>		
             </div>
             <div id="upper-menu"  href="{{path('frontend_product_homepage')}}">

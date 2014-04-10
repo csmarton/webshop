@@ -24,3 +24,33 @@
     height: 24px;
     padding:0px !important;
 }
+
+/*
+* Részletes keresők
+*/
+/*KERESŐ FORM*/
+.main #search_form{
+	height: 200px;
+}
+
+#searcher #search_toggle_button{
+	text-align: center;
+	border-top: 3px solid #CBD4DF;
+	padding-top: 10px;
+}
+
+.main #search_form div{
+    width:50%;
+    float:left;
+}
+
+.main #search_form label{
+    display: inline-block;
+    width: 200px;
+}
+
+.main #search_form select{
+    width:150px;
+}
+
+

@@ -78,5 +78,20 @@ class DefaultController extends Controller
     {
         return $this->container->getParameter('fos_user.template.engine');
     }
+    
+    public function customerServicesAction(){
+        return $this->render('FrontendLayoutBundle:BottomSection:customerServices.html.twig');
+    }
+    
+    public function privacyPolicyAndTermsConditionsAction(){
+        return $this->render('FrontendLayoutBundle:BottomSection:PrivacyPolicyAndTermsConditions.html.twig');
+    }
  
+    public function gyikAction(){
+        return $this->render('FrontendLayoutBundle:BottomSection:GYIK.html.twig');
+    }
+    
+    public function contactAction(){
+        return $this->render('FrontendLayoutBundle:BottomSection:contact.html.twig');
+    }
 }

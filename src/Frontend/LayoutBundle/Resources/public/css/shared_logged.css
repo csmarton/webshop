@@ -254,43 +254,36 @@ padding-top: 30px;
 }
 
 //REGISZTRÁCIÓS/BEJELENTKEZÉS MODÁLIS ABLAK
-#modal-sign-in .formContent,
-#modal-registration .formContent{
+.reveal-modal .formContent{
     padding:10px;
 }
 
-#modal-sign-in .topSection,
-#modal-registration .topSection{
+.reveal-modal .topSection{
     padding: 10px;
 }
 
-#modal-sign-in .bottomSection,
-#modal-registration .bottomSection{
+.reveal-modal .bottomSection{
     padding-top: 5px;
     text-align: center;
 }
 
-#modal-sign-in h2,
-#modal-registration h2{
+.reveal-modal h2{
     color: black;
     font-weight: bold;
     font-size: 1.3em;
 }
 
-#modal-sign-in #sign-in-form .modal-content div
-#modal-registration #registration-form .modal-content div{
+.reveal-modal .modal-content div{
     padding-top: 5px;
 }
 
-#modal-sign-in #sign-in-form .modal-content label,
-#modal-registration #registration-form .modal-content label{
+.reveal-modal .modal-content label{
     float: left;
-    margin-right: 10px;
+    margin: 10px 10px 0px 0px;
     width: 150px;
 }
 
-#modal-sign-in #sign-in-form .modal-content input,
-#modal-registration #registration-form .modal-content input{
+.reveal-modal .modal-content input{
     width: 200px;
     display: block;
     padding: 5px;
@@ -298,7 +291,7 @@ padding-top: 30px;
 }
 
 
-#modal-sign-in #sign-in-form .errorSection{
+.reveal-modal .errorSection{
     background-color: red;
     color: white;
     width: 100%;

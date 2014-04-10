@@ -1,0 +1,22 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+     <div class="topSection">
+        <div class="modal-content">
+            <h2>Jelszó emlékeztető</h2>    
+            <div>
+                {% if invalid_username is defined %}
+                    <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+                {% endif %}
+                <label for="username">Email cím:</label>
+                <input type="text" id="username" name="username" required="required" />
+            </div>
+        </div>
+     </div>
+    <div class="errorSection hide"></div>
+    <div class="bottomSection">
+        <div class="inputs">
+            <input type="submit" value="{{ 'resetting.request.submit'|trans }}" class="ok-button"/>
+        </div>
+    </div>
+</form>

@@ -1,3 +1,5 @@
+var emailPattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+
 UserValidation = {	
     
     init: function(){
@@ -53,51 +55,26 @@ UserValidation = {
             $("#modal-sign-in").trigger('reveal:close');
             $("#modal-registration").reveal();
         });
-        
-        $('body').on('click', '#registration-form-button', function(e) {
-            //var valid = $("#registration-form").validationEngine('validate');
-            
-           /* if(valid){
-                email = $('#registration-form .regEmail').last().val();
+
+        $('body').on('keyup', '.regEmail', function(e) {
+            if(emailPattern.test($(this).val())){
                 $.ajax({
-                    url: $(this).last().attr('checkLink'),
-                    data:{'email': email},
+                    url: $('#registration-form-button').last().attr('checkLink'),
+                    data:{'email': $(this).val()},
                     type: 'POST',
                     dataType: 'json'
                 }).done(function(data) {
-                    if (data.success) { 
-                        if(data.userExists){
-                            $(".regEmail").validationEngine('showPrompt', "Foglalt email cím", 'error', 'centerRight: 0', true);
-                        }else{
-                            $("#registration-form").submit();
-                            
-                        }
+                    if (data.success) {  
+                        $('.regEmail').attr('used', data.userExists);
                     } else {							  
                         console.error('HIBA a szervertől:' + data.err);
-                        return false;
                     }
                 }).fail(function(thrownError) {
                     console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
                 });
-            } */
-           
-                
-        });
-        $('body').on('keyup', '.regEmail', function(e) {
-            $.ajax({
-                url: $('#registration-form-button').last().attr('checkLink'),
-                data:{'email': $(this).val()},
-                type: 'POST',
-                dataType: 'json'
-            }).done(function(data) {
-                if (data.success) {  
-                    $('.regEmail').attr('used', data.userExists);
-                } else {							  
-                    console.error('HIBA a szervertől:' + data.err);
-                }
-            }).fail(function(thrownError) {
-                console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
-            });            	
+            }else{
+                $('.regEmail').attr('used', false);
+            }    
         });
         
         
@@ -140,7 +117,7 @@ UserValidation = {
 	
     setRegistrationFormValidation: function() {
         $("#registration-form").validationEngine({
-            promptPosition: "centerRight:-70",
+            promptPosition: "centerRight:0",
             'custom_error_messages': UserValidation.customErrorMessages,
             scroll: false,
             maxErrorsPerField: 1,
@@ -160,8 +137,13 @@ function RegSamePassword(field, rules, i, options){
 }
 
 function RegEmailCheck(field, rules, i, options){
-    if($('.regEmail').attr('used') == "true"){
-        rules.push('required');
-        return options.allrules.emailExists.alertText;
+    rules.push('required');
+    if(emailPattern.test(field.val())){
+        if($('.regEmail').attr('used') == "true")     
+            return options.allrules.emailExists.alertText;
+    }   
+    else{
+        return options.allrules.email.alertText;
     }
+    
 }

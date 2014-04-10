@@ -1,0 +1,15 @@
+frontend_bottom_customer_services:
+    pattern:  /rolunk/ugyfelszolgalat
+    defaults: { _controller: FrontendLayoutBundle:Default:customerServices}   
+    
+frontend_bottom_privacy_policy_and_terms_conditions:
+    pattern:  /rolunk/adatvedelem
+    defaults: { _controller: FrontendLayoutBundle:Default:privacyPolicyAndTermsConditions}       
+    
+frontend_bottom_gyik:
+    pattern:  /rolunk/gyik
+    defaults: { _controller: FrontendLayoutBundle:Default:customerServices}       
+    
+frontend_bottom_customer_services:
+    pattern:  /rolunk/kapcsolat
+    defaults: { _controller: FrontendLayoutBundle:Default:contact}           

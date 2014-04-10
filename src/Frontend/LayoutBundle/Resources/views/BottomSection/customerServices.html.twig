@@ -1,0 +1,24 @@
+{% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShop - Ügyfélszolgálat {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript">
+            $(document).ready(function(){
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %}
+    <div class="main">
+        {% block leftSide %}                        
+            {{parent()}}
+        {% endblock %}        
+        <div class="container">
+            <div class="page-title">Ügyfélszolgálat</div>
+        </div>
+    </div>    
+{% endblock %}
+                        

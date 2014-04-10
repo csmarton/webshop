@@ -4,7 +4,7 @@ SharedModal = {
     },
 
     bindUIActions: function(){
-       $('body').on('click', '.deleteProduct', function(){     //Termékek törléseére modális ablak       
+       $('body').on('click', '.deleteProduct', function(){     //Termékek törlésére modális ablak       
             var productId = $(this).attr("productId");
             SharedModal.deleteProductModalInit(productId);  
         });

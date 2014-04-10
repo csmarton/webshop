@@ -77,6 +77,9 @@ class DefaultController extends Controller
             return $this->render('FrontendUserBundle:Default:login.html.twig');
         }
         
+        /*
+         * Bejelentkezés ellenőrzése
+         */
         public function checkLoginAction() {
            $request = $this->get('request');
             if('POST' === $request->getMethod()){
@@ -112,6 +115,9 @@ class DefaultController extends Controller
             return new JsonResponse(array ('success'=>false));
         }
         
+        /*
+         * Email cím ellenőrzése, hogy nincs -e már ilyen címmel regisztrált vásárló
+         */
         public function registrationEmailCheckAction(){
             $request = $this->get('request');
             if('POST' === $request->getMethod()){
@@ -124,10 +130,29 @@ class DefaultController extends Controller
                     return new JsonResponse(array ('success'=>true,'userExists' => true));
                 }
             }
-            return new JsonResponse(array ('success'=>false));
-            
-            
+            return new JsonResponse(array ('success'=>false));  
         }
-        
+        /*
+         * Email cím megváltoztatása
+         */
+        public function changeEmailAction(){
+		$request = Request::createFromGlobals();
+		if('POST' === $request->getMethod()){
+			$em = $this->getDoctrine()->getEntityManager();		
+			
+			$request = $this->get('request');		
+			$email = $request->request->get('email');
+			$user    = $this->get('security.context')->getToken()->getUser();
+			$user->setEmail($email);
+			$userManager = $this->container->get('fos_user.user_manager');
+			$userManager->updateUser($user);
+			
+			return new JsonResponse(array ('success'=>true));
+		 }
+		 else{
+			return new JsonResponse(array ('success'=>false));
+		 }
+	}
+
         
 }

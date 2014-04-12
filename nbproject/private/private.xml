@@ -3,9 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/LayoutBundle/Resources/public/css/shared_logged.css</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/list.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Order/list.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/app/config/config.yml</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Entity/Product.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/products.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/public/js/Product.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/SearchBundle/Resources/views/Search/laptopSearch.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Entity/ProductProperty.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/DQL/Cast.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/index.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/upperMenu.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/productBox.html.twig</file>
         </group>
     </open-files>
 </project-private>

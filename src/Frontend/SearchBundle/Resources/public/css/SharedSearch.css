@@ -29,8 +29,7 @@
 * Részletes keresők
 */
 /*KERESŐ FORM*/
-.main #search_form{
-	height: 200px;
+.main #search-box{
 }
 
 #searcher #search_toggle_button{
@@ -39,18 +38,92 @@
 	padding-top: 10px;
 }
 
-.main #search_form div{
+.main #search-box .search-filter{
     width:50%;
     float:left;
 }
 
-.main #search_form label{
+.main #search-box label{
     display: inline-block;
+    width: 150px;
+    text-align: right;
+}
+
+.main #search-box select{
     width: 200px;
+    height: 30px;
+    margin: 5px;
+    background-color: #F7F9FD;
+    border: 1px solid #D5D5D5;
 }
 
-.main #search_form select{
-    width:150px;
+#searchTabs{
+    display:block;
+}
+#searchTabs ul{
+    
+}
+#searchTabs ul>li{
+    display: inline-block;
+    margin:5px;
 }
 
+#searchTabs ul>li a{
+    display: block;
+    padding: 10px;
+    background-color: #F7F7F7;
+    border: 1px solid #d8d8d8;
+    box-shadow: 1px 2px 0px rgba(197,197,197,.4);
+    -moz-box-shadow: 1px 2px 0px rgba(197,197,197,.4);
+    -webkit-box-shadow: 1px 2px 0px rgba(197,197,197,.4);
+    color:black;
+    font-weight: bold;
+    text-decoration: none;
+}
+#searchTabs ul>li a:hover{
+    background-color: #428bca;
+    color: white;
+}
 
+#searchTabs ul>li .current{
+    background-color: #428bca;
+    color: white;
+    border: 1px solid #428bca;
+}
+
+#search-box .bottom-section{
+    margin-top: 5px;
+    text-align: center;
+    clear:both;
+        
+}
+#search-box .top-section{
+    display: block;
+    overflow: hidden;
+}
+
+.price-filter{
+    text-align: center;
+    float: none !important;
+    width: 100% !important;
+    height: 50px;
+}
+
+#laptop-price-amount-copy{
+    color:#428bca;
+    font-weight:bold;
+    border:0;
+    font-size: 1.2em;
+
+}
+#laptop-price-slider{
+    width: 600px;
+    margin: 0px auto;
+}
+
+.ui-slider-range{ 
+    background: #428bca !important;
+}
+.ui-slider-handle { 
+    border-color: #9BA6AF !important
+}

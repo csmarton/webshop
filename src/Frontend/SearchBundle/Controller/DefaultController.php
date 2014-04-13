@@ -21,13 +21,14 @@ class DefaultController extends Controller
                     ->setParameter('key','%'.$key.'%')
                     ->getQuery()->getResult();
             
-            $availableProducts = array();
-           
-            foreach($products as $product){
-               $availableProducts[] = $product->getName();
-            }
-            return new JsonResponse(array('success' => true,'products'=>$availableProducts));
+            
+            $html = $this->renderView('FrontendSearchBundle:Default:autocompleteResults.html.twig', array(
+                        'products' => $products
+                    ));
+            return new JsonResponse(array('success' => true, 'html' => $html));
              
+        }else{
+            return new JsonResponse(array('success' => false));
         }
         
     }   

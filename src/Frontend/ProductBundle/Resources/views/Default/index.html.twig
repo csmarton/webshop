@@ -20,7 +20,7 @@
         {% endblock %}        
         <div class="container">
             <div id="searcher"  href="{{path('frontend_product_homepage')}}">
-                <div id="search-box" url-filter-string="{{urlParameters}}">
+                <div id="search-box" class="hide" url-filter-string="{{urlParameters}}">
                     {% include "FrontendSearchBundle:Search:laptopSearch.html.twig" %}
                 </div>
                     <div id="search_toggle_button">Részletes keresés</div>		

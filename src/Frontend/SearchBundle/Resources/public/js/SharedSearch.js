@@ -1,24 +1,19 @@
 SharedSearch = {
     SEARCH_STRING: '',
     availableProducts :[],
-    searchKey : null,
     SEARCHING_ENABLE: false,
+    resultsSelected : false,
     init: function(){
             this.bindUIActions();
     },
 
     
     bindUIActions: function(){
-        
-        
-        
-         $("body").on('click', '#search_header', function(e){
-             if(SharedSearch.searchKey == null){
-                SharedSearch.searchKey = '';
-                SharedSearch.autocompleteAjaxSubmit();
-             }
-	}); 
-        
+        $(".search-header-content-box").hover(
+            function () { SharedSearch.resultsSelected = true; },
+            function () { SharedSearch.resultsSelected = false; }
+        );
+
         $("body").on('click', '.pages li a', function(e){
             
             if(!SharedSearch.SEARCHING_ENABLE){
@@ -40,13 +35,20 @@ SharedSearch = {
                 SharedSearch.getFilteredProductByAjax(1,false,true);
             }
         });
-        
-       
-        $("body").on('keyup', '#search_header', function(e){
-            e.preventDefault();
-            SharedSearch.searchKey = $(this).val();
+            $('body').on("click", ".product-box a", function(e){     
+                console.log("click");
+            });
             
-            SharedSearch.autocompleteAjaxSubmit();
+        $('body').on("blur", "#search-header", function(e){ 
+             if (!SharedSearch.resultsSelected) {
+               $('.search-header-content-box').hide();
+            }
+            
+        });
+        $("body").on('keyup', '#search-header', function(e){
+            e.preventDefault();
+            searchKey = $(this).val();            
+            SharedSearch.autocompleteAjaxSubmit(searchKey);
             
 	});  
         
@@ -157,18 +159,18 @@ SharedSearch = {
             console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
         });
     },
-    autocompleteAjaxSubmit:function(){
+    
+    autocompleteAjaxSubmit:function(searchKey){
         $.ajax({
-                url: $('#search_header').attr('href'),			
-                data: {'key' : SharedSearch.searchKey},
+                url: $('#search-header').attr('href'),			
+                data: {'key' : searchKey},
                 type: 'POST',
                 dataType: 'json'
             }).done(function(returnData) {
                 if (returnData.success) {
-                    SharedSearch.availableProducts = returnData.products;
-                    $( "#search_header" ).autocomplete({
-                        source: SharedSearch.availableProducts
-                    });
+                    $('.search-header-content').html(returnData.html);
+                    $('.search-header-content-box').show();
+                    
                 }else{
                     console.log("Nincs találat");
                 }

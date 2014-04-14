@@ -6,16 +6,31 @@
     {% else %}
             {% set product_link = product.getId() %}
     {% endif %}
-    <div class="product_box">
+    {% if product.getSpecialOffer() is not null %}
+        {% set classes = "sales" %}
+    {% else%}
+        {% set classes = "" %}
+    {% endif %}
+    <div class="product_box {{classes}}">
             <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
             <div class="upper_box">
 
                     <div class="right_box">
                         <div class="product_price">
                             {% if product.getSpecialOffer() is not null %}
-                                {{product.getSpecialOffer().getNewPrice|priceFormat}} Ft
+                                <div class="old-price">
+                                    {{ product.getPrice()|priceFormat }} Ft
+                                </div>
+                                <div class="new-price">
+                                    {{ product.getSpecialOffer().getNewPrice|priceFormat }} Ft
+                                </div>
                             {% else%}
-                                {{product.getPrice()|priceFormat}}  Ft
+                                <div class="old-price">
+                                    {{ product.getPrice()|priceFormat }} Ft
+                                </div>
+                                <div class="new-price">
+                                </div>
+                                
                             {% endif %}
                         </div>
                             <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">

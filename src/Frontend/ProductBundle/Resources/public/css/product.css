@@ -4,6 +4,7 @@
 .main .products_box{
     clear:both;
 }
+
 .main .products_box img{
     width: 120px;
     height: 120px;
@@ -43,6 +44,16 @@
     padding-bottom: 10px;
     font-size: 1.3em;
 }
+.sales .new-price{
+    
+}
+
+.sales .old-price{
+    text-decoration: line-through;
+    color: black;
+    font-weight: normal;
+}
+
 
 
 .to-cart-button:hover {
@@ -164,8 +175,7 @@
 }
 #current-product-box .image_container{
     float: left;
-    width: 250px;
-    height: 300px;
+    width: 400px;
 }
 
 .main #current-product-box .right_box{
@@ -250,3 +260,10 @@
     float:right;
 }
 
+.sales{
+    background: url("/Shop/web/images/sales.png") top right no-repeat !important;
+}
+
+.flex-control-nav{
+    display:none;
+}

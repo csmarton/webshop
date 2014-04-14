@@ -14,6 +14,11 @@ SharedModal = {
             SharedModal.deleteCategoryModalInit(categoryId);  
        });
        
+       $('body').on('click', '.deleteMainCategory', function(){    //Kategóriák törlése modális ablak        
+            var mainCategoryId = $(this).attr("mainCategoryId");
+            SharedModal.deleteMainCategoryModalInit(mainCategoryId);  
+       });
+       
        $('body').on('click', '.deleteProperty', function(){            
             var productPropertyId = $(this).attr("productPropertyId");
             SharedModal.deleteProductPropertyModalInit(productPropertyId);  
@@ -134,6 +139,35 @@ SharedModal = {
                         $('.modal-content h2').html("Sikeresen töröltük a következő felhasználót: "+data.userName + "!");
                         $('#modal-delete-user .delete-user-button').hide();
                         $('#modal-delete-user .exit-reveal-modal').attr('value','Kilépés');
+                        $('body').on('click', '.exit-reveal-modal', function(){
+                            location.reload();
+                        }); 
+                    } else {							  
+                            console.error('HIBA a szervertől:' + data.err);
+                    }
+                }).fail(function(thrownError) {
+                    console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+                });
+            }); 
+        
+    },
+    
+    deleteMainCategoryModalInit : function(mainCategoryId){        
+        $('#modal-delete-main-category').reveal();
+            $('body').on('click', '.exit-reveal-modal', function(){ //Kilépés gombra a modális ablak bezárása
+                    $("#modal-delete-main-category").trigger('reveal:close');
+            }); 
+            $('body').on('click', '.delete-main-category-button', function(){ //Törlés gombra kattintás után ajax kéréssel töröljük a terméket
+                $.ajax({
+                    url: $(this).attr('href'),
+                    data:{'mainCategoryId': mainCategoryId},
+                    type: 'POST',
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (data.success) {
+                        $('.modal-content h2').html("Sikeresen töröltük a következő főkategóriát: "+data.mainCategoryName + "!");
+                        $('#modal-delete-main-category .delete-main-category-button').hide();
+                        $('#modal-delete-main-category .exit-reveal-modal').attr('value','Kilépés');
                         $('body').on('click', '.exit-reveal-modal', function(){
                             location.reload();
                         }); 

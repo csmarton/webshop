@@ -26,8 +26,8 @@ class DefaultController extends Controller
         $maxResult = 5;        
         $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
                     ->select('p')
-                    ->leftJoin('p.categorys','c') 
-                    ->where('c.mainCategory = 1'); //laptopokat keresünk
+                    ->leftJoin('p.categorys','c') //laptopokat keresünk
+                    ->leftJoin('p.specialOffer','sales');
         
         $request = $this->get('request');       
         if ($request->getMethod() == 'POST') {               
@@ -39,6 +39,9 @@ class DefaultController extends Controller
                $laptopFilterScreenSize = $request->request->get('laptopFilterScreenSize');
                $laptopFilterMemory = $request->request->get('laptopFilterMemory');
                $laptopFilterPrice = $request->request->get('laptopFilterPrice');
+                $products = $products
+                    ->andWhere('c.mainCategory = 1'); //laptopokat keresünk
+                
                if($order == NULL && $by == NULL){
                    $order = $request->request->get('order');
                    $by = $request->request->get('by');
@@ -218,14 +221,14 @@ class DefaultController extends Controller
         }               
          
         //TERMÉKEK RENDEZÉSE
-        if($order == "promotion" && $by=="asc"){
+        if($order == "promotion" && $by=="desc"){
             $products = $products
-                        ->orderBy('p.price', 'desc'); //TODO            
+                        ->orderBy('sales.newPrice', 'desc'); //TODO            
         }else if($order == "price" && $by=="asc"){
             $products = $products
                         ->orderBy('p.price', 'asc');
         }else if($order == "price" && $by=="desc"){
-            $products = $products
+            $products = $products                        
                         ->orderBy('p.price', 'desc');
         }else if($order == "date"  && $by=="desc"){
             $products = $products
@@ -240,7 +243,7 @@ class DefaultController extends Controller
            $order = "promotion"; 
            $by ="asc";
            $products = $products
-                ->orderBy('p.price', 'desc'); //TODO
+                ->orderBy('sales.newPrice', 'desc');        
         }
         $allProductsResult = $products;        
         $allProductCount = count($allProductsResult->getQuery()->getResult());

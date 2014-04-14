@@ -5,7 +5,7 @@ ProductTabs = {
 
     bindUIActions: function(){	
         this.setFormValidation(); 
-        
+
         $("#productTabs").organicTabs();
         
        $('body').on("submit", "#newQuestions", function(e){

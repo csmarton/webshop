@@ -8,8 +8,8 @@ frontend_bottom_privacy_policy_and_terms_conditions:
     
 frontend_bottom_gyik:
     pattern:  /rolunk/gyik
-    defaults: { _controller: FrontendLayoutBundle:Default:customerServices}       
+    defaults: { _controller: FrontendLayoutBundle:Default:gyik}       
     
-frontend_bottom_customer_services:
+frontend_bottom_contact:
     pattern:  /rolunk/kapcsolat
     defaults: { _controller: FrontendLayoutBundle:Default:contact}           

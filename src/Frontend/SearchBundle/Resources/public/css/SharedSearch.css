@@ -63,10 +63,26 @@
 .main #searcher-form{
 }
 
-#searcher #search_toggle_button{
-	text-align: center;
-	border-top: 3px solid #CBD4DF;
-	padding-top: 10px;
+#searcher #search-toggle-button{
+    text-align: center;
+    border-top: 3px solid #CBD4DF;
+    font-weight: bold;
+    font-size: 1.2em;
+    /*background: url("/Shop/web/images/search-mini.png") top center no-repeat !important;*/       
+}
+#searcher #search-toggle-button-content{
+    display: inline-block;
+    padding: 5px;
+    border: 3px solid #CBD4DF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 1px 3px 4px 0px rgba(7, 0, 0, 0.57);
+    -moz-box-shadow: 1px 3px 4px 0px rgba(7, 0, 0, 0.57);
+    box-shadow: 1px 3px 4px 0px rgba(7, 0, 0, 0.57);
+    cursor: pointer;
+    border-top: none;
+    
 }
 
 .main #searchTabs .search-filter{

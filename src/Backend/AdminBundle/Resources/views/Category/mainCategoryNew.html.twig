@@ -1,0 +1,59 @@
+{% extends "BackendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShopAdmin - Új főkategória {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/Category.js') }}"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                Category.init();
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %} 
+    <div class="main">       
+        <h2>Fő kategória</h2>
+        <div class="upperMenu"> 
+            {% if mainCategoryId is not null %}  
+                {% set parameters ="?mainCategoryId=" ~ mainCategoryId %}
+            {% else %}
+                {% set parameters =""%}
+            {% endif %}
+            <a href="{{path('backend_admin_category_new')}}{{parameters}}" class="menu_btn">Új kategória</a>
+            <a href="{{path('backend_admin_main_category')}}" class="menu_btn">Fő kategóriák</a>
+            <a href="{{path('backend_admin_category')}}" class="menu_btn">Kategóriák</a>
+            
+        </div>
+        <form action="{{ path('backend_admin_main_category_new',{'mainCategoryId':mainCategoryId})}}" method="post" {{ form_enctype(form) }} name="newMainCategory"  class="newMainCategory">
+            <table class="new_main_category_table">
+                <tbody>
+                    <tr>
+                        <td>{{ form_label(form.name, 'Kategórianév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                        <td>{{ form_widget(form.name, { 'attr': {'class': 'validate[required] categoryName'} } ) }}</td>
+                    </tr>
+                   
+                    <tr >
+                        <td colspan="2">
+                            <input type="submit" value="Mentés" class="menu_btn ok_btn">
+                            <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>            
+            {{ form_widget(form._token) }}
+        </form> 
+        {% if mainCategoryId is not null %}            
+            <div id="categorys">
+                <h2>Alkategóriák</h2>
+                {% if (categorys|length == 0) %}
+                    Ez a kategória nem tartalmaz alkategóriákat!
+                {% else %}
+                    {% include "BackendAdminBundle:Category:categoryListElement.html.twig" %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

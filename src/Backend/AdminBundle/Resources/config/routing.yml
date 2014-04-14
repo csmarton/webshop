@@ -53,6 +53,14 @@ backend_admin_category_remove:
 backend_admin_main_category:
     pattern:  /admin/fokategoria
     defaults: { _controller: BackendAdminBundle:Category:mainCategory }    
+        
+backend_admin_main_category_new:
+    pattern:  /admin/fokategoria/uj
+    defaults: { _controller: BackendAdminBundle:Category:mainCategoryNew }
+    
+backend_admin_main_category_remove:
+    pattern:  /admin/fokategoria/torles
+    defaults: { _controller: BackendAdminBundle:Category:removeMainCategory }
 # 
 # felhasználók szerkesztése
 #

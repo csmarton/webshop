@@ -107,6 +107,11 @@ body{
     background-color:#10AC8E;
     color:white;
 }
+.sidebar .menuDivideItem{
+    border-bottom: 2px solid white;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
 
 .sidebar .sideFrame{
     border-left: 1px solid #bed2d2;

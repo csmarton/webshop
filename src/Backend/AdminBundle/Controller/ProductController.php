@@ -4,7 +4,9 @@ namespace Backend\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Frontend\ProductBundle\Form\ProductType;
+use Frontend\ProductBundle\Entity\SpecialOffers;
 use Frontend\ProductBundle\Form\ProductPropertyType;
+use Frontend\ProductBundle\Form\SpecialOffersType;
 use Frontend\ProductBundle\Entity\Product;
 use Frontend\ProductBundle\Entity\ProductProperty;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,23 +37,29 @@ class ProductController extends Controller
         $currentMainCategoryId = null;
         $currentCategoryId = null;
         $categorys = null;
-        if($productId == null){
-            $product = new Product();        
-        }else{
+        if($productId == null){ //új termék
+            $product = new Product();  
+        }else{//termék szerkesztése
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
-            
             $categoryId = $product->getCategory();
-            
+            $specialOffer = $this->getDoctrine()->getRepository('FrontendProductBundle:SpecialOffers')->findOneByProduct($product);
+
             $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categoryId);   
             $mainCategory = $category->getMainCategory();
             $currentMainCategoryId = $mainCategory->getId();
             $currentCategoryId = $product->getCategorys()->getId();
             $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($mainCategory);
         }
+        if($specialOffer == null){
+                $specialOffer = new SpecialOffers();
+                $specialOffer->setProduct($product);
+        }
+        $specialOfferForm =  $this->createForm(new SpecialOffersType,$specialOffer);
         $form = $this->createForm(new ProductType(),$product);
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) { 
+               $em = $this->getDoctrine()->getManager();
                
                $categorysId = (int)$request->request->get('categorys');
                
@@ -61,10 +69,24 @@ class ProductController extends Controller
                $product->setCategorys($category);
                $product->setCreatedAt($createdTime);
                $product->setUpdatedAt($createdTime);
-               $em = $this->getDoctrine()->getManager();
-               $em->persist($product);
-               $em->flush();              
                
+               $specialOfferForm->bind($request);
+               if ($specialOfferForm->isValid()) {                    
+                    $specialOffer->setProductId($product->getId());
+                    if($specialOffer->getNewPrice()>0){
+                        $em->persist($specialOffer);
+                        $em->flush(); 
+                    }else{
+                        $em = $this->getDoctrine()->getEntityManager();
+                        $em->remove($specialOffer);
+                        $em->flush(); 
+                    }
+               }
+               //$em = $this->getDoctrine()->getEntityManager(); 
+               //$em->persist($product);
+               //$em->flush();              
+               
+
                return $this->redirect($this->generateUrl('backend_admin_product_new').'?productId='.$product->getId());
             }
         }
@@ -80,7 +102,8 @@ class ProductController extends Controller
             'mainCategorys' => $mainCategorys,
             'currentMainCategoryId' => $currentMainCategoryId,      
             'currentCategoryId'=>$currentCategoryId,
-            'categorys'=>$categorys
+            'categorys'=>$categorys,
+            'specialOfferForm'=>$specialOfferForm->createView(),
         ));
     }
     

@@ -1,0 +1,25 @@
+<table class="product_table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Kategórianév</th>
+            <th scope="col">Slug</th>
+            <th scope="col">Fő kategória</th>
+            <th scope="col">Műveletek</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categorys %}
+            <tr>
+                <td>{{ category.getId() }}</td>
+                <td>{{ category.getName() }}</td>  
+                <td>{{ category.getSlug() }}</td>   
+                <td>{{ category.mainCategory().getName() }}</td>                    
+                <td class="product_edit_btn">
+                    <a href="{{path('backend_admin_category_new',{'categoryId':category.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
+                    <a href="#" class="deleteCategory menu_btn warning_btn delete_btn" categoryId="{{category.getId()}}">Törlés</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

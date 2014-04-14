@@ -37,7 +37,7 @@
             {% endif %}
              >
             <h2>Termékek szerkesztése</h2>
-            <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }} name="newProduct"  class="newProduct" autocomplete="off">
+            <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }} {{ form_enctype(specialOfferForm) }} name="newProduct"  class="newProduct" autocomplete="off">
                 <table class="new_product_table">
                     <tbody>
                         <tr>
@@ -47,7 +47,11 @@
                         <tr>
                             <td>{{ form_label(form.price, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
                             <td>{{ form_widget(form.price, { 'attr': {'class': 'validate[required, custom[number]] grossSalary'} }) }}</td>
-                        </tr>                        
+                        </tr>
+                        <tr>
+                            <td>{{ form_label(specialOfferForm.newPrice, 'Akciós ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
+                            <td>{{ form_widget(specialOfferForm.newPrice, { 'attr': {'class': 'specialOfferPrice'} }) }}</td>
+                        </tr>
                         <tr>
                             <td>{{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
                             <td>{{ form_widget(form.slug) }}</td>
@@ -96,6 +100,7 @@
                     </tbody>
                 </table>            
                 {{ form_widget(form._token) }}
+                {{ form_widget(specialOfferForm._token) }}
             </form>
         </div>      
         

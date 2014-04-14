@@ -1,14 +1,27 @@
 {% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
 
-{% block title%} WebShop - Kezdőlap {% endblock %}
+{% block title%} WebShop - Termékek {% endblock %}
 {% block bodyClass %}class="index_page"{% endblock%}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/jquery-flexslider.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/jquery-colorbox-min.css') }}"/>
+    {{ parent() }}
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
+    
+    <script type="text/javascript" src="{{ asset('js/jquery-flexslider-min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-colorbox-min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/ProductTabs.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/Product.js') }}"></script>
+    
     <script type="text/javascript">
             $(document).ready(function(){
                 $("#productTabs").organicTabs();
                 ProductTabs.init();
+                Product.init();
             });
     </script>
 {% endblock %}
@@ -23,13 +36,25 @@
                 <div class="page-title product_name">{{product.name}}</div>
                 <div class="upper_box">
                     <div class="image_container">
-
-                        <img src="
-                            {% if (product.getProductImages()|length != 0 ) %}
-                                      {{image(product.getProductImages()[0].getWebPath()).resize(200,200)}}"/>
-                            {% else %}     
-                                    {{ asset('images/no_image.jpg')}}"/>
-                            {% endif %}
+                        <div class="flexslider">
+                            <ul class="slides">
+                                {% if (product.getProductImages()|length != 0 ) %}
+                                    {% for image in product.getProductImages() %}                                
+                                        <li>
+                                            <a href="{{image(image.getWebPath()).resize(640,480)}}" class="gallery">
+                                                <img src=" {{image(image.getWebPath()).resize(200,200)}}"/>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% else %}     
+                                    <li>
+                                        <img src="{{ asset('images/no_image.jpg')}}"/>
+                                    </li>
+                                {% endif %}                            
+                            </ul>
+                        </div>
+                        
+                            
 
                     </div>
                     <div class="right_box">

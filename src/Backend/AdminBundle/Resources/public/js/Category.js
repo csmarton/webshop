@@ -1,11 +1,12 @@
-CategoryValidation = {	
+Category = {	
     
     init: function(){
             this.bindUIActions();		
     },	
 		
     bindUIActions: function(){
-            this.setFormValidation();           
+            this.setFormValidation();     
+            
     },
 	
     customErrorMessages: {
@@ -24,9 +25,9 @@ CategoryValidation = {
     },
 	
     setFormValidation: function() {
-        $(".newCategory").validationEngine({
+        $(".newCategory, .newMainCategory").validationEngine({
             promptPosition: "topLeft: 0",
-            'custom_error_messages': CategoryValidation.customErrorMessages,
+            'custom_error_messages': Category.customErrorMessages,
             scroll: false,
             maxErrorsPerField: 1,
             binded: false,

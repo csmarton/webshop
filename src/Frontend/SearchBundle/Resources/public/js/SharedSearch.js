@@ -55,7 +55,7 @@ SharedSearch = {
         $('#searcher_box').submit(function() {
 	});
         
-        $( "#search_toggle_button" ).click(function() {
+        $( "#search-toggle-button-content" ).click(function() {
             $("#search-box").slideToggle("slow");
 	});  
         

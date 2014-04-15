@@ -84,7 +84,11 @@
                                                         </div>                                
                                                     </div>
                                                     <div class="column-2">
-                                                        {{ product.getPrice()|priceFormat }}
+                                                        {% if product.getSpecialOffer() is not null %}
+                                                            {{ product.getSpecialOffer().getNewPrice()|priceFormat }}
+                                                        {% else%}
+                                                            {{ product.getPrice()|priceFormat }}
+                                                        {% endif %}
                                                     </div>
                                                     <div class="column-3">
                                                         <div class="product-cart-count">{{ orderItem.getUnitQuantity() }} db</div>

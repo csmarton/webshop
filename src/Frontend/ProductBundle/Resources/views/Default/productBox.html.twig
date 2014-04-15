@@ -35,13 +35,12 @@
                         </div>
                             <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
                     </div>  
-                                        <div class="image_container">
-                            <img src="
-                                {% if (product.getProductImages()|length != 0 ) %}
-                                          {{asset(product.getProductImages()[0].getWebPath())}}"/>
-                                {% else %}     
-                                        {{ asset('images/no_image.jpg')}}"/>
-                                {% endif %}
+                    <div class="image_container">                           
+                        {% if (product.getProductImages()|length != 0 ) %}
+                            <img src="{{asset(product.getProductImages()[0].getWebPath())}}"/>
+                        {% else %}     
+                            <img src="{{ asset('images/no_image.jpg')}}"/>
+                        {% endif %}
 
                     </div>
             </div>

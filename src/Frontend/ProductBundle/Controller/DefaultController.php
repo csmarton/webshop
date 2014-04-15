@@ -292,13 +292,18 @@ class DefaultController extends Controller
                     'urlParameters' => $urlParameters));
     }   
     
-	
+    /*
+     * SIDEBAR, az oldal oldalsó részén található menüsor
+     */
     public function sidebarAction(){
         $main_catergory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
         
         return $this->render('FrontendProductBundle:Default:sidebar.html.twig',array('main_category' => $main_catergory));
     }
     
+    /*
+     * Termékek listázása kategória alapján
+     */
     public function productByCategoryAction($main_category, $category=null){
         $permalinks = $main_category . "/". $category;
         $request = $this->get('request');
@@ -378,8 +383,46 @@ class DefaultController extends Controller
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($slug);
         }
         
+        $categoryId = $product->getCategory();
+       
+        $categoryRelations = $this->getDoctrine()->getRepository('FrontendProductBundle:CategoryRelationship')->createQueryBuilder('r')
+                ->select('r')
+                ->where('r.firstCategoryId = :categoryId or r.secondCategoryId = :categoryId')
+                ->setParameter('categoryId', $categoryId)
+                ->getQuery()->getResult();
+        $offerCategoryId = array();
+        foreach((array)$categoryRelations as $categoryRelation){
+            if($categoryRelation->getFirstCategoryId() == $categoryId ){
+                $offerCategoryId[] = $categoryRelation->getSecondCategoryId();
+            }else{
+                $offerCategoryId[] = $categoryRelation->getFirstCategoryId();
+            }
+        }
         
-        return $this->render('FrontendProductBundle:Default:product.html.twig',array('product'=>$product));
+        $offerProducts = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p') //TODO: valódi termék ajánlatok 
+                    ->select('p')
+                    ->setMaxResults(10)
+                    ->where('p.category IN (:offerCategoryId)')
+                    ->andWhere('p.id != :productId')
+                    ->setParameter('offerCategoryId',$offerCategoryId)
+                    ->setParameter('productId', $product->getId())
+                    ->getQuery()->getResult();
+        if(count($offerProducts) < 10){
+            $moreProductCount = 10-count($offerProducts);
+            $moreOfferProducts = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p') //TODO: valódi termék ajánlatok 
+                        ->select('p')
+                        ->setMaxResults($moreProductCount)
+                        ->where('p.category = :categoryId ')
+                        ->andWhere('p.id != :productId')
+                        ->setParameter('categoryId',$categoryId)
+                        ->setParameter('productId', $product->getId())
+                        ->getQuery()->getResult();
+            shuffle($moreOfferProducts);
+            $offerProducts = array_merge($offerProducts, $moreOfferProducts);
+        }
+        
+        
+        return $this->render('FrontendProductBundle:Default:product.html.twig',array('product'=>$product, 'offerProducts' => $offerProducts));
     }
     
     public function tabQuestionsAction($productId=null){

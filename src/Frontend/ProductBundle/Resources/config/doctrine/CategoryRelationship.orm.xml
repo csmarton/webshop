@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Frontend\ProductBundle\Entity\CategoryRelationship" table="category_relationship">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="firstCategoryId" type="integer" column="first_category_id" nullable="false"/>
+    <field name="secondCategoryId" type="integer" column="second_category_id" nullable="false"/>
+    <one-to-one field="firstCategory" target-entity="Category">
+      <join-columns>
+        <join-column name="first_category_id" referenced-column-name="id"/>
+      </join-columns>
+    </one-to-one>
+    <one-to-one field="secondCategory" target-entity="Category">
+      <join-columns>
+        <join-column name="second_category_id" referenced-column-name="id"/>
+      </join-columns>
+    </one-to-one>
+  </entity>
+</doctrine-mapping>

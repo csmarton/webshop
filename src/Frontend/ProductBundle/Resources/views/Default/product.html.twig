@@ -32,61 +32,65 @@
                 {{parent()}}       
             {% endblock %}
         <div class="container">
-            <div id="current-product-box">
-                <div class="page-title product_name">{{product.name}}</div>
-                <div class="upper_box">
-                    <div class="image_container">
-                        <div class="flexslider">
-                            <ul class="slides">
-                                {% if (product.getProductImages()|length != 0 ) %}
-                                    {% for image in product.getProductImages() %}                                
+            {% if product is not null %}
+                <div id="current-product-box">
+                    <div class="page-title product_name">{{product.name}}</div>
+                    <div class="upper_box">
+                        <div class="image_container">
+                            <div class="productImageSlider flexslider">
+                                <ul class="slides">
+                                    {% if (product.getProductImages()|length != 0 ) %}
+                                        {% for image in product.getProductImages() %}                                
+                                            <li>
+                                                <a href="{{image(image.getWebPath()).resize(640,480)}}" class="gallery">
+                                                    <img src=" {{image(image.getWebPath()).resize(200,200)}}"/>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    {% else %}     
                                         <li>
-                                            <a href="{{image(image.getWebPath()).resize(640,480)}}" class="gallery">
-                                                <img src=" {{image(image.getWebPath()).resize(200,200)}}"/>
-                                            </a>
+                                            <img src="{{ asset('images/no_image.jpg')}}"/>
                                         </li>
-                                    {% endfor %}
-                                {% else %}     
-                                    <li>
-                                        <img src="{{ asset('images/no_image.jpg')}}"/>
-                                    </li>
-                                {% endif %}                            
-                            </ul>
-                        </div>
-                        
-                            
+                                    {% endif %}                            
+                                </ul>
+                            </div>
 
+
+
+                        </div>
+                        <div class="right_box">
+                            <div class="product_price">Ára: {{product.getPrice()|priceFormat}} Ft</div>
+                            <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
+                        </div>    
                     </div>
-                    <div class="right_box">
-                        <div class="product_price">Ára: {{product.getPrice()|priceFormat}} Ft</div>
-                        <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
-                    </div>    
+                </div> 
+                <div id="productTabs">
+                    <ul class="nav">
+                        <li class="nav-one"><a href="#tabProductInformation" class="current">Specifikáció</a></li>
+                        <li class="nav-two"><a href="#tabDescription">Leírás</a></li>
+                        <li class="nav-two"><a href="#tabGuarantee">Garancia</a></li>
+                        <li class="nav-two"><a href="#tabQuestions">Kérdésem van</a></li>
+                    </ul> 
+                    <div class="list-wrap">
+                        <div class="tabContent" id="tabProductInformation">
+                            {% include 'FrontendProductBundle:Tabs:tabProductInformation.html.twig' with {'product' : product} %}
+                            {% include 'FrontendProductBundle:Tabs:tabProductInformationOffers.html.twig'%}
+                        </div>
+                        <div class="tabContent hide" id="tabDescription">
+                            {% include 'FrontendProductBundle:Tabs:tabProductDescription.html.twig' with {'product' : product} %}
+                        </div>
+                        <div class="tabContent hide" id="tabGuarantee">
+                            {% include 'FrontendProductBundle:Tabs:tabGuarantee.html.twig' with {'product' : product} %}
+                        </div>
+                        <div class="tabContent hide" id="tabQuestions">
+                            {#{% include 'FrontendProductBundle:Default:tabQuestions.html.twig' with {'product' : product} %}#}
+                            {{ render(controller("FrontendProductBundle:Default:tabQuestions", {'productId' : product.getId()} ))}}
+                        </div>
+                    </div>
                 </div>
-            </div> 
-            <div id="productTabs">
-                <ul class="nav">
-                    <li class="nav-one"><a href="#tabProductInformation" class="current">Specifikáció</a></li>
-                    <li class="nav-two"><a href="#tabDescription">Leírás</a></li>
-                    <li class="nav-two"><a href="#tabGuarantee">Garancia</a></li>
-                    <li class="nav-two"><a href="#tabQuestions">Kérdésem van</a></li>
-                </ul> 
-                <div class="list-wrap">
-                    <div class="tabContent" id="tabProductInformation">
-                        {% include 'FrontendProductBundle:Tabs:tabProductInformation.html.twig' with {'product' : product} %}
-                    </div>
-                    <div class="tabContent hide" id="tabDescription">
-                        {% include 'FrontendProductBundle:Tabs:tabProductDescription.html.twig' with {'product' : product} %}
-                    </div>
-                    <div class="tabContent hide" id="tabGuarantee">
-                        {% include 'FrontendProductBundle:Tabs:tabGuarantee.html.twig' with {'product' : product} %}
-                    </div>
-                    <div class="tabContent hide" id="tabQuestions">
-                        {#{% include 'FrontendProductBundle:Default:tabQuestions.html.twig' with {'product' : product} %}#}
-                        {{ render(controller("FrontendProductBundle:Default:tabQuestions", {'productId' : product.getId()} ))}}
-                    </div>
-                </div>
-            </div>
-            
+            {% else %}
+                A termék nem található!
+            {% endif %}
             
         </div> 
     </div>

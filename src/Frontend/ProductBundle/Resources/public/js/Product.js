@@ -5,9 +5,9 @@ Product = {
 
     bindUIActions: function(){
         $('a.gallery').colorbox({
-                    rel:'gal'
+            rel:'gal'
         });
-        $('.flexslider').flexslider({ //Termékek képeinek megjelenítése
+        $('.productImageSlider').flexslider({ //Termékek képeinek megjelenítése
             animation: "slide",
             slideshow: false,
             itemWidth: 210,
@@ -15,7 +15,15 @@ Product = {
             keyboard: false,
             minItems: 2,
             maxItems: 3
-        });    
+        });   
+        
+        $('.productOfferSlider').flexslider({ //Termékek képeinek megjelenítése
+            animation: "slide",
+            slideshow: true,
+            itemWidth: 150,
+            itemMargin: 5,
+            keyboard: false,
+        });  
 
     },
 };	

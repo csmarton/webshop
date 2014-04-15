@@ -6,8 +6,13 @@
         </div>
     {% endif %}
     {% for productWithCount in productsWithCount %}
+        {% if productWithCount[0].getSpecialOffer() is not null %}
+            {% set price = productWithCount[0].getSpecialOffer().getNewPrice %}
+        {% else%}
+            {% set price = productWithCount[0].getPrice() %}
+        {% endif %}
         <div class="cart-item">
-             {% set cartPrice = cartPrice + productWithCount[0].getPrice()*productWithCount[1] %}
+             {% set cartPrice = cartPrice + price*productWithCount[1] %}
             <div class="column-0">
                         {% if ( productWithCount[0].getProductImages()|length != 0 ) %}
                             <img src="{{image( productWithCount[0].getProductImages()[0].getWebPath()).resize(100,100)}}"/>
@@ -30,7 +35,7 @@
                 </div>                                
             </div>
             <div class="column-2">
-                {{ productWithCount[0].getPrice()|priceFormat }}
+                {{ price|priceFormat }}
             </div>
             <div class="column-3">
                 <input type="number" value="{{ productWithCount[1] }}" class="change-product-cart-count" productId="{{productWithCount[0].getId()}}" link="{{path('frontend_cart_update')}}"/>

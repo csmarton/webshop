@@ -72,7 +72,7 @@ doctrine:
                 auto_mapping: true
                 dql:
                     string_functions:
-                        cast: Frontend\ProductBundle\DQL\Cast    
+                        cast: Frontend\ProductBundle\DQL\Cast
 
 # Swiftmailer Configuration
 swiftmailer:

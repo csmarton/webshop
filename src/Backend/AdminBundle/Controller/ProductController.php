@@ -38,7 +38,8 @@ class ProductController extends Controller
         $currentCategoryId = null;
         $categorys = null;
         if($productId == null){ //új termék
-            $product = new Product();  
+            $product = new Product(); 
+            $specialOffer = null;
         }else{//termék szerkesztése
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
             $categoryId = $product->getCategory();
@@ -82,9 +83,9 @@ class ProductController extends Controller
                         $em->flush(); 
                     }
                }
-               //$em = $this->getDoctrine()->getEntityManager(); 
-               //$em->persist($product);
-               //$em->flush();              
+               $em = $this->getDoctrine()->getEntityManager(); 
+               $em->persist($product);
+               $em->flush();              
                
 
                return $this->redirect($this->generateUrl('backend_admin_product_new').'?productId='.$product->getId());

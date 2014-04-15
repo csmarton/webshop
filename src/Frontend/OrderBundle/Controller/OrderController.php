@@ -64,12 +64,19 @@ class OrderController extends Controller
                }
 
                $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
-               $orderPrice = $repo                            
+               $orderProducts = $repo                            
                    ->createQueryBuilder('p')
-                   ->select("sum(p.price)")
                    ->where('p.id IN (:productIds)')
                    ->setParameter('productIds',$productIds)
-                   ->getQuery()->getSingleScalarResult();
+                   ->getQuery()->getResult();
+               $orderPrice = 0;
+               foreach($orderProducts as $orderProduct){
+                   if($orderProduct->getSpecialOffer() != null){
+                       $orderPrice = $orderProduct->getSpecialOffer()->getNewPrice();
+                   }else{
+                       $orderPrice = $orderProduct->getPrice();
+                   }
+               }
 
                $now =  new \DateTime("now"); 
                $order->setUser($user);

@@ -267,3 +267,32 @@
 .flex-control-nav{
     display:none;
 }
+
+/*
+* AJÁNLATOK
+*/
+#product-offers a{
+    text-decoration: none;
+    color:black;
+    
+}
+#product-offers .product-box a{
+    display: block;
+    border-right: 1px solid grey;
+}
+#product-offers .product-box a:hover .product-name{
+    font-weight:bold;
+    /*background-color: #D9E3F8;*/
+}
+#product-offers .product-box:last-child a{
+    border-right: none;
+}
+#product-offers .product-name{
+    text-align: center;
+    text-transform: uppercase;
+}
+#product-offers .product-price{
+    color: #D1466F;
+    font-weight: bold;
+    text-align: center;
+}

@@ -31,4 +31,13 @@ frontend_login_check:
     
 frontend_registration_email_check:
     pattern:  /profil/regisztracio/email/ellenorzes
-    defaults: { _controller: FrontendUserBundle:Default:registrationEmailCheck}           
+    defaults: { _controller: FrontendUserBundle:Default:emailCheck}           
+
+    
+frontend_password_confirmation:
+    pattern:  /profil/uj-jelszo/{confirmationToken}
+    defaults: { _controller: FrontendUserBundle:Default:passwordConfirmation} 
+    
+frontend_password_reset:
+    pattern:  /profil/uj-jelszo
+    defaults: { _controller: FrontendUserBundle:Default:passwordReset}  

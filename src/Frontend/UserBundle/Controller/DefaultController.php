@@ -56,11 +56,15 @@ class DefaultController extends Controller
                     $url = $this->container->get('router')->generate('frontend_product_homepage');
                     $response = new RedirectResponse($url);
                 }
+                
                 $newProfile = new Profile();
                 $newProfile->setUser($user);
+                
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($newProfile);
                 $em->flush();
+                
+                
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
                 return $response;
@@ -118,7 +122,7 @@ class DefaultController extends Controller
         /*
          * Email cím ellenőrzése, hogy nincs -e már ilyen címmel regisztrált vásárló
          */
-        public function registrationEmailCheckAction(){
+        public function emailCheckAction(){
             $request = $this->get('request');
             if('POST' === $request->getMethod()){
                 $email = $request->request->get('email');
@@ -128,6 +132,44 @@ class DefaultController extends Controller
                     return new JsonResponse(array ('success'=>true,'userExists' => false));
                 }else{
                     return new JsonResponse(array ('success'=>true,'userExists' => true));
+                }
+            }
+            return new JsonResponse(array ('success'=>false));  
+        }
+        
+        public function passwordResetAction(){
+            $request = $this->get('request');
+            if('POST' === $request->getMethod()){
+                $email = $request->request->get('email');
+                $user = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->findOneByEmail($email);
+                
+                if($user == null){
+                    return new JsonResponse(array ('success'=>true,'userExists' => false));
+                }else{
+                    $tokenGenerator = $this->container->get('fos_user.util.token_generator');
+                    $confirmationToken = $tokenGenerator->generateToken(); 
+                    $user->setConfirmationToken($confirmationToken);
+                    $now = new \DateTime("now"); 
+                    $user->setPasswordRequestedAt($now);
+                    $em = $this->getDoctrine()->getEntityManager(); 
+                    $em->persist($user);
+                    $em->flush();
+                    
+                    $link = $this->generateUrl('frontend_password_confirmation', array('confirmationToken' => $confirmationToken ));
+                    $confirmationMessage = \Swift_Message::newInstance()
+                        ->setSubject('Új jelszó generálás')
+                        ->setFrom('noreply@marcitech.hu')
+                        ->setTo($user->getEmail())
+                        ->setBody(
+                            $this->renderView(
+                                'FrontendUserBundle:Reset:confirmationPasswordReset.html.twig',
+                                array('link' => $link, 'user' => $user)
+                            ),
+                            "text/html"
+                        )
+                    ;
+                    $this->get('mailer')->send($confirmationMessage);
+                    return new JsonResponse(array ('success'=>true,'userExists' => true, 'sendEmail' => true));
                 }
             }
             return new JsonResponse(array ('success'=>false));  
@@ -153,6 +195,11 @@ class DefaultController extends Controller
 			return new JsonResponse(array ('success'=>false));
 		 }
 	}
+        
+        public function passwordConfirmationAction(){
+            
+        }
+        
 
         
 }

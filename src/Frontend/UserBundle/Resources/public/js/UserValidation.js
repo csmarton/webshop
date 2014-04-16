@@ -15,7 +15,8 @@ UserValidation = {
     
         modalInit:function(){
         $('body').on('click', '#login-sign-in', function(){
-            $("#modal-sign-in").reveal();
+            //$("#modal-sign-in").reveal();
+            $('#modal-password-resetting').reveal();
         });
         
         
@@ -57,6 +58,7 @@ UserValidation = {
         });
 
         $('body').on('keyup', '.regEmail', function(e) {
+            $this = $(this);
             if(emailPattern.test($(this).val())){
                 $.ajax({
                     url: $('#registration-form-button').last().attr('checkLink'),
@@ -65,7 +67,7 @@ UserValidation = {
                     dataType: 'json'
                 }).done(function(data) {
                     if (data.success) {  
-                        $('.regEmail').attr('used', data.userExists);
+                        $this.attr('used', data.userExists);
                     } else {							  
                         console.error('HIBA a szervertől:' + data.err);
                     }
@@ -77,6 +79,26 @@ UserValidation = {
             }    
         });
         
+        //Új jelszó kérése
+        $('body').on('click', '#password-resetting-button', function(e) {
+            email = $('#reset-email').val();
+            $.ajax({
+                    url: $('#password-resetting-form').last().attr('checkLink'),
+                    data:{'email': email},
+                    type: 'POST',
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (data.success) {  
+                        if(data.userExists){
+                            console.log("OK");
+                        }
+                    } else {							  
+                        console.error('HIBA a szervertől:' + data.err);
+                    }
+                }).fail(function(thrownError) {
+                    console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+                });
+        });
         
     },
     

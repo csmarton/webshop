@@ -17,7 +17,15 @@
             {{parent()}}
         {% endblock %}        
         <div class="container">
-            <div id="searcher"  href="{{path('frontend_product_homepage')}}">
+            {% if mainCategory is not null %}
+                {% set href = 'product_by_main_category' %}
+                {% if category is not null %}
+                    {% set href = 'product_by_category' %}
+                {% endif %}
+            {% else %}
+                {% set href = 'frontend_products'%}
+            {% endif %}
+            <div id="searcher"  href="{{path(href, {'main_category' : mainCategory, 'category':category})}}">
                 <div id="search-box" class="hide" url-filter-string="{{urlParameters}}">
                     {% include "FrontendSearchBundle:Search:laptopSearch.html.twig" %}
                 </div>

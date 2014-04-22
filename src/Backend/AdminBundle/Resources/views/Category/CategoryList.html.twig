@@ -1,10 +1,11 @@
 {% extends "BackendLayoutBundle:Default:layout.html.twig" %}
 
-{% block title%} WebShopAdmin - Kategóriák {% endblock %}
+{% block title%} Admin - Kategóriák {% endblock %}
 {% block bodyClass %}class="index_page"{% endblock%}
  
 {% block javascripts %}
 	{{ parent() }}
+        <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Category.css') }}"/>
     <script type="text/javascript">
             $(document).ready(function(){
             });
@@ -15,8 +16,17 @@
     <div class="main">
         <h2>Kategóriák</h2>
         <div class="upperMenu">
-            <a href="{{path('backend_admin_category_new')}}" class="menu_btn">Új kategória</a>
+            <div class="left-side">
+                {% include "BackendAdminBundle:Category:categoryFilter.html.twig"%}
+            </div>
+            <div class="right-side">                
+                <a href="{{path('backend_admin_category_new')}}" class="menu_btn">Új kategória</a>
             <a href="{{path('backend_admin_main_category_new')}}" class="menu_btn">Új főkategória</a>
+            </div>
+            <div class="pages-box">
+                {% include "BackendLayoutBundle:Default:pages.html.twig"%}
+            </div>
+            
         </div>
         <div id="categorys">
             {% include "BackendAdminBundle:Category:categoryListElement.html.twig" %}

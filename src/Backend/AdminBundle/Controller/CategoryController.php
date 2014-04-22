@@ -13,12 +13,101 @@ class CategoryController extends Controller
 {
     public function indexAction()
     {   
-        $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findAll();
-        //$form = $this->createForm(new ProductType());
+        $request = $this->get('request');
+        
+        $page = (int)$request->query->get('page');
+        if($page == NULL){
+             $page = 1;
+        }
+        //OLDALAK
+        $maxResult = (int)$request->query->get('maxResult');
+        if($maxResult == NULL){
+             $maxResult = 10;
+        }
+        
+        //RENDEZÉS
+        $order = $request->query->get('order');
+        $by = $request->query->get('by');
+        if($order == NULL){
+             $order = "id";
+             $by= "asc";
+        }
+        if($by != "asc" && $by != "desc"){
+            $by = "asc";
+        }
+        
+        $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->createQueryBuilder('c')
+                ->select('c');
+        $filterId = "";
+        $filterName = "";
+        $filterMainCategory = "";
+        $parameters = "";
+        if ($request->getMethod() == 'GET') {
+            $filterId = $request->query->get('filterId');
+            $filterName = $request->query->get('filterName');
+            $filterMainCategory = $request->query->get('filterMainCategory');
+            $parameters .= "&filterId=";
+            if($filterId!= ""){
+                $categorys = $categorys
+                    ->andWhere('c.id = :id')
+                    ->setParameter('id', (int)$filterId); 
+                $parameters .= $filterId;
+            }
+            $parameters .= "&filterName=";
+            if($filterName!= ""){
+                $categorys = $categorys
+                    ->andWhere('c.name LIKE :name')
+                    ->setParameter('name', "%".$filterName."%");
+                $parameters .= $filterName;
+            }
+            $parameters .= "&filterMainCategory=";
+            if($filterMainCategory!= ""){
+                $categorys = $categorys
+                    ->leftJoin('c.mainCategory','mc')    
+                    ->andWhere('mc.id = :cat')
+                    ->setParameter('cat', (int)$filterMainCategory);
+                $parameters .= $filterMainCategory;
+            }            
+        }
+        if($order == "id"){
+            $categorys = $categorys
+                ->orderBy('c.id',$by);
+        }else if($order == "name"){
+            $categorys = $categorys
+                ->orderBy('c.name',$by);
+        }else if($order == "mainCategory"){
+            $categorys = $categorys
+                ->orderBy('c.mainCategory',$by);
+        }else{
+            $categorys = $categorys
+                ->orderBy('c.id',$by);
+        }
+        $parameters .= "&maxResult=".$maxResult;
+        $pageCount = ceil(count($categorys->getQuery()->getResult()) / $maxResult);
+        
+        if($pageCount == 0)
+            $pageCount = 1;
+        $categorys = $categorys
+                ->setFirstResult($page*$maxResult - $maxResult)
+                ->setMaxResults($maxResult)
+                ->getQuery()->getResult();
+        
+        $mainCategorys = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
+        
         return $this->render('BackendAdminBundle:Category:categoryList.html.twig', array(
             //'form' => $form->createView(),
             'categorys' => $categorys,
-        ));
+            'mainCategorys' => $mainCategorys,
+            'filterId'=> $filterId,
+            'filterName'=> $filterName,
+            'filterMainCategory'=> $filterMainCategory,
+            'actualPage' => $page,
+            'pageCount' => $pageCount,
+            'parameters' => $parameters,
+            'maxResult' => $maxResult,
+            'order' => $order,
+            'by' => $by
+        ));        
     }
     
     public function newAction()

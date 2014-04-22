@@ -1,6 +1,6 @@
 {% extends "BackendLayoutBundle:Default:layout.html.twig" %}
 
-{% block title%} WebShopAdmin - Új Termék {% endblock %}
+{% block title%} Admin - Új Termék {% endblock %}
 {% block bodyClass %}class="index_page"{% endblock%}
  
 {% block stylesheets %}  
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/font-awesome.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Image.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Product.css') }}"/>
 {% endblock %}
     
 {% block javascripts %}
@@ -37,70 +38,73 @@
             {% endif %}
              >
             <h2>Termékek szerkesztése</h2>
-            <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }} {{ form_enctype(specialOfferForm) }} name="newProduct"  class="newProduct" autocomplete="off">
-                <table class="new_product_table">
-                    <tbody>
-                        <tr>
-                            <td>{{ form_label(form.name, 'Terméknév:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.name, { 'attr': {'class': 'validate[required] profileName'} } ) }}</td>
-                        </tr>       
-                        <tr>
-                            <td>{{ form_label(form.price, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.price, { 'attr': {'class': 'validate[required, custom[number]] grossSalary'} }) }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ form_label(specialOfferForm.newPrice, 'Akciós ár:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(specialOfferForm.newPrice, { 'attr': {'class': 'specialOfferPrice'} }) }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.slug) }}</td>
-                        </tr>
-                        <tr>                            
-                            <td>{{ form_label(form.description, 'Leírás:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.description, { 'attr': {'class': 'textEditor'} }) }}</td>
-                        </tr>
-                        <tr>
-                           {# <td>{{ form_label(form.categorys, 'Kategóra:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.categorys, { 'attr': {'class': 'validate[required] ] productCategory'} }) }}</td>#}
-                            <td>Fő kategória</td>
-                            <td>
-                                <select id="main-category-type" href="{{path('backend_admin_product_select_category_ajax')}}" class="validate[required]">
-                                    <option value=""></option>
-                                    {% for mainCategory in mainCategorys %}
-                                        <option value="{{mainCategory.getId() }}"
-                                            {% if currentMainCategoryId is not null and currentMainCategoryId == mainCategory.getId() %}
-                                                selected
-                                            {% endif %}>
-                                            {{mainCategory.getName()}}
-                                        </option>
-                                    {% endfor%}
-                                </select>
-                            </td>
-                        </tr>
-                        <tr id="category-box">
+            <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }}  name="newProduct"  class="newProduct" autocomplete="off">
+                <div class="new_product_table">
+                    <div class="inline-block">
+                        <div class="left-side">
+                            {{ form_label(form.name, 'Terméknév:', { 'label_attr': {'class': 'labelText'}}) }}
+                            {{ form_widget(form.name, { 'attr': {'class': 'validate[required] profileName'} } ) }}                            
+                        </div>  
+                        <div class="right-side">
+                            {{ form_label(form.slug, 'Slug:', { 'label_attr': {'class': 'labelText'}}) }}
+                            {{ form_widget(form.slug) }}
+                        </div>
+                    </div>
+                    <div class="inline-block">    
+                        <div class="left-side">
+                            {{ form_label(form.price, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}       
+                            {{ form_widget(form.price, { 'attr': {'class': 'validate[required, custom[number]] grossSalary'} }) }}                           
+                        </div>
+                        <div class="right-side">
+                            {{ form_label(form.salesPrice, 'Akciós ár:', { 'label_attr': {'class': 'labelText'}}) }}       
+                            {{ form_widget(form.salesPrice, { 'attr': {'class': 'salesPrice'} }) }}                           
+                        
+                        </div>
+                    </div>
+                    <div class="inline-block">    
+                        <div class="left-side">
+                           <label for="main-category-type"> Fő kategória</label>
+                            <select id="main-category-type" href="{{path('backend_admin_product_select_category_ajax')}}" class="validate[required]" name="main-category-type">
+                                <option value=""></option>
+                                {% for mainCategory in mainCategorys %}
+                                    <option value="{{mainCategory.getId() }}"
+                                        {% if currentMainCategoryId is not null and currentMainCategoryId == mainCategory.getId() %}
+                                            selected
+                                        {% endif %}>
+                                        {{mainCategory.getName()}}
+                                    </option>
+                                {% endfor%}
+                            </select>
+                        </div>
+                        <div id="category-box"  class="right-side">
                             {% if currentMainCategoryId is not null%}                            
-                                {% include 'BackendAdminBundle:Product:categorys_ajax.html.twig' with {'categorys' : categorys, 'currentCategoryId' : currentCategoryId} %}
+                                {% include 'BackendAdminBundle:Product:categorysAjax.html.twig' with {'categorys' : categorys, 'currentCategoryId' : currentCategoryId} %}
                             {% endif %}
-                        </tr>
-                         <tr>
-                            <td>{{ form_label(form.isActive, 'Aktív -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.isActive) }}</td>
-                        </tr>
-                         <tr>
-                            <td>{{ form_label(form.inStock, 'Raktáron van -e?', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                            <td>{{ form_widget(form.inStock) }}</td>
-                        </tr>
-                        <tr >
-                            <td colspan="2">
+                        </div>
+                    </div>
+                    <div class="inline-block">    
+                        <div class="left-side">
+                           {{ form_label(form.isActive, 'Aktív -e?', { 'label_attr': {'class': 'labelText'}}) }}
+                           {{ form_widget(form.isActive) }}
+                        </div>
+                         <div class="right-side">
+                            {{ form_label(form.inStock, 'Raktáron van -e?', { 'label_attr': {'class': 'labelText'}}) }}
+                            {{ form_widget(form.inStock) }}
+                        </div>
+                    </div> 
+                    <div class="inline-block">    
+                        <div>                            
+                            {{ form_label(form.description, 'Leírás:', { 'label_attr': {'class': 'labelText'}}) }}
+                            {{ form_widget(form.description, { 'attr': {'class': 'textEditor'} }) }}
+                        </div>
+                    <div class="inline-block">
+                        <div>
                                 <input type="submit" value="Mentés" class="menu_btn ok_btn">
                                 <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>            
+                        </div>
+                    </div>    
+                </div>            
                 {{ form_widget(form._token) }}
-                {{ form_widget(specialOfferForm._token) }}
             </form>
         </div>      
         

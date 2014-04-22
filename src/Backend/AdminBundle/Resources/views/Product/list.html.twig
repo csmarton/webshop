@@ -1,10 +1,12 @@
 {% extends "BackendLayoutBundle:Default:layout.html.twig" %}
 
-{% block title%} WebShopAdmin - Termékek {% endblock %}
+{% block title%} Admin - Termékek {% endblock %}
 {% block bodyClass %}class="index_page"{% endblock%}
  
 {% block javascripts %}
 	{{ parent() }}
+        
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Product.css') }}"/>
     <script type="text/javascript">
             $(document).ready(function(){
                 
@@ -17,40 +19,61 @@
         <h2>Termékek</h2>
         <div class="upperMenu">
             <div class="left-side">
-                <div class="upperMenu filter-order-menu">
-                    <label for="filter-product-id">Azonosító:</label>
-                    <input type="text" id="filter-product-name" name="filter-product-name">
-                    <label for="filter-product-name">Terméknév:</label>
-                    <input type="text" id="filter-product-name" name="filter-product-name">
-                    <label for="filter-product-active">Aktív:</label>
-                    <select id="filter-product-active" name="filter-product-active">
-                        <option value=""></option>
-                        <option value="yes">Aktív</option>
-                        <option value="no">Inaktív</option>
-                    </select>
-                    <label for="filter-product-categroy">Kategória:</label>
-                    <select id="filter-product-categroy" name="filter-product-categroy">
-                        <option value=""></option>
-                        <option value="asus">Asus</option>
-                    </select>   
-                    <a href="javascript:void(0)" type="button"class="menu_btn ok_btn" id="filter-order-button" link="{{path('backend_admin_order_list')}}"/>Szűrés</a>
-                </div>
+                {% include "BackendAdminBundle:Product:productFilter.html.twig"%}
             </div>
             <div class="right-side">                
                 <a href="{{path('backend_admin_product_new')}}" class="menu_btn">Új Termék</a>
             </div>
-            
+            <div class="pages-box">
+                {% include "BackendLayoutBundle:Default:pages.html.twig"%}
+            </div>
         </div>
         
-        <table class="product_table">
+        <table class="shared-table">
             <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Terméknév</th>
-                    <th scope="col">Bruttó ár</th>
-                    <th scope="col">Nettó ár</th>
-                    <th scope="col">Slug</th>
-                    <th scope="col">Létrehozás dátuma</th>
+                <tr>                    
+                    {% set b = "asc" %}
+                    {% set active = ""%}    
+                    {% if order == "id" %}
+                        {% if by == "asc" %}
+                            {% set b = "desc" %}
+                        {% else %}
+                            {% set b = "asc" %}
+                        {% endif %}
+                        {% set active = "active"%}
+                    {% endif %} 
+                    <th scope="col" class="{{active}}">
+                        <a href="?page=1{{parameters}}&order=id&by={{b}}"   class="{{b}}">Id</a>
+                    </th>
+                    
+                    {% set b = "asc" %}
+                    {% set active = ""%}  
+                    {% if order == "name" %}
+                        {% if by == "asc" %}
+                            {% set b = "desc" %}
+                        {% else %}
+                            {% set b = "asc" %}
+                        {% endif %}
+                        {% set active = "active"%}
+                    {% endif %} 
+                    <th scope="col"  class="{{active}}">
+                        <a href="?page=1{{parameters}}&order=name&by={{b}}"   class="{{b}}">Terméknév</a>
+                    </th>
+                    
+                    {% set b = "asc" %}
+                    {% set active = ""%} 
+                    {% if order == "price" %}
+                        {% if by == "asc" %}
+                            {% set b = "desc" %}
+                        {% else %}
+                            {% set b = "asc" %}
+                        {% endif %}
+                        {% set active = "active"%}
+                    {% endif %}
+                    <th scope="col" class="{{active}}">        
+                        <a href="?page=1{{parameters}}&order=price&by={{b}}" class="{{b}}">Bruttó ár</a>
+                    </th>
+                    {#<th scope="col">Nettó ár</th>#}
                     <th scope="col">Frissítve</th>
                     <th scope="col">Kategória</th>
                     <th scope="col">Aktív?</th>
@@ -64,9 +87,7 @@
                         <td>{{ product.getId() }}</td>
                         <td>{{ product.getName() }}</td>
                         <td>{{ product.getPrice() }}</td>
-                        <td>{{ (product.getPrice()/1.27)|round(0, 'floor') }}</td>
-                        <td>{{ product.getSlug() }}</td>  
-                        <td>{{ product.getCreatedAt()|date('Y-m-d')}}</td>
+                        {#<td>{{ (product.getPrice()/1.27)|round(0, 'floor') }}</td>#}
                         <td>{{ product.getUpdatedAt()|date('Y-m-d')}}</td>
                         <td>
                             {% if (product.getCategorys() is not null and product.getCategorys().getId() != 0)%}
@@ -91,7 +112,9 @@
                 {% endfor %}
             </tbody>
         </table>
-        
+        <div class="pages-box">
+                {% include "BackendLayoutBundle:Default:pages.html.twig"%}
+        </div>
     </div>
     
 <div id="modal-delete-product" class="reveal-modal">

@@ -1,0 +1,87 @@
+.center{
+    text-align: center;
+}
+.new_product_table label{
+    width:150px;
+}
+.new_product_table input,
+.new_product_table select{
+    width:60%;
+}
+.new_product_table .inline-block{
+    display:block;
+    width: 100%;
+    min-width: 800px;
+    overflow: hidden;
+    padding: 5px;
+}
+.new_product_table .left-side{
+    float: left;
+    width: 50%;
+}
+.new_product_table .inline-block:nth-child(2n){
+    background-color: rgb(223, 234, 235);
+}
+
+.new_product_table .right-side{
+    float:right;
+    width:50%;
+}
+
+.note-editor .note-editable {
+    height:120px !important;
+}
+.new-property-list .inline-block,
+.property-list .inline-block{
+}
+.new-property-list .inline-block>div,
+.property-list .inline-block>div{
+    display: inline-block;
+}
+.new-property-list .inline-block .property-name-box,
+.property-list .inline-block .property-name-box{
+    min-width: 200px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.new-property-list .inline-block .property-value-box,
+.property-list .inline-block .property-value-box{
+    width:250px;
+}
+.new-property-list select,
+.new-property-list input[type="text"],
+.property-list select,
+.property-list input input[type="text"]{
+    width:170px;
+    height:30px;
+}
+
+.property-form{
+    position: relative;
+}
+
+.filter-product-menu .inline-block{
+    overflow: hidden;
+    margin: 5px;
+}
+.filter-product-menu .column-0,
+.filter-product-menu .column-1{
+    display:inline-block;
+    width: 350px;
+}
+.filter-product-menu label{
+    width: 150px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.filter-product-menu select,
+.filter-product-menu input[type="text"]{
+    height: 30px;
+    width: 150px;
+    padding: 0px 5px;
+    border: 1px solid grey;
+    display: inline-block;  
+}
+

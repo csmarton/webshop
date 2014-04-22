@@ -25,8 +25,8 @@ backend_admin_product_property_list:
     defaults: { _controller: BackendAdminBundle:Product:propertyList }    
     
 backend_admin_product_property_edit:
-    pattern:  /admin/termekek/tulajdonsagok/szerkesztes
-    defaults: { _controller: BackendAdminBundle:Product:propertyEdit }    
+    pattern:  /admin/termekek/tulajdonsagok/szerkesztes/{productId}/{propertyId}/
+    defaults: { _controller: BackendAdminBundle:Product:propertyNew }    
 
 backend_admin_product_property_remove:
     pattern:  /admin/termekek/tulajdonsagok/torles
@@ -100,4 +100,19 @@ backend_admin_order_list_more:
     
 backend_admin_order_fulfill:
     pattern:  /admin/rendelesek/{orderId}/teljesites
-    defaults: { _controller: BackendAdminBundle:Order:fulfillOrder }        
+    defaults: { _controller: BackendAdminBundle:Order:fulfillOrder }   
+    
+#
+# tulajdonságok szerkesztése    
+#
+backend_admin_property:
+    pattern:  /admin/tulajdonsagok
+    defaults: { _controller: BackendAdminBundle:Property:list }
+    
+backend_admin_property_new:
+    pattern:  /admin/tulajdonsagok/uj
+    defaults: { _controller: BackendAdminBundle:Property:new }
+    
+backend_admin_property_remove:
+    pattern:  /admin/tulajdonsagok/torles
+    defaults: { _controller: BackendAdminBundle:Property:remove }

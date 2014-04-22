@@ -1,0 +1,39 @@
+<?php
+
+namespace Frontend\ProductBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CategoryRelationship
+ *
+ * @ORM\Table(name="category_relationship")
+ * @ORM\Entity
+ */
+class CategoryRelationship
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="first_category_id", type="integer", nullable=false)
+     */
+    private $firstCategoryId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="second_category_id", type="integer", nullable=false)
+     */
+    private $secondCategoryId;
+
+
+}

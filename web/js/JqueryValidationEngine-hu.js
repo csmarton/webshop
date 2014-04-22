@@ -8,7 +8,7 @@
                     "regex": "none",
                     "alertText": "Ezt a mezőt ki kell tölteni",                    
                     "alertTextCheckboxMultiple": "Kérem válasszon egy opciót",
-                    "alertTextCheckboxe": "Ez az opció be kell legyen jelölve",
+                    "alertTextCheckboxe": "Ez az opció be kell legyen jelölve"
                 },		
                 "phone": {
                     // credit: jquery.h5validate.js / orefalo
@@ -19,6 +19,11 @@
                     // HTML5 compatible email regex ( http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#    e-mail-state-%28type=email%29 )
                     "regex": /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                     "alertText": "Hibás E-mail cím"
+                },
+                "wrongEmail": {
+                    // HTML5 compatible email regex ( http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#    e-mail-state-%28type=email%29 )
+                    "regex": /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    "alertText": "Addj meg egy email címet"
                 },
                 "emailExists": {                    
                     "alertText": "Foglalt email cím"

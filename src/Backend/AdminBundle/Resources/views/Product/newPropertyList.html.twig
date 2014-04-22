@@ -1,0 +1,16 @@
+{% for property in propertys %}
+    <form action="{{path('backend_admin_product_property_edit', {'productId' : productId,'propertyId' : property.getId()})}}" method="post" class="property-form">
+        <div class="loading"></div>
+        <div class="inline-block">            
+            <div class="property-name-box">
+                <input type="text" value="{{property.getName()}}" disabled/>
+            </div>
+            <div class="property-value-box">
+                <input type="text" placeholder="érték...." class="property-value validate[required] ">
+            </div>
+            <div class="property-edit-box product_edit_btn">
+                <input type="submit" value="Mentés" class="save-property-button menu_btn ok_btn">
+            </div>
+        </div>
+    </form>        
+{% endfor %}

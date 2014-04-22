@@ -1,0 +1,20 @@
+<form action="{{path('frontend_password_reset')}}" method="post" id="password-resetting-form" >
+    <div class="loading"></div>
+     <div class="topSection">
+        <div class="modal-content">
+            <h2>Új jelszó kérése</h2>    
+            <div class="information">
+                <label for="reset-email">Email cím:</label>
+                <input type="text" id="reset-email" name="reset-email" class="validate[required,funcCall[checkEmailValidation]]" />
+            </div>
+        </div>
+     </div>
+    <div class="errorSection hide"></div>
+
+    <div class="bottomSection">
+        <div class="inputs">
+            <input type="submit" value="Új jelszó" class="ok-button" id="password-resetting-button"/>
+            <input type="button" class="cancel exit-reveal-modal ok-button" value="Mégse">  
+        </div>
+    </div>
+</form>

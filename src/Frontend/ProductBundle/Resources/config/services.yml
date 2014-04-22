@@ -1,7 +1,7 @@
 parameters:
-#    frontend_product.example.class: Frontend\ProductBundle\Example
+    product_service.class: Frontend\ProductBundle\Services\ProductServices
 
 services:
-#    frontend_product.example:
-#        class: %frontend_product.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    product_service:
+        class: "%product_service.class%"
+        arguments: [ @doctrine.orm.entity_manager, '@service_container', '@doctrine' ]     

@@ -19,6 +19,7 @@ class DefaultController extends Controller
             $products = $repo->createQueryBuilder('p') 
                     ->where('p.name LIKE :key')
                     ->setParameter('key','%'.$key.'%')
+                    ->setMaxResults(10)
                     ->getQuery()->getResult();
             
             

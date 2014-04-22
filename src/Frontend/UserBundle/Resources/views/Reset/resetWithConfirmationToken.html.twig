@@ -1,0 +1,62 @@
+{% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} WebShop - Új jelszó {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block javascripts %}
+	{{ parent() }}
+        
+            <script type="text/javascript" src="{{ asset('bundles/frontenduser/js/PasswordReset.js') }}"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                PasswordReset.init();
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %}
+    <div class="main">
+        {% block leftSide %}                        
+            {{parent()}}
+        {% endblock %}        
+        <div class="container">
+            <div class="page-title">Új jelszó</div>
+            <div>  
+                {% if exists == true %}
+                    Új jelszó megadásához kattints ide: <a href="javascript:void(0)" class="new-password-with-confirmation-link">ide</a>
+                {% else %}
+                    Email újraküldéséhez kattints <a href="javascript:void(0)" class="new-password-link">ide</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if exists == true %}                    
+        <form action="{{path('frontend_password_reset_with_token')}}" method="post" id="password-resetting-with-token-form" class="reveal-modal">
+            <div class="formContent">
+                <div class="topSection">
+                    <div class="modal-content">
+                        <h2>Új jelszó megadása</h2>    
+                        <div class="information">
+                            <label for="reset-password-1">Jelszó:</label>
+                            <input type="password" id="reset-password-1" name="reset-password-1" class="validate[required,funcCall[checkPassword]]"/>
+                            <label for="reset-password-2">Jelszó megerősíése:</label>
+                            <input type="password" class="validate[required]" id="reset-password-2" name="reset-password-2"/>
+                            <input type="hidden"  value="{{confirmationToken}}" id="reset-password-confirmaion-token" name="reset-password-confirmaion-token"/>
+                        </div>
+                    </div>
+                 </div>
+                <div class="errorSection hide"></div>
+                <div class="bottomSection">
+                    <div class="inputs">
+                        <input type="submit" value="Megváltoztat" class="ok-button" id="password-resetting-with-token-button"/>
+                        <input type="button" class="cancel exit-reveal-modal ok-button" value="Mégse">  
+                    </div>
+                </div>
+            </div>
+        </form>  
+    {% endif %}
+{% endblock %}
+                        
+
+
+                        

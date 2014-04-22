@@ -18,11 +18,113 @@ class ProductController extends Controller
      */
     public function listAction()
     {   
-        $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findAll();
+        $request = $this->get('request');
+        
+        $page = (int)$request->query->get('page');
+        if($page == NULL){
+             $page = 1;
+        }
+        //OLDALAK
+        $maxResult = (int)$request->query->get('maxResult');
+        if($maxResult == NULL){
+             $maxResult = 10;
+        }
+        
+        //RENDEZÉS
+        $order = $request->query->get('order');
+        $by = $request->query->get('by');
+        if($order == NULL){
+             $order = "id";
+             $by= "asc";
+        }
+        if($by != "asc" && $by != "desc"){
+            $by = "asc";
+        }
+        
+        $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
+                ->select('p');
+        $filterId = "";
+        $filterName = "";
+        $filterActive = "";
+        $filterCategory = "";
+        $parameters = "";
+        if ($request->getMethod() == 'GET') {
+            $filterId = $request->query->get('filterId');
+            $filterName = $request->query->get('filterName');
+            $filterActive = $request->query->get('filterActive');
+            $filterCategory = $request->query->get('filterCategroy');
+            $parameters .= "&filterId=";
+            if($filterId!= ""){
+                $products = $products
+                    ->andWhere('p.id = :id')
+                    ->setParameter('id', (int)$filterId); 
+                $parameters .= $filterId;
+            }
+            $parameters .= "&filterName=";
+            if($filterName!= ""){
+                $products = $products
+                    ->andWhere('p.name LIKE :name')
+                    ->setParameter('name', "%".$filterName."%");
+                $parameters .= $filterName;
+            }
+            $parameters .= "&filterActive=";
+            if($filterActive!= ""){
+                if($filterActive == "yes"){
+                    $products = $products
+                        ->andWhere('p.isActive = 1');
+                }else{
+                    $products = $products
+                        ->andWhere('p.isActive != 1');
+                }  
+                $parameters .= $filterActive;
+            }
+            $parameters .= "&filterCategory=";
+            if($filterCategory!= ""){
+                $products = $products
+                    ->andWhere('p.categorys = :cat')
+                    ->setParameter('cat', (int)$filterCategory);
+                $parameters .= $filterCategory;
+            }            
+        }
+        if($order == "id"){
+            $products = $products
+                ->orderBy('p.id',$by);
+        }else if($order == "name"){
+            $products = $products
+                ->orderBy('p.name',$by);
+        }else if($order == "price"){
+            $products = $products
+                ->orderBy('p.price',$by);
+        }else{
+            $products = $products
+                ->orderBy('p.id',$by);
+        }
+        $parameters .= "&maxResult=".$maxResult;
+        $pageCount = ceil(count($products->getQuery()->getResult()) / $maxResult);
+        
+        if($pageCount == 0)
+            $pageCount = 1;
+        $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findAll();
+        $products = $products
+                ->setFirstResult($page*$maxResult - $maxResult)
+                ->setMaxResults($maxResult)
+                ->getQuery()->getResult();
+        
         //$form = $this->createForm(new ProductType());
         return $this->render('BackendAdminBundle:Product:list.html.twig', array(
             //'form' => $form->createView(),
-            'products' => $products
+            'products' => $products,
+            'filterId'=> $filterId,
+            'filterName'=> $filterName,
+            'filterActive'=> $filterActive,
+            'filterCategory'=> $filterCategory,
+            'categorys' => $categorys,
+            'actualPage' => $page,
+            'pageCount' => $pageCount,
+            'parameters' => $parameters,
+            'maxResult' => $maxResult,
+            'order' => $order,
+            'by' => $by
         ));
     }
     
@@ -33,29 +135,20 @@ class ProductController extends Controller
     {   
         $request = $this->get('request');
         $productId = $request->query->get('productId');
-
-        $currentMainCategoryId = null;
+        
         $currentCategoryId = null;
+        $currentMainCategoryId = null;
         $categorys = null;
         if($productId == null){ //új termék
-            $product = new Product(); 
-            $specialOffer = null;
+            $product = new Product();
         }else{//termék szerkesztése
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
-            $categoryId = $product->getCategory();
-            $specialOffer = $this->getDoctrine()->getRepository('FrontendProductBundle:SpecialOffers')->findOneByProduct($product);
-
-            $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categoryId);   
-            $mainCategory = $category->getMainCategory();
-            $currentMainCategoryId = $mainCategory->getId();
-            $currentCategoryId = $product->getCategorys()->getId();
-            $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($mainCategory);
+            $currentCategoryId = $product->getCategory();
+            $currentMainCategory = $product->getCategorys()->getMainCategory();
+            $currentMainCategoryId = $currentMainCategory->getId();
+            $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($currentMainCategory);
         }
-        if($specialOffer == null){
-                $specialOffer = new SpecialOffers();
-                $specialOffer->setProduct($product);
-        }
-        $specialOfferForm =  $this->createForm(new SpecialOffersType,$specialOffer);
+        
         $form = $this->createForm(new ProductType(),$product);
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
@@ -71,18 +164,6 @@ class ProductController extends Controller
                $product->setCreatedAt($createdTime);
                $product->setUpdatedAt($createdTime);
                
-               $specialOfferForm->bind($request);
-               if ($specialOfferForm->isValid()) {                    
-                    $specialOffer->setProductId($product->getId());
-                    if($specialOffer->getNewPrice()>0){
-                        $em->persist($specialOffer);
-                        $em->flush(); 
-                    }else{
-                        $em = $this->getDoctrine()->getEntityManager();
-                        $em->remove($specialOffer);
-                        $em->flush(); 
-                    }
-               }
                $em = $this->getDoctrine()->getEntityManager(); 
                $em->persist($product);
                $em->flush();              
@@ -93,7 +174,8 @@ class ProductController extends Controller
         }
         
         $mainCategorys = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
-                
+        
+                 
 
         
         return $this->render('BackendAdminBundle:Product:new.html.twig', array(
@@ -101,10 +183,10 @@ class ProductController extends Controller
             'productId'=>$productId,
             'product' => $product,
             'mainCategorys' => $mainCategorys,
-            'currentMainCategoryId' => $currentMainCategoryId,      
+            'categorys'=>$categorys,            
             'currentCategoryId'=>$currentCategoryId,
-            'categorys'=>$categorys,
-            'specialOfferForm'=>$specialOfferForm->createView(),
+            'currentMainCategoryId' => $currentMainCategoryId,      
+            
         ));
     }
     
@@ -133,6 +215,27 @@ class ProductController extends Controller
     public function propertyListAction($productId){
         $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
         $productPropertys = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->findByProduct($product);
+        $mainCategory = $product->getCategorys()->getMainCategory()->getId();
+        $havingProductPropertys = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->createQueryBuilder('pp')
+                    ->select('pp')
+                    ->where('pp.product = :product')
+                    ->setParameter('product', $product)
+                    ->getQuery()->getResult();
+        $havingProductPropertyId = array();
+        
+        foreach($havingProductPropertys as $havingProductProperty){
+            $havingProductPropertyId[] =$havingProductProperty->getProperty()->getId();
+        }
+        $propertys = $this->getDoctrine()->getRepository('FrontendProductBundle:Propertys')->createQueryBuilder('pp')
+                ->select('pp')
+                ->where('pp.mainCategory = :mainCategory')                
+                ->setParameter('mainCategory', $mainCategory);
+        if(count($havingProductPropertyId) != 0){
+            $propertys = $propertys
+                    ->andWhere('pp.id NOT IN (:havingProductProperty)')
+                    ->setParameter('havingProductProperty',$havingProductPropertyId);
+        }
+        $propertys = $propertys->getQuery()->getResult();
         
         $request = $this->get('request');
         $productProperty = new ProductProperty(); 
@@ -154,48 +257,49 @@ class ProductController extends Controller
         return $this->render('BackendAdminBundle:Product:propertys.html.twig', array(
             'form' => $form->createView(),
             'productPropertys' => $productPropertys,
-            'productId' => $productId
+            'productId' => $product->getId(),
+            'propertys' => $propertys
         ));
     }
     
     /*
      * Új termék tulajdonság, vagy meglévő tulajdonság szerkesztése
      */
-    public function propertyEditAction(){
+    public function propertyNewAction($productId, $propertyId){
+        $edit = true;
         $request = $this->get('request');
-        $productId = $request->query->get('productId');
-        $productPropertyId = $request->query->get('productPropertyId');
-        
-        $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
-        
-        if($productPropertyId == null){ //új tulajdonság létrehozása
-            $productProperty = new ProductProperty(); 
-            $productProperty->setProduct($product);
-            
-        }else{ //tulajdonság szerkesztése
-            $productProperty = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->findOneById($productPropertyId);            
-        } 
-        
-        $form = $this->createForm(new ProductPropertyType(), $productProperty);
-        
         if ($request->getMethod() == 'POST') {//form küldése során
-            $form->bind($request);
-            if ($form->isValid()) { 
-              
-               $em = $this->getDoctrine()->getManager();
-               $em->persist($productProperty);
-               $em->flush();               
-               
-               return $this->redirect($this->generateUrl('backend_admin_product_new').'?productId='.$productId);
+            $request = $this->get('request');
+            $propertyValue = $request->request->get('propertyValue');
+
+            $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
+            $property = $this->getDoctrine()->getRepository('FrontendProductBundle:Propertys')->findOneById($propertyId);        
+            $productProperty = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->createQueryBuilder('pp')
+                    ->select('pp')
+                    ->where('pp.product = :product AND pp.property = :property ')
+                    ->setParameter('product',$product)
+                    ->setParameter('property',$property)
+                    ->getQuery()->getOneOrNullResult();
+            if($productProperty == null){
+                $edit = false;
+                $productProperty = new ProductProperty();
+                $productProperty->setProduct($product);
+                $productProperty->setProperty($property);
             }
-        }    
         
-        return $this->render('BackendAdminBundle:Product:new_property.html.twig', array(
-            'form' => $form->createView(),
-            'productPropertyId' => $productPropertyId,
-            'product' => $product,
-            //'productPropertys' => $productPropertys
-        ));
+            $productProperty->setValue($propertyValue);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($productProperty);
+            $em->flush();    
+            $productPropertys = array();
+            $productProperyts[] = $productProperty;
+            $html = $this->renderView('BackendAdminBundle:Product:propertyList.html.twig', array(
+                'productPropertys' => $productProperyts,
+                'productId' => $productId,
+                'propertyId' => $propertyId));
+            return new JsonResponse(array('success' => true, 'html' => $html, 'edit' => $edit));               
+        }
+        return new JsonResponse(array('success' => false));
     }
     
     /*
@@ -206,15 +310,26 @@ class ProductController extends Controller
          if ($request->getMethod() == 'POST') {
             $request = $this->get('request');
             $productPropertyId = $request->request->get('productPropertyId');
-            
             $productProperty = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->findOneById($productPropertyId);
             $property = $productProperty->getProperty()->getName(). "  = ". $productProperty->getValue();
+            $productId = $productProperty->getProduct()->getId();
+            $propertyId = $productProperty->getProperty()->getId();
             
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($productProperty);
             $em->flush();
     
-            return new JsonResponse(array('success' => true,'productProperty'=> $property));
+            $productPropertys = array();
+            $removeProperty = $productProperty->getProperty();
+            $productPropertys[] = $removeProperty;
+            
+            
+            $html = $this->renderView('BackendAdminBundle:Product:newPropertyList.html.twig', array(
+                'propertys' => $productPropertys,
+                'productId' => $productId,
+                'propertyId' => $propertyId));
+            
+            return new JsonResponse(array('success' => true,'productProperty'=> $property, 'html' =>$html));
          }else{
              return new JsonResponse(array('success' => false));
          }   
@@ -229,7 +344,7 @@ class ProductController extends Controller
             
             $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($mainCategory);
             
-            $html = $this->renderView('BackendAdminBundle:Product:categorys_ajax.html.twig', array('categorys' => $categorys));
+            $html = $this->renderView('BackendAdminBundle:Product:categorysAjax.html.twig', array('categorys' => $categorys));
             return new JsonResponse(array('success' => true,'html'=> $html));
          }else{
              return new JsonResponse(array('success' => false));

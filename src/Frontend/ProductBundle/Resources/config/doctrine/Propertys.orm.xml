@@ -12,5 +12,6 @@
         <join-column name="main_category" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
+    <field name="orderValue" type="integer" column="order_value" nullable="true"/>
   </entity>
 </doctrine-mapping>

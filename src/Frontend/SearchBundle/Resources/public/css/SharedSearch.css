@@ -95,7 +95,7 @@
     width: 150px;
     text-align: right;
 }
-
+#general-search-string,
 .main #searchTabs select{
     width: 200px;
     height: 30px;
@@ -103,19 +103,25 @@
     background-color: #F7F9FD;
     border: 1px solid #D5D5D5;
 }
-
+.general-search-string-box{
+    text-align: center;
+}
+#general-search-string{
+    width: 400px;
+    padding: 5px;
+}
 #searchTabs{
     display:block;
 }
 #searchTabs ul{
     
 }
-#searchTabs ul>li{
+#searchTabs ul li{
     display: inline-block;
     margin:5px;
 }
 
-#searchTabs ul>li a{
+#searchTabs ul li a{
     display: block;
     padding: 10px;
     background-color: #F7F7F7;
@@ -156,6 +162,8 @@
     height: 50px;
 }
 
+#general-price-amount-copy,
+#tablet-price-amount-copy,
 #laptop-price-amount-copy{
     color:#428bca;
     font-weight:bold;
@@ -163,6 +171,8 @@
     font-size: 1.2em;
 
 }
+#general-price-slider,
+#tablet-price-slider,
 #laptop-price-slider{
     width: 600px;
     margin: 0px auto;

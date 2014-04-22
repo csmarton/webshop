@@ -43,7 +43,7 @@
                                             </a>
                                     </li>#}
 				{% else %}
-					<li id="login-sign-in">
+					<li class="login-sign-in">
 						<a href="javascript:void(0)">
 							<div id="sign_in"></div>
 							<span>Bejelentkezés/Regisztráció</span>
@@ -56,6 +56,8 @@
             <div class="myprofileDropDownContent">
                 <ul>
                     <li><a href="{{ path('frontend_profile_edit') }}">Személyes adataim</a></li>
+                    <li><a href="javascript:void(0)" class="new-password-link">Új jelszó</a></li>
+                    <li class="menuDivider"></li>
                     <li><a href="{{ path('frontend_profile_my_orders') }}">Rendeléseim</a></li>
                     <li class="menuDivider"></li>
                     <li>
@@ -67,20 +69,20 @@
         
         <div id="modal-sign-in" class="reveal-modal">
             <div class="formContent">
-                {% render controller('FOSUserBundle:Security:login') %}
+                {% include 'FrontendUserBundle:Login:loginModal.html.twig' %}
                  
             </div>
         </div>
         
         <div id="modal-registration" class="reveal-modal">
             <div class="formContent">
-                {% render controller('FOSUserBundle:Registration:register') %}               
+                {% include 'FrontendUserBundle:Registration:registrationModal.html.twig' %}  
             </div>
         </div>
         
         <div id="modal-password-resetting" class="reveal-modal">
             <div class="formContent">
-                {% render controller('FOSUserBundle:Resetting:request') %}               
+                {% include "FrontendUserBundle:Reset:resetEmailModal.html.twig" %}
             </div>
         </div>
         

@@ -1,4 +1,12 @@
 <div class="top-section">
+    <div class="search-filter price-filter">
+        <p>
+            <label for="tablet-price-amount">Ár:</label>
+            <input type="text" id="tablet-price-amount" class="hide">
+            <input type="text" id="tablet-price-amount-copy">
+        </p>
+        <div id="tablet-price-slider"></div>
+    </div> 
     <div class="search-filter">
         <label for="tablet-filter-manufacturer">Gyártó</label>
         <select name="tablet-filter-manufacturer" id="tablet-filter-manufacturer">
@@ -60,11 +68,13 @@
         <label for="tablet-filter-creen-size">Kijelző</label>
         <select name="tablet-filter-screen-size" id="tablet-filter-screen-size">
             <option value=""></option>
+            
+            <option value="0-7">7" alatt</option>
+            <option value="7-8">7-8"</option>
+            <option value="8-9">8-9"</option>
             <option value="9-10">9-10"</option>
-            <option value="11-12">11-12"</option>
-            <option value="13-14">13-14"</option>
-            <option value="15-16">15-16"</option>
-            <option value="17-">17"-tól</option>
+            <option value="10-12">10-12</option>
+            <option value="12-">12" felett</option>
         </select>
     </div>
 
@@ -72,11 +82,14 @@
         <label for="tablet-filter-operation-system">Operációs rendszer</label>
         <select name="tablet-filter-operation-system" id="tablet-filter-operation-system">
             <option value=""></option>
-            <option value="nincs">nincs</option>
-            <option value="DOS">DOS</option>
-            <option value="windows 7">windows 7</option>
-            <option value="windows 8">windows 8</option>
-            <option value="linux">linux</option>
+            <option value="android">Android</option>
+            <option value="android 4.0">Android 4.0</option>
+            <option value="android 4.1">Android 4.1</option>
+            <option value="android 4.2"> Android 4.2</option>
+            <option value="ios 6.0"> IOS 6.0</option>
+            <option value="windows 8">Windows 8</option>
+            <option value="windows 8.1">Windows 8.1</option>
+            <option value="Windows RT">Windows RT</option>
         </select>
     </div>
 
@@ -92,6 +105,7 @@
             <option value="8-">8 GB+</option>
         </select>
     </div>
+    <input type="hidden" name="filter-type" value="2"  id="tablet-filter-type"/>
 </div>
 <div class="bottom-section">
     <input type="button" class="ok-button" id="tablet-filter-button" value="Szűrés">

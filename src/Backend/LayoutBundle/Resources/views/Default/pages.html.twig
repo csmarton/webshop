@@ -1,0 +1,64 @@
+{% if(actualPage-1<=0) %}
+    {% set prevPage = actualPage %}
+{% else %}
+    {% set prevPage = actualPage-1 %}
+{% endif %}
+
+{% if(actualPage+1 > pageCount) %}
+    {% set nextPage = actualPage %}
+{% else %}
+    {% set nextPage = actualPage+1 %}
+{% endif %}
+{% set param = parameters~"&order="~order~"&by="~by %}
+    <ul class="pages">
+        <li>
+            <a href="?page={{prevPage}}{{param}}"><</a>
+        </li>
+        {% if pageCount > 7 %}
+            {% if(actualPage-3>1) %}
+                <li>
+                    <a href="?page={{1}}{{param}}">{{1}}</a>
+                </li>
+                ...
+                {% set low = actualPage-3 %}
+            {% else %}
+                {% set low = 1 %}                  
+            {% endif %}
+                
+            {% set high = low + 6 %}  
+            {% if high > pageCount %}
+                {% set low = low - high + pageCount%}
+                {% set high = pageCount %}                
+            {% endif %}
+                
+            {% for i in range(low,high)%}
+                <li
+                    {%if actualPage == i %}
+                        class="actual-page"
+                    {% endif %}>
+                    <a href="?page={{i}}{{param}}">{{i}}</a>
+                </li>
+            {% endfor %} 
+            
+            {% if(high<pageCount) %}
+                ...
+                <li>
+                    <a href="?page={{pageCount}}{{param}}">{{pageCount}}</a>
+                </li>
+            {% endif %} 
+        {% else %}
+            {% for i in range(1,pageCount)%}
+                <li
+                    {%if actualPage == i %}
+                        class="actual-page"
+                    {% endif %}>
+                    <a href="?page={{i}}{{param}}">{{i}}</a>
+                </li>
+            {% endfor %}     
+        {% endif %}
+        
+        
+        <li>
+            <a href="?page={{nextPage}}{{param}}">></a>
+        </li>
+    </ul>

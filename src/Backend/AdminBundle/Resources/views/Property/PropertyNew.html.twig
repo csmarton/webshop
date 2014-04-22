@@ -1,0 +1,46 @@
+{% extends "BackendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} Admin - Új Tulajdonságok {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block javascripts %}
+	{{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Property.css') }}"/>
+    <script type="text/javascript">
+            $(document).ready(function(){
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %} 
+    <div class="main">  
+        <div class="upperMenu">
+            <a href="{{path('backend_admin_product_new')}}" class="menu_btn">Új Termék</a>
+            <a href="{{path('backend_admin_property')}}" class="menu_btn">Tulajdonságok</a>
+        </div>
+        <div class="product-edit-box">
+            {% if propertyId is not null %}
+                <h2>Tulajdonság szerkesztése</h2>
+            {% else %}
+                <h2>Új tulajdonság</h2>
+            {% endif %}
+            
+            <form action="{{ path('backend_admin_property_new',{'propertyId':propertyId})}}" method="post" {{ form_enctype(form) }} name="newProperty"  class="newProperty">
+                <div class="inline-block">
+                        {{ form_label(form.name, 'Tulajdonságnév:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(form.name, { 'attr': {'class': 'validate[required] categoryName'} } ) }}
+                </div>
+                <div class="inline-block">
+                        {{ form_label(form.mainCategory, 'Fő kategória:', { 'label_attr': {'class': 'labelText'}}) }}
+                        {{ form_widget(form.mainCategory) }}
+                </div>
+                <div class="inline-block center">
+                    <input type="submit" value="Mentés" class="menu_btn ok_btn">
+                    <a href="{{path('backend_admin_property')}}"  class="menu_btn warning_btn cancel_btn" >Mégse</a>
+                </div>    
+
+                {{ form_widget(form._token) }}
+            </form> 
+        </div>
+    </div>
+{% endblock %}

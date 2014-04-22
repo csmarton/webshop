@@ -1,0 +1,50 @@
+.filter-property-menu .inline-block{
+    overflow: hidden;
+    margin: 5px;
+}
+.filter-property-menu .column-0,
+.filter-property-menu .column-1,
+.filter-property-menu .column-2{
+    display:inline-block;
+    width: 350px;
+}
+.filter-property-menu label{
+    width: 150px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.filter-property-menu select,
+.filter-property-menu input[type="text"]{
+    height: 30px;
+    width: 150px;
+    padding: 0px 5px;
+    border: 1px solid grey;
+    display: inline-block;  
+}
+
+
+/*
+* Szerkesztés
+*/
+.newProperty{
+    width:100%;
+}
+.newProperty .inline-block{
+    display: block;
+    padding: 5px;
+}
+.newProperty .inline-block label{
+    font-weight: bold;
+    width: 150px !important;
+    display: inline-block;
+}
+.newProperty .inline-block input[type="text"]{
+    width:500px;
+    height:30px;
+}
+
+.newProperty .inline-block select{
+    width: 100px;
+    height:30px;
+}

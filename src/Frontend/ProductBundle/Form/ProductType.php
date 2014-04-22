@@ -23,7 +23,8 @@ class ProductType extends AbstractType
 		  array('label' => 'Létrehozás dátuma::','empty_value' => array('year' => 'év', 'month' => 'hó', 'day' => 'nap')))
             ->add('updatedAt', 'date',
 		  array('label' => 'Frissítés dátuma:','empty_value' => array('year' => 'év', 'month' => 'hó', 'day' => 'nap')))
-            ->add('price', 'integer', array('max_length'=>15,'label' => 'Bruttó ár:', 'required'  => false))    
+            ->add('price', 'integer', array('max_length'=>15,'label' => 'Bruttó ár:', 'required'  => false)) 
+            ->add('salesPrice', 'integer', array('max_length'=>15,'label' => 'Akciós ár:', 'required'  => false))
             ->add('category', 'entity', array('label' => 'Kategória:',  'required'  => false, 
                                 'class' => 'FrontendProductBundle:Category', 'property' => 'name',
                                 'query_builder' => function(EntityRepository $er) {return $er->createQueryBuilder('c');}

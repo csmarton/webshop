@@ -1,56 +1,61 @@
 <div class="products_box">
-    {% for product in products %}
-    {% set i=loop.index0 %}
-    {% if (product.getSlug() is not null)%}
-            {% set product_link = product.getSlug() %}
+    {% if products|length == 0%}
+        Nincsenek elérhető termékek
     {% else %}
-            {% set product_link = product.getId() %}
-    {% endif %}
-    {% if product.getSpecialOffer() is not null %}
-        {% set classes = "sales" %}
-    {% else%}
-        {% set classes = "" %}
-    {% endif %}
-    <div class="product_box {{classes}}">
-            <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
-            <div class="upper_box">
+        {% for product in products %}
+        {% set i=loop.index0 %}
+        {% if (product.getSlug() is not null)%}
+                {% set product_link = product.getSlug() %}
+        {% else %}
+                {% set product_link = product.getId() %}
+        {% endif %}
+        {% if (product.getSalesPrice() is not null and product.getSalesPrice() > 0) %}
+            {% set classes = "sales" %}
+        {% else %}
+            {% set classes = "" %}
+        {% endif %}
+        <div class="product_box {{classes}}">
+                <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
+                <div class="upper_box">
 
-                    <div class="right_box">
-                        <div class="product_price">
-                            {% if product.getSpecialOffer() is not null %}
-                                <div class="old-price">
-                                    {{ product.getPrice()|priceFormat }} Ft
-                                </div>
-                                <div class="new-price">
-                                    {{ product.getSpecialOffer().getNewPrice|priceFormat }} Ft
-                                </div>
-                            {% else%}
-                                <div class="old-price">
-                                    {{ product.getPrice()|priceFormat }} Ft
-                                </div>
-                                <div class="new-price">
-                                </div>
-                                
+                        <div class="right_box">
+                            <div class="product_price">
+                                {% if product.getSalesPrice() is not null and product.getSalesPrice() > 0 %}
+                                    <div class="old-price">
+                                        {{ product.getPrice()|priceFormat }} Ft
+                                    </div>
+                                    <div class="new-price">
+                                        {{ product.getSalesPrice()|priceFormat }} Ft
+                                    </div>
+                                {% else%}
+                                    <div class="old-price">
+                                        {{ product.getPrice()|priceFormat }} Ft
+                                    </div>
+                                    <div class="new-price">
+                                    </div>                                
+                                {% endif %}
+                            </div>
+                                <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
+                        </div>  
+                        <div class="image_container">                           
+                            {% if (product.getProductImages()|length != 0 ) %}
+                                <img src="{{asset(product.getProductImages()[0].getWebPath())}}"/>
+                            {% else %}     
+                                <img src="{{ asset('images/no_image.jpg')}}"/>
                             {% endif %}
-                        </div>
-                            <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
-                    </div>  
-                    <div class="image_container">                           
-                        {% if (product.getProductImages()|length != 0 ) %}
-                            <img src="{{asset(product.getProductImages()[0].getWebPath())}}"/>
-                        {% else %}     
-                            <img src="{{ asset('images/no_image.jpg')}}"/>
-                        {% endif %}
 
-                    </div>
-            </div>
-            <div class="bottom_box">
+                        </div>
+                </div>
+                <div class="bottom_box">
                     <ul>
-                        {% for property in product.getProductPropertys()%}
+                        {% set i = 0 %}
+                        {% for property in product.getProductPropertys() if i<=8%}
                                 <li>{{property.getValue()}}</li>
+                                {% set i = i+1%}
                         {% endfor %}   
                     </ul>
-            </div>
-    </div> 
-    {% endfor %} 
+                </div>
+        </div> 
+        {% endfor %}
+    {% endif %}        
 </div>

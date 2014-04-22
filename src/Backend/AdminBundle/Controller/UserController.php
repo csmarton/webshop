@@ -12,12 +12,69 @@ class UserController extends Controller
 {
     public function listAction()
     {   
-        $users = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->findAll();
-        //var_dump($users[0]->getRoles());die;
-        //$form = $this->createForm(new ProductType());
+        $request = $this->get('request');
+        
+        $page = (int)$request->query->get('page');
+        if($page == NULL){
+             $page = 1;
+        }
+        //OLDALAK
+        $maxResult = (int)$request->query->get('maxResult');
+        if($maxResult == NULL){
+             $maxResult = 10;
+        }
+        
+        //RENDEZÉS
+        $order = $request->query->get('order');
+        $by = $request->query->get('by');
+        if($order == NULL){
+             $order = "id";
+             $by= "asc";
+        }
+        if($by != "asc" && $by != "desc"){
+            $by = "asc";die;
+        }
+        
+        $users = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->createQueryBuilder('u')
+                ->select('u');
+        
+        $parameters = "";
+        
+        if ($request->getMethod() == 'GET') {
+            
+        }
+        if($order == "id"){
+            $users = $users
+                ->orderBy('u.id',$by);
+        }else if($order == "name"){
+            $users = $users
+                ->orderBy('u.email',$by);
+        }else if($order == "orderDate"){
+            $users = $users
+                ->orderBy('u.lastLogin',$by);
+        }else{
+            $users = $users
+                ->orderBy('u.id',$by);
+        }
+        $parameters .= "&maxResult=".$maxResult;
+        $pageCount = ceil(count($users->getQuery()->getResult()) / $maxResult);
+        
+        if($pageCount == 0)
+            $pageCount = 1;
+        
+        $users = $users
+                ->setFirstResult($page*$maxResult - $maxResult)
+                ->setMaxResults($maxResult)
+                ->getQuery()->getResult();
+        
         return $this->render('BackendAdminBundle:User:list.html.twig', array(
-            //'form' => $form->createView(),
-            'users' => $users
+            'users' => $users,
+            'actualPage' => $page,
+            'pageCount' => $pageCount,
+            'parameters' => $parameters,
+            'maxResult' => $maxResult,
+            'order' => $order,
+            'by' => $by
         ));
     }    
    

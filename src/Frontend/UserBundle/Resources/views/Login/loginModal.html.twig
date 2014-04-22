@@ -1,0 +1,29 @@
+<form id="sign-in-form" action="{{path('frontend_login_check')}}" method="post">
+    <div class="loading"></div>
+    <div class="topSection">
+        <div class="modal-content">
+            <h2>Bejelentkezés</h2>
+                <div>
+                    <label for="email" >Email cím*</label>                        
+                    <input type="text" id="email" name="_email" class="validate[required,funcCall[checkEmailValidation]]"/>
+                    <label for="password">Jelszó*</label>
+                    <input type="password" id="password" name="_password" class="validate[required]"/>
+                    {#<label for="remember_me">Emlékezz rám</label>
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />#}
+                </div>
+                <div>
+                    Elfelejtetted a jelszavadat? Kattints <a href="#" id="forget-password-link">ide</a>
+                </div>
+                <div>
+                    Még nem regisztráltál? <a href="#" class="registration-password-link">Ide</a> kattintva megteheted
+                </div>                
+                
+        </div>
+    </div>
+    <div class="errorSection hide"></div>
+    <div class="bottomSection">
+        <div class="inputs">
+            <input type="submit" value="Bejelentkezés" id="submit-login-form-button" class="ok-button">                    
+        </div>
+    </div>
+</form> 

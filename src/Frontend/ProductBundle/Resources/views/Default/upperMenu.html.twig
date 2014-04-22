@@ -1,48 +1,50 @@
-<div class="left-side">    
-    {% include "FrontendProductBundle:Default:pages.html.twig" %}
-</div>
-<div class="right-side">
-    <select class="set-filter">
-        {% if (order=="promotion" and by == "desc")%}
-            {% set selected = "selected" %}
-        {% else %}
-            {% set selected = "" %}
-        {% endif %}
-        <option value="order=promotion&by=desc" {{selected}}>akciós elől</option>
-        
-    {% if (order=="price" and by == "asc")%}
-            {% set selected = "selected" %}
-        {% else %}
-            {% set selected = "" %}
-        {% endif %}
-        <option value="order=price&by=asc" {{selected}}>leolcsóbb elől</option>
-        
-        {% if (order=="price" and by == "desc")%}
-            {% set selected = "selected" %}
-        {% else %}
-            {% set selected = "" %}
-        {% endif %}
-        <option value="order=price&by=desc" {{selected}}>legdrágább elől</option>
-        
-        {% if (order=="date" and by == "desc")%}
-            {% set selected = "selected" %}
-        {% else %}
-            {% set selected = "" %}
-        {% endif %}
-        <option value="order=date&by=desc" {{selected}}>legújabb elől</option>
-        
-        {% if (order=="name" and by == "asc")%}
-            {% set selected = "selected" %}
-        {% else %}
-            {% set selected = "" %}
-        {% endif %}
-        <option value="order=name&by=asc" {{selected}}>név szerint növekvő</option>
-        
-        {% if (order=="name" and by == "desc")%}
-            {% set selected = "selected" %}
-        {% else %}
-            {% set selected = "" %}
-        {% endif %}
-        <option value="order=name&by=desc" {{selected}}>név szerint növekvő</option>
-    </select>
-</div>    
+{% if productCount != 0%}
+    <div class="left-side">    
+        {% include "FrontendProductBundle:Default:pages.html.twig" %}
+    </div>
+    <div class="right-side">
+        <select class="set-filter">
+            {% if (order=="promotion" and by == "desc")%}
+                {% set selected = "selected" %}
+            {% else %}
+                {% set selected = "" %}
+            {% endif %}
+            <option value="order=promotion&by=desc" {{selected}}>akciós elől</option>
+
+        {% if (order=="price" and by == "asc")%}
+                {% set selected = "selected" %}
+            {% else %}
+                {% set selected = "" %}
+            {% endif %}
+            <option value="order=price&by=asc" {{selected}}>leolcsóbb elől</option>
+
+            {% if (order=="price" and by == "desc")%}
+                {% set selected = "selected" %}
+            {% else %}
+                {% set selected = "" %}
+            {% endif %}
+            <option value="order=price&by=desc" {{selected}}>legdrágább elől</option>
+
+            {% if (order=="date" and by == "desc")%}
+                {% set selected = "selected" %}
+            {% else %}
+                {% set selected = "" %}
+            {% endif %}
+            <option value="order=date&by=desc" {{selected}}>legújabb elől</option>
+
+            {% if (order=="name" and by == "asc")%}
+                {% set selected = "selected" %}
+            {% else %}
+                {% set selected = "" %}
+            {% endif %}
+            <option value="order=name&by=asc" {{selected}}>név szerint növekvő</option>
+
+            {% if (order=="name" and by == "desc")%}
+                {% set selected = "selected" %}
+            {% else %}
+                {% set selected = "" %}
+            {% endif %}
+            <option value="order=name&by=desc" {{selected}}>név szerint növekvő</option>
+        </select>
+    </div>
+{% endif %}

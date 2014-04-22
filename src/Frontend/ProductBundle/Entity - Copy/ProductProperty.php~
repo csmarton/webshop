@@ -1,0 +1,52 @@
+<?php
+
+namespace Frontend\ProductBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ProductProperty
+ *
+ * @ORM\Table(name="product_property", indexes={@ORM\Index(name="IDX_404276494584665A", columns={"product_id"}), @ORM\Index(name="IDX_40427649549213EC", columns={"property_id"})})
+ * @ORM\Entity
+ */
+class ProductProperty
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="string", length=200, nullable=false)
+     */
+    private $value;
+
+    /**
+     * @var \Product
+     *
+     * @ORM\ManyToOne(targetEntity="Product")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * })
+     */
+    private $product;
+
+    /**
+     * @var \Propertys
+     *
+     * @ORM\ManyToOne(targetEntity="Propertys")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="property_id", referencedColumnName="id")
+     * })
+     */
+    private $property;
+
+
+}

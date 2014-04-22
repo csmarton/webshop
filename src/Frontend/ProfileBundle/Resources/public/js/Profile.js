@@ -5,7 +5,7 @@ Profile = {
         
     },
     bindUIActions: function(){
-    },
+    }
     
     
 };	

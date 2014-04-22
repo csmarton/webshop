@@ -1,0 +1,33 @@
+<form action="{{path('backend_admin_property', {'page': actualPage})}}" method="get" class="filter-property-menu">
+    <div class="inline-block">
+        <div class="column-0">
+            <label for="filterId">Azonosító:</label>
+            <input type="text" id="filterId" name="filterId" value="{{filterId}}">
+        </div>
+        <div class="column-1">
+            <label for="filterName">Tulajdonság név:</label>
+            <input type="text" id="filterName" name="filterName" value="{{filterName}}">
+        </div>
+    </div>
+    <div class="inline-block">   
+        <div class="column-0">
+            <label for="filterCategory">Fő kategória:</label>
+            <select id="filterMainCategory" name="filterMainCategory">
+                <option value=""></option>
+                {% for mainCategory in mainCategorys %}
+                    {% if mainCategory.getId() == filterMainCategory %}
+                        <option value="{{mainCategory.getId()}}" selected>{{mainCategory.getName()}}</option>
+                    {% else %}
+                        <option value="{{mainCategory.getId()}}">{{mainCategory.getName()}}</option>
+                    {% endif %}
+                    
+                {% endfor %}
+                
+            </select>
+        </div>
+    </div>
+    <input type="hidden" name="maxResult" value="{{maxResult}}"/>
+    <div class="center">
+        <input type="submit" class="menu_btn ok_btn" id="filter-order-button" value="Szűrés" />
+    </div>
+</form>

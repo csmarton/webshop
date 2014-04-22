@@ -1,14 +1,18 @@
 frontend_product_homepage:
     pattern:  /
     defaults: { _controller: FrontendProductBundle:Default:index }
+    
+frontend_products:
+    pattern:  /t
+    defaults: { _controller: FrontendProductBundle:Default:index }
 
 product_by_category:
     pattern:  /t/{main_category}/{category}
-    defaults: { _controller: FrontendProductBundle:Default:productByCategory }
+    defaults: { _controller: FrontendProductBundle:Default:index }
 
 product_by_main_category:
     pattern:  /t/{main_category}/
-    defaults: { _controller: FrontendProductBundle:Default:productByCategory }
+    defaults: { _controller: FrontendProductBundle:Default:index }
 
 product:
     pattern:  /p/{slug}

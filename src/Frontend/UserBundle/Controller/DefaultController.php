@@ -24,68 +24,64 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class DefaultController extends Controller
 {
-    public function registrationAction(Request $request){
-            
-		  /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->container->get('fos_user.registration.form.factory');
-        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-        $userManager = $this->container->get('fos_user.user_manager');
-        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-        $dispatcher = $this->container->get('event_dispatcher');
-        $user = $userManager->createUser();
-        $user->setEnabled(true);
-        $event = new GetResponseUserEvent($user, $request);
-        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
+    /*
+     * Regisztráció, új user és profil felvétele
+     */
+    public function registrationAction(){
+        $request = $this->get('request');
+        if('POST' === $request->getMethod()){
+            $username = $request->request->get('username');
+            $email = $request->request->get('email');
+            $password = $request->request->get('password');
+            $user = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->findOneByEmail($email);
+            if($user != null){ //Létezik ilyen email címmel regisztrált felhasználó
+                return new JsonResponse(array ('success'=>true,'userExists' => true));
+            }else{
+                /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
+                $formFactory = $this->container->get('fos_user.registration.form.factory');
+                /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+                $userManager = $this->container->get('fos_user.user_manager');
+                /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+                $dispatcher = $this->container->get('event_dispatcher');
 
-        if (null !== $event->getResponse()) {
-            
-            return $event->getResponse();
-        }
-         $form = $formFactory->createForm();
-        $form->setData($user);
-        if ('POST' === $request->getMethod()) {
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $event = new FormEvent($form, $request);
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-
+                $user = $userManager->createUser();
+                $user->setEnabled(true);
+                $user->setUsername($email);
+                $user->setPlainPassword($password);
+                $user->setEmail($email);
                 $userManager->updateUser($user);
 
-                if (null === $response = $event->getResponse()) {
-                    $url = $this->container->get('router')->generate('frontend_product_homepage');
-                    $response = new RedirectResponse($url);
-                }
-                
                 $newProfile = new Profile();
                 $newProfile->setUser($user);
-                
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($newProfile);
                 $em->flush();
                 
+                $token = new UsernamePasswordToken($user, null, "secured_area", $user->getRoles());
+                $this->get("security.context")->setToken($token); 
+                //now dispatch the login event
+                $request = $this->get("request");
+                $event = new InteractiveLoginEvent($request, $token);
+                $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
                 
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-                return $response;
-            }
+                return new JsonResponse(array ('success'=>true,'userExists' => false));
+            }     
         }
-		//return $this->render('FrontendProductBundle:Default:registration.html.twig');
-                return $this->container->get('templating')->renderResponse('FrontendUserBundle:Default:registration.html.twig', array(
-                    'form' => $form->createView(),
-                ));
-	}
-        
-        public function loginAction(){
-            
-            return $this->render('FrontendUserBundle:Default:login.html.twig');
-        }
+            return new JsonResponse(array('success' => false));  
+    }
+    
+    
+    public function loginAction(){            
+        return $this->render('FrontendUserBundle:Default:loginModal.html.twig');
+    }
         
         /*
          * Bejelentkezés ellenőrzése
          */
         public function checkLoginAction() {
-           $request = $this->get('request');
+            $request = $this->get('request');
+           
             if('POST' === $request->getMethod()){
                 $em = $this->getDoctrine()->getEntityManager();		
                 $email = $request->request->get('email');
@@ -154,8 +150,9 @@ class DefaultController extends Controller
                     $em = $this->getDoctrine()->getEntityManager(); 
                     $em->persist($user);
                     $em->flush();
-                    
-                    $link = $this->generateUrl('frontend_password_confirmation', array('confirmationToken' => $confirmationToken ));
+                    $context = $this->get('router')->getContext();
+                    $mailer = $this->get('mailer');
+                    $link = $context->getHost(). "/".$this->generateUrl('frontend_password_confirmation', array('confirmationToken' => $confirmationToken ));
                     $confirmationMessage = \Swift_Message::newInstance()
                         ->setSubject('Új jelszó generálás')
                         ->setFrom('noreply@marcitech.hu')
@@ -168,8 +165,14 @@ class DefaultController extends Controller
                             "text/html"
                         )
                     ;
-                    $this->get('mailer')->send($confirmationMessage);
-                    return new JsonResponse(array ('success'=>true,'userExists' => true, 'sendEmail' => true));
+                    $mailer->send($confirmationMessage);
+                    /*$spool = $mailer->getTransport()->getSpool();
+                    $transport = $container->get('swiftmailer.transport.real');
+                    $spool->flushQueue($transport);*/
+                    
+                    $html = "Új jelszó igényléséhez kattints a ". $user->getEmail(). " email címedre küldött linkre!";
+                    
+                    return new JsonResponse(array ('success'=>true,'userExists' => true, 'sendEmail' => true, 'html' => $html));
                 }
             }
             return new JsonResponse(array ('success'=>false));  
@@ -196,8 +199,41 @@ class DefaultController extends Controller
 		 }
 	}
         
-        public function passwordConfirmationAction(){
+        public function passwordConfirmationAction($confirmationToken){
+            $user = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->findOneByConfirmationToken($confirmationToken);
+            if($user != null){ //Létezik a generált token
+                $exists = true;
+            }else{
+                $exists = false;
+            }  
+            return $this->render('FrontendUserBundle:Reset:resetWithConfirmationToken.html.twig', array('exists' => $exists, 'confirmationToken' => $confirmationToken));
             
+        }
+        
+        public function passwordResetWithConfirmaionTokenAction(){
+            $request = $this->get('request');
+		if('POST' === $request->getMethod()){
+			$em = $this->getDoctrine()->getEntityManager();		
+			
+			$request = $this->get('request');		
+			$confirmationToken = $request->request->get('confirmationToken');
+                        $password = $request->request->get('password');
+                        $user = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->findOneByConfirmationToken($confirmationToken);
+                        
+                        if($user != null){ //Létezik a generált token
+                            $user->setPlainPassword($password);
+                            $user->setConfirmationToken(NULL);
+                            $user->setPasswordRequestedAt(NULL);
+                            $userManager = $this->container->get('fos_user.user_manager');
+                            $userManager->updateUser($user);
+                            return new JsonResponse(array ('success'=>true));
+                        } 
+			return new JsonResponse(array ('success'=>false));
+			
+		 }
+		 else{
+			return new JsonResponse(array ('success'=>false));
+		 }
         }
         
 

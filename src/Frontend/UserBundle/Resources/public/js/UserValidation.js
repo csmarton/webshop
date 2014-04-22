@@ -9,163 +9,164 @@ UserValidation = {
     bindUIActions: function(){
                
         this.modalInit(); 
-        this.setRegistrationFormValidation();  
+        this.setFormValidations();
          
     },
     
         modalInit:function(){
-        $('body').on('click', '#login-sign-in', function(){
-            //$("#modal-sign-in").reveal();
-            $('#modal-password-resetting').reveal();
-        });
         
-        
-        //Bejelentkezési form elküldése
-        $('body').on('click', '#submit-login-form-button', function(e) {
-            email = $('#sign-in-form #email').last().val();
-            password = $('#sign-in-form #password').last().val();
-            $.ajax({
-                url: $('#sign-in-form').last().attr('checklink'),
-                data:{'email': email, 'password' : password},
-                type: 'POST',
-                dataType: 'json'
-            }).done(function(data) {
-                if (data.success) { 
-                    if(data.exists){
-                        window.location.reload();
-                    }else{
-                        var v = $("#sign-in-form").validationEngine('validate');  
-                        if(v){
-                            $('#sign-in-form .errorSection')
-                                .html("Hibás email cím vagy jelszó!")
-                                .slideDown('slow');
-                        }
-                        
-                    }
-                } else {							  
-                    console.error('HIBA a szervertől:' + data.err);
-                    return false;
-                }
-            }).fail(function(thrownError) {
-                console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+            /*
+             * Bejelentkezési modálsi ablak megjelenítése
+             */   
+            $('body').on('click', '.login-sign-in', function(){
+                $("#modal-sign-in").reveal();
+                $('#sign-in-form #email').focus();
+                
+                //$("#modal-registration").reveal();
+                //$('#modal-password-resetting').reveal();
             });
-            return false;
-        });
-
-        $('body').on('click', '#registration-password-link', function(e) {
-            $("#modal-sign-in").trigger('reveal:close');
-            $("#modal-registration").reveal();
-        });
-
-        $('body').on('keyup', '.regEmail', function(e) {
-            $this = $(this);
-            if(emailPattern.test($(this).val())){
-                $.ajax({
-                    url: $('#registration-form-button').last().attr('checkLink'),
-                    data:{'email': $(this).val()},
-                    type: 'POST',
-                    dataType: 'json'
-                }).done(function(data) {
-                    if (data.success) {  
-                        $this.attr('used', data.userExists);
-                    } else {							  
-                        console.error('HIBA a szervertől:' + data.err);
-                    }
-                }).fail(function(thrownError) {
-                    console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
-                });
-            }else{
-                $('.regEmail').attr('used', false);
-            }    
-        });
         
-        //Új jelszó kérése
-        $('body').on('click', '#password-resetting-button', function(e) {
-            email = $('#reset-email').val();
-            $.ajax({
-                    url: $('#password-resetting-form').last().attr('checkLink'),
-                    data:{'email': email},
+        
+            /*
+             * Bejelentkezési modális ablak validálása és bejelentkezés
+             */
+            $('body').on('submit', '#sign-in-form', function(e) {
+                e.preventDefault();
+                email = $('#sign-in-form #email').last().val();
+                password = $('#sign-in-form #password').last().val();
+                $('#sign-in-form .loading').show();
+                $.ajax({
+                    url: $('#sign-in-form').last().attr('action'),
+                    data:{'email': email, 'password' : $.sha256(password)},
                     type: 'POST',
                     dataType: 'json'
                 }).done(function(data) {
-                    if (data.success) {  
-                        if(data.userExists){
-                            console.log("OK");
+                    if (data.success) { 
+                        if(data.exists){
+                            window.location.reload();
+                        }else{
+                            $('#sign-in-form .errorSection').html("Hibás email cím vagy jelszó!")
+                                .slideDown('slow');
+                            $('#sign-in-form .loading').hide();
                         }
                     } else {							  
                         console.error('HIBA a szervertől:' + data.err);
+                        $('#sign-in-form .loading').hide();
                     }
                 }).fail(function(thrownError) {
                     console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+                    $('#sign-in-form .loading').hide();
                 });
-        });
-        
+            });
+
+            
+            $('body').on('click', '.registration-password-link', function(e) {
+                $("#modal-sign-in").trigger('reveal:close');
+                $("#modal-registration").reveal();
+                $('#registration-email').focus();
+            });
+
+            $('body').on('submit', '#registration-form', function(e) {
+                e.preventDefault();
+                email = $('#registration-form #registration-email').last().val();
+                password1 = $('#registration-form #registration-password-1').last().val();
+                password2 = $('#registration-form #registration-password-2').last().val();
+                
+                $('#registration-form .loading').show();
+                $.ajax({
+                    url: $('#registration-form').last().attr('action'),
+                    data:{'email': email, 'password' : $.sha256(password1)},
+                    type: 'POST',
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (data.success) { 
+                        if(!data.userExists){
+                            window.location.reload();
+                        }else{
+                            $('#registration-form .errorSection').html("Ez az email cím már foglalt!")
+                                .slideDown('slow');
+                            $('#registration-form .loading').hide();
+                        }
+                    } else {							  
+                        console.error('HIBA a szervertől:' + data.err);
+                        $('#registration-form .loading').hide();
+                        return false;
+                    }
+                }).fail(function(thrownError) {
+                    console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+                    $('#registration-form .loading').hide();
+                }); 
+            });
     },
     
-    
     customErrorMessages: {
-        '.profileName': {
+        '#email': {
             'required': {
-                'message': "Addj meg egy terméknevet!"
+                'message': "Addj meg egy email címet"
             }
         },
-        '.grossSalary': {
-            'required': {
-                'message': "Add meg a termék bruttó értékét(Szám)!"
-            }
-        },      
-        '.regUserName': {
-            'required': {
-                'message': "Addj meg egy felhasználói nevet!"
-            }
-        }, 
-        '.regEmail': {
-            'required': {
-                'message': "Addj meg egy email címet!"
-            }
-        }, 
-        '.regPass1': {
+        '#password': {
             'required': {
                 'message': "Addj meg egy jelszót!"
             }
-        }, 
-        '.regPass2': {
+        },
+        '#registration-email': {
             'required': {
-                'message': "Jelszó megerősítése!"
+                'message': "Addj meg egy email címet!"
             }
-        }, 
+        },
+        '#registration-password-1': {
+            'required': {
+                'message': "Addj meg egy jelszót!"
+            }
+        },
+        '#registration-password-2': {
+            'required': {
+                'message': "Add meg a jelszót mégegyszer!"
+            }
+        }
+        
         
     },
 	
-    setRegistrationFormValidation: function() {
-        $("#registration-form").validationEngine({
-            promptPosition: "centerRight:0",
+    setFormValidations: function() {
+        $("#sign-in-form").last().validationEngine({
+            promptPosition: "centerRight: 0",
             'custom_error_messages': UserValidation.customErrorMessages,
             scroll: false,
             maxErrorsPerField: 1,
             binded: false,
             validationEventTrigger: 'submit'
         });
-    },
+        $("#registration-form").last().validationEngine({
+            promptPosition: "centerRight: 0",
+            'custom_error_messages': UserValidation.customErrorMessages,
+            scroll: false,
+            maxErrorsPerField: 1,
+            binded: false,
+            validationEventTrigger: 'submit'
+        });
         
-
+    }	
 }	
 
-function RegSamePassword(field, rules, i, options){  
-    if($('.regPass1').val() != $('.regPass2').val()){
+function checkEmailValidation(field, rules, i, options){
+  if (field.val() == "") {
+     rules.push('required');
+     return options.allrules.wrongEmail.alertText;
+  }else if(!emailPattern.test(field.val())){
+      console.log("OK");
+      rules.push('required');
+      return options.allrules.email.alertText;
+  }
+}
+
+function checkPassword(field, rules, i, options){
+  pass2 = $('#registration-form #registration-password-2').val();
+  if(pass2 != ""){
+    if(field.val() != pass2) {
         rules.push('required');
         return options.allrules.differentPass.alertText;
     }
-}
-
-function RegEmailCheck(field, rules, i, options){
-    rules.push('required');
-    if(emailPattern.test(field.val())){
-        if($('.regEmail').attr('used') == "true")     
-            return options.allrules.emailExists.alertText;
-    }   
-    else{
-        return options.allrules.email.alertText;
-    }
-    
+  }
 }

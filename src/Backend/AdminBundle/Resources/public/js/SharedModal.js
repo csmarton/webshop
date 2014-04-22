@@ -19,14 +19,13 @@ SharedModal = {
             SharedModal.deleteMainCategoryModalInit(mainCategoryId);  
        });
        
-       $('body').on('click', '.deleteProperty', function(){            
-            var productPropertyId = $(this).attr("productPropertyId");
-            SharedModal.deleteProductPropertyModalInit(productPropertyId);  
-       });
-       
        $('body').on('click', '.deleteUser', function(){            
             var userId = $(this).attr("userId");
             SharedModal.deleteUserModalInit(userId);  
+       });
+        $('body').on('click', '.deleteProperty', function(){            
+            var propertyId = $(this).attr("propertyId");
+            SharedModal.deletePropertyModalInit(propertyId);  
        });
        
     },
@@ -91,34 +90,6 @@ SharedModal = {
         
     },
     
-    deleteProductPropertyModalInit : function(productPropertyId){        
-        $('#modal-delete-property').reveal();
-            $('body').on('click', '.exit-reveal-modal', function(){ //Kilépés gombra a modális ablak bezárása
-                    $("#modal-delete-property").trigger('reveal:close');
-            }); 
-            $('body').on('click', '.delete-property-button', function(){ //Törlés gombra kattintás után ajax kéréssel töröljük a kategóriát
-                $.ajax({
-                    url: $(this).attr('href'),
-                    data:{'productPropertyId': productPropertyId},
-                    type: 'POST',
-                    dataType: 'json'
-                }).done(function(data) {
-                    if (data.success) {
-                        $('.modal-content h2').html("Sikeresen töröltük a "+data.productProperty +" tulajdonságot!");
-                        $('#modal-delete-property .delete-property-button').hide();
-                        $('#modal-delete-property .exit-reveal-modal').attr('value','Kilépés');
-                        $('body').on('click', '.exit-reveal-modal', function(){
-                            location.reload();
-                        }); 
-                    } else {							  
-                            console.error('HIBA a szervertől:' + data.err);
-                    }
-                }).fail(function(thrownError) {
-                    console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
-                });
-            }); 
-        
-    },  
     
    /*
     ** Felhasználók törlésénél feljövő modális ablak
@@ -168,6 +139,38 @@ SharedModal = {
                         $('.modal-content h2').html("Sikeresen töröltük a következő főkategóriát: "+data.mainCategoryName + "!");
                         $('#modal-delete-main-category .delete-main-category-button').hide();
                         $('#modal-delete-main-category .exit-reveal-modal').attr('value','Kilépés');
+                        $('body').on('click', '.exit-reveal-modal', function(){
+                            location.reload();
+                        }); 
+                    } else {							  
+                            console.error('HIBA a szervertől:' + data.err);
+                    }
+                }).fail(function(thrownError) {
+                    console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+                });
+            }); 
+        
+    },
+    
+    /*
+     * Tulajdonságok törlésére megerősítő ablak
+     */
+    deletePropertyModalInit : function(propertyId){        
+        $('#modal-delete-property').reveal();
+            $('body').on('click', '.exit-reveal-modal', function(){ //Kilépés gombra a modális ablak bezárása
+                    $("#modal-delete-property").trigger('reveal:close');
+            }); 
+            $('body').on('click', '.delete-property-button', function(){ //Törlés gombra kattintás után ajax kéréssel töröljük a terméket
+                $.ajax({
+                    url: $(this).attr('href'),
+                    data:{'propertyId': propertyId},
+                    type: 'POST',
+                    dataType: 'json'
+                }).done(function(data) {
+                    if (data.success) {
+                        $('.modal-content h2').html("Sikeresen töröltük a következő tulajdonságot: "+data.propertyName + "!");
+                        $('#modal-delete-property .delete-property-button').hide();
+                        $('#modal-delete-property .exit-reveal-modal').attr('value','Kilépés');
                         $('body').on('click', '.exit-reveal-modal', function(){
                             location.reload();
                         }); 

@@ -2,48 +2,24 @@
 {#<div class="upperMenu">
     <a href="{{path('backend_admin_product_property_edit',{'productId' : productId})}}" class="menu_btn">Új Tulajdonság</a>
 </div>#}
-<form action="{{ path('backend_admin_product_property_edit',{'productId' : productId})}}" method="post" {{ form_enctype(form) }} name="newProperty"  class="newProperty" >
-    <table class="property_table">
-
-        <thead>
-            <tr>
-                <th scope="col">Tulajdonság</th>
-                <th scope="col">Érték</th>
-                <th scope="col">Műveletek</th>
-            </tr>
-        </thead>
-        <tbody>
-
-                <tr>
-                    <td>{{ form_widget(form.property, { 'attr': {'class': 'validate[required]  propertyName'} }) }}</td>
-                    <td>{{ form_widget(form.value, { 'attr': {'class': 'validate[required]  propertyValue'} }) }}</td>
-                    <td><input type="submit" value="Mentés" class="menu_btn ok_btn"></td>
-                </tr>
-                {{ form_widget(form._token) }}
-
-            {% for productProperty in productPropertys %}
-                <tr>
-                    <td>{{ productProperty.getProperty().getName() }}</td> 
-                    <td>{{ productProperty.getValue() }}</td> 
-                    <td class="product_edit_btn">
-                        <a href="{{path('backend_admin_product_property_edit',{'productId' : productId,'productPropertyId':productProperty.getId()}) }}" class="menu_btn edit_btn">Szerkesztés</a>
-                        <a href="#" class="deleteProperty menu_btn warning_btn delete_btn" productPropertyId="{{productProperty.getId()}}">Törlés</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</form> 
+<div  class="newProperty" >
+    <div class="new-property-list">
+        {% include "BackendAdminBundle:Product:newPropertyList.html.twig" %}
+    </div>
+    <div class="property-list">
+        {% include "BackendAdminBundle:Product:propertyList.html.twig" %}
+    </div>
+</div> 
 <div id="modal-delete-property" class="reveal-modal">
     <div class="formContent">
         <div class="topSection">
-            <div class="modal-content">
+            <div class="modal-content-box">
                 <h2>Biztosan törölni szeretnéd ezt a tulajdonságot? </h2>
             </div>
         </div>
         <div class="bottomSection">
             <div class="inputs">
-                <input type="button" class="delete-property-button" value="Törlés" href="{{path('backend_admin_product_property_remove')}}">
+                <input type="button" class="delete-property-modal-button" value="Törlés" href="{{path('backend_admin_product_property_remove')}}">
                 <input type="button" class="cancel exit-reveal-modal" value="Mégse">                        
             </div>
         </div>

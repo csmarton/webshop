@@ -1,0 +1,14 @@
+{% if categorys|length != 0 %}
+    <label for="categorys">Alkategória</label>
+    <select id="category-type" name="categorys" class="validate[required]">
+        <option value=""></option>
+        {% for category in categorys %}
+            <option value="{{category.getId() }}"
+                    {%if currentCategoryId is defined and currentCategoryId is not null and currentCategoryId == category.getId() %}
+                        selected
+                    {% endif %}>
+                {{category.getName()}}
+            </option>
+        {% endfor %}
+    </select>
+{% endif %}

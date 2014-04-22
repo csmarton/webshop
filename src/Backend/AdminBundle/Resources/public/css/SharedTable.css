@@ -1,0 +1,142 @@
+.shared-table{
+    clear:both;
+    overflow:hidden;
+    border:1px solid #d3d3d3;
+    background:#fefefe;
+    min-width:700px;
+    -moz-border-radius:5px; /* FF1+ */
+    -webkit-border-radius:5px; /* Saf3-4 */
+    border-radius:5px;
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    width:100%;
+}
+
+.shared-table thead{
+    font-weight: bold;
+    text-transform: uppercase;
+    color: grey;
+}
+.shared-table td {
+    padding: 5px 5px 5px;
+    text-align:center; 
+}
+	
+.shared-table th {
+    text-shadow: 1px 1px 1px #fff;
+    background:#e8eaeb;
+}
+
+.shared-table td {
+    border-top:1px solid #e0e0e0;
+    border-right:1px solid #e0e0e0;
+}
+
+.shared-table tr.odd-row td {
+    background:#f6f6f6;
+}
+
+.shared-table td.first,
+.shared-table th.first {
+    text-align:left
+}
+
+.shared-table td.last {
+    border-right:none;
+}
+
+.shared-table td {
+    background: -moz-linear-gradient(100% 25% 90deg, #fefefe, #f9f9f9);
+    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f9f9f9), to(#fefefe));
+}
+
+.shared-table tr.odd-row td {
+    background: -moz-linear-gradient(100% 25% 90deg, #f6f6f6, #f1f1f1);
+    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f1f1f1), to(#f6f6f6));
+}
+
+
+.shared-table tr:first-child th.first {
+    -moz-border-radius-topleft:5px;
+    -webkit-border-top-left-radius:5px;
+}
+
+.shared-table tr:first-child th.last {
+    -moz-border-radius-topright:5px;
+    -webkit-border-top-right-radius:5px;
+}
+
+.shared-table tr:last-child td.first {
+    -moz-border-radius-bottomleft:5px;
+    -webkit-border-bottom-left-radius:5px;
+}
+
+.shared-table tr:last-child td.last {
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-bottom-right-radius:5px;
+}
+
+.shared-table{
+    width: 100%;
+}
+
+.new_product_table tr>td:first-child{
+    width:200px;
+}
+.new_product_table table tr>td:first-child{
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.new_product_table input,
+.new_product_table textarea,
+.new_product_table select{
+    /*width: 98%;*/
+    font-size: 1.5em;
+    padding: 0px 5px;
+}
+
+.new_product_table .textEditor{
+    width:400px;
+}
+
+.new_product_table input:focus,
+.new_product_table textarea:focus, 
+.new_product_table select:focus{
+    color:#10AC8E;
+}
+.new_product_table input,
+.new_product_table select{
+    height:40px;
+}
+
+.new_product_table textarea{
+    height:200px;
+}
+
+.shared-table th{
+    padding-right: 5px;
+}
+.shared-table th a{
+    padding: 10px;
+    display: block;
+}
+
+.shared-table .asc,
+.shared-table .desc{
+    padding-right: 25px !important;
+}
+.active .asc,
+.shared-table .asc:hover{
+    background: #e8eaeb url('/Shop/web/images/up_arrow.png') top right no-repeat !important;
+}
+
+.active .desc,
+.shared-table .desc:hover{
+    background: #e8eaeb url('/Shop/web/images/down_arrow.png') bottom right no-repeat !important;
+}
+
+.big-header th{
+    padding:10px;
+}

@@ -21,13 +21,13 @@ frontend_registration:
     pattern:  /profil/regisztracio
     defaults: { _controller: FrontendUserBundle:Default:registration}
     
-#frontend_login:
-#    pattern:  /profil/bejelentkezes
-#    defaults: { _controller: FrontendUserBundle:Default:login}   
-    
+frontend_login:
+    pattern:  /profil/bejelentkezes
+    defaults: { _controller: FrontendUserBundle:Default:login}   
+
 frontend_login_check:
     pattern:  /profil/bejelentkezes/ellenorzed
-    defaults: { _controller: FrontendUserBundle:Default:checkLogin}        
+    defaults: { _controller: FrontendUserBundle:Default:checkLogin}
     
 frontend_registration_email_check:
     pattern:  /profil/regisztracio/email/ellenorzes
@@ -41,3 +41,7 @@ frontend_password_confirmation:
 frontend_password_reset:
     pattern:  /profil/uj-jelszo
     defaults: { _controller: FrontendUserBundle:Default:passwordReset}  
+        
+frontend_password_reset_with_token:
+    pattern:  /profil/uj-jelszo/valtoztat/
+    defaults: { _controller: FrontendUserBundle:Default:passwordResetWithConfirmaionToken}

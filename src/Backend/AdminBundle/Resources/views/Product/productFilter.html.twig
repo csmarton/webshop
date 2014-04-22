@@ -1,0 +1,51 @@
+<form action="{{path('backend_admin_product', {'page': actualPage})}}" method="get" class="filter-product-menu">
+    <div class="inline-block">
+        <div class="column-0">
+            <label for="filterId">Azonosító:</label>
+            <input type="text" id="filterId" name="filterId" value="{{filterId}}">
+        </div>
+        <div class="column-1">
+            <label for="filterName">Terméknév:</label>
+            <input type="text" id="filterName" name="filterName" value="{{filterName}}">
+        </div>
+    </div>
+    <div class="inline-block">    
+        <div class="column-0">    
+            <label for="filterActive">Aktív:</label>
+            <select id="filterActive" name="filterActive">
+                <option value=""></option>
+                {% if filterActive == "yes" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="yes" {{selected}}>Aktív</option>
+                {% if filterActive == "no" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="no" {{selected}} >Inaktív</option>
+            </select>
+        </div>
+        <div class="column-1">
+            <label for="filterCategroy">Kategória:</label>
+            <select id="filterCategroy" name="filterCategroy">
+                <option value=""></option>
+                {% for category in categorys %}
+                    {% if category.getId() == filterCategory %}
+                        <option value="{{category.getId()}}" selected>{{category.getName()}}</option>
+                    {% else %}
+                        <option value="{{category.getId()}}">{{category.getName()}}</option>
+                    {% endif %}
+                    
+                {% endfor %}
+                
+            </select> 
+        </div>
+    </div>
+    <input type="hidden" name="maxResult" value="{{maxResult}}"/>
+    <div class="center">
+        <input type="submit" class="menu_btn ok_btn" id="filter-order-button" value="Szűrés" />
+    </div>
+</form>

@@ -1,0 +1,20 @@
+{% for productProperty in productPropertys %}
+    <form action="{{path('backend_admin_product_property_edit', {'productId' : productId,'propertyId' : productProperty.getProperty().getId()})}}" method="post" class="property-form">
+        <div class="loading"></div>
+        <div class="inline-block">            
+            <div class="property-name-box">
+                <input type="text" value="{{ productProperty.getProperty().getName() }}" class="property-name-box" disabled />
+            </div>
+            <div class="property-value-box">
+                <input type="text" value="{{ productProperty.getValue() }}" oldValue="{{ productProperty.getValue() }}" placeholder="érték...." class="property-value validate[required] " disabled />
+            </div>
+            <div class="property-edit-box product_edit_btn">
+                <input type="button"  value="Szerkesztés" class="edit-property-button menu_btn edit_btn"/>
+                <input type="button"  value="Törlés" class="delete-property-button menu_btn warning_btn delete_btn" productPropertyId="{{productProperty.getId()}}"/>
+            
+                <input type="submit" value="Mentés" class="save-property-button menu_btn ok_btn hide" />
+                <input type="button" class="cancel-property-save-button menu_btn warning_btn delete_btn hide" value="Mégse"/>
+            </div>
+        </div>
+    </form> 
+{% endfor %}

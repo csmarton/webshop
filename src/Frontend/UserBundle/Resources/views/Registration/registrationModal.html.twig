@@ -1,0 +1,28 @@
+<form action="{{ path('frontend_registration') }}" method="post" id="registration-form">
+    <div class="loading"></div>
+    <div class="topSection">
+        <div class="modal-content">
+            <h2>Regisztráció</h2>
+                <div>
+                    {#<label for="registration-username">Felhasználói név*</label>                        
+                    <input type="text" id="registration-username" name="registration-username" />
+                    #}
+                    <label for="registration-email">Email cím*</label>                        
+                    <input type="text" id="registration-email" name="registration-email" class="validate[required,funcCall[checkEmailValidation]]"/>
+                    
+                    <label for="registration-password-1">Jelszó*</label>
+                    <input type="password" id="registration-password-1" name="registration-password-1" class="validate[required,funcCall[checkPassword]]"/>
+                    
+                    <label for="registration-password-2">Jelszó megerősítése*</label>
+                    <input type="password" id="registration-password-2" name="registration-password-2" class="validate[required]"/>
+                    
+                </div>
+        </div>
+    </div>
+    <div class="errorSection hide"></div>
+    <div class="bottomSection">
+        <div class="inputs">
+            <input type="submit" value="Regisztráció" class="ok-button" id="registration-form-button"/>       
+        </div>
+    </div>
+</form>

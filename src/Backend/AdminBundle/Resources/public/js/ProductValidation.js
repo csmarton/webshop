@@ -61,15 +61,6 @@ ProductValidation = {
             binded: false,
             validationEventTrigger: 'submit'
         });
-        
-        $(".newProperty").validationEngine({
-            promptPosition: "topLeft: 0",
-            'custom_error_messages': ProductValidation.customErrorMessages,
-            scroll: false,
-            maxErrorsPerField: 1,
-            binded: false,
-            validationEventTrigger: 'submit'
-        });
     },	
         
 

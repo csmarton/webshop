@@ -10,6 +10,7 @@ use Frontend\ProductBundle\Form\SpecialOffersType;
 use Frontend\ProductBundle\Entity\Product;
 use Frontend\ProductBundle\Entity\ProductProperty;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProductController extends Controller
 {
@@ -18,6 +19,9 @@ class ProductController extends Controller
      */
     public function listAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         
         $page = (int)$request->query->get('page');
@@ -133,6 +137,9 @@ class ProductController extends Controller
      */
     public function newAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         $productId = $request->query->get('productId');
         
@@ -194,6 +201,9 @@ class ProductController extends Controller
      * Termékek törlése
      */
      public function removeAction(){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
          $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
             $productId = $request->request->get('productId');
@@ -213,6 +223,9 @@ class ProductController extends Controller
      * Tulajdonságok listázása
      */
     public function propertyListAction($productId){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
         $productPropertys = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->findByProduct($product);
         $mainCategory = $product->getCategorys()->getMainCategory()->getId();
@@ -266,6 +279,9 @@ class ProductController extends Controller
      * Új termék tulajdonság, vagy meglévő tulajdonság szerkesztése
      */
     public function propertyNewAction($productId, $propertyId){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $edit = true;
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {//form küldése során
@@ -306,6 +322,9 @@ class ProductController extends Controller
      * Termék tulajdonságok törlése
      */
      public function propertyRemoveAction(){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
          $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
             $request = $this->get('request');

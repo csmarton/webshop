@@ -1,3 +1,6 @@
+#searcher-form{
+    position: relative;
+}
 #search-header{
     width: 300px;
     margin: 0;
@@ -8,6 +11,10 @@
     position: relative;
 }
 #search-header:hover{
+}
+
+#search-header .loading{
+    background: url("/Shop/web/images/loading_small.gif") center right no-repeat;
 }
 
 .search-header-content-box{

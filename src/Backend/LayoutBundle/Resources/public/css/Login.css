@@ -1,0 +1,63 @@
+html,body{
+    height:100%;
+}
+h2{
+    font-weight: bold;
+    color: grey;
+    font-size: 2em;
+    padding-bottom: 10px;
+}
+#sign-in-form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -250px;
+    /* width: 400px; */
+    /* height: 180px; */
+    padding: 10px;
+}
+
+#sign-in-form label{
+    float: left;
+    margin: 10px 10px 0px 0px;
+    width: 150px;
+    font-weight: bold;
+}
+#sign-in-form input{
+    width: 200px;
+    display: block;
+    padding: 5px;
+    margin: 10px;
+}
+#submit-login-form-button{
+    text-transform: uppercase;
+    border-radius: 3px;
+    color: #ffffff;
+    background-color: #428bca;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    border: none;
+    margin: 10px auto !important; 
+}
+
+.errorSection {
+    display:none;
+    background-color: red;
+    color: white;
+    width: 100%;
+    padding: 10px 0px;
+    text-align: center;
+    font-size: 1.2em;
+}

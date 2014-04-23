@@ -11,6 +11,9 @@ class ImageController extends Controller
 {
     public function uploadAction()
     {  
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         $productId = $request->query->get('productId');
         
@@ -45,6 +48,9 @@ class ImageController extends Controller
     }
     
     public function removeAction(){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         
         if ($request->getMethod() == 'POST') {

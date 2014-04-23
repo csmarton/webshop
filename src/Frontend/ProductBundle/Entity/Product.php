@@ -523,7 +523,7 @@ class Product
     
     public function getNormalProductImage(){
         foreach($this->getProductImages() as $image)
-            return (Image::open($image->getWebPath())->cropResize(50));
+            return (Image::open($image->getAbsolutePath())->cropResize(50));
         return Image::open("images/no_image.jpg")->cropResize(50);
     }
 }

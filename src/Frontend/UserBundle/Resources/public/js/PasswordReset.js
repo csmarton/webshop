@@ -154,13 +154,3 @@ function checkEmailValidation(field, rules, i, options){
   }
 }
 
-
-function checkPassword(field, rules, i, options){
-  pass2 = $('#password-resetting-with-token-form #reset-password-2').val();
-  if(pass2 != ""){
-    if(field.val() != pass2) {
-        rules.push('required');
-        return options.allrules.differentPass.alertText;
-    }
-  }
-}

@@ -1,9 +1,8 @@
 SharedSearch = {
-    SEARCH_STRING: '',
-    availableProducts :[],
-    SEARCHING_ENABLE: false,
-    resultsSelected : false,
-    FILTER_TYPE : null,
+    SEARCH_STRING: '', //Keresési szöveg
+    SEARCHING_ENABLE: false, //Keresés be van -e kapcsolva
+    resultsSelected : false, 
+    FILTER_TYPE : null, //Szűrés típusa: 1- laptop, 2- tablet, "" - általános
     init: function(){
             this.bindUIActions();
             this.initPriceSliders();
@@ -44,12 +43,15 @@ SharedSearch = {
         });
         
         
-        $("#searchTabs").organicTabs();
     },
+    
+    /*
+     * Termékek szűrése AJAX-al
+     */
     getFilteredProductByAjax : function(page,upperMenuRefreshEnable,pagesMenuRefreshEnable){        
         order = $('.set-filter').val().split('&')[0].split('=')[1];
         by = $('.set-filter').val().split('&')[1].split('=')[1];
-        if(SharedSearch.FILTER_TYPE === 1){
+        if(SharedSearch.FILTER_TYPE === 1){ //Laptopok szűrése 
             laptopFilterManufacturer = $('#laptop-filter-manufacturer').val();
             laptopFilterWinchester = $('#laptop-filter-winchester').val();
             laptopFilterOperationSystem = $('#laptop-filter-operation-system').val();
@@ -70,7 +72,7 @@ SharedSearch = {
                 'laptopFilterPrice':laptopFilterPrice,
                 'filterType' : SharedSearch.FILTER_TYPE
             };
-        }else if(SharedSearch.FILTER_TYPE === 2){
+        }else if(SharedSearch.FILTER_TYPE === 2){ //Tabletek szűrése
             tabletFilterManufacturer = $('#tablet-filter-manufacturer').val();
             tabletFilterWinchester = $('#tablet-filter-winchester').val();
             tabletFilterOperationSystem = $('#tablet-filter-operation-system').val();
@@ -91,9 +93,9 @@ SharedSearch = {
                 'tabletFilterPrice':tabletFilterPrice,
                 'filterType' : SharedSearch.FILTER_TYPE
             };
-        }else{
+        }else{//Általános szűrés
             searchHeader = SharedSearch.SEARCH_STRING;
-            if(searchHeader === ""){
+            if(searchHeader === ""){ 
                 generalSearchString = $('#general-search-string').val();
                 generalFilterPrice = $('#general-price-amount').val();
                 param = { 
@@ -116,9 +118,8 @@ SharedSearch = {
             }
             
             
-        }
-        
-        
+        }        
+        //elküldjük az adatokat ajax-al
         $.ajax({
         url: $('#searcher').attr('href'),			
         data: param,
@@ -126,7 +127,7 @@ SharedSearch = {
         dataType: 'json'
         }).done(function(returnData) {
             if (returnData.success) {
-                $('.products_box').html(returnData.productHtml);
+                $('.products_box').html(returnData.productHtml); //termékek doboz frissítése
                 if(upperMenuRefreshEnable){
                     $('#upper-menu').html(returnData.upperMenu);
                 }
@@ -217,6 +218,11 @@ SharedSearch = {
 	});  
         
         /*
+         * Részletes kereső tabok váltása
+         */
+        $("#searchTabs").organicTabs();
+        
+        /*
          * Tabletek keresése
          */                        
         $("body").on('click', '#tablet-filter-button', function(e){
@@ -291,7 +297,9 @@ SharedSearch = {
             });
         });
         
-        
+        /*
+         * Laptopok szűrése
+         */
         $("body").on('click', '#laptop-filter-button', function(e){
             $('#tabLaptopSearch .loading').show();
             SharedSearch.SEARCHING_ENABLE = true;
@@ -344,6 +352,7 @@ SharedSearch = {
          */
         $('#search-header').autocomplete({
                 source: function (request, response) { //AJAX-al kérjük le az adatokat
+                    $('#searcher-form .loading').show();
                     $.ajax({
                         url: $('#search-header').attr('href'),	
                         data: { searchText: request.term, maxResults: 10 },
@@ -357,13 +366,14 @@ SharedSearch = {
                                     image : item.image
                                 };
                             }))
+                         $('#searcher-form .loading').hide();   
                         }
                     })
                 },
                 select: function (event, ui) {
                     if(ui.item)
                     $('#search-header').val(ui.item.name); //Kiválasztás esetén berakjuk az inpuz box-ba az értéket
-
+                    $('#searcher-form').submit();
                     return false;
                 }
             }).data("ui-autocomplete")._renderItem = function (ul, item) { //Adatok megjelenítése
@@ -374,7 +384,7 @@ SharedSearch = {
                    name = item.name;
                 }
                 
-                var inner_html = '<a><img src="'+ item.image +'" class="search-product-image"/><div class="search-product-name">' + name +'</div></a>';
+                var inner_html = '<a><img src="/Shop/web/'+ item.image +'" class="search-product-image"/><div class="search-product-name">' + name +'</div></a>';
                 return $("<li></li>")
                         .data("item.autocomplete", item)
                         .append(inner_html)
@@ -385,6 +395,7 @@ SharedSearch = {
              * Kereső form elküldése
              */
             $("body").on('submit', '#searcher-form', function(e){
+                $('#searcher-form .loading').show();
                 e.preventDefault();
                 SharedSearch.SEARCHING_ENABLE = true;
                 SharedSearch.FILTER_TYPE = $('.general-filter-type').val();
@@ -401,13 +412,16 @@ SharedSearch = {
                     $('.products_box').html(returnData.productHtml);
                     $('#upper-menu').html(returnData.upperMenu);    
                     $('#search-header').autocomplete('close');
+                    $('#searcher-form .loading').hide();
                 }else{
                     console.log("Nincs találat");
                 }
                 $('#tabTabletSearch .loading').hide();
+                $('#searcher-form .loading').hide();
             }).fail(function(thrownError) {
                 console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
                 $('#tabTabletSearch .loading').hide();
+                $('#searcher-form .loading').hide();
             });
             });
     }

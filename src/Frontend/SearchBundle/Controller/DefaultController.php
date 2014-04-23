@@ -19,6 +19,7 @@ class DefaultController extends Controller
             foreach((array)$products as $product){
                 
                 $productWithImage[] = array('image'=> (string)$product->getNormalProductImage(), 'name' => $product->getName() );
+                //var_dump((string)$product->getNormalProductImage());die;
             }
             
             return new JsonResponse($productWithImage);

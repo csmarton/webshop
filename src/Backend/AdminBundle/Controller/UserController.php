@@ -12,6 +12,9 @@ class UserController extends Controller
 {
     public function listAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         
         $page = (int)$request->query->get('page');
@@ -116,6 +119,9 @@ class UserController extends Controller
    
     public function newAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         $userId = $request->query->get('userId');
         
@@ -194,6 +200,9 @@ class UserController extends Controller
     }
     
     public function profileEditAction($userId = null){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         
         if($userId == null){

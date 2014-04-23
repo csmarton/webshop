@@ -13,6 +13,9 @@ class CategoryController extends Controller
 {
     public function indexAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         
         $page = (int)$request->query->get('page');
@@ -112,6 +115,9 @@ class CategoryController extends Controller
     
     public function newAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         $categoryId = $request->query->get('categoryId');
         $mainCategoryId = $request->query->get('mainCategoryId');
@@ -173,13 +179,19 @@ class CategoryController extends Controller
     }
     
     public function mainCategoryAction(){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $mainCategorys = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
         return $this->render('BackendAdminBundle:Category:mainCategoryList.html.twig', array(
             'mainCategorys' => $mainCategorys
         ));
     }
     
-        public function mainCategoryNewAction(){   
+    public function mainCategoryNewAction(){ 
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         $mainCategoryId = $request->query->get('mainCategoryId');
         $categorys = null;

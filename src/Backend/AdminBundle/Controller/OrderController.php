@@ -13,6 +13,9 @@ class OrderController extends Controller
      */
     public function listAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         
         $page = (int)$request->query->get('page');
@@ -124,7 +127,9 @@ class OrderController extends Controller
     }
     
     public function listMoreAction($orderId){
-        
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $order = $this->getDoctrine()->getRepository('FrontendOrderBundle:Orders')->findOneById($orderId);
         return $this->render('BackendAdminBundle:Order:listMore.html.twig', array(
             'order' => $order
@@ -132,6 +137,9 @@ class OrderController extends Controller
     }
     
     public function fulfillOrderAction($orderId){
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
             $html = "";

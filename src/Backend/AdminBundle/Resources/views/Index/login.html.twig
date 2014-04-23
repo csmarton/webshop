@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>Bejelentkezés</title>
+
+            <link rel="stylesheet" href="{{ asset('bundles/backendlayout/css/reset.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/reveal.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('css/validationEngine-jquery.css') }}"/>
+            <link rel="stylesheet" href="{{ asset('bundles/backendlayout/css/Login.css') }}"/>
+            
+            <script type="text/javascript" src="{{ asset('js/jquery-1.9.0.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery-migrate-1.2.1.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/JqueryValidationEngine-hu.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/JqueryValidationEngine.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jquery-sha256.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('bundles/backendlayout/js/UserValidation.js') }}"></script>
+            <script type="text/javascript">
+                    $(document).ready(function(){
+                        UserValidation.init();
+                    });
+            </script>
+            <link rel="shortcut icon" href="{{ asset('bundles/frontendlayout/images/icon.png') }}" />
+    </head>
+    <body>
+        <div id="login-form-box">
+            <form id="sign-in-form" action="{{path('frontend_login_check')}}" method="post" goto="{{path('backend_admin_product')}}">    
+                <h2>Bejelentkezés</h2>
+                <div>
+                    <label for="email" >Email cím*</label>                        
+                    <input type="text" id="email" name="_email" class="validate[required,funcCall[checkEmailValidation]]"/>
+                    <label for="password">Jelszó*</label>
+                    <input type="password" id="password" name="_password" class="validate[required]"/>
+                </div>
+                <div class="errorSection hide"></div>
+                <div class="inputs">
+                    <input type="submit" value="Bejelentkezés" id="submit-login-form-button" class="ok-button">                    
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
+

@@ -10,6 +10,9 @@ class PropertyController extends Controller
 {
     public function listAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         
         $page = (int)$request->query->get('page');
@@ -110,6 +113,9 @@ class PropertyController extends Controller
     
     public function newAction()
     {   
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
+            return $this->redirect($this->generateUrl('backend_admin'));
+        }
         $request = $this->get('request');
         $propertyId = $request->query->get('propertyId');
         if($propertyId == null){

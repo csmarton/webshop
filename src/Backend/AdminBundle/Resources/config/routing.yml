@@ -1,6 +1,6 @@
-backend_admin_homepage:
+backend_admin:
     pattern:  /admin
-    defaults: { _controller: BackendAdminBundle:Product:list }
+    defaults: { _controller: BackendAdminBundle:Index:login }
 #
 # termékek szerkesztése   
 #

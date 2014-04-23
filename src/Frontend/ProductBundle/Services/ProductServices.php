@@ -184,9 +184,10 @@ class ProductServices{
         $filteredProductIds = $productRepo->getAllProductIds();
 
         //Szűrés ár szerint
-        list($lowPrice,$hightPrice)=explode("-",$generalFilterPrice);
-        $products = $this->doctrine->getRepository('FrontendProductBundle:Product')->getfilterByPrice($products, $lowPrice, $hightPrice);
-         
+        if($generalFilterPrice != null){
+            list($lowPrice,$hightPrice)=explode("-",$generalFilterPrice);
+            $products = $this->doctrine->getRepository('FrontendProductBundle:Product')->getfilterByPrice($products, $lowPrice, $hightPrice);
+        } 
         //Szűrés kulcsszó alapján
         if($generalSearchString != ""){ 
            $filteredProductIds0 = $productRepo->getProductIdsFilterBySearchString($generalSearchString);           

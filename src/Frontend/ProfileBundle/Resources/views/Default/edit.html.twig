@@ -15,7 +15,7 @@
             {% endblock %}
             
             <div class="container">
-                <div class="page_title">Személyes adatok</div>
+                <div class="page-title">Személyes adatok</div>
                  <form action="{{ path('frontend_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="profile_edit_form">
                      <div class="profile_edit_box_header">
                          <h2>Általános adatok:</h2>
@@ -119,7 +119,7 @@
                             </div>
                         {% endif %} 
                         <div class="profile_edit_bottom_menu">
-                                <input type="submit" value="Mentés" />
+                                <input type="submit" value="Mentés" class="menu_btn ok_btn"/>
                         </div>
                     </div>    
                      {{ form_widget(form._token) }}

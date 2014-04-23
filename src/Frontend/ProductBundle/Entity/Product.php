@@ -3,7 +3,7 @@
 namespace Frontend\ProductBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Gregwar\Image\Image;
 /**
  * Product
  * @ORM\Entity
@@ -511,5 +511,19 @@ class Product
     public function getSalesPrice()
     {
         return $this->salesPrice;
+    }
+    
+    public function getRealPrice(){
+        if($this->salesPrice > 0){
+            return $this->salesPrice; 
+        }else{
+            return $this->price;
+        }
+    }
+    
+    public function getNormalProductImage(){
+        foreach($this->getProductImages() as $image)
+            return (Image::open($image->getWebPath())->cropResize(50));
+        return Image::open("images/no_image.jpg")->cropResize(50);
     }
 }

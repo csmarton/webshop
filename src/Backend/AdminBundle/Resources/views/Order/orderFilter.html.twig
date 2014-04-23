@@ -1,0 +1,40 @@
+<form action="{{path('backend_admin_order_list', {'page': actualPage})}}" method="get" class="filter-shared-menu">
+    <div class="inline-block">
+        <div class="column-0">
+            <label for="filterId">Azonosító:</label>
+            <input type="text" id="filterId" name="filterId" value="{{filterId}}">
+        </div>
+        <div class="column-1">
+            <label for="filterName">Név:</label>
+            <input type="text" id="filterName" name="filterName" value="{{filterName}}">
+        </div>
+    </div>
+    <div class="inline-block">    
+        <div class="column-0">    
+            <label for="filterDate">Dátum:</label>
+            <input type="text" id="filterDate" name="filterDate" value="{{filterDate}}">
+        </div>
+        <div class="column-1">
+            <label for="filterFulfill">Teljesítve:</label>
+            <select id="filterFulfill" name="filterFulfill">
+                <option value=""></option>
+                {% if filterFulfill == "yes" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="yes" {{selected}}>Teljesítve</option>
+                {% if filterFulfill == "no" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="no" {{selected}} >Nincs teljesítve</option>
+            </select>
+        </div>
+    </div>
+    <input type="hidden" name="maxResult" value="{{maxResult}}"/>
+    <div class="center">
+        <input type="submit" class="menu_btn ok_btn" id="filter-order-button" value="Szűrés" />
+    </div>
+</form>

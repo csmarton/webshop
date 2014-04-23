@@ -59,7 +59,43 @@
                             <tr class="more-information hide">
                                 <td colspan="5">
                                         <div class="order-items">
-                                            {% for orderItem in myOrder.getOrderItems() %}
+                                            <div class="order-information">                                                    
+                                                <div class="information-box">
+                                                    <div class="label-text">Fizetési mód</div>
+                                                    <div class="information-text">
+                                                        {{myOrder.getPaymentOption().getName()}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="information-box">
+                                                    <div class="label-text">Szállítási mód</div>
+                                                    <div class="information-text">
+                                                        {{myOrder.getShippingOption().getName()}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="information-box">
+                                                    <div class="label-text">Teljesítés</div>
+                                                    <div class="information-text">
+                                                        {% if myOrder.getPerformedAt() == NULL %}
+                                                            Feldolgozás alatt
+                                                        {% else %}
+                                                            Teljesítve
+                                                        {% endif %}
+                                                    </div>    
+                                                </div>
+                                                <div class="information-box">
+                                                    <div class="label-text">Megjegyzés</div>
+                                                    <div class="information-text">
+                                                        {% if myOrder.getComment() == NULL %}
+                                                            -
+                                                        {% else %}
+                                                            {{myOrder.getComment()}}
+                                                        {% endif %}
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                            {% for orderItem in myOrder.getOrderItems() %}                                                
                                                 {% set product = orderItem.getProduct() %}
                                                 <div class="cart-item">
                                                     <div class="column-0">
@@ -99,20 +135,6 @@
                                         <div class="cart-sum">
                                             Összesen: <span class="bold">{{myOrder.getItemsTotal()}}</span> termék, ára: <span class="bold">{{myOrder.getItemsTotalPrice()|priceFormat}} Ft</span>
                                         </div>  
-                                 db , ára: , megjegyzés: {{myOrder.getComment}},
-                                Rendelés dátuma: ,
-                                Fizetés: {{myOrder.getPaymentOption().getName()}}, 
-                                Szállítás: {{myOrder.getShippingOption().getName()}},                         
-                                {% if myOrder.getPaymentState() == NULL %}
-                                    Kifizetés alatt
-                                {% else %}
-                                    Kifizetve
-                                {% endif %}
-                                {% if myOrder.getShippingState() == NULL %}
-                                    Feldolgozás alatt
-                                {% else %}
-                                    Kiszállítás
-                                {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

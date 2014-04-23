@@ -38,10 +38,43 @@ class UserController extends Controller
         $users = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->createQueryBuilder('u')
                 ->select('u');
         
+        $filterId = "";
+        $filterEmail = "";
+        $filterAdmin = "";
         $parameters = "";
         
         if ($request->getMethod() == 'GET') {
+            $filterId = $request->query->get('filterId');
+            $filterEmail = $request->query->get('filterEmail');
+            $filterAdmin = $request->query->get('filterAdmin');
             
+            $parameters .= "&filterId=";
+            if($filterId!= ""){
+                $users = $users
+                    ->andWhere('u.id = :id')
+                    ->setParameter('id', (int)$filterId); 
+                $parameters .= $filterId;
+            }
+            $parameters .= "&filterEmail=";
+            if($filterEmail!= ""){
+                $users = $users
+                    ->andWhere('u.email LIKE :email')
+                    ->setParameter('email', "%".$filterEmail."%");
+                $parameters .= $filterEmail;
+            }
+            $parameters .= "&filterAdmin=";
+            if($filterAdmin!= ""){
+                if($filterAdmin == "yes"){
+                    $users = $users
+                         ->andWhere('u.roles LIKE :roles')
+                         ->setParameter('roles', '%ROLE_ADMIN%');
+                }else{
+                    $users = $users
+                         ->andWhere('u.roles NOT LIKE :roles')
+                         ->setParameter('roles', '%ROLE_ADMIN%');
+                }  
+                $parameters .= $filterAdmin;
+            }
         }
         if($order == "id"){
             $users = $users
@@ -69,6 +102,9 @@ class UserController extends Controller
         
         return $this->render('BackendAdminBundle:User:list.html.twig', array(
             'users' => $users,
+            'filterId'=> $filterId,
+            'filterEmail'=> $filterEmail,
+            'filterAdmin'=> $filterAdmin,
             'actualPage' => $page,
             'pageCount' => $pageCount,
             'parameters' => $parameters,

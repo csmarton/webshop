@@ -1,12 +1,7 @@
 <div class="search-header-box">
-    <form id="searcher-form" action="{{path('frontend_product_homepage')}}" method="get">
-        <input type="text" id="search-header" placeholder="Mit keresel?" name="searchKey" autocomplete="off" href="{{path('frontend_header_search_autocomplete')}}">    
-        {#<input type="button" class="search-button" value="&nbsp">#}
-    </form>    
-    <div class="search-header-content-box" style="display:none">
-        <div class="search-header-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae elit ut odio fermentum ultricies. Duis mattis tellus ut tincidunt ullamcorper. Sed accumsan mauris eu nunc feugiat elementum. Nulla interdum varius est id faucibus. Phasellus condimentum lacus sit amet elit volutpat, at ultricies massa egestas. Sed rhoncus est non facilisis pellentesque. In consectetur tellus hendrerit, ornare sapien porta, cursus enim. Curabitur convallis diam neque, id consequat lacus facilisis in. Maecenas sodales euismod ligula a convallis. Aliquam malesuada blandit est, ut consequat justo posuere at. Phasellus diam erat, gravida non nibh eget, tempus ultrices nunc. Aliquam erat volutpat. Praesent eleifend sem eu aliquam faucibus.
-        </div>
-    </div>
+    <form id="searcher-form" action="{{path('frontend_products')}}" method="post">
+        <input type="text" id="search-header" placeholder="Mit keresel?" name="generalSearchString" autocomplete="off" href="{{path('frontend_header_search_autocomplete')}}">
+        <input type="hidden" name="filterType" value="" class="general-filter-type"/>
+    </form> 
 </div>
 

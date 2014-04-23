@@ -24,7 +24,7 @@ class User extends BaseUser
      */
     protected $profile;
     
-    private $isAdmin;
+    protected $isAdmin;
     
     public function getIsAdmin(){
             return in_array("ROLE_ADMIN",$this->roles);

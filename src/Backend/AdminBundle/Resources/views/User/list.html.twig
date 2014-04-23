@@ -3,20 +3,24 @@
 {% block title%} Admin - Felhasználók {% endblock %}
 {% block bodyClass %}class="index_page"{% endblock%}
  
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/User.css') }}"/>
+{% endblock %}
 {% block javascripts %}
 	{{ parent() }}
+
     <script type="text/javascript">
             $(document).ready(function(){
             });
     </script>
 {% endblock %}
- 
+
 {% block main %} 
     <div class="main">
         <h2>Felhasználók</h2>
         <div class="upperMenu">
             <div class="left-side">
-                {#{% include "BackendAdminBundle:Product:productFilter.html.twig"%}#}
+                {% include "BackendAdminBundle:User:userFilter.html.twig"%}
             </div>
             <div class="right-side">                
                 <a href="{{path('backend_admin_user_new')}}" class="menu_btn">Új Felhasználó</a>

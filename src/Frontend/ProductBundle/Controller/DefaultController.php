@@ -18,16 +18,18 @@ class DefaultController extends Controller
      */
     public function indexAction($main_category=null, $category=null)
     {                       
+        
         $request = $this->get('request');
         $page = (int)$request->query->get('page');
         if($page == NULL){
              $page = 1;
         }
+
         $order = $request->query->get('order');
         $by = $request->query->get('by');
         
         //OLDALAK
-        $maxResult = 10; //   
+        $maxResult = 1; //   
         $productRepo = $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
         $productPropertyRepo = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty');
         
@@ -127,6 +129,9 @@ class DefaultController extends Controller
         if($pageCount == 0){
             $pageCount = 1;
         }
+        if($page>$pageCount || $page < 0)
+            $page = 1;
+        
         
         //Termékek
         $products = array_slice($allProductsResult,$page*$maxResult - $maxResult,$maxResult);

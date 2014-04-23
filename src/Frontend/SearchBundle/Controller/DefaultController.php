@@ -4,7 +4,6 @@ namespace Frontend\SearchBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 class DefaultController extends Controller
 {
     public function mainSearchAutocompleteAction()
@@ -12,21 +11,17 @@ class DefaultController extends Controller
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
             
-            $key = $request->request->get('key');            
- 
-            $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
+            $key = $request->request->get('searchText');
         
-            $products = $repo->createQueryBuilder('p') 
-                    ->where('p.name LIKE :key')
-                    ->setParameter('key','%'.$key.'%')
-                    ->setMaxResults(10)
-                    ->getQuery()->getResult();
+            $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findProductBySearchKey($key);
             
+            $productWithImage = array();
+            foreach((array)$products as $product){
+                
+                $productWithImage[] = array('image'=> (string)$product->getNormalProductImage(), 'name' => $product->getName() );
+            }
             
-            $html = $this->renderView('FrontendSearchBundle:Default:autocompleteResults.html.twig', array(
-                        'products' => $products
-                    ));
-            return new JsonResponse(array('success' => true, 'html' => $html));
+            return new JsonResponse($productWithImage);
              
         }else{
             return new JsonResponse(array('success' => false));

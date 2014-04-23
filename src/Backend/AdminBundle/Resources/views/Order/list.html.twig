@@ -18,18 +18,16 @@
 {% block main %} 
     <div class="main">
         <h2>Rendelések</h2>
-        <div class="upperMenu filter-order-menu">
-            <label for="filter-name">Név:</label>
-            <input type="text" id="filter-name" name="filter-name">
-            <label for="filter-date">Rendelés dátuma:</label>
-            <input type="text" id="filter-date" name="filter-date">
-            <label for="filter-fulfill">Teljesítve:</label>
-            <select id="filter-fulfill" name="filter-fulfill">
-                <option value=""></option>
-                <option value="yes">Teljesítve</option>
-                <option value="no">Nincs teljesítve</option>
-            </select>
-            <input type="button" value="Szűrés" class="menu_btn ok_btn" id="filter-order-button" link="{{path('backend_admin_order_list')}}"/>
+        <div class="upperMenu">
+            <div class="left-side">
+                {% include "BackendAdminBundle:Order:orderFilter.html.twig"%}
+            </div>
+            <div class="right-side">                
+                {#<a href="{{path('backend_admin_product_new')}}" class="menu_btn">Új Termék</a>#}
+            </div>
+            <div class="pages-box">
+                {% include "BackendLayoutBundle:Default:pages.html.twig"%}
+            </div>
         </div>
         <div id="order-table">
             {% include "BackendAdminBundle:Order:listOrderTable.html.twig" %}
@@ -46,7 +44,13 @@
         </div>
         <div class="bottomSection">
             <div class="inputs">
-                <input type="button" class="cancel exit-reveal-modal cancel_btn menu_btn" value="Ok">                        
+                <div class="first-inputs">
+                    <input type="button" class="fulfill-order-button menu_btn" value="Teljesít">                     
+                    <input type="button" class="cancel exit-reveal-modal warning_btn cancel_btn menu_btn" value="Mégse"> 
+                </div>
+                <div class="second-inputs hide">             
+                    <input type="button" class="exit-reveal-modal menu_btn" value="Ok"> 
+                </div>
             </div>
         </div>
     </div>

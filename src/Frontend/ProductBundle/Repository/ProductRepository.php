@@ -115,5 +115,25 @@ class ProductRepository extends EntityRepository{
         } 
         return $filteredProductIds;
     }
-
+    
+    //Termékek keresése kulcsszó alapján
+    public function findProductBySearchKey($key){
+        return $this->createQueryBuilder('p')
+                ->select('p')
+                ->leftJoin('p.categorys','c')                         
+                ->leftJoin('c.mainCategory','mc')
+                ->where('p.name LIKE :key OR c.name LIKE :key OR mc.name LIKE :key')
+                ->setParameter('key', "%".$key."%")
+                ->getQuery()->getResult();
+    }
+    //Termékek keresése kulcsszó alapján
+    public function findProductIdBySearchKey($key){
+        return $this->createQueryBuilder('p')
+                ->select('p.id')
+                ->leftJoin('p.categorys','c')                         
+                ->leftJoin('c.mainCategory','mc')
+                ->where('p.name LIKE :key OR c.name LIKE :key OR mc.name LIKE :key')
+                ->setParameter('key', "%".$key."%")
+                ->getQuery()->getResult();
+    }
 }

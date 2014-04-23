@@ -1,0 +1,36 @@
+<form action="{{path('backend_admin_user', {'page': actualPage})}}" method="get" class="filter-shared-menu">
+    <div class="inline-block">
+        <div class="column-0">
+            <label for="filterId">Azonosító:</label>
+            <input type="text" id="filterId" name="filterId" value="{{filterId}}">
+        </div>
+        <div class="column-1">
+            <label for="filterEmail">Email:</label>
+            <input type="text" id="filterEmail" name="filterEmail" value="{{filterEmail}}">
+        </div>
+    </div>
+     <div class="inline-block">    
+        <div class="column-0">    
+            <label for="filterAdmin">Admin:</label>
+            <select id="filterAdmin" name="filterAdmin">
+                <option value=""></option>
+                {% if filterAdmin == "yes" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="yes" {{selected}}>Admin</option>
+                {% if filterAdmin == "no" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="no" {{selected}} >Normál</option>
+            </select>
+        </div>
+     </div>
+    <input type="hidden" name="maxResult" value="{{maxResult}}"/>
+    <div class="center">
+        <input type="submit" class="menu_btn ok_btn" id="filter-order-button" value="Szűrés" />
+    </div>
+</form>

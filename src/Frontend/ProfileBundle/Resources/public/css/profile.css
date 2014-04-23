@@ -49,3 +49,17 @@ h2{
     text-decoration: underline;
     font-size: 1.2em;
 }
+
+
+.order-information .information-box{
+    display:block;
+    padding: 5px;
+}
+.order-information .label-text{
+    width: 200px;
+    font-weight:bold;
+    display:inline-block;
+}
+.order-information .information-text{
+    display:inline-block;
+}

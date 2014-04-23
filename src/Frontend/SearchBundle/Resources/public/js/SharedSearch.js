@@ -3,17 +3,21 @@ SharedSearch = {
     availableProducts :[],
     SEARCHING_ENABLE: false,
     resultsSelected : false,
+    FILTER_TYPE : null,
     init: function(){
             this.bindUIActions();
+            this.initPriceSliders();
+            this.initDetailedSearch();
+            this.initMainSearch();
+
     },
 
     
     bindUIActions: function(){
-        $(".search-header-content-box").hover(
-            function () { SharedSearch.resultsSelected = true; },
-            function () { SharedSearch.resultsSelected = false; }
-        );
-
+        
+        /*
+         * Oldalak váltása AJAX-al
+         */
         $("body").on('click', '.pages li a', function(e){
             
             if(!SharedSearch.SEARCHING_ENABLE){
@@ -24,7 +28,10 @@ SharedSearch = {
             }
             e.preventDefault();
         });
-        //Rendezés 
+        
+        /*
+         * Rendezés AJAX-al 
+         */
         $('body').on("change", ".set-filter", function(e){
             e.preventDefault();
             filter = "?"+$(this).val();
@@ -35,33 +42,112 @@ SharedSearch = {
                 SharedSearch.getFilteredProductByAjax(1,false,true);
             }
         });
-            $('body').on("click", ".product-box a", function(e){     
-                console.log("click");
-            });
-            
-        $('body').on("blur", "#search-header", function(e){ 
-             if (!SharedSearch.resultsSelected) {
-               $('.search-header-content-box').hide();
-            }
-            
-        });
-        $("body").on('keyup', '#search-header', function(e){
-            e.preventDefault();
-            searchKey = $(this).val();            
-            SharedSearch.autocompleteAjaxSubmit(searchKey);
-            
-	});  
         
-        $('#searcher_box').submit(function() {
-	});
-        
-        $( "#search-toggle-button-content" ).click(function() {
-            $("#search-box").slideToggle("slow");
-	});  
         
         $("#searchTabs").organicTabs();
+    },
+    getFilteredProductByAjax : function(page,upperMenuRefreshEnable,pagesMenuRefreshEnable){        
+        order = $('.set-filter').val().split('&')[0].split('=')[1];
+        by = $('.set-filter').val().split('&')[1].split('=')[1];
+        if(SharedSearch.FILTER_TYPE === 1){
+            laptopFilterManufacturer = $('#laptop-filter-manufacturer').val();
+            laptopFilterWinchester = $('#laptop-filter-winchester').val();
+            laptopFilterOperationSystem = $('#laptop-filter-operation-system').val();
+            laptopFilterProcessor = $('#laptop-filter-processor').val();
+            laptopFilterScreenSize = $('#laptop-filter-screen-size').val();
+            laptopFilterMemory = $('#laptop-filter-memory').val();
+            laptopFilterPrice = $('#laptop-price-amount').val();
+            param = {
+                'order':order,
+                'by':by,
+                'page':page,
+                'laptopFilterManufacturer':laptopFilterManufacturer,
+                'laptopFilterWinchester':laptopFilterWinchester,
+                'laptopFilterOperationSystem':laptopFilterOperationSystem,
+                'laptopFilterProcessor':laptopFilterProcessor,
+                'laptopFilterScreenSize':laptopFilterScreenSize,
+                'laptopFilterMemory':laptopFilterMemory,
+                'laptopFilterPrice':laptopFilterPrice,
+                'filterType' : SharedSearch.FILTER_TYPE
+            };
+        }else if(SharedSearch.FILTER_TYPE === 2){
+            tabletFilterManufacturer = $('#tablet-filter-manufacturer').val();
+            tabletFilterWinchester = $('#tablet-filter-winchester').val();
+            tabletFilterOperationSystem = $('#tablet-filter-operation-system').val();
+            tabletFilterProcessor = $('#tablet-filter-processor').val();
+            tabletFilterScreenSize = $('#tablet-filter-screen-size').val();
+            tabletFilterMemory = $('#tablet-filter-memory').val();
+            tabletFilterPrice = $('#tablet-price-amount').val();
+            param = {
+                'order':order,
+                'by':by,
+                'page':page,
+                'tabletFilterManufacturer':tabletFilterManufacturer,
+                'tabletFilterWinchester':tabletFilterWinchester,
+                'tabletFilterOperationSystem':tabletFilterOperationSystem,
+                'tabletFilterProcessor':tabletFilterProcessor,
+                'tabletFilterScreenSize':tabletFilterScreenSize,
+                'tabletFilterMemory':tabletFilterMemory,
+                'tabletFilterPrice':tabletFilterPrice,
+                'filterType' : SharedSearch.FILTER_TYPE
+            };
+        }else{
+            searchHeader = SharedSearch.SEARCH_STRING;
+            if(searchHeader === ""){
+                generalSearchString = $('#general-search-string').val();
+                generalFilterPrice = $('#general-price-amount').val();
+                param = { 
+                    'order':order,
+                    'by':by,
+                    'page':page,
+                    'generalSearchString':generalSearchString,
+                    'generalFilterPrice':generalFilterPrice,
+                    'filterType' : SharedSearch.FILTER_TYPE
+                };
+            }else{
+                generalSearchString = searchHeader;
+                param = { 
+                    'order':order,
+                    'by':by,
+                    'page':page,
+                    'generalSearchString':generalSearchString,
+                    'filterType' : SharedSearch.FILTER_TYPE
+                };
+            }
+            
+            
+        }
         
-        //Laptop árszűrő slider
+        
+        $.ajax({
+        url: $('#searcher').attr('href'),			
+        data: param,
+        type: 'POST',
+        dataType: 'json'
+        }).done(function(returnData) {
+            if (returnData.success) {
+                $('.products_box').html(returnData.productHtml);
+                if(upperMenuRefreshEnable){
+                    $('#upper-menu').html(returnData.upperMenu);
+                }
+                if(pagesMenuRefreshEnable){
+                    $('.left-side').html(returnData.pagesMenu);
+                }
+            }else{
+                console.log("Nincs találat");
+            }
+        }).fail(function(thrownError) {
+            console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+        });
+    },
+    
+    /*
+     * Árszűrők megjelenítése
+     */
+    initPriceSliders:function(){
+        /*
+         * Laptop árszűrő slider
+         */
         $( "#laptop-price-slider" ).slider({
             range: true,
             min: 0,
@@ -76,7 +162,9 @@ SharedSearch = {
         $( "#laptop-price-amount-copy" ).val(accounting.formatNumber($( "#laptop-price-slider" ).slider( "values", 0 ), 0, " ") + " Ft - "
                                         + accounting.formatNumber($( "#laptop-price-slider" ).slider( "values", 1 ), 0, " ") + " Ft") ;
     
-            //Tablet árszűrő slider
+        /*
+         * Tablet árszűrő slider
+         */
         $( "#tablet-price-slider" ).slider({
             range: true,
             min: 0,
@@ -91,6 +179,9 @@ SharedSearch = {
         $( "#tablet-price-amount-copy" ).val(accounting.formatNumber($( "#tablet-price-slider" ).slider( "values", 0 ), 0, " ") + " Ft - "
                                         + accounting.formatNumber($( "#tablet-price-slider" ).slider( "values", 1 ), 0, " ") + " Ft") ;
         
+        /*
+         * Általános árszűrő megjelenítése
+         */
         $( "#general-price-slider" ).slider({
             range: true,
             min: 0,
@@ -105,6 +196,26 @@ SharedSearch = {
         $( "#general-price-amount-copy" ).val(accounting.formatNumber($( "#general-price-slider" ).slider( "values", 0 ), 0, " ") + " Ft - "
                                         + accounting.formatNumber($( "#general-price-slider" ).slider( "values", 1 ), 0, " ") + " Ft") ;
         
+    },
+    
+    initDetailedSearch : function(){
+        /*
+         * Részletes kereső elrejtése
+         */
+        $('body').on("blur", "#search-header", function(e){ 
+             if (!SharedSearch.resultsSelected) {
+               $('.search-header-content-box').hide();
+            }
+            
+        });
+        
+        /*
+         * Részletes kereső megjelenítése
+         */
+        $( "#search-toggle-button-content" ).click(function() {
+            $("#search-box").slideToggle("slow");
+	});  
+        
         /*
          * Tabletek keresése
          */                        
@@ -112,8 +223,8 @@ SharedSearch = {
             $('#tabTabletSearch .loading').show();
             SharedSearch.SEARCHING_ENABLE = true;
             urlFilterString = $('#search-box').attr('url-filter-string');
-            
-            tabletFilterType = $('#tablet-filter-type').val();
+            SharedSearch.SEARCH_STRING = "";
+            SharedSearch.FILTER_TYPE = $('#tablet-filter-type').val();
             tabletFilterManufacturer = $('#tablet-filter-manufacturer').val();
             tabletFilterWinchester = $('#tablet-filter-winchester').val();
             tabletFilterOperationSystem = $('#tablet-filter-operation-system').val();
@@ -131,7 +242,7 @@ SharedSearch = {
                         'tabletFilterScreenSize':tabletFilterScreenSize,
                         'tabletFilterMemory':tabletFilterMemory,
                         'tabletFilterPrice':tabletFilterPrice,
-                        'filterType' : tabletFilterType
+                        'filterType' : SharedSearch.FILTER_TYPE
                 },
                 type: 'POST',
                 dataType: 'json'
@@ -153,8 +264,8 @@ SharedSearch = {
             $('#tabGeneralSearch .loading').show();
             SharedSearch.SEARCHING_ENABLE = true;
             urlFilterString = $('#search-box').attr('url-filter-string');
-            
-            generalFilterType = $('#general-filter-type').val();
+            SharedSearch.SEARCH_STRING = "";
+            SharedSearch.FILTER_TYPE = $('#general-filter-type').val();
             generalSearchString = $('#general-search-string').val();
             generalFilterPrice = $('#general-price-amount').val();
             
@@ -162,7 +273,7 @@ SharedSearch = {
                 url: $('#searcher').attr('href'),			
                 data: { 'generalSearchString':generalSearchString,
                         'generalFilterPrice':generalFilterPrice,
-                        'filterType' : generalFilterType
+                        'filterType' : SharedSearch.FILTER_TYPE
                 },
                 type: 'POST',
                 dataType: 'json'
@@ -184,9 +295,10 @@ SharedSearch = {
         $("body").on('click', '#laptop-filter-button', function(e){
             $('#tabLaptopSearch .loading').show();
             SharedSearch.SEARCHING_ENABLE = true;
+            SharedSearch.SEARCH_STRING = "";
             urlFilterString = $('#search-box').attr('url-filter-string');
             
-            laptopFilterType = $('#laptop-filter-type').val();
+            SharedSearch.FILTER_TYPE = $('#laptop-filter-type').val();
             laptopFilterManufacturer = $('#laptop-filter-manufacturer').val();
             laptopFilterWinchester = $('#laptop-filter-winchester').val();
             laptopFilterOperationSystem = $('#laptop-filter-operation-system').val();
@@ -204,7 +316,7 @@ SharedSearch = {
                         'laptopFilterScreenSize':laptopFilterScreenSize,
                         'laptopFilterMemory':laptopFilterMemory,
                         'laptopFilterPrice':laptopFilterPrice,
-                        'filterType' : laptopFilterType
+                        'filterType' : SharedSearch.FILTER_TYPE
                 },
                 type: 'POST',
                 dataType: 'json'
@@ -221,68 +333,82 @@ SharedSearch = {
                 $('#tabLaptopSearch .loading').hide();
             });
         });
-        
-        
-    },
-    getFilteredProductByAjax : function(page,upperMenuRefreshEnable,pagesMenuRefreshEnable){        
-        order = $('.set-filter').val().split('&')[0].split('=')[1];
-        by = $('.set-filter').val().split('&')[1].split('=')[1];
-        laptopFilterManufacturer = $('#laptop-filter-manufacturer').val();
-        laptopFilterWinchester = $('#laptop-filter-winchester').val();
-        laptopFilterOperationSystem = $('#laptop-filter-operation-system').val();
-        laptopFilterProcessor = $('#laptop-filter-processor').val();
-        laptopFilterScreenSize = $('#laptop-filter-screen-size').val();
-        laptopFilterMemory = $('#laptop-filter-memory').val();
-        laptopFilterPrice = $('#laptop-price-amount').val();
-
-        $.ajax({
-        url: $('#searcher').attr('href'),			
-        data: { 'order':order,
-                'by':by,
-                'page':page,
-                'laptopFilterManufacturer':laptopFilterManufacturer,
-                'laptopFilterWinchester':laptopFilterWinchester,
-                'laptopFilterOperationSystem':laptopFilterOperationSystem,
-                'laptopFilterProcessor':laptopFilterProcessor,
-                'laptopFilterScreenSize':laptopFilterScreenSize,
-                'laptopFilterMemory':laptopFilterMemory,
-                'laptopFilterPrice':laptopFilterPrice
-        },
-        type: 'POST',
-        dataType: 'json'
-        }).done(function(returnData) {
-            if (returnData.success) {
-                $('.products_box').html(returnData.productHtml);
-                if(upperMenuRefreshEnable){
-                    $('#upper-menu').html(returnData.upperMenu);
-                }
-                if(pagesMenuRefreshEnable){
-                    $('.left-side').html(returnData.pagesMenu);
-                }
-            }else{
-                console.log("Nincs találat");
-            }
-        }).fail(function(thrownError) {
-            console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
-        });
     },
     
-    autocompleteAjaxSubmit:function(searchKey){
-        $.ajax({
-                url: $('#search-header').attr('href'),			
-                data: {'key' : searchKey},
+    /*
+     * Fő kereső az oldal fejlécében
+     */
+    initMainSearch:function(){
+        /*
+         * Autocomplete
+         */
+        $('#search-header').autocomplete({
+                source: function (request, response) { //AJAX-al kérjük le az adatokat
+                    $.ajax({
+                        url: $('#search-header').attr('href'),	
+                        data: { searchText: request.term, maxResults: 10 },
+                        dataType: "json",
+                        type: 'POST',
+                        success: function (data) {
+
+                            response($.map(data, function (item) {
+                                return {
+                                    name: item.name,
+                                    image : item.image
+                                };
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    if(ui.item)
+                    $('#search-header').val(ui.item.name); //Kiválasztás esetén berakjuk az inpuz box-ba az értéket
+
+                    return false;
+                }
+            }).data("ui-autocomplete")._renderItem = function (ul, item) { //Adatok megjelenítése
+                var name = "";
+                if(item.name.length > 20){
+                   name = item.name.substring(0,20) + "...";
+                }else{
+                   name = item.name;
+                }
+                
+                var inner_html = '<a><img src="'+ item.image +'" class="search-product-image"/><div class="search-product-name">' + name +'</div></a>';
+                return $("<li></li>")
+                        .data("item.autocomplete", item)
+                        .append(inner_html)
+                        .appendTo(ul);
+            };
+            
+            /*
+             * Kereső form elküldése
+             */
+            $("body").on('submit', '#searcher-form', function(e){
+                e.preventDefault();
+                SharedSearch.SEARCHING_ENABLE = true;
+                SharedSearch.FILTER_TYPE = $('.general-filter-type').val();
+                SharedSearch.SEARCH_STRING = $('#search-header').val();
+                $.ajax({
+                url: $(this).attr('href'),			
+                data: { 'generalSearchString':SharedSearch.SEARCH_STRING,
+                        'filterType' : SharedSearch.FILTER_TYPE
+                },
                 type: 'POST',
                 dataType: 'json'
             }).done(function(returnData) {
                 if (returnData.success) {
-                    $('.search-header-content').html(returnData.html);
-                    $('.search-header-content-box').show();
-                    
+                    $('.products_box').html(returnData.productHtml);
+                    $('#upper-menu').html(returnData.upperMenu);    
+                    $('#search-header').autocomplete('close');
                 }else{
                     console.log("Nincs találat");
                 }
+                $('#tabTabletSearch .loading').hide();
             }).fail(function(thrownError) {
                 console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+                $('#tabTabletSearch .loading').hide();
+            });
             });
     }
 };

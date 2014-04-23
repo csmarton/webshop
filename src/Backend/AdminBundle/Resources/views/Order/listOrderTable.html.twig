@@ -1,11 +1,49 @@
-<table class="product_table">
+<table class="shared-table">
     <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Rendelő neve</th>
+            {% set b = "asc" %}
+            {% set active = ""%}    
+            {% if order == "id" %}
+                {% if by == "asc" %}
+                    {% set b = "desc" %}
+                {% else %}
+                    {% set b = "asc" %}
+                {% endif %}
+                {% set active = "active"%}
+            {% endif %} 
+            <th scope="col" class="{{active}}">
+                <a href="?page=1{{parameters}}&order=id&by={{b}}"   class="{{b}}">Id</a>
+            </th>
+            
+            {% set b = "asc" %}
+            {% set active = ""%}  
+            {% if order == "name" %}
+                {% if by == "asc" %}
+                    {% set b = "desc" %}
+                {% else %}
+                    {% set b = "asc" %}
+                {% endif %}
+                {% set active = "active"%}
+            {% endif %} 
+            <th scope="col"  class="{{active}}">
+                <a href="?page=1{{parameters}}&order=name&by={{b}}"   class="{{b}}">Rendelő neve</a>
+            </th>
             <th scope="col">Db</th>
             <th scope="col">Ár</th>
-            <th scope="col">Rendelési idő</th>
+            {% set b = "asc" %}
+            {% set active = ""%}  
+            {% if order == "date" %}
+                {% if by == "asc" %}
+                    {% set b = "desc" %}
+                {% else %}
+                    {% set b = "asc" %}
+                {% endif %}
+                {% set active = "active"%}
+            {% endif %} 
+            <th scope="col"  class="{{active}}">
+                <a href="?page=1{{parameters}}&order=date&by={{b}}"   class="{{b}}">Rendelési idő</a>
+            </th>
+            <th scope="col">Teljesítve</th>
             <th scope="col">Műveletek</th>
         </tr>
     </thead>
@@ -13,12 +51,24 @@
         {% for order in orders %}
             <tr>
                 <td>{{order.getId()}}</td>
-                <td>{{order.getUser().getProfile().getName()}}</td>
+                <td>{{order.getOrderProfileInformation().getName()}}</td>
                 <td>{{order.getItemsTotal()}}</td>
                 <td>{{order.getItemsTotalPrice()|priceFormat}}</td>
-                <td>{{order.getOrderedAt()|date('Y:m:d')}}</td>
+                <td>{{order.getOrderedAt()|date('Y-m-d')}}</td>
                 <td>
-                    <a href="javascript:void(0)" class="menu_btn cancel_btn fulfill-button" link="{{path('backend_admin_order_fulfill', {'orderId':order.getId()})}}">Teljesítés</a>
+                    {% if order.getPerformedAt() is null %}
+                        -
+                    {% else %}
+                        {{order.getPerformedAt()|date('Y-m-d')}}
+                    {% endif %}                    
+                </td>
+                <td>
+                    {% if order.getPerformedAt() is null %}
+                        <a href="javascript:void(0)" class="menu_btn cancel_btn fulfill-button" link="{{path('backend_admin_order_fulfill', {'orderId':order.getId()})}}">Teljesítés</a>
+                    {% else %}
+                        <a href="javascript:void(0)" class="menu_btn warning_btn">Teljesítve</a>
+                    {% endif %}  
+                    
                     <a href="{{path('backend_admin_order_list_more',{'orderId':order.getId()})}}" class="menu_btn edit_btn">Bővebben</a>                            
                 </td>
             </tr>                    

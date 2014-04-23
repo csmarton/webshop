@@ -66,28 +66,27 @@
     text-align: right;
 }
 
-.filter-order-menu{
-    float:none !important;
-    height: 50px;
+.order-information .information-box{
+    display:block;
+    padding-bottom: 5px;
 }
-
-#filter-name,
-#filter-date,
-#filter-fulfill{
+.order-information .label-text{
     width: 200px;
-    height: 30px;
-    margin-right:20px;
-    font-size: 1.2em;
-    padding: 0px 5px;
+    font-weight:bold;
+    display:inline-block;
 }
-#filter-name:focus,
-#filter-date:focus,
-#filter-fulfill{
-    color:#10AC8E;
+.order-information .information-text{
+    display:inline-block;
 }
 
-.filter-order-menu .ok_btn{
-    height:auto !important;
-    padding:5px;
+#modal-fulfill-order .cant-fulfill-order-items{
+    width:100%;
+    margin: 5px;
+}
+#modal-fulfill-order .cant-fulfill-order-items thead{
+    font-weight: bold;
 }
 
+#modal-fulfill-order .cant-fulfill-order-items tbody td{
+    text-align: center;
+}

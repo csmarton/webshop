@@ -1,13 +1,21 @@
 Order = {	
-    
+    DELETE_LINK : null,
     init: function(){
             this.bindUIActions();		
     },	
 		
     bindUIActions: function(){
         $('body').on('click', '.fulfill-button', function(){
+            $('#modal-fulfill-order').reveal();
+            $('#modal-fulfill-order h2').html("Biztosan teljesíti a rendelést?");
+            $('#modal-fulfill-order .modal-information').html("");
+            $('#modal-fulfill-order .first-inputs').show();
+            $('#modal-fulfill-order .second-inputs').hide();
+            Order.DELETE_LINK = $(this).attr('link');
+        });
+        $('body').on('click', '.fulfill-order-button', function(){
             $.ajax({
-                url: $(this).attr('link'),
+                url: Order.DELETE_LINK,
                 type: 'POST',
                 dataType: 'json'
             }).done(function(data) {
@@ -15,15 +23,14 @@ Order = {
                     if(data.canFulfill){//Teljesíthető -e a rendelés
                         $('#modal-fulfill-order h2').html("Rendelés sikeresen teljesítve!");
                         $('#modal-fulfill-order .modal-information').html("");
+                        
                     }
                     else{
                         $('#modal-fulfill-order h2').html("Rendelés nem teljesíthető");
-                        $('#modal-fulfill-order .modal-information').html("Ezekből a termékekből nincs elegendő mennyiség raktáron: <br/>");
-                        for(var i=0;i<data.cantFullfillProduct.length;i++){
-                            $('#modal-fulfill-order .modal-information').append('<a href="">'+ data.cantFullfillProduct[i] +'</a> ')
-                        }
+                        $('#modal-fulfill-order .modal-information').append(data.html)
                     }
-                    $('#modal-fulfill-order').reveal();
+                    $('#modal-fulfill-order .first-inputs').hide();
+                    $('#modal-fulfill-order .second-inputs').show();
                      
                 } else {							  
                     console.error('HIBA a szervertől:' + data.err);
@@ -36,28 +43,8 @@ Order = {
             $(".exit-reveal-modal").trigger('reveal:close');
         }); 
         
-        $('#filter-date').datepicker({ dateFormat: 'yy-mm-dd'});
+        $('#filterDate').datepicker({ dateFormat: 'yy-mm-dd'});        
         
-         $('body').on('click', '#filter-order-button', function(){
-             filterName = $('#filter-name').val();
-             filterDate = $('#filter-date').val();
-             filterFulfill = $('#filter-fulfill').val();
-              $.ajax({
-                url: $(this).attr('link'),
-                data:{'filterName':filterName, 'filterDate':filterDate, 'filterFulfill':filterFulfill},
-                type: 'POST',
-                dataType: 'json'
-            }).done(function(data) {
-                if (data.success) {    
-                    $('#order-table').html(data.html);
-                    console.log("SIKER");
-                } else {							  
-                    console.error('HIBA a szervertől:' + data.err);
-                }
-            }).fail(function(thrownError) {
-                console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
-            });
-         });
     },
 }	
 

@@ -9,23 +9,56 @@
 {% else %}
     {% set nextPage = actualPage+1 %}
 {% endif %}
-
-{% if (pageCount > 1) %}
+{% set param = "order=" ~ order ~ "&by=" ~ by ~ "&page=" %}
     <ul class="pages">
         <li>
-            <a href="order={{order}}&by={{by}}&page={{prevPage}}"><</a>
+            <a href="{{param}}{{prevPage}}"><</a>
         </li>
-        {% for i in range(1,pageCount)%}
-            <li
-                {%if actualPage == i %}
-                    class="actual-page"
-                {% endif %}>
-                <a href="order={{order}}&by={{by}}&page={{i}}">{{i}}</a>
-            </li>
-
-        {% endfor %} 
+        {% if pageCount > 7 %}
+            {% if(actualPage-3>1) %}
+                <li>
+                    <a href="{{param}}1">{{1}}</a>
+                </li>
+                ...
+                {% set low = actualPage-3 %}
+            {% else %}
+                {% set low = 1 %}                  
+            {% endif %}
+                
+            {% set high = low + 6 %}  
+            {% if high > pageCount %}
+                {% set low = low - high + pageCount%}
+                {% set high = pageCount %}                
+            {% endif %}
+                
+            {% for i in range(low,high)%}
+                <li
+                    {%if actualPage == i %}
+                        class="actual-page"
+                    {% endif %}>
+                    <a href="{{param}}{{i}}">{{i}}</a>
+                </li>
+            {% endfor %} 
+            
+            {% if(high<pageCount) %}
+                ...
+                <li>
+                    <a href="{{param}}{{pageCount}}">{{pageCount}}</a>
+                </li>
+            {% endif %} 
+        {% else %}
+            {% for i in range(1,pageCount)%}
+                <li
+                    {%if actualPage == i %}
+                        class="actual-page"
+                    {% endif %}>
+                    <a href="{{param}}{{i}}">{{i}}</a>
+                </li>
+            {% endfor %}     
+        {% endif %}
+        
+        
         <li>
-            <a href="order={{order}}&by={{by}}&page={{nextPage}}">></a>
+            <a href="{{param}}{{nextPage}}">></a>
         </li>
     </ul>
-{% endif %}

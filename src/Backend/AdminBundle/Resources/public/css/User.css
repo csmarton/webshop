@@ -1,0 +1,26 @@
+.right-side a{
+    display:block;
+}
+
+.newUser{
+    width:100%;
+}
+.newUser .inline-block{
+    display: block;
+    padding: 5px;
+}
+.newUser .inline-block label{
+    font-weight: bold;
+    width: 150px !important;
+    display: inline-block;
+}
+.newUser .inline-block input[type="text"],
+.newUser .inline-block input[type="password"]{
+    width:500px;
+    height:30px;
+}
+
+.newProperty .inline-block select{
+    width: 100px;
+    height:30px;
+}

@@ -60,28 +60,3 @@
 .property-form{
     position: relative;
 }
-
-.filter-product-menu .inline-block{
-    overflow: hidden;
-    margin: 5px;
-}
-.filter-product-menu .column-0,
-.filter-product-menu .column-1{
-    display:inline-block;
-    width: 350px;
-}
-.filter-product-menu label{
-    width: 150px;
-    font-weight: bold;
-    display: inline-block;
-}
-
-.filter-product-menu select,
-.filter-product-menu input[type="text"]{
-    height: 30px;
-    width: 150px;
-    padding: 0px 5px;
-    border: 1px solid grey;
-    display: inline-block;  
-}
-

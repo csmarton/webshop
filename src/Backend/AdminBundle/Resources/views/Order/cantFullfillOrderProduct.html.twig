@@ -1,0 +1,26 @@
+<div>
+    A következő termékekből nincs elegendő mennyiség raktáron:
+</div>
+
+<table class="cant-fulfill-order-items">
+    <thead>
+        <th>Azonosító</th>
+        <th>Mennyiség</th>
+        <th>Raktáron</th>
+    </thead>
+    <tbody>
+        {% for cantFullfillOrderItem in cantFullfillOrderItems %}
+            <tr>
+                <td>
+                    <a href="{{path('backend_admin_product_new', {'productId':cantFullfillOrderItem.getProduct().getId()})}}">{{cantFullfillOrderItem.getId()}}</a>
+                </td>
+                <td>
+                    {{cantFullfillOrderItem.getUnitQuantity() }}
+                </td>
+                <td>
+                    {{cantFullfillOrderItem.getProduct().getInStock()}}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

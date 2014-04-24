@@ -1,0 +1,67 @@
+<?php
+
+namespace Backend\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Log
+ *
+ * @ORM\Table(name="log")
+ * @ORM\Entity
+ */
+class Log
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="action", type="integer", nullable=false)
+     */
+    private $action;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="time", type="datetime", nullable=false)
+     */
+    private $time;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="object_id", type="integer", nullable=false)
+     */
+    private $objectId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="object_class", type="string", length=100, nullable=false)
+     */
+    private $objectClass;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="data", type="text", nullable=true)
+     */
+    private $data;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     */
+    private $userId;
+
+
+}

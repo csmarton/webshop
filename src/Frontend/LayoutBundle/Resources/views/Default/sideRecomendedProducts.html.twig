@@ -1,0 +1,19 @@
+Legnépszerűbb termékek
+<div class="sideRecomendedProducts flexslider">
+    <ul class="slides">
+        {% for product in products %}
+            {% if (product.getProductImages()|length != 0 ) %}  
+                {% set image = product.getProductImages() %}
+                <li>
+                    <a href="{{image(image[0].getWebPath()).resize(640,480)}}" class="gallery">
+                        <img src=" {{image(image[0].getWebPath()).resize(150,150)}}"/>
+                    </a>
+                </li>
+            {% else %}     
+                <li>
+                    <img src="{{ asset('images/no_image.jpg')}}"/>
+                </li>
+            {% endif %}  
+        {% endfor%}
+    </ul>
+</div>

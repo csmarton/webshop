@@ -116,3 +116,8 @@ backend_admin_property_new:
 backend_admin_property_remove:
     pattern:  /admin/tulajdonsagok/torles
     defaults: { _controller: BackendAdminBundle:Property:remove }
+    
+    
+backend_admin_log:
+    pattern:  /admin/log
+    defaults: { _controller: BackendAdminBundle:Log:list }

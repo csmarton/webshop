@@ -60,4 +60,25 @@ class DefaultController extends Controller
     public function contactAction(){
         return $this->render('FrontendLayoutBundle:BottomSection:contact.html.twig');
     }
+    
+    public function sideRecomendedProductsAction(){
+        $ordersItem = $this->getDoctrine()->getRepository('FrontendOrderBundle:OrdersItem')->createQueryBuilder('p')
+                ->select('p.productId,SUM(p.unitQuantity) AS db')
+                ->groupBy('p.productId')
+                ->orderBy('db', 'desc')
+                ->getQuery()->getResult();
+        $productIds = array();
+        foreach($ordersItem as $item){
+            $productIds[] = $item['productId'];
+        }
+        $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
+                ->select('p')
+                ->where('p.id IN (:productIds)')
+                ->setParameter('productIds', $productIds)
+                ->getQuery()->getResult();
+        
+        return $this->render('FrontendLayoutBundle:Default:sideRecomendedProducts.html.twig',array(
+            'products' => $products
+        ));
+    }
 }

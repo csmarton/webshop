@@ -3,8 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/SearchBundle/Resources/public/js/SharedSearch.js</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/SearchBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/public/js/Product.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/sideRecomendedProducts.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/sidebar.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/product.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/layout.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Entity/OrdersItem.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/css/shared_logged.css</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/js/Shared.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Controller/DefaultController.php</file>
         </group>
     </open-files>
 </project-private>

@@ -8,6 +8,7 @@ use Frontend\ProductBundle\Form\MainCategoryType;
 use Frontend\ProductBundle\Entity\Category;
 use Frontend\ProductBundle\Entity\MainCategory;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Backend\AdminBundle\Entity\Log;
 
 class CategoryController extends Controller
 {
@@ -118,10 +119,12 @@ class CategoryController extends Controller
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
         }
+        $edit = true;
         $request = $this->get('request');
         $categoryId = $request->query->get('categoryId');
         $mainCategoryId = $request->query->get('mainCategoryId');
         if($categoryId == null){
+            $edit = false;
             $category = new Category();
             if($mainCategoryId != null){
                 $mainCategory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findOneById($mainCategoryId);
@@ -131,6 +134,11 @@ class CategoryController extends Controller
             }
         }else{
             $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categoryId);
+            $oldCategory = array(
+                'name' => $category->getName(),
+                'slug' => $category->getSlug(),
+                'mainCategory' => $category->getMainCategory()->getName()
+            );
         }
        
         $form = $this->createForm(new CategoryType(),$category);
@@ -148,6 +156,38 @@ class CategoryController extends Controller
                $em->persist($category);
                $em->flush();
                
+                //LOGOLÁS
+                $log = new Log();
+                $user = $this->get('security.context')->getToken()->getUser();
+                if($edit){//Szerkesztés
+                    $changedData = "";
+                    if($category->getName() != $oldCategory['name']){                            
+                        $changedData .= "<div class=\"label-text\">Név: </div><div class='content-box'><div class=\"old-value\">".$oldCategory['name'] . "</div><div class=\"new-value\"> " .$category->getName(). "</div></div>";
+                    }
+                    if($category->getMainCategory() != $oldCategory['mainCategory']){                            
+                        $changedData .= "<div class=\"label-text\">Főkategória: </div><div class='content-box'><div class=\"old-value\">".$oldCategory['mainCategory'] . "</div><div class=\"new-value\"> " .$category->getMainCategory()->getName(). "</div></div>";
+                    }
+                    if($category->getSlug() != $oldCategory['slug']){                            
+                        $changedData .= "<div class=\"label-text\">Slug: </div><div class='content-box'><div class=\"old-value\">".$oldCategory['slug'] . "</div><div class=\"new-value\"> " .$category->getSlug(). "</div></div>";
+                    }
+                    
+                    $log->setAction(1);
+                }else{//Új adat 
+                    $changedData = "<div class=\"label-text\">Új kategória: </div><div class='content-box'>". $productProperty->getId() ."</div>";
+                    $log->setAction(0);
+                }
+
+                $now = new \DateTime('now');
+                $log->setObjectClass("Frontend\ProductBundle\Entity\Category");
+                $log->setObjectId($category->getId());
+                $log->setTime($now);
+                $log->setUser($user);
+                $log->setData($changedData);
+                $em = $this->getDoctrine()->getEntityManager(); 
+                $em->persist($log);
+                $em->flush();            
+                
+            
                return $this->redirect($this->generateUrl('backend_admin_category'));
             }
         }    
@@ -167,6 +207,21 @@ class CategoryController extends Controller
             
             $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categoryId);
             $categoryName = $category->getName();
+            //LOGOLÁS
+            $user = $this->get('security.context')->getToken()->getUser();
+
+            $changedData = "<div class=\"label-text\">Kategória törlése: </div><div class='content-box'>". $categoryName ."</div>";
+            $now = new \DateTime('now');
+            $log = new Log();
+            $log->setAction(2);
+            $log->setObjectClass("Frontend\ProductBundle\Entity\Category");
+            $log->setObjectId($category->getId());
+            $log->setTime($now);
+            $log->setUser($user);
+            $log->setData($changedData);
+            $em = $this->getDoctrine()->getEntityManager(); 
+            $em->persist($log);
+            $em->flush();
             
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($category);
@@ -195,11 +250,16 @@ class CategoryController extends Controller
         $request = $this->get('request');
         $mainCategoryId = $request->query->get('mainCategoryId');
         $categorys = null;
+        $edit = true;
         if($mainCategoryId == null){
+            $edit = false;
             $mainCategory = new MainCategory();        
         }else{
             $mainCategory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findOneById($mainCategoryId);
             $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($mainCategory);
+            $oldMainCategory = array(
+                'name' => $mainCategory->getName()
+            );
         }
         
         
@@ -213,7 +273,31 @@ class CategoryController extends Controller
                $em = $this->getDoctrine()->getManager();
                $em->persist($mainCategory);
                $em->flush();
-               
+               //LOGOLÁS
+                $log = new Log();
+                $user = $this->get('security.context')->getToken()->getUser();
+                if($edit){//Szerkesztés
+                    $changedData = "";
+                    if($mainCategory->getName() != $oldMainCategory['name']){                            
+                        $changedData = "<div class=\"label-text\">Név: </div><div class='content-box'><div class=\"old-value\">".$oldMainCategory['name'] . "</div><div class=\"new-value\"> " .$oldMainCategory->getName(). "</div></div>";
+                    }
+                    $log->setAction(1);
+                }else{//Új adat 
+                    $changedData = "<div class=\"label-text\">Új főkategória: </div><div class='content-box'>". $mainCategory->getName() ."</div>";
+                    $log->setAction(0);
+                }
+
+                $now = new \DateTime('now');
+                $log->setObjectClass("Frontend\ProductBundle\Entity\MainCategory");
+                $log->setObjectId($mainCategory->getId());
+                $log->setTime($now);
+                $log->setUser($user);
+                $log->setData($changedData);
+                $em = $this->getDoctrine()->getEntityManager(); 
+                $em->persist($log);
+                $em->flush();            
+                
+            
                if($mainCategoryId == null){
                     return $this->redirect($this->generateUrl('backend_admin_main_category'));
                }else{
@@ -239,6 +323,22 @@ class CategoryController extends Controller
             $mainCategory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findOneById($mainCategoryId);
             $mainCategoryName = $mainCategory->getName();
             
+            //LOGOLÁS
+            $user = $this->get('security.context')->getToken()->getUser();
+
+            $changedData = "<div class=\"label-text\">Főkategória törlése: </div><div class='content-box'>". $mainCategory->getName() ."</div>";
+            $now = new \DateTime('now');
+            $log = new Log();
+            $log->setAction(2);
+            $log->setObjectClass("Frontend\ProductBundle\Entity\MainCategory");
+            $log->setObjectId($mainCategory->getId());
+            $log->setTime($now);
+            $log->setUser($user);
+            $log->setData($changedData);
+            $em = $this->getDoctrine()->getEntityManager(); 
+            $em->persist($log);
+            $em->flush();
+                
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($mainCategory);
             $em->flush();

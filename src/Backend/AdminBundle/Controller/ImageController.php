@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Frontend\ProductBundle\Entity\ProductImages;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Backend\AdminBundle\Entity\Log;
 
 class ImageController extends Controller
 {
@@ -36,7 +37,22 @@ class ImageController extends Controller
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($productImages);
                         $em->flush();
-                       // var_dump($productImages->getWebPath());die;
+                        
+                        //LOGOLÁS
+                        $user = $this->get('security.context')->getToken()->getUser();
+
+                        $changedData = "<div class=\"label-text\">Új kép: </div><div class='content-box'>". $productImages->getId() ."</div>";
+                        $now = new \DateTime('now');
+                        $log = new Log();
+                        $log->setAction(0);
+                        $log->setObjectClass("Frontend\ProductBundle\Entity\ProductImages");
+                        $log->setObjectId($productImages->getId());
+                        $log->setTime($now);
+                        $log->setUser($user);
+                        $log->setData($changedData);
+                        $em = $this->getDoctrine()->getEntityManager(); 
+                        $em->persist($log);
+                        $em->flush();
 
                         return $this->redirect($this->generateUrl('backend_admin_product_new',array('productId' => $productId)));
                 }
@@ -58,6 +74,21 @@ class ImageController extends Controller
             
             $productImage = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductImages')->findOneById($productImageId);
             
+            $user = $this->get('security.context')->getToken()->getUser();
+
+            $changedData = "<div class=\"label-text\">Kép törlése: </div><div class='content-box'>". $productImage->getId() ."</div>";
+            $now = new \DateTime('now');
+            $log = new Log();
+            $log->setAction(2);
+            $log->setObjectClass("Frontend\ProductBundle\Entity\ProductImages");
+            $log->setObjectId($productImage->getId());
+            $log->setTime($now);
+            $log->setUser($user);
+            $log->setData($changedData);
+            $em = $this->getDoctrine()->getEntityManager(); 
+            $em->persist($log);
+            $em->flush();
+                        
             unlink($productImage->getAbsolutePath());
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($productImage);

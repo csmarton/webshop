@@ -32,11 +32,7 @@
          <div class="upperMenu">
             <a href="{{path('backend_admin_product_new')}}" class="menu_btn">Új Termék</a>
         </div>
-        <div class="product-edit-box"
-             {% if (productId is not defined or productId is null)%}
-                style='width:100%'
-            {% endif %}
-             >
+        <div class="product-edit-box" style='width:100%'>
             <h2>Termékek szerkesztése</h2>
             <form action="{{ path('backend_admin_product_new',{'productId':productId})}}" method="post" {{ form_enctype(form) }}  name="newProduct"  class="newProduct" autocomplete="off">
                 <div class="new_product_table">
@@ -89,7 +85,7 @@
                         </div>
                          <div class="right-side">
                             {{ form_label(form.inStock, 'Raktáron van -e?', { 'label_attr': {'class': 'labelText'}}) }}
-                            {{ form_widget(form.inStock) }}
+                            {{ form_widget(form.inStock, { 'attr': {'class': 'validate[required, custom[number]] inStock'} }) }}       
                         </div>
                     </div> 
                     <div class="inline-block">    
@@ -97,7 +93,7 @@
                             {{ form_label(form.description, 'Leírás:', { 'label_attr': {'class': 'labelText'}}) }}
                             {{ form_widget(form.description, { 'attr': {'class': 'textEditor'} }) }}
                         </div>
-                    <div class="inline-block">
+                    <div class="inline-block center">
                         <div>
                                 <input type="submit" value="Mentés" class="menu_btn ok_btn">
                                 <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">

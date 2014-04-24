@@ -19,6 +19,11 @@ ProductValidation = {
                 'message': "Add meg a termék bruttó értékét(Szám)!"
             }
         },  
+        '.inStock': {
+            'required': {
+                'message': "Addj meg egy értéket!"
+            }
+        }, 
         '.netSalary': {
             'required': {
                 'message': "Add meg a termék nettó értékét(Szám)!"

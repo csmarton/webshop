@@ -11,6 +11,7 @@ use Frontend\ProductBundle\Entity\Product;
 use Frontend\ProductBundle\Entity\ProductProperty;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Backend\AdminBundle\Entity\Log;
 
 class ProductController extends Controller
 {
@@ -140,16 +141,30 @@ class ProductController extends Controller
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
         }
+        
+        $user = $this->get('security.context')->getToken()->getUser();
+        $userId = $user->getId();
+        
         $request = $this->get('request');
         $productId = $request->query->get('productId');
         
         $currentCategoryId = null;
         $currentMainCategoryId = null;
         $categorys = null;
+        $oldProduct = null;
         if($productId == null){ //új termék
             $product = new Product();
         }else{//termék szerkesztése
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
+            $oldProduct = array(
+                'name' => $product->getName(),
+                'slug' => $product->getSlug(),
+                'description' => $product->getDescription(),
+                'price' => $product->getPrice(),
+                'category' => $product->getCategory(),
+                'isActive' => $product->getIsActive(),
+                'inStock' => $product->getInStock(),
+            );
             $currentCategoryId = $product->getCategory();
             $currentMainCategory = $product->getCategorys()->getMainCategory();
             $currentMainCategoryId = $currentMainCategory->getId();
@@ -158,26 +173,65 @@ class ProductController extends Controller
         
         $form = $this->createForm(new ProductType(),$product);
         if ($request->getMethod() == 'POST') {
+            $em = $this->getDoctrine()->getEntityManager(); 
             $form->bind($request);
             if ($form->isValid()) { 
-               $em = $this->getDoctrine()->getManager();
-               
-               $categorysId = (int)$request->request->get('categorys');
-               
-               $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categorysId);
-               
-               $createdTime = new \DateTime("now"); 
-               $product->setCategorys($category);
-               $product->setCreatedAt($createdTime);
-               $product->setUpdatedAt($createdTime);
-               
-               $em = $this->getDoctrine()->getEntityManager(); 
-               $em->persist($product);
-               $em->flush();              
-               
+                    $categorysId = (int)$request->request->get('categorys');
+                    //var_dump($categorysId);die;
+                    $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categorysId);
 
+                    $createdTime = new \DateTime("now"); 
+                    $product->setCategory($categorysId);
+                    $product->setCategorys($category);
+                    $product->setCreatedAt($createdTime);
+                    $product->setUpdatedAt($createdTime);
+
+
+                    $em->persist($product);
+                    $em->flush();
+                    
+                    $now = new \DateTime('now');
+                    $log = new Log();
+                    if($oldProduct != null){ //Termék szerkesztése
+                        $log->setAction(1);
+                        $changedData = "";
+                        if($product->getName() != $oldProduct['name']){                            
+                            $changedData .= "<div class=\"label-text\">Név: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['name'] . "</div><div class=\"new-value\"> " .$product->getName(). "</div></div>";
+                        }
+                        if($product->getPrice() != $oldProduct['price']){                            
+                            $changedData .= "<div class=\"label-text\">Ár: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['price'] . "</div><div class=\"new-value\"> " .$product->getPrice(). "</div></div>";
+                        }
+                        if($product->getSlug() != $oldProduct['slug']){                            
+                            $changedData .= "<div class=\"label-text\">Slug: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['slug'] . "</div><div class=\"new-value\"> " .$product->getSlug(). "</div></div>";
+                        }
+                        if($product->getDescription() != $oldProduct['description']){                            
+                            $changedData .= "<div class=\"label-text\">Leírás: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['description'] . "</div><div class=\"new-value\"> " .$product->getDescription(). "</div></div>";
+                        }
+                        if($product->getCategory() != $oldProduct['category']){                            
+                            $changedData .= "<div class=\"label-text\">Kategória: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['category'] . "</div><div class=\"new-value\"> " .$product->getCategory(). "</div></div>";
+                        }
+                        if($product->getIsActive() != $oldProduct['isActive']){                            
+                            $changedData .= "<div class=\"label-text\">Aktív: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['isActive'] . "</div><div class=\"new-value\"> " .$product->getIsActive(). "</div></div>";
+                        }
+                        if($product->getInStock() != $oldProduct['inStock']){                            
+                            $changedData .= "<div class=\"label-text\">Raktáron: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['inStock'] . "</div><div class=\"new-value\"> " .$product->getInStock(). "</div></div>";
+                        }
+                    }else{//Új terméket szúrok be
+                        $log->setAction(0);
+                        $changedData = null;
+                    }                    
+                    
+                    $log->setObjectClass("Frontend\ProductBundle\Entity\Product");
+                    $log->setObjectId($product->getId());
+                    $log->setTime($now);
+                    $log->setUser($user);
+                    $log->setData($changedData);
+                    $em->persist($log);
+                    $em->flush();
+               }
+              
+                
                return $this->redirect($this->generateUrl('backend_admin_product_new').'?productId='.$product->getId());
-            }
         }
         
         $mainCategorys = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
@@ -207,8 +261,24 @@ class ProductController extends Controller
          $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
             $productId = $request->request->get('productId');
-            
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
+            
+            //LOGOLÁS
+            $user = $this->get('security.context')->getToken()->getUser();
+            
+            $changedData = "<div class=\"label-text\">Termék törlése: </div><div class='content-box'>". $product->getId() ."</div>";
+            $now = new \DateTime('now');
+            $log = new Log();
+            $log->setAction(2);
+            $log->setObjectClass("Frontend\ProductBundle\Entity\Product");
+            $log->setObjectId($product->getId());
+            $log->setTime($now);
+            $log->setUser($user);
+            $log->setData($changedData);
+            $em = $this->getDoctrine()->getEntityManager(); 
+            $em->persist($log);
+            $em->flush();
+            
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($product);
             $em->flush();
@@ -302,11 +372,34 @@ class ProductController extends Controller
                 $productProperty->setProduct($product);
                 $productProperty->setProperty($property);
             }
-        
+            $oldValue = $productProperty->getValue();
+            
             $productProperty->setValue($propertyValue);
             $em = $this->getDoctrine()->getManager();
             $em->persist($productProperty);
-            $em->flush();    
+            $em->flush(); 
+            
+            //LOGOLÁS
+            $log = new Log();
+            $user = $this->get('security.context')->getToken()->getUser();
+            if($edit){//Szerkesztés
+                $changedData = "<div class=\"label-text\">Érték: </div><div class='content-box'><div class=\"old-value\">".$oldValue . "</div><div class=\"new-value\"> " .$propertyValue. "</div></div>";
+                $log->setAction(1);
+            }else{//Új adat 
+                $changedData = "<div class=\"label-text\">Új terméktulajdonság: </div><div class='content-box'>". $productProperty->getId() ."</div>";
+                $log->setAction(0);
+            }
+            
+            $now = new \DateTime('now');
+            $log->setObjectClass("Frontend\ProductBundle\Entity\ProductProperty");
+            $log->setObjectId($productProperty->getId());
+            $log->setTime($now);
+            $log->setUser($user);
+            $log->setData($changedData);
+            $em = $this->getDoctrine()->getEntityManager(); 
+            $em->persist($log);
+            $em->flush();
+                        
             $productPropertys = array();
             $productProperyts[] = $productProperty;
             $html = $this->renderView('BackendAdminBundle:Product:propertyList.html.twig', array(
@@ -333,6 +426,22 @@ class ProductController extends Controller
             $property = $productProperty->getProperty()->getName(). "  = ". $productProperty->getValue();
             $productId = $productProperty->getProduct()->getId();
             $propertyId = $productProperty->getProperty()->getId();
+            
+            //LOGOLÁS
+            $user = $this->get('security.context')->getToken()->getUser();
+            $changedData = "<div class=\"label-text\">Terméktulajdonság törlése: </div><div class='content-box'><div class=\"old-value\">".$productProperty->getProperty()->getName() . "</div><div class=\"new-value\"> " .$productProperty->getValue(). "</div></div>";
+                        
+            $now = new \DateTime('now');
+            $log = new Log();
+            $log->setAction(2);
+            $log->setObjectClass("Frontend\ProductBundle\Entity\ProductProperty");
+            $log->setObjectId($productProperty->getId());
+            $log->setTime($now);
+            $log->setUser($user);
+            $log->setData($changedData);
+            $em = $this->getDoctrine()->getEntityManager(); 
+            $em->persist($log);
+            $em->flush();
             
             $em = $this->getDoctrine()->getEntityManager();
             $em->remove($productProperty);

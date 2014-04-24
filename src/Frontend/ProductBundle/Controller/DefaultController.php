@@ -29,7 +29,7 @@ class DefaultController extends Controller
         $by = $request->query->get('by');
         
         //OLDALAK
-        $maxResult = 1; //   
+        $maxResult = 9; //   
         $productRepo = $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
         $productPropertyRepo = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty');
         

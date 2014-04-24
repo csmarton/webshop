@@ -6,6 +6,16 @@ Shared = {
     bindUIActions: function(){
        this.qtipInit();
        
+        $('.sideRecomendedProducts').flexslider({ //Termékek képeinek megjelenítése
+            animation: "slide",
+            slideshow: true,
+            itemWidth: 80,
+            slideshowSpeed:5000,
+            keyboard: false,
+            minItems: 1,
+            maxItems: 1
+        }); 
+        
     },
     
 

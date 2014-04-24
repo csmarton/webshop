@@ -1,0 +1,80 @@
+{% extends "BackendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} Admin - Log {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block javascripts %}
+	{{ parent() }}
+        
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Product.css') }}"/>
+    <script type="text/javascript">
+            $(document).ready(function(){
+                
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %} 
+    <div class="main">
+        <h2>Események</h2>
+        <div class="upperMenu">
+            <div class="pages-box">
+                {% include "BackendLayoutBundle:Default:pages.html.twig"%}
+            </div>
+        </div>
+        
+        <table class="shared-table">
+            <thead>
+                <tr>         
+                    
+                    
+                    <th scope="col">Művelet</th>
+                    {% set b = "asc" %}
+                    {% set active = ""%}    
+                    {% if order == "time" %}
+                        {% if by == "asc" %}
+                            {% set b = "desc" %}
+                        {% else %}
+                            {% set b = "asc" %}
+                        {% endif %}
+                        {% set active = "active"%}
+                    {% endif %} 
+                    <th scope="col" class="{{active}}">
+                        <a href="?page=1{{parameters}}&order=time&by={{b}}"   class="{{b}}">Idő</a>
+                    </th>
+                    <th scope="col">Objektum azonosító?</th>
+                    <th scope="col">Objektum osztály</th>
+                    <th scope="col">Módosítások</th>
+                    <th scope="col">Admin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                    <tr>
+                        <td>
+                            {% if (log.getAction() == 0) %}
+                                Új adat
+                            {% elseif (log.getAction() == 1) %}
+                                Frissítés
+                            {% elseif (log.getAction() == 2) %}
+                                Törlés
+                            {% endif %}
+                        </td>
+                        <td>{{ log.getTime()|date('Y-m-d') }}</td>
+                        <td>{{ log.getObjectId() }}</td>
+                        <td>{{ log.getObjectClass() }}</td>
+                        <td>{{ log.getData()|raw }}</td>
+                        <td>
+                             {{log.getUser().getEmail()}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pages-box">
+                {% include "BackendLayoutBundle:Default:pages.html.twig"%}
+        </div>
+    </div>
+    
+{% endblock %}
+                  

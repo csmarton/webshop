@@ -13,7 +13,7 @@
 #search-header:hover{
 }
 
-#search-header .loading{
+#searcher-form .loading{
     background: url("/Shop/web/images/loading_small.gif") center right no-repeat;
 }
 

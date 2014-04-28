@@ -198,4 +198,65 @@ class ProductServices{
         
         return $filteredProductIds;
     }
+    
+    function getCompareProductPropertysAndValues(){
+        $request = $this->container->get('request');
+        $session = $request->getSession();
+        $compareProducts = $session->get('compareProducts');
+        
+        $productPropertysValues = array();
+        $comparePropertys = array();        
+        if(count($compareProducts) != 0){
+            $productIds = array();
+            foreach((array)$compareProducts as $key=>$value){
+                $productIds[] = $key;
+            }
+            $products = array();
+            $repo =  $this->doctrine->getRepository('FrontendProductBundle:Product');
+            $products = $repo
+                    ->createQueryBuilder('p')                   
+                    ->where('p.id IN (:productIds)')
+                    ->setParameter('productIds',$productIds)
+                    ->getQuery()->getResult();
+            $mainCategoryId = $products[0]->getCategorys()->getMainCategory()->getId();
+            
+            $propertys = $this->doctrine->getRepository('FrontendProductBundle:Propertys')
+                    ->createQueryBuilder('p')       
+                    ->where('p.mainCategory = :mainCategoryId')
+                    ->orderBy('p.orderValue','asc')
+                    ->setMaxResults(8)
+                    ->setParameter('mainCategoryId',$mainCategoryId )
+                    ->getQuery()->getResult();
+            foreach($propertys as $property){
+                $comparePropertys[] = $property;
+            }    
+            
+              
+            $i = 1;
+            foreach($products as $product){
+                $productId = $product->getId();
+                $productPropertysValues[$productId] = array();
+                $productPropetys = $product->getProductPropertys();
+                $productPropertysValues[$productId][0] = $product->getName();
+                $productPropertysValues[$productId][1] = $product->getRealPrice();
+                $j = 2;
+                foreach($comparePropertys as $property){                    
+                    $productPropertysValues[$productId][$j] = $this->inPropertys($productPropetys,$property->getId());
+                    $j++;               
+                }
+                $productPropertysValues[$productId][$j] = $product;
+                $i++;                
+            }
+            
+        }
+        return array('comparePropertys' => $comparePropertys, 'productPropertysValues' => $productPropertysValues);
+    }
+    function inPropertys($propertys, $id){
+        foreach($propertys as $property){
+            if($property->getProperty()->getId() == $id){
+                return $property->getValue();
+            }
+        }
+        return "-";
+    }
 }

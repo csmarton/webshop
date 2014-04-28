@@ -35,7 +35,7 @@
                                     </div>                                
                                 {% endif %}
                             </div>
-                                <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">
+                                <input class="to-cart-button" id = "cart_{{product.getId()}}" href ={{path('frontend_add_cart')}} type="button" value="Kosárba">                                
                         </div>  
                         <div class="image_container">                           
                             {% if (product.getProductImages()|length != 0 ) %}
@@ -53,8 +53,9 @@
                                 <li>{{property.getValue()}}</li>
                                 {% set i = i+1%}
                         {% endfor %}   
-                    </ul>
+                    </ul>                    
                 </div>
+                <a href="{{path('frontend_product_compare', {'productId' : product.getId()})}}" class="compare-product-button" productId="{{product.getId()}}">Összehasonlít</a>
         </div> 
         {% endfor %}
     {% endif %}        

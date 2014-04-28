@@ -184,7 +184,10 @@ class DefaultController extends Controller
      * SIDEBAR, az oldal oldalsó részén található menüsor
      */
     public function sidebarAction(){
-        $main_catergory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
+        $main_catergory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->createQueryBuilder('mc')
+                ->select('mc')
+                ->leftJoin('mc.category','c')
+                ->getQuery()->getResult();
         
         return $this->render('FrontendProductBundle:Default:sidebar.html.twig',array('main_category' => $main_catergory));
     }
@@ -283,7 +286,65 @@ class DefaultController extends Controller
             'productQuestions' => $productQuestions,
             ));
     }
+    
+    /*
+     * Termékek összehasonlítása 
+     */
+    public function compareAction($productId){
+        $request = $this->get('request');
+        if ($request->getMethod() == 'POST') { 
+            $session = $request->getSession();
+            $compareProducts = $session->get('compareProducts');
+            $compareProducts[$productId] = true;
+            $session->set('compareProducts', $compareProducts);
+            $compareProducts = $session->get('compareProducts');
+            
+            $service = $this->container->get('product_service');
+            $data = $service->getCompareProductPropertysAndValues();
+            $comparePropertys = $data['comparePropertys'];
+            $productPropertysValues = $data['productPropertysValues'];
+            $html = $this->renderView('FrontendProductBundle:Compare:compareList.html.twig',array(
+                'comparePropertys' => $comparePropertys,
+                'productPropertysValues' => $productPropertysValues
+            ));
+            return new JsonResponse(array('success' => true, 'html' => $html));
+        }
+        return new JsonResponse(array('success' => false));
+    }
+    
+    public function compareListAction(){
+        $request = $this->get('request');
+        $session = $request->getSession();
+        
+        $service = $this->container->get('product_service');
+        $data = $service->getCompareProductPropertysAndValues();
+        $comparePropertys = $data['comparePropertys'];
+        $productPropertysValues = $data['productPropertysValues'];
+        return $this->render('FrontendProductBundle:Compare:compareList.html.twig',array(
+            'comparePropertys' => $comparePropertys,
+            'productPropertysValues' => $productPropertysValues
+        ));
+    }
+    
+    public function removeCompareProductAction($productId){
+        $request = $this->get('request');
+        if ($request->getMethod() == 'POST') { 
+            $session = $request->getSession();
+            $compareProducts = $session->get('compareProducts');
+            unset($compareProducts[$productId]);
+            $session->set('compareProducts', $compareProducts);
+            $service = $this->container->get('product_service');
+            $data = $service->getCompareProductPropertysAndValues();
+            $comparePropertys = $data['comparePropertys'];
+            $productPropertysValues = $data['productPropertysValues'];
+            $html = $this->renderView('FrontendProductBundle:Compare:compareList.html.twig',array(
+                'comparePropertys' => $comparePropertys,
+                'productPropertysValues' => $productPropertysValues
+            ));
+            return new JsonResponse(array('success' => true, 'html' => $html));
+        }
+        return new JsonResponse(array('success' => false));
+    }
 
-    
-    
+
 }

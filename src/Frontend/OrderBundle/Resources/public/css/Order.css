@@ -114,3 +114,11 @@
     border-top: 5px double #428bca;
     text-align: right;
 }
+
+/* RENDELÉSI EMAIL */
+#order-email-table{
+    border-collapse: collapse;
+}
+#order-email-table td{
+    border:1px solid grey;
+}

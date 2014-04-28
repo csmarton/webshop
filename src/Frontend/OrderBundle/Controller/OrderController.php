@@ -71,11 +71,7 @@ class OrderController extends Controller
                    ->getQuery()->getResult();
                $orderPrice = 0;
                foreach($orderProducts as $orderProduct){
-                   if($orderProduct->getSpecialOffer() != null){
-                       $orderPrice = $orderProduct->getSpecialOffer()->getNewPrice();
-                   }else{
-                       $orderPrice = $orderProduct->getPrice();
-                   }
+                    $orderPrice += $orderProduct->getRealPrice();
                }
 
                $now =  new \DateTime("now"); 
@@ -87,8 +83,8 @@ class OrderController extends Controller
                $em->persist($ordersProfileInformation);
                $order->setOrderProfileInformation($ordersProfileInformation);
                $em->persist($order);                    
-               $em->flush();   
-
+               $em->flush();
+                    
                $products = $repo
                            ->createQueryBuilder('p')                   
                            ->where('p.id IN (:productIds)')
@@ -107,12 +103,32 @@ class OrderController extends Controller
                    $em = $this->getDoctrine()->getManager();
                    $em->persist($ordersItem);          
                    $em->flush();
+                   $order->addOrderItem($ordersItem);
                }
-
-               $session->remove('cart'); //töröljük a kosár tartalmát
+                $session->remove('cart'); //töröljük a kosár tartalmát
+                
+                $mailer = $this->get('mailer');
+                $confirmationMessage = \Swift_Message::newInstance()
+                    ->setSubject('Rendelés leadása')
+                    ->setFrom('noreply@marcitech.hu')
+                    ->setTo($order->getOrderProfileInformation()->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'FrontendOrderBundle:Order:orderEmail.html.twig',
+                            array('order' => $order)
+                        ),
+                        "text/html"
+                    )
+                ;
+                $mailer->send($confirmationMessage);
+                
                return $this->redirect($this->generateUrl('frontend_cart_orders_success'));
            }  
         }
+        /*$order = $this->getDoctrine()->getRepository('FrontendOrderBundle:Orders')->findOneById(9);
+        return $this->render('FrontendOrderBundle:Order:orderEmail.html.twig',array(
+            'order' => $order
+        ));*/
         return $this->render('FrontendOrderBundle:Order:order.html.twig',array(
             'ProfileForm' => $ProfileForm->createView(),
             'orderForm'=>$orderForm->createView(),

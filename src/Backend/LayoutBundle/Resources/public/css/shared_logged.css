@@ -14,33 +14,38 @@ body{
     position: absolute;
 }
 
+/*
+* Fejléc stílusa
+*/
 .header{
-    background-color: #333;
-    height: 50px;
+    background-color: #f3f3f3;
     width: 100%;
     z-index: 100;
-    top: 0;    
+    top: 0;
     padding: 10px 0px;
     position: fixed;
-    min-width:1200px !important;
+    min-width: 1200px !important;
+    border-bottom: 2px solid #d8d8d8;
 }
 
 .header .group_right  li{
-	float: left;
-	padding: 10px;	
-	margin-left: 5px;
-        font-weight: bold;
-        color:white;
+    float: left;
+    padding: 10px;	
+    margin-left: 5px;
+    color: black;
+    font-weight: bold;
 }
 
-.header .group_right  li:hover{
-    background-color:#10AC8E;
+.header .group_right  li:hover,
+.header .group_right  a:hover{
+    background-color:#428bca;
+    color:white;
 }
 .header .group_right  a{
-	display: inline;
-	text-decoration:none;
-	color:white;
-        font-weight: bold;
+    display: inline;
+    text-decoration:none;
+    font-weight: bold;
+    color: black;
 }
 .header .group_right #cart #cart_icon{    
     background: url("/Shop/web/bundles/frontendlayout/images/cart.png") center no-repeat;
@@ -62,19 +67,20 @@ body{
     text-align: center;
     color: white;
 }
-
+/* LOGO */
 #logo{
-	background: url("/Shop/web/bundles/frontendlayout/images/logo.png") center no-repeat !important;
-	height: 30px;
-	width: 150px;
-	float: left;
-	padding: 0px 10px;
+    background: url("/Shop/web/bundles/frontendlayout/images/logo.png") center no-repeat !important;
+    height: 30px;
+    width: 150px;
+    float: left;
+    margin: 0px 10px;
 }
 #logo a{
 	display:block;
 	width:100%;
 	height:100%;
 }
+
 .wrapper {
     position: relative;
 }
@@ -93,7 +99,7 @@ body{
 }
 
 /*
-    JOBB OLDAL
+*   Bal oldali menüsor
 */    
 .sidebar{
     width: 200px;
@@ -101,28 +107,26 @@ body{
     position: fixed;
     background-color: #f3f3f3;
     height: 100%;
-    background-color:#333;
-    font-weight: bold;
+    background-color: #f3f3f3;
     letter-spacing: 1.2px;
-    border-top: 2px solid grey;
     padding-top: 30px;
+    border-right: 2px solid #d8d8d8;
 }
 
-.sidebar ul{
-    
-}
+/* Linkek stílusa */
 .sidebar .menuItem a{
-    color: white;
+    color: black;
+    font-weight: bold;
     display: block;
     padding: 10px;
     text-decoration: none;
 }
 .sidebar .menuItem a:hover{
-    background-color:#10AC8E;
+    background-color:#428bca;
     color:white;
 }
 .sidebar .menuDivideItem{
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid #d8d8d8;
     padding-bottom: 5px;
     margin-bottom: 5px;
 }
@@ -201,7 +205,6 @@ body{
 
 .main {
     min-height: 720px;
-    background-color: #F8F8F8;
     margin-left:200px;
     padding: 30px;
     overflow: hidden;

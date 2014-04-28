@@ -1,0 +1,36 @@
+{% if productPropertysValues|length == 0%}
+    Nincsenek összehasonlítandó termékek! 
+{% else %}
+    <table>
+        <thead>
+            <th>Kép</th>
+            <th>Név</th>
+            <th>Ár</th>
+            {% for compareProperty in comparePropertys %}
+                <th>{{compareProperty.getName()}}</th>
+            {% endfor %}
+            <th>Törlés</th>
+        </thead>
+        <tbody>
+            {% for productPropertysValue in productPropertysValues %}
+                {% set length = productPropertysValue|length-1  %}
+                {% set product = productPropertysValue[length] %}
+                <tr>
+                    <td>
+                        {% if (product.getProductImages()|length != 0 ) %}
+                            <img src="{{image(product.getProductImages()[0].getWebPath()).resize(50,50)}}"/>
+                        {% else %}     
+                            <img src="{{ image('images/no_image.jpg').resize(50,50)}}"/>
+                        {% endif %}
+                    </td>
+                    {% for value in productPropertysValue %}
+                        {% if loop.index <= length %}
+                            <td>{{value}}</td>
+                        {% endif %}
+                    {% endfor %}
+                        <td><a href="{{path('frontend_product_compare_remove', {'productId' : product.getId() })}}" class="delete-compare-product">Törlés</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

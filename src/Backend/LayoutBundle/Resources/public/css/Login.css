@@ -1,3 +1,6 @@
+/*
+* Admin felület bejelentkezési ablakának stílusa
+*/
 html,body{
     height:100%;
 }
@@ -7,29 +10,40 @@ h2{
     font-size: 2em;
     padding-bottom: 10px;
 }
+
+/* Bejelentkezési űrlap */
 #sign-in-form{
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -150px;
     margin-left: -250px;
-    /* width: 400px; */
-    /* height: 180px; */
     padding: 10px;
+    background-color: rgb(231, 231, 231);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 1px 3px 4px 0px rgba(7, 0, 0, 0.57);
+    -moz-box-shadow: 1px 3px 4px 0px rgba(7, 0, 0, 0.57);
+    box-shadow: 1px 3px 4px 0px rgba(7, 0, 0, 0.57);
 }
 
+/* beviteli mezők címkéi */
 #sign-in-form label{
     float: left;
-    margin: 10px 10px 0px 0px;
+    margin: 0px 10px 0px 0px;
     width: 150px;
     font-weight: bold;
 }
+
+/* Beviteli mezők */
 #sign-in-form input{
     width: 200px;
     display: block;
     padding: 5px;
     margin: 10px;
 }
+/* Bejelentkezés gomb */
 #submit-login-form-button{
     text-transform: uppercase;
     border-radius: 3px;
@@ -52,6 +66,7 @@ h2{
     margin: 10px auto !important; 
 }
 
+/* Hiba üzenetek */
 .errorSection {
     display:none;
     background-color: red;

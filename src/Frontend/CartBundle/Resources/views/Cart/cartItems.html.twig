@@ -6,8 +6,8 @@
         </div>
     {% endif %}
     {% for productWithCount in productsWithCount %}
-        {% if productWithCount[0].getSpecialOffer() is not null %}
-            {% set price = productWithCount[0].getSpecialOffer().getNewPrice %}
+        {% if productWithCount[0].getSalesPrice() is not null %}
+            {% set price = productWithCount[0].getSalesPrice() %}
         {% else%}
             {% set price = productWithCount[0].getPrice() %}
         {% endif %}

@@ -103,7 +103,7 @@
 	clear: both;
 	font-size: 0.8em;
 	padding: 0px 10px 0px 0px;
-	height: 190px;
+	height: 130px;
 }
 .main .products_box .bottom_box ul{
     list-style: disc;
@@ -299,4 +299,10 @@
     color: #D1466F;
     font-weight: bold;
     text-align: center;
+}
+
+.product_box .compare-product-button{
+    display: block;
+    text-align: right;
+    padding: 0px 5px;
 }

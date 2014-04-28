@@ -1,0 +1,45 @@
+<style type="text/css">
+    #order-email-table{
+        border-collapse: collapse;
+    }
+    #order-email-table td{
+        border:1px solid grey;
+    }
+</style>
+Kedves {{order.getOrderProfileInformation().getName()}},<br/><br/>
+Az alábbi rendelésedet leadásra került.<br>
+Szállítási mód: <span style="font-weight:bold">{{order.getShippingOption().getName()}}</span><br/>
+Fizetési mód: <span style="font-weight:bold">{{order.getPaymentOption().getName()}}</span><br/>
+<table id="order-email-table">
+    <thead>
+        <th>Termék azonosító</th>
+        <th>Terméknév</th>
+        <th>Rendelési egység</th>                
+        <th>Ár</th>
+    </thead>
+    <tbody>
+        {% for item in order.getOrderItems() %}
+            {% set product = item.getProduct() %}
+            {% if product.getSalesPrice() is not null %}
+                {% set price = product.getSalesPrice() %}
+            {% else%}
+                {% set price = product.getPrice() %}
+            {% endif %}
+            <tr>
+                <td>{{ product.getId() }}</td>
+                <td>{{ product.getName() }}</td>
+                <td>{{ item.getUnitQuantity() }}</td>
+                <td>{{ product.getRealPrice() |priceFormat }}</td>                             
+                </div>
+            </tr>
+        {% endfor %}
+        <tr class="cart-sum">
+            <td>Összesen:</td>
+            <td></td>
+            <td>{{order.getItemsTotal()}}</td>
+            <td>{{order.getItemsTotalPrice()|priceFormat}} Ft</td>
+        </tr>
+    </tbody>
+</table>
+<br/>
+Üdvözlette: marci-tech.hu

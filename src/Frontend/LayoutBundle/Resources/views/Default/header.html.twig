@@ -8,8 +8,8 @@
         </div>
         <div class="group_right">
 			<ul>
-                                <li id="compare-product">
-                                    <a href="">
+                                <li >
+                                    <a id="compare-products-button" href="javascrip:void(0)">
                                         <div id="compare-product-icon"></div>
                                         <span>Összehasonlítás</span>
                                     </a>
@@ -64,6 +64,12 @@
                         <a href="{{ path('fos_user_security_logout') }}">Kijelentkezés</a>
                     </li>                
                 </ul>
+            </div>    
+        </div>
+        <div id="compareProductsDropDown" class="hide">
+            <div class="loading"></div>
+            <div class="compareProductsDropDownContent">
+                {% render(controller('FrontendProductBundle:Default:compareList')) %}
             </div>    
         </div>
         

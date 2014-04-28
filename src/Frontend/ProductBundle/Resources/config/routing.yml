@@ -21,3 +21,15 @@ product:
 frontend_product_questions:
     pattern:  /kerdesek/uj
     defaults: { _controller: FrontendProductBundle:Default:tabQuestions }
+    
+frontend_product_compare:
+    pattern:  /osszehasonlit/t/{productId}
+    defaults: { _controller: FrontendProductBundle:Default:compare }
+    
+frontend_product_compare_list:
+    pattern:  /osszehasonlit/t
+    defaults: { _controller: FrontendProductBundle:Default:compareList }
+    
+frontend_product_compare_remove:
+    pattern:  /osszehasonlit/torles/{productId}
+    defaults: { _controller: FrontendProductBundle:Default:removeCompareProduct }        

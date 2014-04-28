@@ -1,6 +1,6 @@
 Cart = {    
+    OLDVALUE : null,
     init: function(){
-            Cart.initOrderButtons();
             this.bindUIActions();            
     },
 
@@ -10,6 +10,7 @@ Cart = {
             e.preventDefault();
             id = $(this).attr('id').split("_");
             product_id = id[1];
+            $this = $(this);
             $.ajax({
                 url: $(this).attr("href"),
                 data: {'productId' : product_id},
@@ -17,7 +18,8 @@ Cart = {
                 dataType: 'json'
             }).done(function(returnData) {
                $('#cart-count').html(returnData.html);
-               $('#cart-count').effect('shake');
+               var i = $('.to-cart-button').index( $this );
+               $('#cart-count').effect('transfer',{ to: $( ".to-cart-button" ).eq( i ), className: "ui-effects-transfer" }, 500);
             }).fail(function(thrownError) {
                 console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
             });
@@ -27,14 +29,16 @@ Cart = {
             e.preventDefault();
             productId = $(this).attr('productId');
             $this = $(this);
-            beforeChangeValue = $(this).val();
-        }).change(function(){
-            /*if($this.val() < 0 || $this.val() == ""){
-               $this.val(beforeChangeValue);
+            Cart.OLDVALUE = $(this).val();
+            console.log(Cart.OLDVALUE);
+        });
+        $('body').on("change", ".change-product-cart-count", function(e){
+            if($(this).val() < 0 || $(this).val() === ""){
+               $this.val(Cart.OLDVALUE);
             }else{
                 $.ajax({
                     url: $this.attr("link"),
-                    data: {'productId' : productId, 'changeValue' : $this.val()},
+                    data: {'productId' : productId, 'changeValue' : $(this).val()},
                     type: 'POST',
                     dataType: 'json'
                 }).done(function(data) {
@@ -42,11 +46,11 @@ Cart = {
                     $('#cart-count').html(data.cartCount);
                     $('#order-button').attr('cartCount',data.cartCount);
                     Cart.initOrderButtons();
-                    $('#cart-count').effect('shake');
+                    $('#cart-count').effect('highlight');
                 }).fail(function(thrownError) {
                     console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
                 });
-            }*/
+            }
         });
         
         $('body').on("click", ".delete-product-from-cart", function(e){ //Rendelés gombra kattintás
@@ -58,12 +62,13 @@ Cart = {
                 type: 'POST',
                 dataType: 'json'
             }).done(function(data) {
-                if (data.success) {                    
-                    $('#cart-box .top-section').html(data.html);
-                    $('#cart-count').html(data.cartCount);
+                if (data.success) {    
+                    $('#cart-count')
+                            .effect('highlight')
+                            .html(data.cartCount);
+                     $('#cart-box .top-section').html(data.html);
                     $('#order-button').attr('cartCount',data.cartCount);
                     Cart.initOrderButtons();
-                    $('#cart-count').effect('shake');
                 } else {							  
                     console.error('HIBA a szervertől:' + data.err);
                 }
@@ -77,7 +82,7 @@ Cart = {
         }); 
 
     },
-    initOrderButtons : function(){       
+    initOrderButtons : function(){
         $('body').on("click", "#order-button", function(e){ //Rendelés gombra kattintás
             
             if($('#order-button').attr('cartCount') == "0"){ //Ha nincs bejelentkezve a felhasználó, feldobjuk a bejelentkezési ablakot           
@@ -88,6 +93,6 @@ Cart = {
                 $("#modal-sign-in").reveal();
                 e.preventDefault();
             }
-        });  
+        });
     }
 };	

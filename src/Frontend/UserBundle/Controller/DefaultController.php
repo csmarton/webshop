@@ -152,7 +152,7 @@ class DefaultController extends Controller
                     $em->flush();
                     $context = $this->get('router')->getContext();
                     $mailer = $this->get('mailer');
-                    $link = $context->getHost(). "/".$this->generateUrl('frontend_password_confirmation', array('confirmationToken' => $confirmationToken ));
+                    $link = "http://".$context->getHost(). "".$this->generateUrl('frontend_password_confirmation', array('confirmationToken' => $confirmationToken ));
                     $confirmationMessage = \Swift_Message::newInstance()
                         ->setSubject('Új jelszó generálás')
                         ->setFrom('noreply@marcitech.hu')

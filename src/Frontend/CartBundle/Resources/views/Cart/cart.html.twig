@@ -5,10 +5,8 @@
  
 {% block javascripts %}
 	{{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/Product.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
-                Product.init();
             });
     </script>
 {% endblock %}

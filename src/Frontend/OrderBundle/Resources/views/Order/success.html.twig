@@ -11,12 +11,10 @@
 {% block javascripts %}
 	{{ parent() }}
     <script type="text/javascript" src="{{ asset('js/jquery.slimscrol.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/frontendproduct/js/Product.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/frontendcart/js/Cart.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/frontendorder/js/OrderValidation.js') }}"></script>
     <script type="text/javascript">
             $(document).ready(function(){
-                Product.init();
                 Cart.init();
                 OrderValidation.init();
             });

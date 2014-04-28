@@ -3,15 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/public/js/Product.js</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/sideRecomendedProducts.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/sidebar.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/product.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Resources/views/Order/success.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/UserBundle/Resources/views/Reset/confirmationPasswordReset.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Resources/public/js/Order.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/views/Cart/cart.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/views/Cart/cartItems.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/UserBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/app/config/config.yml</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Resources/views/Order/order.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Controller/OrderController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/UserBundle/Resources/public/js/UserValidation.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Entity/Orders.php</file>
             <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/layout.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Entity/OrdersItem.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/css/shared_logged.css</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/js/Shared.js</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Resources/public/css/Order.css</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Resources/views/Order/orderEmail.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/public/js/Cart.js</file>
         </group>
     </open-files>
 </project-private>

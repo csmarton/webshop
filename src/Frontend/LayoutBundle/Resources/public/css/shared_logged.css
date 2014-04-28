@@ -5,6 +5,9 @@ body{
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
 }
 
+.qtip{
+    max-width:1000px;
+}
 .loading{
     display:none;
     width: 100%;
@@ -31,11 +34,11 @@ body{
 }
 
 #logo{
-	background: url("/Shop/web/bundles/frontendlayout/images/logo.png") center no-repeat !important;
-	height: 30px;
-	width: 150px;
-	float: left;
-	padding: 0px 10px;
+    background: url("/Shop/web/bundles/frontendlayout/images/logo.png") center no-repeat !important;
+    height: 30px;
+    width: 150px;
+    float: left;
+    width: 200px;
 }
 #logo a{
 	display:block;
@@ -146,20 +149,41 @@ body{
     position: relative;
 }
 
+.header .group_right  ul{
+    display: block;
+    overflow: hidden;
+}
 .header .group_right  li{
-	float: left;
-	padding: 10px;	
-	margin-left: 5px;
+    display: inline-block;
+    margin-left: 5px;
 }
 
 .header .group_right  li:hover{
 	background-color: white;
 }
 .header .group_right  a{
-	display: inline;
-	text-decoration:none;
-	color:black;
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
 }
+
+.header .group_right #cart #cart_icon{    
+    background: url("/Shop/web/bundles/frontendlayout/images/cart.png") center no-repeat;
+}
+.header .group_right #cart{
+    position: relative;
+}
+.header .group_right #cart-count{
+    display: inline;
+    background-color: rgba(255,0,0,1);
+    padding: 5px;
+    height: 14px;
+    width: 18px;
+    text-align: center;
+    color: white;
+}
+.ui-effects-transfer { border: 2px dotted gray; }
 
 .hide{
     display:none;
@@ -351,4 +375,25 @@ padding-top: 30px;
 .ui-menu .ui-menu-item .search-product-image{
     padding:5px;
     display:inline-block;
+}
+
+/*
+* Termékek összehasonlítása qtip
+*/
+.compareProductsDropDownQTip thead tr{
+    border-bottom: 1px solid grey;
+}
+.compareProductsDropDownQTip thead th{
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+.compareProductsDropDownQTip tbody tr{
+    border-bottom: 1px solid #ddd;
+    height: 40px;
+}
+.compareProductsDropDownQTip tbody tr td{
+    padding: 5px 0px;
+    vertical-align: top;
+    text-align: center;
 }

@@ -11,87 +11,71 @@ use Frontend\ProfileBundle\Form\ProfileType;
 
 class CartController extends Controller
 {
+    /*
+     * Kosárba tevés funkció
+     * A kosárban lévő termékeket asszociatív tömbként tároljuk el,
+     * a kulcs maga az azonosító, az érték pedig a darabszám. A tömböt munkafolyamatba mentjük el.
+     */
     public function addAction(){        
                 
         $request = $this->get('request');
         
-        $productId = $request->request->get('productId');
+        $productId = $request->request->get('productId'); //termék azonosítója
         
-        $session = $request->getSession();
+        $session = $request->getSession(); //munkafolyamat lekérése
         $inCart = $session->get('cart');
         if(isset($inCart[$productId])){
-            $inCart[$productId]++;
+            $inCart[$productId]++;  //megnöveljük a darabszámot
         }else{
-            $inCart[$productId] = 1;
+            $inCart[$productId] = 1; //kosárba tesszük a terméket egy darabszámmal
         }
         
-        $session->set('cart', $inCart);
+        $session->set('cart', $inCart); //mentjük a munkafolyamatato
         
-        $service = $this->container->get('cart_service');
+        $service = $this->container->get('cart_service'); //service a kosárban lévő termékek darabszámának meghatározásához
         $cartCount = $service->getCartCount();
+        
         $html = $cartCount;
+        
         return new JsonResponse(array('success' => true,'html' => $html, 'cartCount' => $cartCount));
     }
     
+    /*
+     * Kosárba lévő termékek listázása
+     * A munkafolyamatból megkapjuk a kosárban lévő termékek azonosítóját, ez
+     * alapján lekérjük a megfelelő termékeket. 
+     */
     public function cartAction(){
-        $request = $this->get('request');        
-        $session = $request->getSession();
-        $inCart = $session->get('cart');
-        $productIds = array();
-        foreach((array)$inCart as $key=>$value){
-            $productIds[] = $key;
-        }
+        $request = $this->get('request');   
         
-        $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
-        $products = $repo
-                    ->createQueryBuilder('p')                   
-                    ->where('p.id IN (:productIds)')
-                    ->setParameter('productIds',$productIds)
-                    ->getQuery()->getResult();
-        $productsWithCount = array();
-        foreach((array)$products as $product){
-            $productsWithCount[] = array($product,$inCart[$product->getId()]);
-        }
         $service = $this->container->get('cart_service');
+        $productsWithCount = $service->getProductWithCount();            
         $cartCount = $service->getCartCount();
         return $this->render('FrontendCartBundle:Cart:cart.html.twig',array('productsWithCount' => $productsWithCount,
                 'cartCount'=>$cartCount));
     }
     
-        public function removeAction(){        
-                
+    /*
+     * Kosárból való törlés
+     * Töröljük a kosárból a megadott elemet, majd ismét kilistázzuk a kosár tartalmát
+     */
+    public function removeAction(){  
         $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
             $productId = $request->request->get('productId');
 
             $session = $request->getSession();
             $inCart = $session->get('cart');
-            unset($inCart[$productId]);
+            unset($inCart[$productId]); //Töröljük a terméket a kosárból
             
-            $session->set('cart', $inCart);
+            $session->set('cart', $inCart); //Mentjük a munkafolyamatot
             
-            $productIds[] = array();
-            foreach((array)$inCart as $key=>$value){
-                $productIds[] = $key;
-            }
-        
-            $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
-            $products = array();
-            if(count($productIds) != 0){
-                $products = $repo
-                            ->createQueryBuilder('p')                   
-                            ->where('p.id IN (:productIds)')
-                            ->setParameter('productIds',$productIds)
-                            ->getQuery()->getResult();
-            }    
-            $productsWithCount = array();
-            foreach((array)$products as $product){
-                $productsWithCount[] = array($product,$inCart[$product->getId()]);
-            }
             $service = $this->container->get('cart_service');
+            $productsWithCount = $service->getProductWithCount();            
             $cartCount = $service->getCartCount();
         
-            $html = $this->renderView('FrontendCartBundle:Cart:cartItems.html.twig', array(
+            //Kilistázzuk a kosár tartalmát 
+            $html = $this->renderView('FrontendCartBundle:Cart:cartItems.html.twig', array( 
                         'productsWithCount' => $productsWithCount,
                         'cartCount'=>$cartCount));
             
@@ -101,6 +85,11 @@ class CartController extends Controller
          }   
     }
     
+    /*
+     * Kosár tartalmának frissítése
+     * Módosítjuk a megadott termék darabszámát, 
+     * majd kilistázzuk újra a kosár tartalmát
+     */
     public function updateAction(){        
                 
         $request = $this->get('request');
@@ -110,36 +99,20 @@ class CartController extends Controller
             
             $session = $request->getSession();
             $inCart = $session->get('cart');
-            if($changeValue == 0){
-                unset($inCart[$productId]);
+            if($changeValue == 0){ //Ha a darabszám 0-a, töröljük a terméket a kosárból
+                unset($inCart[$productId]); 
             }else{
-                $inCart[$productId] = $changeValue;
+                $inCart[$productId] = $changeValue; //A darabszámot a megadott értékre változtatjuk
             }
+                        
+            $session->set('cart', $inCart);//Mentjük a munkafolyamatot
             
             
-            $session->set('cart', $inCart);
-            
-            $productIds[] = array();
-            foreach((array)$inCart as $key=>$value){
-                $productIds[] = $key;
-            }
-        
-            $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
-            $products = array();
-            if(count($productIds) != 0){
-                $products = $repo
-                    ->createQueryBuilder('p')                   
-                    ->where('p.id IN (:productIds)')
-                    ->setParameter('productIds',$productIds)
-                    ->getQuery()->getResult();
-            }    
-            $productsWithCount = array();
-            foreach((array)$products as $product){
-                $productsWithCount[] = array($product,$inCart[$product->getId()]);
-            }
             $service = $this->container->get('cart_service');
-            $cartCount = $service->getCartCount();
+            $productsWithCount = $service->getProductWithCount(); //Lekérjük a kosár tartalmát           
+            $cartCount = $service->getCartCount(); //Kosárban lévő termékek száma
         
+            //Kilistázzuk a kosárban lévő termékeket
             $html = $this->renderView('FrontendCartBundle:Cart:cartItems.html.twig', array(
                         'productsWithCount' => $productsWithCount,
                         'cartCount'=>$cartCount));

@@ -1,15 +1,23 @@
+#
+# Kosár útvonalak
+#
+
+#kosárba tevés
 frontend_add_cart:
     pattern:  /kosar/betesz
     defaults: { _controller: FrontendCartBundle:Cart:add}
-    
+
+#törlés a kosárból
 frontend_remov_from_cart:
     pattern:  /kosar/kivesz
     defaults: { _controller: FrontendCartBundle:Cart:remove}
-    
+
+#kosár frissítése    
 frontend_cart_update:
     pattern:  /kosar/frissites
     defaults: { _controller: FrontendCartBundle:Cart:update}    
-    
+
+#kosár kilistázása
 frontend_cart:
     pattern:  /kosar
     defaults: { _controller: FrontendCartBundle:Cart:cart}

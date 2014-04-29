@@ -205,7 +205,7 @@ class ProductController extends Controller
                             $changedData .= "<div class=\"label-text\">Slug: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['slug'] . "</div><div class=\"new-value\"> " .$product->getSlug(). "</div></div>";
                         }
                         if($product->getDescription() != $oldProduct['description']){                            
-                            $changedData .= "<div class=\"label-text\">Leírás: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['description'] . "</div><div class=\"new-value\"> " .$product->getDescription(). "</div></div>";
+                            $changedData .= "<div class=\"label-text\">Leírás szerkesztése </div>";
                         }
                         if($product->getCategory() != $oldProduct['category']){                            
                             $changedData .= "<div class=\"label-text\">Kategória: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['category'] . "</div><div class=\"new-value\"> " .$product->getCategory(). "</div></div>";

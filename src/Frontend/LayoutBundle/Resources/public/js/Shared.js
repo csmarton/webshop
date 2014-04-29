@@ -1,3 +1,4 @@
+/* Közös funkciók s*/
 Shared = {
     init: function(){
             this.bindUIActions();
@@ -6,16 +7,23 @@ Shared = {
     bindUIActions: function(){
        this.qtipInit();
        
-        $('.sideRecomendedProducts').flexslider({ //Ajánlott termékek képeinek megjelenítése
+        /*
+         * Ajánlott termékek képeinek megjelenítése
+         */
+        $('.sideRecomendedProducts').flexslider({ 
             animation: "slide",
             slideshow: true,
             itemWidth: 80,
             slideshowSpeed:5000,
             keyboard: false,
             minItems: 1,
-            maxItems: 1
+            maxItems: 1,
+            directionNav: false
         }); 
         
+        /*
+         * Összehasonlításnál termék törlése
+         */
         $('body').on("click", ".delete-compare-product", function(e){
             $('.compareProductsDropDownQTip .loading').show();
             e.preventDefault();		
@@ -39,8 +47,13 @@ Shared = {
         
     },
     
-
+    /*
+     * Buborékablakok inicializálása
+     */
     qtipInit : function(){
+        /*
+         * Profilom qTip
+         */
         $('#my-profile-text').qtip({
             content: $("#myprofileDropDown").html(),
             position: {
@@ -59,6 +72,9 @@ Shared = {
             }
         });
         
+        /*
+         * Összehasonlítás qTip
+         */
         $('#compare-products-button').qtip({
             content: $("#compareProductsDropDown").html(),
             position: {

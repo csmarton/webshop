@@ -1,15 +1,23 @@
+#
+# Közös útvonalak
+#
+
+#ügyfélszolgálat útvonala
 frontend_bottom_customer_services:
     pattern:  /rolunk/ugyfelszolgalat
     defaults: { _controller: FrontendLayoutBundle:Default:customerServices}   
-    
+
+#adatvédelmi és szerződési feltételek útvonala
 frontend_bottom_privacy_policy_and_terms_conditions:
     pattern:  /rolunk/adatvedelem
     defaults: { _controller: FrontendLayoutBundle:Default:privacyPolicyAndTermsConditions}       
     
+#gyakori kérédek útvonala
 frontend_bottom_gyik:
     pattern:  /rolunk/gyik
     defaults: { _controller: FrontendLayoutBundle:Default:gyik}       
-    
+   
+#kapcsolatok útvonala
 frontend_bottom_contact:
     pattern:  /rolunk/kapcsolat
     defaults: { _controller: FrontendLayoutBundle:Default:contact}           

@@ -1,7 +1,14 @@
+/*
+* Általános stílusok
+*/
 .bold{
     font-weight: bold;
 }
 
+
+/*
+* Kosár tartalmának megjelenése
+*/
 #cart-box .cart-items .empty-cart-messages{
     padding-top:10px;
 }
@@ -59,6 +66,9 @@
 }
 
 
+/* 
+* Összegzés a kosár alatt
+*/
 #cart-box .cart-sum{
     text-align: right;
     padding-bottom: 10px;
@@ -70,7 +80,9 @@
     text-align: right;
 }
 
-
+/* 
+* Gombok 
+*/
 .menu_btn{
     text-transform: uppercase;
     border-radius: 3px;
@@ -116,58 +128,9 @@
     border-bottom: 2px solid #428bca;
 }
 
-#order-profile-data label,
-#order-shipping-address label,
-#order-billing-address label{
-    float: left;
-    width: 150px;
-}
-
-#order-profile-data input,
-#order-shipping-address input,
-#order-billing-address input{
-    display:block;
-    width: 250px;
-    height: 25px;
-    margin: 10px;
-    background-color: #F7F9FD;
-    border: 1px solid #D5D5D5;
-    padding: 5px;
-    font-weight: bold;
-}
-
-#shipping-option-box input,
-#payment-option-box input{
-    float: left;
-}
-
-#shipping-option-box label,
-#payment-option-box label{
-    display:block;
-    margin: 10px;
-}
-
-#order-comment-box textarea{
-    width: 100%;
-    height:100px;
-    padding: 0;
-}
-
-.order-information-boxes{
-    padding:10px;
-}
-
-#order-conditions{
-}
-
-#order-conditions-box .slimScrollDiv{
-    border:1px solid rgb(169, 169, 169);
-    width: 770px;
-    padding: 10px 10px;
-    margin: 10px 0px;
-}
-
-//MODÁLIS ABLAK ÜRES KOSÁRNÁL
+/*
+* MODÁLIS ABLAK ÜRES KOSÁRNÁL
+*/
 #modal-empty-cart .formContent{
     padding:10px;
 }

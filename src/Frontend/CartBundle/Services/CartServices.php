@@ -14,12 +14,20 @@ class CartServices{
     
     protected $em;
     private $container;
+    private $doctrine;
 	
+    /*
+     * Konstruktor
+     */
     function __construct(EntityManager $em, Container $container, Doctrine $doctrine){
-		$this->em = $em;
+        $this->em = $em;
         $this->container = $container;
+        $this->doctrine = $doctrine;
     }
     
+    /*
+     * Kosárban lévő termékek darabszáma
+     */
     function getCartCount(){
         $request = $this->container->get('request');
         $session = $request->getSession();
@@ -30,6 +38,34 @@ class CartServices{
             $cartCount+=$value;
         }
         return $cartCount;
+    }
+    
+    /*
+     * Kosárba lévő termékek darabszámmal együtt
+     */
+    function getProductWithCount(){
+        $request = $this->container->get('request');
+        $session = $request->getSession();
+        $inCart = $session->get('cart');
+        $productIds[] = array(); //lekédezzük a munkafolyamatból a termékek azonosítóját
+        foreach((array)$inCart as $key=>$value){
+            $productIds[] = $key;
+        }
+
+        $repo =  $this->doctrine->getRepository('FrontendProductBundle:Product'); //lekérjük a termékeket
+        $products = array();
+        if(count($productIds) != 0){
+            $products = $repo
+                        ->createQueryBuilder('p')                   
+                        ->where('p.id IN (:productIds)')
+                        ->setParameter('productIds',$productIds)
+                        ->getQuery()->getResult();
+        }    
+        $productsWithCount = array();
+        foreach((array)$products as $product){
+            $productsWithCount[] = array($product,$inCart[$product->getId()]); //Darabszám és termék
+        }
+        return $productsWithCount;
     }
 
     

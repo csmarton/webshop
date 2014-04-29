@@ -21,55 +21,75 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 class DefaultController extends Controller
 {
+    /*
+     * Réteg renderelése
+     */
     public function layoutAction()
     {
-
         return $this->render('FrontendLayoutBundle:Default:layout.html.twig');
     }
     
+    /*
+     * Lábléc renderelése
+     */
     public function footerAction(){
         return $this->render('FrontendLayoutBundle:Default:footer.html.twig');
     }
     
+    /*
+     * Fejléc renderelése
+     * Paraméterben átadjuk neki a kosárban lévő termékek darabszámát
+     */
      public function headerAction() {        
         $request = $this->get('request');
         $service = $this->container->get('cart_service');
         $cartCount = $service->getCartCount();
         return $this->render('FrontendLayoutBundle:Default:header.html.twig',array('cartCount'=>$cartCount));
-    }
-    
-   
-    
-    protected function getEngine()
-    {
-        return $this->container->getParameter('fos_user.template.engine');
-    }
-    
+    }    
+       
+   /*
+    * Ügyfélszolgálat renderelése
+    */
     public function customerServicesAction(){
         return $this->render('FrontendLayoutBundle:BottomSection:customerServices.html.twig');
     }
     
+    /*
+     * Adatvédelmi és szeződési feltételek renderelése
+     */
     public function privacyPolicyAndTermsConditionsAction(){
         return $this->render('FrontendLayoutBundle:BottomSection:PrivacyPolicyAndTermsConditions.html.twig');
     }
  
+    /*
+     * Gyakori kérdések renderelése
+     */
     public function gyikAction(){
         return $this->render('FrontendLayoutBundle:BottomSection:GYIK.html.twig');
     }
     
+    /*
+     * Kapcsolat renderelése
+     */
     public function contactAction(){
         return $this->render('FrontendLayoutBundle:BottomSection:contact.html.twig');
     }
     
+    /*
+     * Ajánlott termékek az oldalsávban
+     * Lekérjük a rendeléseket, megnézzük hogy mely termékből rendelték a legtöbbet és azokat adjuk vissza
+     */
     public function sideRecomendedProductsAction(){
+        
         $ordersItem = $this->getDoctrine()->getRepository('FrontendOrderBundle:OrdersItem')->createQueryBuilder('p')
                 ->select('p.productId,SUM(p.unitQuantity) AS db')
-                ->groupBy('p.productId')
+                ->groupBy('p.productId')                
                 ->orderBy('db', 'desc')
+                ->setMaxResults(8)
                 ->getQuery()->getResult();
         $productIds = array();
         foreach($ordersItem as $item){
-            $productIds[] = $item['productId'];
+            $productIds[] = $item['productId']; //legtöbbet rendelt termékek azonosítói
         }
         $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
                 ->select('p')

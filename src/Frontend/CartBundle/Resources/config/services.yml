@@ -5,7 +5,3 @@ services:
      cart_service:
         class: "%cart_service.class%"
         arguments: [ @doctrine.orm.entity_manager, '@service_container', '@doctrine' ]
-     frontend.twig.price_format_extension:
-        class: Frontend\CartBundle\Twig\PriceFormatExtension
-        tags:
-            - { name: twig.extension }   

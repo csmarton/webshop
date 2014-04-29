@@ -122,3 +122,55 @@
 #order-email-table td{
     border:1px solid grey;
 }
+
+/* Rendelési űrlap kinézete */
+#order-profile-data label,
+#order-shipping-address label,
+#order-billing-address label{
+    float: left;
+    width: 150px;
+}
+
+#order-profile-data input,
+#order-shipping-address input,
+#order-billing-address input{
+    display:block;
+    width: 250px;
+    height: 25px;
+    margin: 10px;
+    background-color: #F7F9FD;
+    border: 1px solid #D5D5D5;
+    padding: 5px;
+    font-weight: bold;
+}
+
+#shipping-option-box input,
+#payment-option-box input{
+    float: left;
+}
+
+#shipping-option-box label,
+#payment-option-box label{
+    display:block;
+    margin: 10px;
+}
+
+#order-comment-box textarea{
+    width: 100%;
+    height:100px;
+    padding: 0;
+}
+
+.order-information-boxes{
+    padding:10px;
+}
+
+#order-conditions{
+}
+
+#order-conditions-box .slimScrollDiv{
+    border:1px solid rgb(169, 169, 169);
+    width: 770px;
+    padding: 10px 10px;
+    margin: 10px 0px;
+}

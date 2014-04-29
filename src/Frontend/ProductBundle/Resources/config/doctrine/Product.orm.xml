@@ -15,7 +15,8 @@
     <field name="isActive" type="boolean" column="is_active" nullable="false"/>
     <field name="inStock" type="integer" column="in_stock" nullable="false"/>
     <one-to-many field="productImages" target-entity="ProductImages" mapped-by="product" fetch="LAZY"/>
-    <one-to-many field="productPropertys" target-entity="ProductProperty" mapped-by="product" fetch="LAZY"/>
+    <one-to-many field="productPropertys" target-entity="ProductProperty" mapped-by="product">
+    </one-to-many>
     <one-to-one field="specialOffer" target-entity="SpecialOffers" mapped-by="product" />
     <one-to-many field="productQuestions" target-entity="ProductQuestions" mapped-by="product" />
     <many-to-one field="categorys" target-entity="Category">

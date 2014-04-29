@@ -5,3 +5,8 @@ services:
     product_service:
         class: "%product_service.class%"
         arguments: [ @doctrine.orm.entity_manager, '@service_container', '@doctrine' ]     
+        
+    frontend.twig.property_sort_extension:
+        class: Frontend\ProductBundle\Twig\PropertySortExtension
+        tags:
+            - { name: twig.extension }       

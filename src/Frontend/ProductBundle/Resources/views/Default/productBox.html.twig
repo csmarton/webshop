@@ -49,10 +49,15 @@
                 <div class="bottom_box">
                     <ul>
                         {% set i = 0 %}
-                        {% for property in product.getProductPropertys() if i<=8%}
-                                <li>{{property.getValue()}}</li>
-                                {% set i = i+1%}
-                        {% endfor %}   
+                        {% for property in product.getProductPropertys()|propertySort if i<=8%}
+                            {% set propertyName = property.getProperty().getName()%}
+                            {% set propertyValue = property.getValue() %}
+                            <li>
+                                <span class="property-name">{{propertyName}}</span> : 
+                                <span class="bold">{{propertyValue}}</span>
+                            </li>
+                            {% set i = i + 1 %}                            
+                        {% endfor %} 
                     </ul>                    
                 </div>
                 <a href="{{path('frontend_product_compare', {'productId' : product.getId()})}}" class="compare-product-button" productId="{{product.getId()}}">Összehasonlít</a>

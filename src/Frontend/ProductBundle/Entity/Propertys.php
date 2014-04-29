@@ -56,6 +56,8 @@ class Propertys
      */
     private $orderValue;
 
+
+
     /**
      * Set name
      *
@@ -126,6 +128,29 @@ class Propertys
     }
 
     /**
+     * Set orderValue
+     *
+     * @param integer $orderValue
+     * @return Propertys
+     */
+    public function setOrderValue($orderValue)
+    {
+        $this->orderValue = $orderValue;
+
+        return $this;
+    }
+
+    /**
+     * Get orderValue
+     *
+     * @return integer 
+     */
+    public function getOrderValue()
+    {
+        return $this->orderValue;
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -156,28 +181,5 @@ class Propertys
     public function getMainCategory()
     {
         return $this->mainCategory;
-    }
-
-    /**
-     * Set orderValue
-     *
-     * @param integer $orderValue
-     * @return Propertys
-     */
-    public function setOrderValue($orderValue)
-    {
-        $this->orderValue = $orderValue;
-
-        return $this;
-    }
-
-    /**
-     * Get orderValue
-     *
-     * @return integer 
-     */
-    public function getOrderValue()
-    {
-        return $this->orderValue;
     }
 }

@@ -1,19 +1,18 @@
-Legnépszerűbb termékek
+<h3>Legnépszerűbb termékek</h3>
 <div class="sideRecomendedProducts flexslider">
     <ul class="slides">
         {% for product in products %}
-            {% if (product.getProductImages()|length != 0 ) %}  
-                {% set image = product.getProductImages() %}
-                <li>
-                    <a href="{{image(image[0].getWebPath()).resize(640,480)}}" class="gallery">
-                        <img src=" {{image(image[0].getWebPath()).resize(150,150)}}"/>
-                    </a>
-                </li>
-            {% else %}     
-                <li>
-                    <img src="{{ asset('images/no_image.jpg')}}"/>
-                </li>
-            {% endif %}  
+            <li>
+                {% if (product.getProductImages()|length != 0 ) %}  
+                    {% set image = product.getProductImages() %}                
+                        <a href="{{image(image[0].getWebPath()).resize(640,480)}}" class="gallery">
+                            <img src=" {{image(image[0].getWebPath()).resize(150,150)}}"/>
+                        </a>
+                {% else %}    
+                    <img src="{{ asset('images/no_image.jpg')}}"/>                    
+                {% endif %}  
+                <div class="recomended-product-price">{{product.getRealPrice()|priceFormat}} Ft</div>
+            </li>
         {% endfor%}
     </ul>
 </div>

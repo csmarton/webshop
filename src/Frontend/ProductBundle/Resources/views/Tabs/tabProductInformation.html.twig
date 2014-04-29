@@ -1,7 +1,11 @@
 <div class="bottom_box">
     <ul>
-        {% for property in product.getProductPropertys()%}
+        {% for property in product.getProductPropertys()|propertySort %}
                     <li><span class="property-name">{{property.getProperty().getName()}}:</span> {{property.getValue()}}</li>
             {% endfor %}       
     </ul>
+</div>
+
+<div id="product-offers">
+    {% include 'FrontendProductBundle:Tabs:tabProductInformationOffers.html.twig'%}
 </div>

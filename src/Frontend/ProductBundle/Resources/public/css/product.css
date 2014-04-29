@@ -27,6 +27,7 @@
 .main .product_box .product_name{
     padding: 10px 0px 0px 10px;
     font-weight: bold;
+    height: 40px;
 }
 
 .main .product_box .product_name a{
@@ -38,7 +39,8 @@
 	text-decoration:underline;
 }
 
-.main .product_box .product_price{
+.main .product_box .product_price,
+.main #current-product-box .product_price{
     color: #D1466F;
     font-weight: bold;
     padding-bottom: 10px;
@@ -115,11 +117,13 @@
 	-webkit-border-top-right-radius:2em;
 	border-bottom-right-radius:2em;
 	-webkit-border-bottom-right-radius:2em;
+        height: 125px;
 }
 
 .main .products_box .bottom_box ul li{
-    padding-bottom: 2px;
-	padding-right: 15px;
+    margin-right: 10px;
+    line-height: 15px;
+    display: inline;
 }
 
 .main #productTabs{
@@ -300,6 +304,17 @@
     font-weight: bold;
     text-align: center;
 }
+#product-offers{
+    margin: 25px 0px;
+}
+
+#product-offers h2{
+    font-weight: bold;
+    font-size: 1.3em;
+    border-bottom: 2px solid #d8d8d8;
+    padding-bottom: 5px;
+}
+
 
 .product_box .compare-product-button{
     display: block;

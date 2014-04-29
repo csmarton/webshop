@@ -130,38 +130,38 @@ class ProductServices{
         }
 
         //Szűrés MEREVLEMEZ szerint                
-        /*if($laptopFilterWinchester != ""){
-           list($first,$second)=explode("-",$tabletFilterWinchester);
-           $filteredProductIds1 = $productPropertyRepo->getProductIdsFilterByWinchester($first,$second);
+        if($tabletFilterWinchester != ""){
+           
+           $filteredProductIds1 = $productPropertyRepo->getProductIdsFilterByWinchester($tabletFilterWinchester,$tabletFilterWinchester, 24);
            $filteredProductIds = array_intersect($filteredProductIds, $filteredProductIds1); 
         } 
 
         //Szűrés OPERÁCIÓS RENDSZER szerint                
-        if($laptopFilterOperationSystem != ""){
-           $filteredProductIds2 = $productPropertyRepo->getProductIdsFilterByOperatingSystem($tabletFilterOperationSystem);                    
+        if($tabletFilterOperationSystem != ""){
+           $filteredProductIds2 = $productPropertyRepo->getProductIdsFilterByOperatingSystem($tabletFilterOperationSystem,26);                    
            $filteredProductIds = array_intersect($filteredProductIds, $filteredProductIds2); 
         }
 
         //Szűrés PROCESSZOR szerint
-        if($laptopFilterProcessor != ""){
-            $filteredProductIds3 = $productPropertyRepo->getProductIdsFilterByProcessor($tabletFilterProcessor);                    
+        if($tabletFilterProcessor != ""){
+            $filteredProductIds3 = $productPropertyRepo->getProductIdsFilterByProcessor($tabletFilterProcessor,23);                    
            $filteredProductIds = array_intersect($filteredProductIds, $filteredProductIds3); 
         }
 
         //Szűrés KÉPERNYŐ méret szerint
-        if($laptopFilterScreenSize != ""){ 
+        if($tabletFilterScreenSize != ""){ 
            list($first,$second)=explode("-",$tabletFilterScreenSize);
-           $filteredProductIds4 = $productPropertyRepo->getProductIdsFilterByScreenSize($first, $second);
+           $filteredProductIds4 = $productPropertyRepo->getProductIdsFilterByScreenSize($first, $second,25);
            $filteredProductIds = array_intersect($filteredProductIds, $filteredProductIds4); 
         } 
 
 
         //Szűrés MEMÓRIA szerint
-        if($laptopFilterMemory != ""){
-            list($first,$second)=explode("-",$tFilterMemory);
-            $filteredProductIds5 = $productPropertyRepo->getProductIdsFilterByMemory($first, $second);
+        if($tabletFilterMemory != ""){
+            list($first,$second)=explode("-",$tabletFilterMemory);
+            $filteredProductIds5 = $productPropertyRepo->getProductIdsFilterByMemory($first, $second,27,false);
             $filteredProductIds = array_intersect($filteredProductIds, $filteredProductIds5); 
-        } */
+        } 
                                      
         return $filteredProductIds;
     }

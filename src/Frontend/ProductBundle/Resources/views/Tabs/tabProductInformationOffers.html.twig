@@ -1,43 +1,41 @@
 <h2>Ajánlott termékek</h2>
-<div id="product-offers">
-    <div class="productOfferSlider flexslider">
-        <ul class="slides">
-            {% for product in offerProducts %}
-                {% if (product.getSlug() is not null)%}
-                    {% set product_link = product.getSlug() %}
-                {% else %}
-                        {% set product_link = product.getId() %}
-                {% endif %}
-                {% if (product.getProductImages()|length != 0 ) %}   
-                    {% set image = product.getProductImages()[0] %}
-                    <li class="product-box">
-                        <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
-                            <div class="product-name">
-                                {% if product.getName()|length > 20 %}
-                                    {{product.getName()|slice(0, 20)}}...
-                                {% else %}
-                                    {{product.getName()}}
-                                {% endif %}
-                                
-                            </div>
-                            <div class="product-image">
-                                <img src=" {{image(image.getWebPath()).resize(150,150)}}"/>
-                            </div>
-                            <div class="product-price">
-                                {% if product.getSpecialOffer() is not null %}
-                                    {{ product.getSpecialOffer().getNewPrice|priceFormat }} Ft
-                                {% else%}
-                                    {{ product.getPrice()|priceFormat }} Ft                                
-                                {% endif %}
-                            </div>
-                        </a>
-                    </li>
-                {% else %}     
-                    <li>
-                        <img src="{{ asset('images/no_image.jpg')}}"/>
-                    </li>
-                {% endif %}  
-            {% endfor %}
-        </ul>
-    </div>
+<div class="productOfferSlider flexslider">
+    <ul class="slides">
+        {% for product in offerProducts %}
+            {% if (product.getSlug() is not null)%}
+                {% set product_link = product.getSlug() %}
+            {% else %}
+                    {% set product_link = product.getId() %}
+            {% endif %}
+            {% if (product.getProductImages()|length != 0 ) %}   
+                {% set image = product.getProductImages()[0] %}
+                <li class="product-box">
+                    <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
+                        <div class="product-name">
+                            {% if product.getName()|length > 20 %}
+                                {{product.getName()|slice(0, 20)}}...
+                            {% else %}
+                                {{product.getName()}}
+                            {% endif %}
+
+                        </div>
+                        <div class="product-image">
+                            <img src=" {{image(image.getWebPath()).resize(150,150)}}"/>
+                        </div>
+                        <div class="product-price">
+                            {% if product.getSpecialOffer() is not null %}
+                                {{ product.getSpecialOffer().getNewPrice|priceFormat }} Ft
+                            {% else%}
+                                {{ product.getPrice()|priceFormat }} Ft                                
+                            {% endif %}
+                        </div>
+                    </a>
+                </li>
+            {% else %}     
+                <li>
+                    <img src="{{ asset('images/no_image.jpg')}}"/>
+                </li>
+            {% endif %}  
+        {% endfor %}
+    </ul>
 </div>

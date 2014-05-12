@@ -25,6 +25,10 @@ body{
     background-color: rgba(255,255,255,0.5);
     position: absolute;
 }
+.loading-top{
+    background: url("/Shop/web/images/loading_small.gif") center top no-repeat;
+    background-color: rgba(255,255,255,0.5);
+}
 
 .reveal-modal{
     top:30% !important;
@@ -273,11 +277,18 @@ body{
     display:block;
 }
 
+.main .sidebar .taxonomy li a:hover, 
 .main  .sidebar .taxon li a:hover{
-    background-color: #428bca;
-}
-.main .sidebar .taxonomy li a:hover{
     background-color: #428bca;	
+    color:white;
+    font-weight: bold;
+}
+.main .sidebar .selected-category{
+    background-color: #428bca;	
+}
+.main .sidebar .selected-category a{
+    color:white;
+    font-weight: bold;
 }
 
 .sidebar{
@@ -404,15 +415,26 @@ body{
     height:65px;
 }
 
-.ui-menu .ui-menu-item .search-product-name{
+.ui-menu .ui-menu-item .search-product-information{
     display:inline-block;
     vertical-align: top;
 }
-
+.ui-menu .ui-menu-item .search-product-name{
+    font-weight: bold;
+}
+.ui-menu .ui-menu-item .search-product-price{
+    color: #D1466F;
+    font-weight: bold;
+}
 .ui-menu .ui-menu-item .search-product-image{
     padding:5px;
     display:inline-block;
 }
+.ui-autocomplete {
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
 /*
 * Termékek összehasonlítása qtip

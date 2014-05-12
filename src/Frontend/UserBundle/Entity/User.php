@@ -19,9 +19,9 @@ class User extends BaseUser
      */
     protected $id;
 
-     /**
-     * @ORM\OneToOne(targetEntity="\Frontend\ProfileBundle\Entity\Profile", mappedBy="user")
-     */
+    /**
+    * @ORM\OneToOne(targetEntity="\Frontend\ProfileBundle\Entity\Profile", mappedBy="user")
+    */
     protected $profile;
     
     protected $isAdmin;

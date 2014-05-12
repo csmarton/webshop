@@ -38,7 +38,6 @@ class ProductServices{
         $laptopFilterScreenSize = $parameters['laptopFilterScreenSize'];
         $laptopFilterMemory = $parameters['laptopFilterMemory'];
         $laptopFilterPrice = $parameters['laptopFilterPrice'];
-        
         $products = $products
             ->andWhere('c.mainCategory = 1'); //laptopokat keresünk
                 
@@ -199,10 +198,13 @@ class ProductServices{
         return $filteredProductIds;
     }
     
+    /*
+     * Összehasonlítandó termékek legfontosabb tulajdonságai és értékei
+     */
     function getCompareProductPropertysAndValues(){
         $request = $this->container->get('request');
         $session = $request->getSession();
-        $compareProducts = $session->get('compareProducts');
+        $compareProducts = $session->get('compareProducts'); //Munkafolyamatból kiolvassuk a termékek azonosítóit
         
         $productPropertysValues = array();
         $comparePropertys = array();        
@@ -211,15 +213,17 @@ class ProductServices{
             foreach((array)$compareProducts as $key=>$value){
                 $productIds[] = $key;
             }
+            //Termékek lekérése
             $products = array();
             $repo =  $this->doctrine->getRepository('FrontendProductBundle:Product');
-            $products = $repo
+            $products = $repo 
                     ->createQueryBuilder('p')                   
                     ->where('p.id IN (:productIds)')
                     ->setParameter('productIds',$productIds)
                     ->getQuery()->getResult();
             $mainCategoryId = $products[0]->getCategorys()->getMainCategory()->getId();
             
+            //Tulajdonságok lekérdezése
             $propertys = $this->doctrine->getRepository('FrontendProductBundle:Propertys')
                     ->createQueryBuilder('p')       
                     ->where('p.mainCategory = :mainCategoryId')
@@ -237,11 +241,12 @@ class ProductServices{
                 $productId = $product->getId();
                 $productPropertysValues[$productId] = array();
                 $productPropetys = $product->getProductPropertys();
+                //nevet és az árat előre berakjuk, mivel az a termékek táblában van, nem a tulajdonságokban
                 $productPropertysValues[$productId][0] = $product->getName();
                 $productPropertysValues[$productId][1] = $product->getRealPrice();
                 $j = 2;
                 foreach($comparePropertys as $property){                    
-                    $productPropertysValues[$productId][$j] = $this->inPropertys($productPropetys,$property->getId());
+                    $productPropertysValues[$productId][$j] = $this->inPropertys($productPropetys,$property->getId()); //Eltároljuk a tulajdonság értékét
                     $j++;               
                 }
                 $productPropertysValues[$productId][$j] = $product;
@@ -251,12 +256,42 @@ class ProductServices{
         }
         return array('comparePropertys' => $comparePropertys, 'productPropertysValues' => $productPropertysValues);
     }
+    /*
+     * Van -e adott tulajdonság
+     */
     function inPropertys($propertys, $id){
+        $twigCurrency = $this->container->get('frontend.twig.property_converter_extension');
         foreach($propertys as $property){
             if($property->getProperty()->getId() == $id){
-                return $property->getValue();
+                return $twigCurrency->getPropertyConverter($property);
             }
         }
         return "-";
     }
+    
+    function convertToMByte($value){
+        preg_match('/(\d+) (\w+)/', $value, $matches);
+        if(!isset($matches[2]))
+            preg_match('/(\d+)(\w+)/', $value, $matches);
+        $unitType = strtolower($matches[2]);
+        switch ($unitType) {
+            case "b":
+                $output = round($matches[1]/1024);
+                break;
+            case "kb":
+                $output = round($matches[1]);
+                break;
+            case "mb":
+                $output = round($matches[1]*1024);
+                break;
+            case "gb":
+                $output = round($matches[1]*1024*1024);
+                break;
+            case "tb":
+                $output = round($matches[1]*1024*1024*1024);
+                break;
+        }
+        return $output;
+    }
+    
 }

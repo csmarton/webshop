@@ -26,13 +26,13 @@ class ProductPropertyRepository extends EntityRepository{
             ->setParameter('propertyId', $propertyId);
         if($first != ""){
              $filtered1 = $productIdsFromProperty
-                     ->andWhere('CAST(pp.value) >= :first') //p.id==6 --> merevlemez
-                     ->setParameter('first',(int)$first);
+                     ->andWhere('pp.value >= :first') //p.id==6 --> merevlemez
+                     ->setParameter('first',(int)$first*1024*1024);
         }
         if($second != ""){
              $filtered1 = $filtered1
-                     ->andWhere('CAST(pp.value) <= :second')
-                     ->setParameter('second',(int)$second);
+                     ->andWhere('pp.value <= :second')
+                     ->setParameter('second',(int)$second*1024*1024);
 
         }
         $filtered1 = $filtered1->getQuery()->getResult();
@@ -42,6 +42,9 @@ class ProductPropertyRepository extends EntityRepository{
         return $filteredProductIds1;
     }
     
+    /*
+     * Szűrés operációs rendszer alapján
+     */
     public function getProductIdsFilterByOperatingSystem($laptopFilterOperationSystem, $propertyId = 14){
         $filteredProductIds2 = array();
         $filtered2 = array();
@@ -61,6 +64,9 @@ class ProductPropertyRepository extends EntityRepository{
         return $filteredProductIds2;
     }
     
+    /*
+     * Szűrés processzor alapján
+     */
     public function getProductIdsFilterByProcessor($laptopFilterProcessor, $propertyId = 13){
         $filtered3 = array();
         $filteredProductIds3 = array();
@@ -79,6 +85,9 @@ class ProductPropertyRepository extends EntityRepository{
         return $filteredProductIds3;
     }
     
+    /*
+     * Szűrés képernyőméret alapján
+     */
     public function getProductIdsFilterByScreenSize($first, $second, $propertyId = 5){
         $filteredProductIds4 = array();
         $filtered4 = array();
@@ -106,13 +115,12 @@ class ProductPropertyRepository extends EntityRepository{
         return $filteredProductIds4;
     }
     
+    /*
+     * Szűrés memória méret alapján
+     */
     public function getProductIdsFilterByMemory($first, $second, $propertyId = 4, $toGb = true){
         $filteredProductIds5 = array();
         $filtered5 = array();
-        if($toGb){
-            $first = (int)$first*1000;
-            $second = (int)$second*1000;
-        }
         $productIdsFromProperty = $this->createQueryBuilder('pp')
             ->select('product.id')
             ->leftJoin('pp.product','product') 
@@ -122,13 +130,13 @@ class ProductPropertyRepository extends EntityRepository{
 
         if($first != ""){
              $filtered5 = $productIdsFromProperty
-                     ->andWhere('CAST(pp.value) >= :first') //p.id==4 --> Memória
-                     ->setParameter('first',(int)$first);
+                     ->andWhere('pp.value >= :first') //p.id==4 --> Memória
+                     ->setParameter('first',(int)$first*1024*1024);
         }
         if($second != ""){
              $filtered5 = $filtered5
-                     ->andWhere('CAST(pp.value) <= :second')
-                     ->setParameter('second',(int)$second);
+                     ->andWhere('pp.value <= :second')
+                     ->setParameter('second',(int)$second*1024*1024);
         }
         $filtered5 = $filtered5->getQuery()->getResult();
         foreach((array)$filtered5 as $f5){
@@ -137,6 +145,9 @@ class ProductPropertyRepository extends EntityRepository{
         return $filteredProductIds5;
     }
     
+    /*
+     * Szűrés általános szöveg alapján
+     */
     public function getProductIdsFilterBySearchString($generalSearchString){
         $productIds = $this->createQueryBuilder('pp')
                     ->select('product.id')

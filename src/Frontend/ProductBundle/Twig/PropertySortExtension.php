@@ -12,6 +12,9 @@ class PropertySortExtension extends \Twig_Extension{
         );
     }
 
+    /*
+     * Tulajdonság rendezése az order_value oszlop alapján
+     */
     public function getPropertySort(Collection $objects)
     {
         $values = $objects->getValues();

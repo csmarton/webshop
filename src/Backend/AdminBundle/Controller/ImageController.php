@@ -10,6 +10,9 @@ use Backend\AdminBundle\Entity\Log;
 
 class ImageController extends Controller
 {
+    /*
+     * Kép feltöltése
+     */
     public function uploadAction()
     {  
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
@@ -63,6 +66,9 @@ class ImageController extends Controller
         return new JsonResponse(array('success' => false));
     }
     
+    /*
+     * Kép törlése
+     */
     public function removeAction(){
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));

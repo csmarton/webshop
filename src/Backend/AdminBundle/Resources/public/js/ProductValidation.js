@@ -7,7 +7,8 @@ ProductValidation = {
     bindUIActions: function(){
             this.setFormValidation();           
     },
-	
+    
+    //Form validációs üzenetek
     customErrorMessages: {
         '.profileName': {
             'required': {
@@ -54,11 +55,24 @@ ProductValidation = {
                 'message': "Válassz egy kategóriát!"
             }
         }, 
+        '.property-value': {
+            'required': {
+                'message': "Hibás adat!"
+            }
+        }, 
         
     },
 	
     setFormValidation: function() {
-        $(".newProduct").validationEngine({
+        $(".newProduct").validationEngine({ //új termék validációja
+            promptPosition: "topLeft: 0",
+            'custom_error_messages': ProductValidation.customErrorMessages,
+            scroll: false,
+            maxErrorsPerField: 1,
+            binded: false,
+            validationEventTrigger: 'submit'
+        });
+        $(".property-form").validationEngine({ //új termék validációja
             promptPosition: "topLeft: 0",
             'custom_error_messages': ProductValidation.customErrorMessages,
             scroll: false,
@@ -67,7 +81,18 @@ ProductValidation = {
             validationEventTrigger: 'submit'
         });
     },	
+    
         
 
-}	
+}
+
+//Email cím ellenőrzése
+function checkPropertyValue(field, rules, i, options){    
+    var propertyPattern = new RegExp(/^(\d+)\s*(B|KB|MB|GB|TB)$/);
+
+  if(!propertyPattern.test(field.val())){
+     rules.push('required');
+     return options.allrules.wrongPropertyValue.alertText;
+  }
+}
 

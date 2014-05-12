@@ -1,3 +1,6 @@
+/*
+ * Rendelések
+ */
 Order = {	
     DELETE_LINK : null,
     init: function(){
@@ -5,6 +8,9 @@ Order = {
     },	
 		
     bindUIActions: function(){
+        /*
+         * Rendelés teljesítése megerősítő ablak
+         */
         $('body').on('click', '.fulfill-button', function(){
             $('#modal-fulfill-order').reveal();
             $('#modal-fulfill-order h2').html("Biztosan teljesíti a rendelést?");
@@ -13,6 +19,8 @@ Order = {
             $('#modal-fulfill-order .second-inputs').hide();
             Order.DELETE_LINK = $(this).attr('link');
         });
+        
+        //rendelés tényleges teljesítése
         $('body').on('click', '.fulfill-order-button', function(){
             $.ajax({
                 url: Order.DELETE_LINK,
@@ -43,7 +51,7 @@ Order = {
             $(".exit-reveal-modal").trigger('reveal:close');
         }); 
         
-        $('#filterDate').datepicker({ dateFormat: 'yy-mm-dd'});        
+        $('#filterDate').datepicker({ dateFormat: 'yy-mm-dd'}); //dátumválasztó       
         
     },
 }	

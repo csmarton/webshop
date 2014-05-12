@@ -1,0 +1,28 @@
+<h2>Tulajdonságok</h2>    
+{#<div class="upperMenu">
+    <a href="{{path('backend_admin_product_property_edit',{'productId' : productId})}}" class="menu_btn">Új Tulajdonság</a>
+</div>#}
+<div  class="newProperty" >
+    <div class="new-property-list">
+        {% include "BackendAdminBundle:Product:propertyNewList.html.twig" %}
+    </div>
+    <div class="property-list">
+        {% include "BackendAdminBundle:Product:propertyList.html.twig" %}
+    </div>
+</div> 
+<div id="modal-delete-property" class="reveal-modal">
+    <div class="formContent">
+        <div class="topSection">
+            <div class="modal-content-box">
+                <h2>Biztosan törölni szeretnéd ezt a tulajdonságot? </h2>
+            </div>
+        </div>
+        <div class="bottomSection">
+            <div class="inputs">
+                <input type="button" class="delete-property-modal-button" value="Törlés" href="{{path('backend_admin_product_property_remove')}}">
+                <input type="button" class="cancel exit-reveal-modal" value="Mégse">                        
+            </div>
+        </div>
+    </div>
+</div>
+    

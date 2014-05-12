@@ -1,6 +1,6 @@
 {% extends "FrontendLayoutBundle:Default:layout.html.twig" %}
 
-{% block title%} WebShop - Rendeléseim {% endblock %}
+{% block title%} {{page_name}} - Rendeléseim {% endblock %}
 {% block bodyClass %}class="login_page"{% endblock%}
 
  {% block stylesheets %}
@@ -97,6 +97,11 @@
                                             </div>
                                             {% for orderItem in myOrder.getOrderItems() %}                                                
                                                 {% set product = orderItem.getProduct() %}
+                                                    {% if (product.getSlug() is not null)%}
+                                                            {% set product_link = product.getSlug() %}
+                                                    {% else %}
+                                                            {% set product_link = product.getId() %}
+                                                    {% endif %}
                                                 <div class="cart-item">
                                                     <div class="column-0">
                                                                 {% if ( product.getProductImages()|length != 0 ) %}
@@ -108,7 +113,9 @@
                                                     <div class="column-1">
                                                         <div class="product-information">
                                                             <div class="product-name">
-                                                                {{ product.getName() }}
+                                                                <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
+                                                                    {{ product.getName() }}
+                                                                </a>
                                                             </div>
                                                             <div class="product-propertys">
                                                                 <ul>
@@ -120,15 +127,12 @@
                                                         </div>                                
                                                     </div>
                                                     <div class="column-2">
-                                                        {% if product.getSpecialOffer() is not null %}
-                                                            {{ product.getSpecialOffer().getNewPrice()|priceFormat }}
-                                                        {% else%}
-                                                            {{ product.getPrice()|priceFormat }}
-                                                        {% endif %}
+                                                        {{ product.getRealPrice()|priceFormat}} Ft
+                                                        <div class="column-3">
+                                                            <div class="product-cart-count">{{ orderItem.getUnitQuantity() }} db</div>
+                                                        </div>
                                                     </div>
-                                                    <div class="column-3">
-                                                        <div class="product-cart-count">{{ orderItem.getUnitQuantity() }} db</div>
-                                                    </div>
+                                                    
                                                 </div>
                                             {% endfor %}
                                         </div>

@@ -70,13 +70,22 @@
             {% endblock %}
 
             {% block header %}
-                {{ render(controller("FrontendLayoutBundle:Default:header"))}}
+                {% if searchKey is defined %}
+                    {% set key = searchKey %}
+                {% else %}
+                    {% set key = null %}
+                {% endif %}
+                {{ render(controller("FrontendLayoutBundle:Default:header", {'searchKey' : key}))}}
             {% endblock %}
             	
             {% block mainContent %} 
                 {% block main %}
-                    {% block leftSide %}                        
-                        {% render (controller("FrontendProductBundle:Default:sidebar")) %}
+                    {% block leftSide %}   
+                        {% if mainCategory is defined %}        
+                            {% render (controller("FrontendLayoutBundle:Default:sidebar", {'currentMainCategory' : mainCategory, 'currentCategory':category})) %}
+                         {% else %}
+                            {% render (controller("FrontendLayoutBundle:Default:sidebar", {'currentMainCategory' : null, 'currentCategory':null})) %}
+                        {% endif %}
                     {% endblock %}
                 {% endblock %}
             {% endblock %}

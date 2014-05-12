@@ -12,18 +12,21 @@ use Backend\AdminBundle\Entity\Log;
 
 class CategoryController extends Controller
 {
-    public function indexAction()
+    /*
+     * Kategória listázása
+     */
+    public function listAction()
     {   
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
         }
         $request = $this->get('request');
         
+        //OLDALAK
         $page = (int)$request->query->get('page');
         if($page == NULL){
              $page = 1;
-        }
-        //OLDALAK
+        }        
         $maxResult = (int)$request->query->get('maxResult');
         if($maxResult == NULL){
              $maxResult = 10;
@@ -46,26 +49,27 @@ class CategoryController extends Controller
         $filterName = "";
         $filterMainCategory = "";
         $parameters = "";
+        //Szűrés
         if ($request->getMethod() == 'GET') {
             $filterId = $request->query->get('filterId');
             $filterName = $request->query->get('filterName');
             $filterMainCategory = $request->query->get('filterMainCategory');
             $parameters .= "&filterId=";
-            if($filterId!= ""){
+            if($filterId!= ""){ //Azonosító alapján
                 $categorys = $categorys
                     ->andWhere('c.id = :id')
                     ->setParameter('id', (int)$filterId); 
                 $parameters .= $filterId;
             }
             $parameters .= "&filterName=";
-            if($filterName!= ""){
+            if($filterName!= ""){ //Név alapján
                 $categorys = $categorys
                     ->andWhere('c.name LIKE :name')
                     ->setParameter('name', "%".$filterName."%");
                 $parameters .= $filterName;
             }
             $parameters .= "&filterMainCategory=";
-            if($filterMainCategory!= ""){
+            if($filterMainCategory!= ""){ //Kategória alapján
                 $categorys = $categorys
                     ->leftJoin('c.mainCategory','mc')    
                     ->andWhere('mc.id = :cat')
@@ -73,6 +77,7 @@ class CategoryController extends Controller
                 $parameters .= $filterMainCategory;
             }            
         }
+        //Rendezés
         if($order == "id"){
             $categorys = $categorys
                 ->orderBy('c.id',$by);
@@ -114,6 +119,9 @@ class CategoryController extends Controller
         ));        
     }
     
+    /*
+     * Kategória szerkesztése és új kategória
+     */
     public function newAction()
     {   
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
@@ -123,7 +131,7 @@ class CategoryController extends Controller
         $request = $this->get('request');
         $categoryId = $request->query->get('categoryId');
         $mainCategoryId = $request->query->get('mainCategoryId');
-        if($categoryId == null){
+        if($categoryId == null){ //Új kategória
             $edit = false;
             $category = new Category();
             if($mainCategoryId != null){
@@ -132,7 +140,7 @@ class CategoryController extends Controller
                     $category->setMainCategory($mainCategory);
                 }
             }
-        }else{
+        }else{ //Meglévő kategória
             $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categoryId);
             $oldCategory = array(
                 'name' => $category->getName(),
@@ -199,6 +207,9 @@ class CategoryController extends Controller
         ));
     }
     
+    /*
+     * Kategória törlése
+     */
      public function removeAction(){
          $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
@@ -233,6 +244,9 @@ class CategoryController extends Controller
          }   
     }
     
+    /*
+     * Főkategória listázása
+     */
     public function mainCategoryAction(){
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
@@ -243,6 +257,9 @@ class CategoryController extends Controller
         ));
     }
     
+    /*
+     * Főkategória szerkesztése vagy új főkategória
+     */
     public function mainCategoryNewAction(){ 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
@@ -251,10 +268,10 @@ class CategoryController extends Controller
         $mainCategoryId = $request->query->get('mainCategoryId');
         $categorys = null;
         $edit = true;
-        if($mainCategoryId == null){
+        if($mainCategoryId == null){ //Új főkategória
             $edit = false;
             $mainCategory = new MainCategory();        
-        }else{
+        }else{ //Meglévő szerkesztése
             $mainCategory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findOneById($mainCategoryId);
             $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($mainCategory);
             $oldMainCategory = array(
@@ -314,6 +331,9 @@ class CategoryController extends Controller
         ));
     }
     
+    /*
+     * Főkategória törlése
+     */
     public function removeMainCategoryAction(){
          $request = $this->get('request');
          if ($request->getMethod() == 'POST') {

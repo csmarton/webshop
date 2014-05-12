@@ -20,6 +20,9 @@
                     "regex": /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                     "alertText": "Hibás E-mail cím"
                 },
+                "wrongPropertyValue": {
+                    "alertText": "Hibás formátum! Válassz az alábbiak közül: 1B, 1 KB, 1 MB, 1GB,1 TB"
+                },
                 "wrongEmail": {
                     // HTML5 compatible email regex ( http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#    e-mail-state-%28type=email%29 )
                     "regex": /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,

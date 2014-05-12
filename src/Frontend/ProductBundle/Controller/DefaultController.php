@@ -17,49 +17,64 @@ class DefaultController extends Controller
      * Termékek kezdőoldal, termékek listázása és szűrése
      */
     public function indexAction($main_category=null, $category=null)
-    {                       
+    {                  
+        $currentMainCategory = $main_category;
+        $currentCategory = $category;
+        $withAjax = true;
         
         $request = $this->get('request');
+        //aktuális oldalszám lekérdezése
         $page = (int)$request->query->get('page');
         if($page == NULL){
              $page = 1;
         }
 
+        //Rendezés lekérdezése
         $order = $request->query->get('order');
         $by = $request->query->get('by');
         
         //OLDALAK
-        $maxResult = 9; //   
+        $maxResult = 9;
+        
         $productRepo = $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
         $productPropertyRepo = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty');
         
         //termékek listája, szűrt termékek azonosítója alapján ezt fogjuk szűrni
         $products = $productRepo->createQueryBuilder('p')
-                    ->select('p')
+                    ->select('p,pi,c,pp,so,prop')
                     ->leftJoin('p.categorys','c')
-                    ->leftJoin('p.productImages','pi');
+                    ->leftJoin('p.productImages','pi')
+                    ->leftJoin('p.productPropertys', 'pp')
+                    ->leftJoin('pp.property', 'prop')
+                    ->leftJoin('p.specialOffer', 'so');
+        
+        //Bal oldalsó menüben a kategóriák közötti szűrés bekapcsolása
         if ($request->getMethod() != 'POST') {
-            if($main_category != null){
+            if($currentMainCategory != null){
                 $products = $products
+                        ->addSelect('mc')
                         ->leftJoin('c.mainCategory','mc')
                         ->andWhere('mc.name = :main_category OR mc.id = :main_category ')     
-                        ->setParameter('main_category',$main_category);   
+                        ->setParameter('main_category',$currentMainCategory);   
             }
             if($category != null){
                 $products = $products
                         ->andWhere('c.slug = :category OR c.id = :category ')     
-                        ->setParameter('category',$category);   
+                        ->setParameter('category',$currentCategory);   
             }        
         }
         
         $request = $this->get('request');       
+        $searchParameter = null;
+        $onlyOneProductId = null; //ha a keresésnél csak egy termék van
+        $reloadPage = "";
+        
         if ($request->getMethod() == 'POST') { //AJAX kérés esetén  
                 //Rendezési szempontok
                 if($order == NULL && $by == NULL){
                     $order = $request->request->get('order');
                     $by = $request->request->get('by');
                 }
-
                 
                 //Oldalszám
                 $getPage = (int)$request->request->get('page');
@@ -67,6 +82,7 @@ class DefaultController extends Controller
                     $page = $getPage;
                 }
                 
+                //Szűrés típusa
                 $filterType = $request->request->get('filterType');
                 $filteredProductIds = null;
                 
@@ -100,21 +116,41 @@ class DefaultController extends Controller
                     //Szűrt laptopok azonosítói
                     $service = $this->container->get('product_service');
                     $filteredProductIds = $service->getTabletFilteredProducts($products, $parameters);
-                }else if($filterType == ""){
+                }else if($filterType == "" || $filterType == "0"){      
+                    $searchString = $request->request->get('generalSearchString');
+                    $searchParameter = $searchString;
                     $parameters = array(
-                        'generalSearchString' => $request->request->get('generalSearchString'),
+                        'generalSearchString' => $searchString,
                         'generalFilterPrice' => $request->request->get('generalFilterPrice'),
                     );
-                    
+                    if($request->request->get('reloadPage') == null){
+                        $withAjax = false;
+                        $searchParameter = $searchString;
+                    }
                     //Szűrt laptopok azonosítói
                     $service = $this->container->get('product_service');
                     $filteredProductIds = $service->getGeneralFilteredProducts($products, $parameters);
+                    if(count($filteredProductIds) == 1 && $filterType == "0"){
+                        foreach($filteredProductIds as $key => $val){
+                            $onlyOneProductId = $val;
+                            break;
+                        } 
+                        $withAjax = true;                        
+                        if($onlyOneProductId != null){
+                            if($request->request->get('reloadPage') == null ){
+                                return $this->forward('FrontendProductBundle:Default:product', array(
+                                    'slug' => $onlyOneProductId
+                                ));
+                            }
+                            $reloadPage = $this->generateUrl('product', array('slug' => $onlyOneProductId));
+                        }
+                    }
                 }
                 
                 //Termékek lekérdezése szűrés alapján
-                    $products = $products
-                         ->andWhere('p.id IN (:filteredProductIds)')
-                         ->setParameter('filteredProductIds',$filteredProductIds);
+                $products = $products
+                     ->andWhere('p.id IN (:filteredProductIds)')
+                     ->setParameter('filteredProductIds',$filteredProductIds);
                     
         }               
          
@@ -122,7 +158,8 @@ class DefaultController extends Controller
         $products = $productRepo->getOrderByProduct($products, $order, $by);
         
         $allProductsResult = $products->getQuery()->getResult();  
-        $allProductCount = count($allProductsResult);
+        
+        $allProductCount = count($allProductsResult); //Az összes termék darabszáma az oldalszámok megjelenítéséhez
         
         //Oldalak száma
         $pageCount = ceil($allProductCount/ $maxResult); 
@@ -137,9 +174,11 @@ class DefaultController extends Controller
         $products = array_slice($allProductsResult,$page*$maxResult - $maxResult,$maxResult);
         
         $urlParameters = "?order=".$order."&by=".$by;
-        
+        if($searchParameter != null){
+            $urlParameters .= '&searchKey=' . $searchParameter;
+        }
         //AJAX kérés esetén visszadjuk a felső menüt és a termékek listáját
-        if ($request->getMethod() == 'POST') {  
+        if ($request->getMethod() == 'POST' && $withAjax) {            
             //Felső menü
             $upperMenu = $this->renderView('FrontendProductBundle:Default:upperMenu.html.twig', array(
                 'order' => $order,
@@ -157,82 +196,93 @@ class DefaultController extends Controller
                 'by'=>$by,
                 'productCount' => $allProductCount,
              ));
-            
+             
             //Termékek 
             $productHtml = $this->renderView('FrontendProductBundle:Default:productBox.html.twig', array('products' => $products));
             return new JsonResponse(array(
                 'success' => true,
                 'productHtml'=>$productHtml,
                 'upperMenu' => $upperMenu,
-                'pagesMenu' => $pagesMenu));
-         }               
+                'pagesMenu' => $pagesMenu,
+                'reloadPage' => $reloadPage
+                    ));
+         }
      
         return $this->render('FrontendProductBundle:Default:index.html.twig',array(
             'products'=>$products,
             'order' => $order,
             'by'=>$by,
+            'searchKey' => $searchParameter,
             'actualPage' => $page, 
             'pageCount' => $pageCount,
             'urlParameters' => $urlParameters,
             'productCount' => $allProductCount,
-            'mainCategory' => $main_category,
-            'category' => $category
+            'mainCategory' => $currentMainCategory,
+            'category' => $currentCategory
         ));
     }   
     
-    /*
-     * SIDEBAR, az oldal oldalsó részén található menüsor
-     */
-    public function sidebarAction(){
-        $main_catergory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->createQueryBuilder('mc')
-                ->select('mc')
-                ->leftJoin('mc.category','c')
-                ->getQuery()->getResult();
-        
-        return $this->render('FrontendProductBundle:Default:sidebar.html.twig',array('main_category' => $main_catergory));
-    }
     
+    /*
+     * Adott termék megjelenítése
+     */
     public function productAction($slug){
-        if(!is_numeric($slug)){//slug alapján
-            $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneBySlug($slug);
-        }else{//id alapján
-            $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($slug);
-        }
-        
-        $categoryId = $product->getCategory();
-       
-        $categoryRelations = $this->getDoctrine()->getRepository('FrontendProductBundle:CategoryRelationship')->createQueryBuilder('r')
-                ->select('r')
-                ->where('r.firstCategoryId = :categoryId or r.secondCategoryId = :categoryId')
-                ->setParameter('categoryId', $categoryId)
-                ->getQuery()->getResult();
-        $offerCategoryId = array();
-        foreach((array)$categoryRelations as $categoryRelation){
-            if($categoryRelation->getFirstCategoryId() == $categoryId ){
-                $offerCategoryId[] = $categoryRelation->getSecondCategoryId();
-            }else{
-                $offerCategoryId[] = $categoryRelation->getFirstCategoryId();
-            }
-        }
-        
-        $offerProducts = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p') //TODO: valódi termék ajánlatok 
-                    ->select('p')
-                    ->setMaxResults(10)
-                    ->where('p.category IN (:offerCategoryId)')
-                    ->andWhere('p.id != :productId')
-                    ->setParameter('offerCategoryId',$offerCategoryId)
-                    ->setParameter('productId', $product->getId())
+        $productRepo = $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
+        $product = $productRepo->createQueryBuilder('p')
+                    ->select('p,pi,c,pp,prop')
+                    ->leftJoin('p.categorys','c')
+                    ->leftJoin('p.productImages','pi')
+                    ->leftJoin('p.productPropertys', 'pp')
+                    ->leftJoin('pp.property', 'prop')
+                    ->where('p.slug = :slug OR p.id = :slug')
+                    ->setParameter('slug', $slug)
+                    ->getQuery()->getOneOrNullResult();
+        $offerProducts = array(); 
+        $categoryId = null;
+        if($product != NULL ){
+            //Ajánlott termékek lekérdezése kategória alapján a kategória-kapcsolat táblálból
+            $categoryId = $product->getCategory();       
+            $categoryRelations = $this->getDoctrine()->getRepository('FrontendProductBundle:CategoryRelationship')->createQueryBuilder('r')
+                    ->select('r')
+                    ->where('r.firstCategoryId = :categoryId or r.secondCategoryId = :categoryId')
+                    ->setParameter('categoryId', $categoryId)
                     ->getQuery()->getResult();
-        if(count($offerProducts) < 10){
+            $offerCategoryId = array();
+            foreach((array)$categoryRelations as $categoryRelation){
+                if($categoryRelation->getFirstCategoryId() == $categoryId ){
+                    $offerCategoryId[] = $categoryRelation->getSecondCategoryId();
+                }else{
+                    $offerCategoryId[] = $categoryRelation->getFirstCategoryId();
+                }
+            }
+
+            //Ajánlott termékek
+            $offerProducts = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p') //TODO: valódi termék ajánlatok 
+                        ->select('p')
+                        ->setMaxResults(10)
+                        ->where('p.category IN (:offerCategoryId)')
+                        ->andWhere('p.id != :productId')
+                        ->setParameter('offerCategoryId',$offerCategoryId)
+                        ->setParameter('productId', $product->getId())
+                        ->getQuery()->getResult();
+        }
+        if(count($offerProducts) < 10){ //Ha nincs elegendő termék az előzőek alapján
             $moreProductCount = 10-count($offerProducts);
             $moreOfferProducts = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p') //TODO: valódi termék ajánlatok 
                         ->select('p')
-                        ->setMaxResults($moreProductCount)
-                        ->where('p.category = :categoryId ')
+                        ->setMaxResults($moreProductCount);
+            if($product != null){
+                $moreOfferProducts = $moreOfferProducts
                         ->andWhere('p.id != :productId')
-                        ->setParameter('categoryId',$categoryId)
-                        ->setParameter('productId', $product->getId())
-                        ->getQuery()->getResult();
+                        ->setParameter('productId', $product->getId());
+            }
+            if($categoryId != null){
+                $moreOfferProducts = $moreOfferProducts
+                    ->andWhere('p.category = :categoryId ')                        
+                    ->setParameter('categoryId',$categoryId);
+            }
+            $moreOfferProducts = $moreOfferProducts->getQuery()->getResult();
+            
             shuffle($moreOfferProducts);
             $offerProducts = array_merge($offerProducts, $moreOfferProducts);
         }
@@ -241,6 +291,9 @@ class DefaultController extends Controller
         return $this->render('FrontendProductBundle:Default:product.html.twig',array('product'=>$product, 'offerProducts' => $offerProducts));
     }
     
+    /*
+     * Termékeknél kérdések feltevése
+     */
     public function tabQuestionsAction($productId=null){
         $request = $this->get('request');
         if($productId == null){
@@ -251,24 +304,25 @@ class DefaultController extends Controller
         
         $form = $this->createForm(new ProductQuestionsType());
         if ($request->getMethod() == 'POST') { 
-                
-                
-              $name = $request->request->get('name');
-               $email = $request->request->get('email');
-               $question = $request->request->get('question');
-               $productQuestion = new ProductQuestions();
-               $productQuestion->setProduct($product);
-               $productQuestion->setName($name);
-               $productQuestion->setEmail($email);
-               $productQuestion->setQuestion($question);
-               $productQuestion->setStatus(0);
-               $em = $this->getDoctrine()->getManager();
-               $em->persist($productQuestion);
-               $em->flush(); 
-               
-               //$html = $this->renderView('FrontendProductBundle:Tabs:questions.html.twig', array('product' => $product));
-               $html = "Kérdésedet sikeresen elküldtük!";
-               return new JsonResponse(array('success' => true,'html'=>$html));
+            //Adatok lekérése és elmentése
+            $name = $request->request->get('name');
+            $email = $request->request->get('email');
+            $question = $request->request->get('question');
+            $questionTime = new \DateTime('now');
+            $productQuestion = new ProductQuestions();
+            $productQuestion->setProduct($product);
+            $productQuestion->setName($name);
+            $productQuestion->setEmail($email);
+            $productQuestion->setQuestion($question);
+            $productQuestion->setQuestionTime($questionTime);
+            $productQuestion->setStatus(0);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($productQuestion);
+            $em->flush(); 
+
+            //$html = $this->renderView('FrontendProductBundle:Tabs:questions.html.twig', array('product' => $product));
+            $html = "Kérdésedet sikeresen elküldtük!";
+            return new JsonResponse(array('success' => true,'html'=>$html));
               
         }
         
@@ -293,6 +347,7 @@ class DefaultController extends Controller
     public function compareAction($productId){
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') { 
+            //Lekérjük a munkafolyamatot és beállítjuk a termék azonosítóját
             $session = $request->getSession();
             $compareProducts = $session->get('compareProducts');
             $compareProducts[$productId] = true;
@@ -300,9 +355,9 @@ class DefaultController extends Controller
             $compareProducts = $session->get('compareProducts');
             
             $service = $this->container->get('product_service');
-            $data = $service->getCompareProductPropertysAndValues();
-            $comparePropertys = $data['comparePropertys'];
-            $productPropertysValues = $data['productPropertysValues'];
+            $data = $service->getCompareProductPropertysAndValues(); //Lekérjük az összehasonlítandó termékek tulajdonságát és értékét
+            $comparePropertys = $data['comparePropertys']; //Tulajdonságok
+            $productPropertysValues = $data['productPropertysValues']; //Értékek
             $html = $this->renderView('FrontendProductBundle:Compare:compareList.html.twig',array(
                 'comparePropertys' => $comparePropertys,
                 'productPropertysValues' => $productPropertysValues
@@ -312,10 +367,13 @@ class DefaultController extends Controller
         return new JsonResponse(array('success' => false));
     }
     
+    /*
+     * Összehasonlítandó termékek listája
+     */
     public function compareListAction(){
         $request = $this->get('request');
-        $session = $request->getSession();
-        
+        //munkafolyamatból lekérjük a termékek listáját
+        $session = $request->getSession();        
         $service = $this->container->get('product_service');
         $data = $service->getCompareProductPropertysAndValues();
         $comparePropertys = $data['comparePropertys'];
@@ -326,13 +384,18 @@ class DefaultController extends Controller
         ));
     }
     
+    /*
+     * Összehasonlítandó termékek törlése
+     */
     public function removeCompareProductAction($productId){
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') { 
             $session = $request->getSession();
             $compareProducts = $session->get('compareProducts');
-            unset($compareProducts[$productId]);
+            unset($compareProducts[$productId]); //Töröljük az adott azonosítójú terméket
             $session->set('compareProducts', $compareProducts);
+            
+            //Újra rendereljük az összehasonlítandó termékek listáját
             $service = $this->container->get('product_service');
             $data = $service->getCompareProductPropertysAndValues();
             $comparePropertys = $data['comparePropertys'];

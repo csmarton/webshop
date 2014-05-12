@@ -6,9 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * ProductProperty
- *
+ * @ORM\Entity(repositoryClass="Frontend\ProductBundle\Repository\ProductPropertyRepository")
  * @ORM\Table(name="product_property", indexes={@ORM\Index(name="IDX_404276494584665A", columns={"product_id"}), @ORM\Index(name="IDX_40427649549213EC", columns={"property_id"})})
- * @ORM\Entity
  */
 class ProductProperty
 {

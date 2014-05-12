@@ -33,6 +33,8 @@ twig:
     cache:            "%kernel.cache_dir%/twig"
     globals:
         web_path: "%kernel.root_dir%/../web/"
+        page_name: "Marci-tech"
+        page_name_admin: "Marci-tech Admin"
 
 # Assetic Configuration
 assetic:

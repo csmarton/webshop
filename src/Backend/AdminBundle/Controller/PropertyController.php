@@ -8,6 +8,9 @@ use Frontend\ProductBundle\Entity\Propertys;
 use Frontend\ProductBundle\Form\PropertysType;
 class PropertyController extends Controller
 {
+    /*
+     * Tulajdonságok listázása
+     */
     public function listAction()
     {   
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
@@ -15,11 +18,11 @@ class PropertyController extends Controller
         }
         $request = $this->get('request');
         
+        //OLDALAK
         $page = (int)$request->query->get('page');
         if($page == NULL){
              $page = 1;
-        }
-        //OLDALAK
+        }        
         $maxResult = (int)$request->query->get('maxResult');
         if($maxResult == NULL){
              $maxResult = 10;
@@ -44,32 +47,34 @@ class PropertyController extends Controller
         $filterMainCategory = "";
         $parameters = "";
         
+        //Szűrés
         if ($request->getMethod() == 'GET') {
             $filterId = $request->query->get('filterId');
             $filterName = $request->query->get('filterName');
             $filterMainCategory = $request->query->get('filterMainCategory');
-            $parameters .= "&filterId=";
-            if($filterId!= ""){
+            $parameters .= "&filterId="; 
+            if($filterId!= ""){ //Azonosító alapján
                 $propertys = $propertys
                     ->andWhere('p.id = :id')
                     ->setParameter('id', (int)$filterId); 
                 $parameters .= $filterId;
             }
             $parameters .= "&filterName=";
-            if($filterName!= ""){
+            if($filterName!= ""){ //Név alapján
                 $propertys = $propertys
                     ->andWhere('p.name LIKE :name')
                     ->setParameter('name', "%".$filterName."%");
                 $parameters .= $filterName;
             }
             $parameters .= "&filterMainCategory=";
-            if($filterMainCategory!= ""){
+            if($filterMainCategory!= ""){ //Kategória alapján
                 $propertys = $propertys
                     ->andWhere('p.mainCategory = :filterMainCategory')
                     ->setParameter('filterMainCategory', (int)$filterMainCategory);
                 $parameters .= $filterMainCategory;
             }
         }
+        //Rendezés
         if($order == "id"){
             $propertys = $propertys
                 ->orderBy('p.id',$by);
@@ -96,7 +101,7 @@ class PropertyController extends Controller
         $mainCategorys = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
         
         //$form = $this->createForm(new ProductType());
-        return $this->render('BackendAdminBundle:Property:PropertyList.html.twig', array(
+        return $this->render('BackendAdminBundle:Property:propertyList.html.twig', array(
             'filterId'=> $filterId,
             'filterName'=> $filterName,
             'filterMainCategory'=> $filterMainCategory,
@@ -111,6 +116,9 @@ class PropertyController extends Controller
         ));
     }
     
+    /*
+     * Tulajdonságok szerkesztése és új tulajdonság
+     */
     public function newAction()
     {   
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
@@ -118,11 +126,11 @@ class PropertyController extends Controller
         }
         $request = $this->get('request');
         $propertyId = $request->query->get('propertyId');
-        if($propertyId == null){
+        if($propertyId == null){ //Új tulajdonság
             $property = new Propertys();
             
         }else{
-            $property = $this->getDoctrine()->getRepository('FrontendProductBundle:Propertys')->findOneById($propertyId);
+            $property = $this->getDoctrine()->getRepository('FrontendProductBundle:Propertys')->findOneById($propertyId); //Tulajdonság lekérése
         }
        
         $form = $this->createForm(new PropertysType(),$property);
@@ -130,6 +138,9 @@ class PropertyController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) {
+                if($property->getOrderValue() == NULL){
+                   $property->setOrderValue(100); 
+                }
                 $now = new \DateTime("now"); 
                 $property->setCreatedAt($now);
                 $property->setUpdatedAt($now);
@@ -140,13 +151,16 @@ class PropertyController extends Controller
             }
         }    
         
-        return $this->render('BackendAdminBundle:Property:PropertyNew.html.twig', array(
+        return $this->render('BackendAdminBundle:Property:propertyNew.html.twig', array(
             'form' => $form->createView(),
             'propertyId'=>$propertyId,
             'property' => $property,
         ));
     }
     
+    /*
+     * Tulajdonság törlése
+     */
      public function removeAction(){
          $request = $this->get('request');
          if ($request->getMethod() == 'POST') {

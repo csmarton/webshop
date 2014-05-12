@@ -1,7 +1,13 @@
+#
+# rendelési oldal
+#
 frontend_cart_orders:
     pattern:  /kosar/rendeles
     defaults: { _controller: FrontendOrderBundle:Order:orders}    
     
+#
+# sikeres rendelés útvonal
+#
 frontend_cart_orders_success:
     pattern:  /kosar/rendeles/leadva
     defaults: { _controller: FrontendOrderBundle:Order:success}        

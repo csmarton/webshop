@@ -59,13 +59,14 @@ UserValidation = {
                 });
             });
 
-            
+            //Regisztrációs linkre kattintás
             $('body').on('click', '.registration-password-link', function(e) {
                 $("#modal-sign-in").trigger('reveal:close');
                 $("#modal-registration").reveal();
                 $('#registration-email').focus();
             });
 
+            //Regisztrációs form elküldése
             $('body').on('submit', '#registration-form', function(e) {
                 e.preventDefault();
                 email = $('#registration-form #registration-email').last().val();
@@ -99,6 +100,7 @@ UserValidation = {
             });
     },
     
+    //Űrlap validációs üzenetek
     customErrorMessages: {
         '#email': {
             'required': {
@@ -130,15 +132,15 @@ UserValidation = {
     },
 	
     setFormValidations: function() {
-        $("#sign-in-form").last().validationEngine({
-            promptPosition: "centerRight: 0",
-            'custom_error_messages': UserValidation.customErrorMessages,
-            scroll: false,
-            maxErrorsPerField: 1,
-            binded: false,
-            validationEventTrigger: 'submit'
+        $("#sign-in-form").last().validationEngine({ //bejelenetkezési form validáció
+            promptPosition: "centerRight: 0", //felbukkanó ablak pozíciója
+            'custom_error_messages': UserValidation.customErrorMessages, //üzenetek
+            scroll: false, //görgetés kikapcsolása
+            maxErrorsPerField: 1, //maximum hibaüzenet/mező
+            binded: false, //csak küldésre validál
+            validationEventTrigger: 'submit' //küldésre validál, alapérték blur
         });
-        $("#registration-form").last().validationEngine({
+        $("#registration-form").last().validationEngine({ //regisztrációs form validáció
             promptPosition: "centerRight: 0",
             'custom_error_messages': UserValidation.customErrorMessages,
             scroll: false,
@@ -150,17 +152,18 @@ UserValidation = {
     }	
 }	
 
+//Email cím ellenőrzése
 function checkEmailValidation(field, rules, i, options){
   if (field.val() == "") {
      rules.push('required');
      return options.allrules.wrongEmail.alertText;
   }else if(!emailPattern.test(field.val())){
-      console.log("OK");
       rules.push('required');
       return options.allrules.email.alertText;
   }
 }
 
+//Megegyező jelszavak ellenőrzése
 function checkPassword(field, rules, i, options){
   pass2 = $('#registration-form #registration-password-2').val();
   if(pass2 != ""){

@@ -1,35 +1,50 @@
+#
+# Termékek megjelenítése
+#
+
+#termékek kezdőoldal
 frontend_product_homepage:
     pattern:  /
     defaults: { _controller: FrontendProductBundle:Default:index }
-    
+
+#termékek listája    
 frontend_products:
     pattern:  /t
     defaults: { _controller: FrontendProductBundle:Default:index }
 
+#termékek megjelenítése fő és alkategória alapján
 product_by_category:
     pattern:  /t/{main_category}/{category}
     defaults: { _controller: FrontendProductBundle:Default:index }
 
+#termékek megjelenítése főkategória alapján
 product_by_main_category:
     pattern:  /t/{main_category}/
     defaults: { _controller: FrontendProductBundle:Default:index }
 
+
+#adott termék megjelenítése
 product:
     pattern:  /p/{slug}
     defaults: { _controller: FrontendProductBundle:Default:product }
-    
+
+#termékekhez tartozó kérdések
 frontend_product_questions:
     pattern:  /kerdesek/uj
     defaults: { _controller: FrontendProductBundle:Default:tabQuestions }
     
+    
+#termékek összehasonlítása
 frontend_product_compare:
     pattern:  /osszehasonlit/t/{productId}
     defaults: { _controller: FrontendProductBundle:Default:compare }
-    
+
+#összehasonlítandó termékek listája
 frontend_product_compare_list:
     pattern:  /osszehasonlit/t
     defaults: { _controller: FrontendProductBundle:Default:compareList }
     
+#összehasonlítandó termék törlése   
 frontend_product_compare_remove:
     pattern:  /osszehasonlit/torles/{productId}
     defaults: { _controller: FrontendProductBundle:Default:removeCompareProduct }        

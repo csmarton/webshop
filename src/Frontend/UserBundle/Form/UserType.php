@@ -21,7 +21,7 @@ class UserType extends AbstractType
             ->add('emailCanonical')
             ->add('enabled')
             //->add('salt')
-            ->add('password','password', array('label' => 'Jelszó:', 'required'  => false))
+            ->add('password','hidden', array('label' => 'Jelszó:', 'required'  => false))
            // ->add('lastLogin')
             //->add('locked')
             //->add('expired')

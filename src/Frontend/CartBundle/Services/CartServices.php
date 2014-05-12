@@ -56,7 +56,11 @@ class CartServices{
         $products = array();
         if(count($productIds) != 0){
             $products = $repo
-                        ->createQueryBuilder('p')                   
+                        ->createQueryBuilder('p') 
+                        ->select('p,pi,pp,prop')
+                        ->leftJoin('p.productImages','pi')
+                        ->leftJoin('p.productPropertys', 'pp')
+                        ->leftJoin('pp.property', 'prop')
                         ->where('p.id IN (:productIds)')
                         ->setParameter('productIds',$productIds)
                         ->getQuery()->getResult();

@@ -14,7 +14,8 @@ Fizetési mód: <span style="font-weight:bold">{{order.getPaymentOption().getNam
     <thead>
         <th>Termék azonosító</th>
         <th>Terméknév</th>
-        <th>Rendelési egység</th>                
+        <th>Rendelési egység</th> 
+        <th>Egységár</th>
         <th>Ár</th>
     </thead>
     <tbody>
@@ -28,15 +29,17 @@ Fizetési mód: <span style="font-weight:bold">{{order.getPaymentOption().getNam
             <tr>
                 <td>{{ product.getId() }}</td>
                 <td>{{ product.getName() }}</td>
-                <td>{{ item.getUnitQuantity() }}</td>
-                <td>{{ product.getRealPrice() |priceFormat }}</td>                             
+                <td>{{ item.getUnitQuantity() }} db</td>
+                <td>{{ product.getRealPrice()|priceFormat}} Ft</td>         
+                <td>{{ (product.getRealPrice()*item.getUnitQuantity())|priceFormat}} Ft</td>                             
                 </div>
             </tr>
         {% endfor %}
         <tr class="cart-sum">
             <td>Összesen:</td>
+            <td></td>            
+            <td>{{order.getItemsTotal()}} db</td>
             <td></td>
-            <td>{{order.getItemsTotal()}}</td>
             <td>{{order.getItemsTotalPrice()|priceFormat}} Ft</td>
         </tr>
     </tbody>

@@ -40,11 +40,11 @@ class DefaultController extends Controller
      * Fejléc renderelése
      * Paraméterben átadjuk neki a kosárban lévő termékek darabszámát
      */
-     public function headerAction() {        
+     public function headerAction($searchKey = null) {        
         $request = $this->get('request');
         $service = $this->container->get('cart_service');
         $cartCount = $service->getCartCount();
-        return $this->render('FrontendLayoutBundle:Default:header.html.twig',array('cartCount'=>$cartCount));
+        return $this->render('FrontendLayoutBundle:Default:header.html.twig',array('cartCount'=>$cartCount, 'searchKey' => $searchKey));
     }    
        
    /*
@@ -75,12 +75,26 @@ class DefaultController extends Controller
         return $this->render('FrontendLayoutBundle:BottomSection:contact.html.twig');
     }
     
+     /*
+     * SIDEBAR, az oldal oldalsó részén található menüsor
+     */
+    public function sidebarAction($currentMainCategory = null, $currentCategory = null){
+        $main_catergory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->createQueryBuilder('mc')
+                ->select('mc,c')
+                ->leftJoin('mc.category','c')
+                ->getQuery()->getResult();
+        
+        return $this->render('FrontendLayoutBundle:Default:sidebar.html.twig',array('main_category' => $main_catergory,
+            'currentMainCategory' =>$currentMainCategory,
+            'currentCategory' => $currentCategory
+            ));
+    }
+    
     /*
      * Ajánlott termékek az oldalsávban
      * Lekérjük a rendeléseket, megnézzük hogy mely termékből rendelték a legtöbbet és azokat adjuk vissza
      */
     public function sideRecomendedProductsAction(){
-        
         $ordersItem = $this->getDoctrine()->getRepository('FrontendOrderBundle:OrdersItem')->createQueryBuilder('p')
                 ->select('p.productId,SUM(p.unitQuantity) AS db')
                 ->groupBy('p.productId')                
@@ -92,7 +106,8 @@ class DefaultController extends Controller
             $productIds[] = $item['productId']; //legtöbbet rendelt termékek azonosítói
         }
         $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
-                ->select('p')
+                ->select('p,pi')
+                ->leftJoin('p.productImages','pi')
                 ->where('p.id IN (:productIds)')
                 ->setParameter('productIds', $productIds)
                 ->getQuery()->getResult();
@@ -101,4 +116,5 @@ class DefaultController extends Controller
             'products' => $products
         ));
     }
+    
 }

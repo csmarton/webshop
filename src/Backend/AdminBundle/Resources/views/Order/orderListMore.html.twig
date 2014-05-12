@@ -1,0 +1,115 @@
+{% extends "BackendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} {{page_name_admin}} - Rendelések {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript">
+            $(document).ready(function(){
+            });
+    </script>
+{% endblock %}
+ {% block stylesheets %}   
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Order.css') }}"/>
+{% endblock %}
+    
+{% block main %} 
+    <div class="main">
+        <h2>Rendelés információi</h2>
+        <div class="upperMenu">
+        </div>
+        <div>
+            <div class="order-information">
+                <div class="information-box">
+                    <div class="label-text">Rendelési azonosító</div>
+                    <div class="information-text">
+                        {{order.getId()}}
+                    </div>
+                </div>
+                
+                <div class="information-box">
+                    <div class="label-text">Rendelés dátuma</div>
+                    <div class="information-text">
+                        {{order.getOrderedAt|date('Y-m-d')}}
+                    </div>
+                </div>
+                    
+                <div class="information-box">
+                    <div class="label-text">Ár</div>
+                    <div class="information-text">
+                        {{order.getItemsTotalPrice|priceFormat}}Ft
+                    </div>
+                </div>
+                
+                <div class="information-box">
+                    <div class="label-text">Fizetési mód</div>
+                    <div class="information-text">
+                        {{order.getPaymentOption().getName()}}
+                    </div>
+                </div>
+                
+                <div class="information-box">
+                    <div class="label-text">Szállítási mód</div>
+                    <div class="information-text">
+                        {{order.getShippingOption().getName()}}
+                    </div>
+                </div>
+                
+                <div class="information-box">
+                    <div class="label-text">Teljesítés</div>
+                    <div class="information-text">
+                        {% if order.getPerformedAt() == NULL %}
+                            Feldolgozás alatt
+                        {% else %}
+                            Teljesítve
+                        {% endif %}
+                    </div>    
+                </div>
+                <div class="information-box">
+                    <div class="label-text">Megjegyzés</div>
+                    <div class="information-text">
+                        {% if order.getComment() == NULL %}
+                            -
+                        {% else %}
+                            {{order.getComment()}}
+                        {% endif %}
+                    </div>    
+                </div>
+            </div>
+            <table class="shared-table">
+                <thead class="big-header">
+                    <th>Azonosító</th>
+                    <th>Terméknév</th>
+                    <th>Egységár</th>
+                    <th>Mennyiség</th>
+                    <th>Összes ár</th>
+                </thead>
+                <tbody>
+                    {% for orderItem in order.getOrderItems() %}
+                        {% set product = orderItem.getProduct() %}
+                        <tr>
+                            <td>
+                                <a href="{{path('backend_admin_product_new', {'productId':product.getId()})}}">{{product.getId()}}</a>
+                             </td>
+                            <td>
+                                {{product.getName()}}
+                            </td>
+                            <td>
+                                {{product.getRealPrice()|priceFormat}}
+                            </td>
+                            <td>
+                                {{orderItem.getUnitQuantity()}}
+                            </td>
+                            <td>
+                                {{(product.getRealPrice()*orderItem.getUnitQuantity())|priceFormat}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+              
+        
+    </div>
+{% endblock %}
+                  

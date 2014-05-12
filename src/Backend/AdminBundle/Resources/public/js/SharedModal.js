@@ -1,3 +1,7 @@
+/*
+ * 
+ * Törlés modális ablakok
+ */
 SharedModal = {
     init: function(){
             this.bindUIActions();
@@ -14,16 +18,16 @@ SharedModal = {
             SharedModal.deleteCategoryModalInit(categoryId);  
        });
        
-       $('body').on('click', '.deleteMainCategory', function(){    //Kategóriák törlése modális ablak        
+       $('body').on('click', '.deleteMainCategory', function(){    //Főkategóriák törlése modális ablak        
             var mainCategoryId = $(this).attr("mainCategoryId");
             SharedModal.deleteMainCategoryModalInit(mainCategoryId);  
        });
        
-       $('body').on('click', '.deleteUser', function(){            
+       $('body').on('click', '.deleteUser', function(){  //felhasználó törlése modális ablak        
             var userId = $(this).attr("userId");
             SharedModal.deleteUserModalInit(userId);  
        });
-        $('body').on('click', '.deleteProperty', function(){            
+        $('body').on('click', '.deleteProperty', function(){    //Tulajdonság törlése modális ablak                
             var propertyId = $(this).attr("propertyId");
             SharedModal.deletePropertyModalInit(propertyId);  
        });
@@ -61,6 +65,10 @@ SharedModal = {
             }); 
         
     },
+    
+    /*
+    ** Kategória törlésénél feljövő modális ablak
+    */
     deleteCategoryModalInit : function(categoryId){        
         $('#modal-delete-category').reveal();
             $('body').on('click', '.exit-reveal-modal', function(){ //Kilépés gombra a modális ablak bezárása
@@ -123,6 +131,9 @@ SharedModal = {
         
     },
     
+    /*
+    ** Főkategória törlésénél feljövő modális ablak
+    */
     deleteMainCategoryModalInit : function(mainCategoryId){        
         $('#modal-delete-main-category').reveal();
             $('body').on('click', '.exit-reveal-modal', function(){ //Kilépés gombra a modális ablak bezárása

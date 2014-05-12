@@ -18,19 +18,25 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OrderController extends Controller
 {    
+    /*
+     * Rendelés leadása
+     */
     public function ordersAction(){
         $request = $this->get('request');
+        //Lekérjük a munkafolyamatból a kosárban lévő termékeket
         $session = $request->getSession();
         $inCart = $session->get('cart');
         if(count($inCart) == 0){
             return $this->redirect($this->generateUrl('frontend_cart'));
         }     
+        
         $user = $this->get('security.context')->getToken()->getUser();
         if( !$this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') )
             return $this->redirect($this->generateUrl('frontend_cart'));
 
         $profile = $user->getProfile();
         
+        //Beállítjuk a rendeléshez tartozó személyes adatokat a prodfil adataira
         $ordersProfileInformation = new OrdersProfileInformation();
         $ordersProfileInformation->setName($profile->getName());
         $ordersProfileInformation->setEmail($user->getUserName());
@@ -44,25 +50,26 @@ class OrderController extends Controller
         $ordersProfileInformation->setShippingAddressStreetNumber($profile->getShippingAddressStreetNumber());
         $ordersProfileInformation->setShippingAddressZipCode($profile->getShippingAddressZipCode());
         
+        //Profil űrlap
         $ProfileForm = $this->createForm(new OrdersProfileInformationType(),$ordersProfileInformation);
-        $order = new Orders();             
+        $order = new Orders();     
+        //Rendelési űrlap
         $orderForm = $this->createForm(new OrdersType(), $order);   
         
         if ($request->getMethod() == 'POST') {
            $ProfileForm->bind($request);
            $orderForm->bind($request);
-           if ($ProfileForm->isValid() && $orderForm->isValid()) {
+           if ($ProfileForm->isValid() && $orderForm->isValid()) {//a kapott űrlapok validak
                $em = $this->getDoctrine()->getManager();
-
-
-
-               $productIds = array();
+               
+               $productIds = array(); //Kosárban lévő termékek azonosítói
                $itemsTotal = 0;
                foreach($inCart as $key => $value){
                    $productIds[] = $key;
                    $itemsTotal += $value;
                }
 
+               //Kosárban lévő termékek
                $repo =  $this->getDoctrine()->getRepository('FrontendProductBundle:Product');
                $orderProducts = $repo                            
                    ->createQueryBuilder('p')
@@ -71,30 +78,28 @@ class OrderController extends Controller
                    ->getQuery()->getResult();
                $orderPrice = 0;
                foreach($orderProducts as $orderProduct){
-                    $orderPrice += $orderProduct->getRealPrice();
+                    $orderPrice += $orderProduct->getRealPrice()*$inCart[$orderProduct->getId()]; //Rendelési ár
                }
 
+               //Rendelési adatok beállítása
                $now =  new \DateTime("now"); 
                $order->setUser($user);
                $order->setOrderedAt($now);
                $order->setItemsTotalPrice($orderPrice);
                $order->setItemsTotal($itemsTotal);                    
 
+               //Adatok mentése az adatbázisba
                $em->persist($ordersProfileInformation);
                $order->setOrderProfileInformation($ordersProfileInformation);
                $em->persist($order);                    
                $em->flush();
                     
-               $products = $repo
-                           ->createQueryBuilder('p')                   
-                           ->where('p.id IN (:productIds)')
-                           ->setParameter('productIds',$productIds)
-                           ->getQuery()->getResult();
                $productsAssoc = array();
-               foreach((array)$products as $product){
+               foreach((array)$orderProducts as $product){
                    $productsAssoc[$product->getId()] = $product;
                }
 
+               //Rendeléshez tartozó termékek mentése az adatbázisba
                foreach($inCart as $key => $value){
                    $ordersItem = new OrdersItem();
                    $ordersItem->setOrders($order);
@@ -107,6 +112,7 @@ class OrderController extends Controller
                }
                 $session->remove('cart'); //töröljük a kosár tartalmát
                 
+                //Levél küldése a vásárlónak a rendelt termékekről
                 $mailer = $this->get('mailer');
                 $confirmationMessage = \Swift_Message::newInstance()
                     ->setSubject('Rendelés leadása')
@@ -120,21 +126,21 @@ class OrderController extends Controller
                         "text/html"
                     )
                 ;
-                $mailer->send($confirmationMessage);
+                $mailer->send($confirmationMessage); //Levél küldése
                 
-               return $this->redirect($this->generateUrl('frontend_cart_orders_success'));
+               return $this->redirect($this->generateUrl('frontend_cart_orders_success', array('success' => true))); //Átirányítás a sikeres rendelés weboldalra
            }  
         }
-        /*$order = $this->getDoctrine()->getRepository('FrontendOrderBundle:Orders')->findOneById(9);
-        return $this->render('FrontendOrderBundle:Order:orderEmail.html.twig',array(
-            'order' => $order
-        ));*/
+        
         return $this->render('FrontendOrderBundle:Order:order.html.twig',array(
             'ProfileForm' => $ProfileForm->createView(),
             'orderForm'=>$orderForm->createView(),
         ));
     }
     
+    /*
+     * Rendelés sikeres teljesítése
+     */
     public function successAction(){
         return $this->render('FrontendOrderBundle:Order:success.html.twig');
     }

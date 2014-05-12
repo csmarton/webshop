@@ -10,6 +10,9 @@ use Frontend\ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 class UserController extends Controller
 {
+    /*
+     * Felhasználók listázása
+     */
     public function listAction()
     {   
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
@@ -17,11 +20,12 @@ class UserController extends Controller
         }
         $request = $this->get('request');
         
+        //OLDALAK
         $page = (int)$request->query->get('page');
         if($page == NULL){
              $page = 1;
         }
-        //OLDALAK
+        
         $maxResult = (int)$request->query->get('maxResult');
         if($maxResult == NULL){
              $maxResult = 10;
@@ -46,27 +50,28 @@ class UserController extends Controller
         $filterAdmin = "";
         $parameters = "";
         
+        //Szűrés
         if ($request->getMethod() == 'GET') {
             $filterId = $request->query->get('filterId');
             $filterEmail = $request->query->get('filterEmail');
             $filterAdmin = $request->query->get('filterAdmin');
             
-            $parameters .= "&filterId=";
-            if($filterId!= ""){
+            $parameters .= "&filterId="; 
+            if($filterId!= ""){//Azonosító alapján
                 $users = $users
                     ->andWhere('u.id = :id')
                     ->setParameter('id', (int)$filterId); 
                 $parameters .= $filterId;
             }
             $parameters .= "&filterEmail=";
-            if($filterEmail!= ""){
+            if($filterEmail!= ""){ //Email cím alapján
                 $users = $users
                     ->andWhere('u.email LIKE :email')
                     ->setParameter('email', "%".$filterEmail."%");
                 $parameters .= $filterEmail;
             }
             $parameters .= "&filterAdmin=";
-            if($filterAdmin!= ""){
+            if($filterAdmin!= ""){ //Admin -e
                 if($filterAdmin == "yes"){
                     $users = $users
                          ->andWhere('u.roles LIKE :roles')
@@ -79,6 +84,7 @@ class UserController extends Controller
                 $parameters .= $filterAdmin;
             }
         }
+        //Rendezés
         if($order == "id"){
             $users = $users
                 ->orderBy('u.id',$by);
@@ -103,7 +109,7 @@ class UserController extends Controller
                 ->setMaxResults($maxResult)
                 ->getQuery()->getResult();
         
-        return $this->render('BackendAdminBundle:User:list.html.twig', array(
+        return $this->render('BackendAdminBundle:User:userList.html.twig', array(
             'users' => $users,
             'filterId'=> $filterId,
             'filterEmail'=> $filterEmail,
@@ -117,6 +123,9 @@ class UserController extends Controller
         ));
     }    
    
+    /*
+     * Felhasználó szerkesztése és új felhasználó
+     */
     public function newAction()
     {   
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
@@ -127,13 +136,13 @@ class UserController extends Controller
         
         $myUser = $this->get('security.context')->getToken()->getUser();
         $profile = null;
-        if($userId == null){
+        if($userId == null){ //Új felhasználó
             $user = new User();   
             $user->setUserName('');
             $user->setPassword('');
             $profile = new Profile();            
         }else{
-            $user = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->findOneById($userId);
+            $user = $this->getDoctrine()->getRepository('FrontendUserBundle:User')->findOneById($userId); //Meglévő felhasználó
         }
 
         $form = $this->createForm(new UserType(),$user);
@@ -142,19 +151,17 @@ class UserController extends Controller
             $form->bind($request);
             if ($form->isValid()) { 
                if (isset($form['isAdmin'])) {
-                    $isAdmin = $form['isAdmin']->getData();
+                    $isAdmin = $form['isAdmin']->getData(); //Admin
                }
-               if (isset($form['password'])) {
-                    $password = $form['password']->getData();
-               }   
                
                if($isAdmin){
                    $user->addRole("ROLE_ADMIN");
                }else{
                    $user->removeRole("ROLE_ADMIN");
                }
-               
-               $user->setPlainPassword($password);
+               if($user->getPassword() == null || $user->getPassword() == ''){
+                   $user->setPlainPassword($password);
+               }               
                
                $em = $this->getDoctrine()->getManager();
                $em->persist($user);               
@@ -172,7 +179,7 @@ class UserController extends Controller
                 
 
         
-        return $this->render('BackendAdminBundle:User:new.html.twig', array(
+        return $this->render('BackendAdminBundle:User:userNew.html.twig', array(
             'form' => $form->createView(),
             'userId'=>$userId,
             'user' => $user,
@@ -180,6 +187,9 @@ class UserController extends Controller
         ));
     }
     
+    /*
+     * Felhasználó törlése
+     */
     public function removeAction(){
          $request = $this->get('request');
          if ($request->getMethod() == 'POST') {
@@ -199,6 +209,9 @@ class UserController extends Controller
          }   
     }
     
+    /*
+     * Profil szerkesztése
+     */
     public function profileEditAction($userId = null){
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
@@ -223,7 +236,7 @@ class UserController extends Controller
                return $this->redirect($this->generateUrl('backend_admin_user_new').'?userId='.$userId);
             }
         } 
-        return $this->render('BackendAdminBundle:User:profiles.html.twig', array(
+        return $this->render('BackendAdminBundle:User:userProfiles.html.twig', array(
             'form' => $form->createView(),
             'profile' => $profile,
             'userId' => $userId

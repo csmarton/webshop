@@ -53,27 +53,28 @@ class ProductController extends Controller
         $filterActive = "";
         $filterCategory = "";
         $parameters = "";
+        //Szűrés
         if ($request->getMethod() == 'GET') {
             $filterId = $request->query->get('filterId');
             $filterName = $request->query->get('filterName');
             $filterActive = $request->query->get('filterActive');
             $filterCategory = $request->query->get('filterCategroy');
             $parameters .= "&filterId=";
-            if($filterId!= ""){
+            if($filterId!= ""){ //Azonosító alapján
                 $products = $products
                     ->andWhere('p.id = :id')
                     ->setParameter('id', (int)$filterId); 
                 $parameters .= $filterId;
             }
             $parameters .= "&filterName=";
-            if($filterName!= ""){
+            if($filterName!= ""){ //Név alapján
                 $products = $products
                     ->andWhere('p.name LIKE :name')
                     ->setParameter('name', "%".$filterName."%");
                 $parameters .= $filterName;
             }
             $parameters .= "&filterActive=";
-            if($filterActive!= ""){
+            if($filterActive!= ""){ //aktív -e
                 if($filterActive == "yes"){
                     $products = $products
                         ->andWhere('p.isActive = 1');
@@ -84,13 +85,14 @@ class ProductController extends Controller
                 $parameters .= $filterActive;
             }
             $parameters .= "&filterCategory=";
-            if($filterCategory!= ""){
+            if($filterCategory!= ""){ //Kategória alapján
                 $products = $products
                     ->andWhere('p.categorys = :cat')
                     ->setParameter('cat', (int)$filterCategory);
                 $parameters .= $filterCategory;
             }            
         }
+        //Rendezés
         if($order == "id"){
             $products = $products
                 ->orderBy('p.id',$by);
@@ -116,7 +118,7 @@ class ProductController extends Controller
                 ->getQuery()->getResult();
         
         //$form = $this->createForm(new ProductType());
-        return $this->render('BackendAdminBundle:Product:list.html.twig', array(
+        return $this->render('BackendAdminBundle:Product:productList.html.twig', array(
             //'form' => $form->createView(),
             'products' => $products,
             'filterId'=> $filterId,
@@ -164,6 +166,7 @@ class ProductController extends Controller
                 'category' => $product->getCategory(),
                 'isActive' => $product->getIsActive(),
                 'inStock' => $product->getInStock(),
+                'salesPrice' => $product->getSalesPrice(),
             );
             $currentCategoryId = $product->getCategory();
             $currentMainCategory = $product->getCategorys()->getMainCategory();
@@ -177,21 +180,20 @@ class ProductController extends Controller
             $form->bind($request);
             if ($form->isValid()) { 
                     $categorysId = (int)$request->request->get('categorys');
-                    //var_dump($categorysId);die;
                     $category = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findOneById($categorysId);
-
                     $createdTime = new \DateTime("now"); 
                     $product->setCategory($categorysId);
                     $product->setCategorys($category);
                     $product->setCreatedAt($createdTime);
                     $product->setUpdatedAt($createdTime);
 
-
+                    
                     $em->persist($product);
                     $em->flush();
                     
+                    //LOGOLÁS
                     $now = new \DateTime('now');
-                    $log = new Log();
+                    $log = new Log(); 
                     if($oldProduct != null){ //Termék szerkesztése
                         $log->setAction(1);
                         $changedData = "";
@@ -216,6 +218,14 @@ class ProductController extends Controller
                         if($product->getInStock() != $oldProduct['inStock']){                            
                             $changedData .= "<div class=\"label-text\">Raktáron: </div><div class='content-box'><div class=\"old-value\">".$oldProduct['inStock'] . "</div><div class=\"new-value\"> " .$product->getInStock(). "</div></div>";
                         }
+                        if($product->getSalesPrice() != $oldProduct['salesPrice']){  //Az ár elmentés a spcial_offers táblába
+                            $specialOffer = new SpecialOffers();
+                            $specialOffer->setProduct($product);
+                            $specialOffer->setNewPrice($product->getSalesPrice());
+                            $em->persist($specialOffer);
+                            $em->flush();
+                        }
+                        
                     }else{//Új terméket szúrok be
                         $log->setAction(0);
                         $changedData = null;
@@ -239,7 +249,7 @@ class ProductController extends Controller
                  
 
         
-        return $this->render('BackendAdminBundle:Product:new.html.twig', array(
+        return $this->render('BackendAdminBundle:Product:productNew.html.twig', array(
             'form' => $form->createView(),
             'productId'=>$productId,
             'product' => $product,
@@ -318,7 +328,9 @@ class ProductController extends Controller
                     ->andWhere('pp.id NOT IN (:havingProductProperty)')
                     ->setParameter('havingProductProperty',$havingProductPropertyId);
         }
-        $propertys = $propertys->getQuery()->getResult();
+        $propertys = $propertys
+                ->orderBy('pp.name', 'asc')
+                ->getQuery()->getResult();
         
         $request = $this->get('request');
         $productProperty = new ProductProperty(); 
@@ -337,7 +349,7 @@ class ProductController extends Controller
             }
         }    
         
-        return $this->render('BackendAdminBundle:Product:propertys.html.twig', array(
+        return $this->render('BackendAdminBundle:Product:propertysBox.html.twig', array(
             'form' => $form->createView(),
             'productPropertys' => $productPropertys,
             'productId' => $product->getId(),
@@ -372,9 +384,17 @@ class ProductController extends Controller
                 $productProperty->setProduct($product);
                 $productProperty->setProperty($property);
             }
-            $oldValue = $productProperty->getValue();
-            
+            $oldValue = $productProperty->getValue();            
             $productProperty->setValue($propertyValue);
+            
+            
+            if($property->getId() == 27 || $property->getId() == 4 || $property->getId() == 24 || $property->getId() == 6){ //1-2 Memória, 3-4 Merevlemez
+                $service = $this->container->get('product_service');
+                $convertedValue = $service->convertToMByte($productProperty->getValue());
+                $productProperty->setValue($convertedValue);
+            }
+            
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($productProperty);
             $em->flush(); 
@@ -452,7 +472,7 @@ class ProductController extends Controller
             $productPropertys[] = $removeProperty;
             
             
-            $html = $this->renderView('BackendAdminBundle:Product:newPropertyList.html.twig', array(
+            $html = $this->renderView('BackendAdminBundle:Product:propertyNewList.html.twig', array(
                 'propertys' => $productPropertys,
                 'productId' => $productId,
                 'propertyId' => $propertyId));
@@ -463,6 +483,9 @@ class ProductController extends Controller
          }   
     }
     
+    /*
+     * Kategória kiválasztása ajax segítségével termékeknél
+     */
     public function selectCategoryAjaxAction(){
         $request = $this->get('request');
          if ($request->getMethod() == 'POST') {

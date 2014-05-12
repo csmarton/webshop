@@ -6,41 +6,50 @@
         </div>
     {% endif %}
     {% for productWithCount in productsWithCount %}
-        {% if productWithCount[0].getSalesPrice() is not null %}
-            {% set price = productWithCount[0].getSalesPrice() %}
+        {% set product = productWithCount[0] %}
+        {% if (product.getSlug() is not null)%}
+                {% set product_link = product.getSlug() %}
+        {% else %}
+                {% set product_link = product.getId() %}
+        {% endif %}
+        {% if product.getSalesPrice() is not null %}
+            {% set price = product.getSalesPrice() %}
         {% else%}
-            {% set price = productWithCount[0].getPrice() %}
+            {% set price = product.getPrice() %}
         {% endif %}
         <div class="cart-item">
              {% set cartPrice = cartPrice + price*productWithCount[1] %}
             <div class="column-0">
-                        {% if ( productWithCount[0].getProductImages()|length != 0 ) %}
-                            <img src="{{image( productWithCount[0].getProductImages()[0].getWebPath()).resize(100,100)}}"/>
+                        {% if ( product.getProductImages()|length != 0 ) %}
+                            <img src="{{image( product.getProductImages()[0].getWebPath()).resize(100,100)}}"/>
                         {% else %}     
-                            <img src="{{ asset('images/no_image.jpg')}}"/>
+                            <img src="{{ image('images/no_image.jpg').resize(100,100)}}"/>
                         {% endif %}
             </div>
             <div class="column-1">
                 <div class="product-information">
                     <div class="product-name">
-                        {{ productWithCount[0].getName() }}
+                        <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
+                            {{ product.getName() }}
+                        </a>
                     </div>
                     <div class="product-propertys">
                         <ul>
-                            {% for productProperty in productWithCount[0].getProductPropertys()%}
-                            <li>{{productProperty.getProperty().getName()}} : <span class="bold">{{productProperty.getValue()}}</span></li>
+                            {% for productProperty in product.getProductPropertys()%}
+                            <li>{{productProperty.getProperty().getName()}} : <span class="bold">{{productProperty|propertyConverter}}</span></li>
                             {% endfor %}   
                         </ul>
                     </div>
                 </div>                                
             </div>
             <div class="column-2">
-                {{ price|priceFormat }}
+                {{ price|priceFormat }} Ft
+                <div class="column-3">
+                    <input type="number" value="{{ productWithCount[1] }}" class="change-product-cart-count" productId="{{productWithCount[0].getId()}}" link="{{path('frontend_cart_update')}}"/>
+                    <a href="javascript:void(0)" productId="{{productWithCount[0].getId()}}" class="delete-product-from-cart" link="{{path('frontend_remov_from_cart')}}">Törlés</a>
+                </div>
             </div>
-            <div class="column-3">
-                <input type="number" value="{{ productWithCount[1] }}" class="change-product-cart-count" productId="{{productWithCount[0].getId()}}" link="{{path('frontend_cart_update')}}"/>
-                <a href="javascript:void(0)" productId="{{productWithCount[0].getId()}}" class="delete-product-from-cart" link="{{path('frontend_remov_from_cart')}}">Törlés</a>
-            </div>
+
         </div>
     {% endfor %}
 </div>

@@ -20,8 +20,7 @@ class CartController extends Controller
                 
         $request = $this->get('request');
         
-        $productId = $request->request->get('productId'); //termék azonosítója
-        
+        $productId = $request->request->get('productId'); //termék azonosítója        
         $session = $request->getSession(); //munkafolyamat lekérése
         $inCart = $session->get('cart');
         if(isset($inCart[$productId])){
@@ -30,7 +29,7 @@ class CartController extends Controller
             $inCart[$productId] = 1; //kosárba tesszük a terméket egy darabszámmal
         }
         
-        $session->set('cart', $inCart); //mentjük a munkafolyamatato
+        $session->set('cart', $inCart); //mentjük a munkafolyamatatot
         
         $service = $this->container->get('cart_service'); //service a kosárban lévő termékek darabszámának meghatározásához
         $cartCount = $service->getCartCount();

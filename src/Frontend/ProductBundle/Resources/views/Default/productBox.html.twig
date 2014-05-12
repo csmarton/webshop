@@ -1,4 +1,5 @@
 <div class="products_box">
+    <div class="loading loading-top"></div>
     {% if products|length == 0%}
         Nincsenek elérhető termékek
     {% else %}
@@ -15,7 +16,15 @@
             {% set classes = "" %}
         {% endif %}
         <div class="product_box {{classes}}">
-                <div class="product_name"><a href="{{path('frontend_product_homepage')}}p/{{product_link}}">{{product.name}}</a></div>
+                <div class="product_name">
+                    <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
+                        {% if product.getName()|length > 35 %}
+                        {{product.getName()|slice(0, 35)}}...
+                        {% else %}
+                            {{product.name}}
+                        {% endif %}
+                    </a>
+                </div>
                 <div class="upper_box">
 
                         <div class="right_box">
@@ -49,12 +58,14 @@
                 <div class="bottom_box">
                     <ul>
                         {% set i = 0 %}
-                        {% for property in product.getProductPropertys()|propertySort if i<=8%}
+                        {% set propertyStringLength = 0 %}
+                        {% for property in product.getProductPropertys()|propertySort if (i<=8 and propertyStringLength <= 200)%}
                             {% set propertyName = property.getProperty().getName()%}
                             {% set propertyValue = property.getValue() %}
+                            {% set propertyStringLength = propertyStringLength + propertyName|length + propertyValue|length + 3 %}
                             <li>
                                 <span class="property-name">{{propertyName}}</span> : 
-                                <span class="bold">{{propertyValue}}</span>
+                                <span class="bold">{{property|propertyConverter}}</span>
                             </li>
                             {% set i = i + 1 %}                            
                         {% endfor %} 

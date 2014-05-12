@@ -1,3 +1,6 @@
+/*
+* Profil szerkesztése
+*/
 .profile_edit_form{
     margin-left: 50px;
 }
@@ -14,18 +17,6 @@
     float: left;
     font-weight: bold;
     width: 120px;
-}
-
-.profile_edit_form .input_box{
-    
-}
-
-.profile_edit_form .profile_edit_error_line{
-
-}
-
-.profile_edit_form .profile_edit_bottom_menu{
-    
 }
 
 .profile_edit_header_box,
@@ -50,7 +41,9 @@ h2{
     font-size: 1.2em;
 }
 
-
+/*
+* Rendeléseim 
+*/
 .order-information .information-box{
     display:block;
     padding: 5px;

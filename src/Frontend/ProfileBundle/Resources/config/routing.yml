@@ -1,7 +1,9 @@
+#profil szerkesztése
 frontend_profile_edit:
     pattern:  /profil/szerkesztes
     defaults: { _controller: FrontendProfileBundle:Default:edit}  
-    
+
+#rendeléseim
 frontend_profile_my_orders:
     pattern:  /profil/rendeleseim
     defaults: { _controller: FrontendProfileBundle:Default:myOrders}      

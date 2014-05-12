@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 class LogController extends Controller
 {
+    /*
+     * Naplózás listázása
+     */
     public function listAction()
     {   
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
@@ -13,11 +16,11 @@ class LogController extends Controller
         }
         $request = $this->get('request');
         
+        //OLDALAK
         $page = (int)$request->query->get('page');
         if($page == NULL){
              $page = 1;
-        }
-        //OLDALAK
+        }        
         $maxResult = (int)$request->query->get('maxResult');
         if($maxResult == NULL){
              $maxResult = 10;
@@ -63,7 +66,7 @@ class LogController extends Controller
                 ->getQuery()->getResult();
         
         //$form = $this->createForm(new ProductType());
-        return $this->render('BackendAdminBundle:Log:list.html.twig', array(
+        return $this->render('BackendAdminBundle:Log:LogList.html.twig', array(
             'logs' => $logs,
             'actualPage' => $page,
             'pageCount' => $pageCount,

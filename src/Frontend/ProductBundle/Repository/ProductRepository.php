@@ -53,6 +53,9 @@ class ProductRepository extends EntityRepository{
                     ->setParameter('hightPrice',(int)$hightPrice );
     }
     
+    /*
+     * Gyártó szerinti szűrés
+     */
     public function getProductIdsFilterByManufacturer($laptopFilterManufacturer, $catId = 1){
         $filtered0 = array();
         $filteredProductIds0 = array();
@@ -70,6 +73,9 @@ class ProductRepository extends EntityRepository{
         return $filteredProductIds0;
     }
     
+    /*
+     * Rendezés megadott szempontok alapján
+     */
     public function getOrderByProduct($products,$order, $by){
         if($order == "promotion" && $by=="desc"){
             $products = $products
@@ -100,6 +106,9 @@ class ProductRepository extends EntityRepository{
         return $products;
     }
 
+    /*
+     * Általános keresés
+     */
     public function getProductIdsFilterBySearchString($generalSearchString){
         $productIds = $this->createQueryBuilder('p')
                     ->select('p.id')
@@ -117,15 +126,20 @@ class ProductRepository extends EntityRepository{
     }
     
     //Termékek keresése kulcsszó alapján
-    public function findProductBySearchKey($key){
-        return $this->createQueryBuilder('p')
+    public function findProductBySearchKey($key, $maxResults = null){
+        $products = $this->createQueryBuilder('p')
                 ->select('p')
                 ->leftJoin('p.categorys','c')                         
                 ->leftJoin('c.mainCategory','mc')
                 ->where('p.name LIKE :key OR c.name LIKE :key OR mc.name LIKE :key')
-                ->setParameter('key', "%".$key."%")
-                ->getQuery()->getResult();
+                ->setParameter('key', "%".$key."%");
+        if($maxResults != null){
+              $products = $products
+                ->setMaxResults($maxResults);
+        }
+        return $products->getQuery()->getResult();
     }
+    
     //Termékek keresése kulcsszó alapján
     public function findProductIdBySearchKey($key){
         return $this->createQueryBuilder('p')

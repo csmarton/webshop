@@ -8,7 +8,7 @@ Category = {
             this.setFormValidation();     
             
     },
-	
+    //kategória form validációs üzenetek
     customErrorMessages: {
         '.categoryName': {
             'required': {
@@ -25,7 +25,7 @@ Category = {
     },
 	
     setFormValidation: function() {
-        $(".newCategory, .newMainCategory").validationEngine({
+        $(".newCategory, .newMainCategory").validationEngine({ //új kategória űrlap validáció
             promptPosition: "topLeft: 0",
             'custom_error_messages': Category.customErrorMessages,
             scroll: false,

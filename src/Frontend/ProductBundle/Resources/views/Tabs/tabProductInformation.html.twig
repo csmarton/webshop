@@ -1,7 +1,7 @@
 <div class="bottom_box">
     <ul>
         {% for property in product.getProductPropertys()|propertySort %}
-                    <li><span class="property-name">{{property.getProperty().getName()}}:</span> {{property.getValue()}}</li>
+                    <li><span class="property-name">{{property.getProperty().getName()}}:</span> {{property|propertyConverter}}</li>
             {% endfor %}       
     </ul>
 </div>

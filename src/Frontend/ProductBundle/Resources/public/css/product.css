@@ -1,8 +1,14 @@
 .bold{
     font-weight: bold;
 }
+
+/*
+* Termék dobozok megjelenítése
+*/
 .main .products_box{
     clear:both;
+    position: relative;
+    overflow: hidden;
 }
 
 .main .products_box img{
@@ -25,7 +31,7 @@
 }
 
 .main .product_box .product_name{
-    padding: 10px 0px 0px 10px;
+    padding: 10px 25px 0px 10px;
     font-weight: bold;
     height: 40px;
 }
@@ -46,17 +52,12 @@
     padding-bottom: 10px;
     font-size: 1.3em;
 }
-.sales .new-price{
-    
-}
 
 .sales .old-price{
     text-decoration: line-through;
     color: black;
     font-weight: normal;
 }
-
-
 
 .to-cart-button:hover {
     text-decoration: underline;
@@ -126,6 +127,9 @@
     display: inline;
 }
 
+/*
+* Adott terméknél a tabok stílusa
+*/
 .main #productTabs{
     clear:both;
 }
@@ -166,9 +170,6 @@
     display: inline-block;
 }
 
-.main .tabContent{
-}
-
 #current-product-box .bottom_box li{
     padding: 5px 0px;
 }
@@ -204,7 +205,8 @@
 
 /*KÉRDÉSEK TAB*/
 #questions-table{
-    width:600px;
+    
+    width:100%;
     border-collapse:separate; 
     border-spacing:1em;
 }

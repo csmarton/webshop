@@ -70,6 +70,9 @@ PasswordReset = {
             $('#password-resetting-with-token-form').reveal();
         });
         
+        /*
+         * Új jelszó beállítása és mentése
+         */
         $('body').on('submit', '#password-resetting-with-token-form', function(e) {
             e.preventDefault();
             token = $('#reset-password-confirmaion-token').val();
@@ -94,6 +97,7 @@ PasswordReset = {
                 });
         });
         
+        //Bejelentkezési ablak 
         $('body').on('click', '.sing-in-link', function(e) {
             $('#password-resetting-with-token-form').trigger('reveal:close');
             $('#modal-sign-in').reveal();
@@ -101,6 +105,7 @@ PasswordReset = {
         
         
     },
+    //Form validációs üzenetek
     customErrorMessages: {
         '#reset-email': {
             'required': {
@@ -120,7 +125,7 @@ PasswordReset = {
         
         
     },
-	
+    //Form validációk
     setFormValidations: function() {
         $("#password-resetting-form").last().validationEngine({
             promptPosition: "centerRight: 0",
@@ -142,13 +147,12 @@ PasswordReset = {
         
     }	
 }	
-
+//Email cím validációjának ellenőrzése
 function checkEmailValidation(field, rules, i, options){
   if (field.val() == "") {
      rules.push('required');
      return options.allrules.wrongEmail.alertText;
   }else if(!emailPattern.test(field.val())){
-      console.log("OK");
       rules.push('required');
       return options.allrules.email.alertText;
   }

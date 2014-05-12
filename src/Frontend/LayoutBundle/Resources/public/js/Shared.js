@@ -5,8 +5,8 @@ Shared = {
     },
 
     bindUIActions: function(){
-       this.qtipInit();
-       
+       this.qtipProfileInit();
+       this.qtipCompareInit();
         /*
          * Ajánlott termékek képeinek megjelenítése
          */
@@ -19,13 +19,14 @@ Shared = {
             minItems: 1,
             maxItems: 1,
             directionNav: false
-        }); 
+        });  
         
         /*
          * Összehasonlításnál termék törlése
          */
         $('body').on("click", ".delete-compare-product", function(e){
-            $('.compareProductsDropDownQTip .loading').show();
+            e.preventDefault();
+            $('.compareProductsDropDownQTip .loading').show(); //Betöltő ikon megjelenítése
             e.preventDefault();		
             $.ajax({
                 url: $(this).attr('href'),
@@ -33,7 +34,7 @@ Shared = {
                 dataType: 'json'
             }).done(function(data) {
                 if (data.success) {                    
-                    $('.compareProductsDropDownContent').html(data.html);
+                    $('.compareProductsDropDownContent').html(data.html);//Összehasonlítandó termékek listájának módosítása
                     $('.compareProductsDropDownQTip .loading').hide();
                 } else {							  
                     console.error('HIBA a szervertől:' + data.err);
@@ -50,31 +51,34 @@ Shared = {
     /*
      * Buborékablakok inicializálása
      */
-    qtipInit : function(){
+    qtipProfileInit : function(){
         /*
          * Profilom qTip
          */
         $('#my-profile-text').qtip({
-            content: $("#myprofileDropDown").html(),
-            position: {
-                my: 'top center',  // Position my top left...
-                at: 'bottom center' // at the bottom right of...
+            content: $("#myprofileDropDown").html(), //Tartalom
+            position: { //pozíció
+                my: 'top center',  // buburokéablak 
+                at: 'bottom center' // elem, amihez igazítjuk
             },
-            show: {
+            show: { //megjelenítés kattintás hatására
                 event: 'click',
-                solo: true
+                solo: true //egyszerre csak egy buborék jelenhet meg
             },
-            hide: {
+            hide: { //elrejtés kattintásra vagy fókusz elvesztése esetén
                 event: 'click unfocus'
             },
             style: { 
-                classes: 'profileDropDownQTip'
+                classes: 'profileDropDownQTip' //Osztály, ezzel fogunk tudni hivatkozni rá
             }
         });
-        
-        /*
-         * Összehasonlítás qTip
-         */
+    },
+    
+    /*
+     * Összehasonlítás qTip
+     */
+    qtipCompareInit : function(){   
+
         $('#compare-products-button').qtip({
             content: $("#compareProductsDropDown").html(),
             position: {

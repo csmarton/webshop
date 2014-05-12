@@ -23,11 +23,7 @@
                             <img src=" {{image(image.getWebPath()).resize(150,150)}}"/>
                         </div>
                         <div class="product-price">
-                            {% if product.getSpecialOffer() is not null %}
-                                {{ product.getSpecialOffer().getNewPrice|priceFormat }} Ft
-                            {% else%}
-                                {{ product.getPrice()|priceFormat }} Ft                                
-                            {% endif %}
+                            {{ product.getRealPrice()|priceFormat }} Ft   
                         </div>
                     </a>
                 </li>

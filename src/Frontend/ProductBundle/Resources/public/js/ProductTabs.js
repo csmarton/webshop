@@ -4,17 +4,20 @@ ProductTabs = {
     },
 
     bindUIActions: function(){	
-        this.setFormValidation(); 
+       this.setFormValidation(); //Form validáció beállítása
 
-        $("#productTabs").organicTabs();
+       $("#productTabs").organicTabs(); //Tabok 
         
+       /*
+        * új kérdés feltevése
+        */ 
        $('body').on("submit", "#newQuestions", function(e){
-            e.preventDefault();		
+            e.preventDefault();	
+            $('#newQuestions .loading').show();
             var productId = $('#newQuestions .sendQuestion').attr('productId');
             var name = $('#newQuestions .name').val();
             var email = $('#newQuestions .email').val();
             var question = $('#newQuestions .question').val();
-            console.log(productId);
             $.ajax({
                 url: $(this).attr("action"),
                 data: {'productId' : productId,'name' : name, 'email':email, 'question' : question},
@@ -22,26 +25,30 @@ ProductTabs = {
                 dataType: 'json'
             }).done(function(returnData) {
                $('#questions-box').html(returnData.html);
+               $('#newQuestions .loading').hide();
             }).fail(function(thrownError) {
                 console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
+                $('#newQuestions .loading').hide();
             });
             
         }); 
         
+        //Képre kattintás esetén képnézegető megjelenítése
         $('a.gallery').colorbox({
             rel:'gal'
         });
+        
         $('.productImageSlider').flexslider({ //Termékek képeinek megjelenítése
-            animation: "slide",
-            slideshow: false,
-            itemWidth: 210,
-            itemMargin: 5,
-            keyboard: false,
-            minItems: 2,
-            maxItems: 3
+            animation: "slide", //animáció
+            slideshow: false, //automatikus mozgatás
+            itemWidth: 210, //elemek szélessége
+            itemMargin: 5, //elemek közötti margó
+            keyboard: false, //billenytűvel mozgatás
+            minItems: 2, //minimális elemek száma
+            maxItems: 3 //maximális elemek
         });   
         
-        $('.productOfferSlider').flexslider({ //Termékek képeinek megjelenítése
+        $('.productOfferSlider').flexslider({ //Ajánlott termékek képeinek megjelenítése
             animation: "slide",
             slideshow: true,
             itemWidth: 150,
@@ -51,6 +58,7 @@ ProductTabs = {
         
     },
     
+    //Kérdés form validáció üzenetek
     customErrorMessages: {
         '.name': {
             'required': {
@@ -72,7 +80,7 @@ ProductTabs = {
     },
 	
     setFormValidation: function() {
-        
+        //Kérdések form validáció
         $("#newQuestions").validationEngine({
             promptPosition: "centerRight: 0px",
             'custom_error_messages': ProductTabs.customErrorMessages,

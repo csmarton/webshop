@@ -1,0 +1,41 @@
+<div class="sidebar ">
+    <h3>Kategóriák</h3>
+    <div id="leftMenu">
+        {% for mc in main_category %}                 
+            <ul class="taxon">
+                
+                {% if currentMainCategory is not null and currentCategory is null and (mc.getName()|lower == currentMainCategory|lower or mc.getId() == currentMainCategory) %}
+                    <li class="selected-category">
+                        <a href="{{path('frontend_product_homepage')}}t/{{mc.getName()}}/" >{{mc.getName()}}</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{path('frontend_product_homepage')}}t/{{mc.getName()}}/">{{mc.getName()}}</a>
+                    </li>
+                {% endif %} 
+                
+            </ul>
+                     <ul class="taxonomy"> 
+                         {% for category in mc.getCategory() %}                         
+                            
+                                {% if currentMainCategory is not null and currentCategory is not null and (category.getName()|lower == currentCategory|lower or category.getId() == currentCategory or category.getSlug()|lower == currentCategory|lower) %}
+                                    <li class="selected-category">
+                                        <a href="{{path('frontend_product_homepage')}}t/{{category.getMainCategory().getName()}}/{{category.getSlug()}}">{{category.getName()}}</a>
+                                    </li>                                
+                                {% else %}
+                                    <li>
+                                        <a href="{{path('frontend_product_homepage')}}t/{{category.getMainCategory().getName()}}/{{category.getSlug()}}">{{category.getName()}}</a>
+                                    <li>
+                                {% endif %} 
+                                
+                            
+                         {% endfor %}   
+                    </ul> 
+
+        {% endfor %}
+    </div> 
+    <div class="side-recomended-products">
+        {% render (controller("FrontendLayoutBundle:Default:sideRecomendedProducts")) %}
+    </div>
+    <div></div>
+</div>

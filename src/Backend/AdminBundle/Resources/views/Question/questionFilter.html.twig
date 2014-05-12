@@ -1,0 +1,24 @@
+<form action="{{path('backend_admin_product_question', {'page': actualPage})}}" method="get" class="filter-shared-menu">
+    <div class="inline-block">
+        <div class="column-0">
+            <label for="filterId">Azonosító:</label>
+            <input type="text" id="filterId" name="filterId" value="{{filterId}}">
+        </div>
+        <div class="column-1">
+            <label for="filterProductId">Termék azonosító</label>
+            <input type="text" id="filterProductId" name="filterProductId" value="{{filterProductId}}">
+        </div>
+    </div>
+    <div class="inline-block">    
+        <div class="column-0">    
+            
+        </div>
+        <div class="column-1">
+            
+        </div>
+    </div>
+    <input type="hidden" name="maxResult" value="{{maxResult}}"/>
+    <div class="center">
+        <input type="submit" class="menu_btn ok_btn" id="filter-question-button" value="Szűrés" />
+    </div>
+</form>

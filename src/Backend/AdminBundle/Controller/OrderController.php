@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class OrderController extends Controller
 {
     /*
-     * Termékek listázása
+     * Rendelések listázása
      */
     public function listAction()
     {   
@@ -46,20 +46,21 @@ class OrderController extends Controller
         $filterDate = "";
         $filterFulfill = "";
         $parameters = "";
+        //Szűrés
         if ($request->getMethod() == 'GET') {
             $filterId = $request->query->get('filterId');
             $filterName = $request->query->get('filterName');
             $filterDate = $request->query->get('filterDate');
             $filterFulfill = $request->query->get('filterFulfill');
             $parameters .= "&filterId=";
-            if($filterId!= ""){
+            if($filterId!= ""){ //Azonosító alapján
                 $orders = $orders
                     ->andWhere('p.id = :id')
                     ->setParameter('id', (int)$filterId); 
                 $parameters .= $filterId;
             }
             $parameters .= "&filterName=";
-            if($filterName!= ""){
+            if($filterName!= ""){ //Név alapján
                 $orders = $orders                        
                     ->leftJoin('p.orderProfileInformation', 'prof')
                     ->andWhere('prof.name LIKE :name')
@@ -67,7 +68,7 @@ class OrderController extends Controller
                 $parameters .= $filterName;
             }
             $parameters .= "&filterFulfill=";
-            if($filterFulfill!= ""){
+            if($filterFulfill!= ""){ //Teljesített -e
                 if($filterFulfill == "yes"){
                     $orders = $orders
                         ->andWhere('p.performedAt IS NOT NULL');
@@ -77,14 +78,15 @@ class OrderController extends Controller
                 }  
                 $parameters .= $filterFulfill;
             }
-            $parameters .= "&filterDate=";
-            if($filterDate!= ""){
+            $parameters .= "&filterDate="; 
+            if($filterDate!= ""){ //Dátum alapján
                 $orders = $orders
                     ->andWhere('p.orderedAt LIKE :filterDate')
                     ->setParameter('filterDate', '%'.$filterDate.'%');
                 $parameters .= $filterDate;
             }            
         }
+        //Rendezés
         if($order == "id"){
             $orders = $orders
                 ->orderBy('p.id',$by);
@@ -110,7 +112,7 @@ class OrderController extends Controller
                 ->setMaxResults($maxResult)
                 ->getQuery()->getResult();
         
-        return $this->render('BackendAdminBundle:Order:list.html.twig', array(
+        return $this->render('BackendAdminBundle:Order:orderList.html.twig', array(
             'orders' => $orders,
             'filterId'=> $filterId,
             'filterName'=> $filterName,
@@ -126,16 +128,22 @@ class OrderController extends Controller
          
     }
     
+    /*
+     * Rendelésekről bővebben
+     */
     public function listMoreAction($orderId){
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
         }
         $order = $this->getDoctrine()->getRepository('FrontendOrderBundle:Orders')->findOneById($orderId);
-        return $this->render('BackendAdminBundle:Order:listMore.html.twig', array(
+        return $this->render('BackendAdminBundle:Order:OrderListMore.html.twig', array(
             'order' => $order
         ));
     }
     
+    /*
+     * Rendelés teljesítése
+     */
     public function fulfillOrderAction($orderId){
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
@@ -149,6 +157,7 @@ class OrderController extends Controller
             $orderItems = $order->getOrderItems();
             $cantFullfillOrderItems = array();
 
+            //megnézzük, hogy teljesíthető -e a rendelés, a raktáron van -e elegendő mennyiség minden termékből
             foreach($orderItems as $orderItem){
                 if($orderItem->getProduct()->getInStock() < $orderItem->getUnitQuantity()){
                     $cantFullfillOrderItems[] = $orderItem;
@@ -156,7 +165,8 @@ class OrderController extends Controller
                 }
             }
             $em = $this->getDoctrine()->getEntityManager();
-            if($canFulfill){
+            if($canFulfill){//Teljesíthető
+                //Levonjuk a raktárkészletből 
                 foreach($orderItems as $orderItem){
                     $product = $orderItem->getProduct();
                     $inStock = $product->getInStock();

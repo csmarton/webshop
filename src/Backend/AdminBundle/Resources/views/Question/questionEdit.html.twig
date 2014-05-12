@@ -1,0 +1,68 @@
+{% extends "BackendLayoutBundle:Default:layout.html.twig" %}
+
+{% block title%} {{page_name_admin}} - Kérdések szerkesztése {% endblock %}
+{% block bodyClass %}class="index_page"{% endblock%}
+ 
+{% block stylesheets %}  
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/summernote.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/font-awesome.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/ProductQuestion.css') }}"/>
+{% endblock %}
+    
+{% block javascripts %}
+	{{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/backendadmin/js/summernote.js') }}"></script>
+    <script type="text/javascript">
+            $(document).ready(function(){
+            });
+    </script>
+{% endblock %}
+ 
+{% block main %} 
+    <div class="main">
+         
+        <div class="question-edit-box" style='width:100%'>
+            <h2>Kérdések szerkesztése</h2>
+            <form action="{{ path('backend_admin_product_question_edit',{'productQuestionId':productQuestionId})}}" method="post" {{ form_enctype(form) }}  name="editQuestion"  class="editQuestion" autocomplete="off">
+                <div >
+                    <div class="label-text">Termék azonosító</div>
+                    <a href="{{path('backend_admin_product_new', {'productId':productQuestion.getProduct().getId()})}}">{{productQuestion.getProduct().getId()}}</a>
+                </div>
+                <div>
+                    <div class="label-text">Név</div>
+                    {{productQuestion.getName()}}
+                </div>
+                <div>
+                   <div class="label-text">Email</div>
+                   {{productQuestion.getEmail()}}
+                </div>
+                <div>
+                    <div class="label-text">Kérdés</div>
+                   {{productQuestion.getQuestion()}}
+                </div>
+                <div>
+                    {{ form_label(form.status, 'Elfogadva:', { 'label_attr': {'class': 'label-text'}}) }}
+                    {{ form_widget(form.status) }}
+                </div>
+                <div>
+                    {{ form_label(form.answer, 'Válasz:', { 'label_attr': {'class': 'label-text'}}) }}
+                    {{ form_widget(form.answer, { 'attr': {'class': 'answer'} }) }}
+                </div>
+                <div>
+                    <input type="submit" value="Mentés" class="menu_btn ok_btn">
+                </div>
+                {{ form_widget(form.email, { 'attr': {'hidden': true} }) }}
+                {{ form_widget(form.name, { 'attr': {'hidden': true} }) }}
+                {{ form_widget(form.question, { 'attr': {'hidden': true} }) }}
+                {{ form_widget(form.productId)}}
+                {{ form_widget(form._token) }}
+            </form>
+        </div>      
+        
+        
+    </div>
+
+{% endblock %}
+    

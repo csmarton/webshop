@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 class DefaultController extends Controller
 {
+    /*
+     * Főoldali kereső
+     */
     public function mainSearchAutocompleteAction()
     {
         $request = $this->get('request');
@@ -16,10 +19,8 @@ class DefaultController extends Controller
             $products = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findProductBySearchKey($key);
             
             $productWithImage = array();
-            foreach((array)$products as $product){
-                
-                $productWithImage[] = array('image'=> (string)$product->getNormalProductImage(), 'name' => $product->getName() );
-                //var_dump((string)$product->getNormalProductImage());die;
+            foreach((array)$products as $product){                
+                $productWithImage[] = array('image'=> (string)$product->getNormalProductImage(), 'name' => $product->getName(), 'price' => $product->getRealPrice() );
             }
             
             return new JsonResponse($productWithImage);
@@ -30,7 +31,7 @@ class DefaultController extends Controller
         
     }   
     
-     public function mainSearchAction()
+     /*public function mainSearchAction()
      {
         $request = $this->get('request');
         if ($request->getMethod() == 'POST') {
@@ -47,10 +48,7 @@ class DefaultController extends Controller
             return $this->render('FrontendProductBundle:Default:index.html.twig',array('products'=>$products));
         }
         
-    }  
+    }  */
     
-    public function mainSearchFormAction(){
-        return $this->render('FrontendProductBundle:Default:index.html.twig');
-    }
     
 }

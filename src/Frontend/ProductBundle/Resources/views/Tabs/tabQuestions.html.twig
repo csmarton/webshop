@@ -1,4 +1,5 @@
  <form action="{{path('frontend_product_questions')}}"  method="post" {{ form_enctype(form) }} id="newQuestions" autocomplete="off">
+    <div class="loading"></div>
     <table id="questions-table">
         <tbody>
             <tr>
@@ -7,7 +8,7 @@
             </tr>  
             <tr>
                 <td>{{ form_label(form.email, 'Email:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
-                <td>{{ form_widget(form.email, { 'attr': {'class': 'questionerEmail validate[required] email'} } ) }}</td>
+                <td>{{ form_widget(form.email, { 'attr': {'class': 'questionerEmail validate[required, custom[email]] email'} } ) }}</td>
             </tr>  
             <tr>
                 <td>{{ form_label(form.question, 'Kérdés:', { 'label_attr': {'class': 'labelText'}}) }}        </td>
@@ -23,6 +24,5 @@
         </tbody>
     </table>
  </form>
-{#<div id="questions-box">
-    {% include 'FrontendProductBundle:Tabs:questions.html.twig' with {'productQuestions' : productQuestions} %}
-</div>#}
+<div id="questions-box">
+</div>

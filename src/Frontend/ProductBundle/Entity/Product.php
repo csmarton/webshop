@@ -1,14 +1,14 @@
 <?php
 
 namespace Frontend\ProductBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
 use Gregwar\Image\Image;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * Product
- * @ORM\Entity
+ * Product 
  * @ORM\Entity(repositoryClass="Frontend\ProductBundle\Repository\ProductRepository")
  * @ORM\Table(name="product")
+ * @ORM\Entity
  */
 class Product
 {
@@ -64,12 +64,12 @@ class Product
     private $price;
 
     /**
-     * @var float
+     * @var integer
      *
-     * @ORM\Column(name="sales_price", type="float", precision=10, scale=0, nullable=true)
+     * @ORM\Column(name="sales_price", type="integer", nullable=true)
      */
     private $salesPrice;
-    
+
     /**
      * @var integer
      *
@@ -103,20 +103,20 @@ class Product
     private $productPropertys;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $specialOffer;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $productQuestions;
+
+    /**
      * @var \Frontend\ProductBundle\Entity\Category
      */
     private $categorys;
 
-     /**
-     * @var \Frontend\ProductBundle\Entity\SpecialOffers
-     */
-    private $specialOffer;
-    
-     /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $productQuestions;
-    
     /**
      * Constructor
      */
@@ -124,9 +124,9 @@ class Product
     {
         $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->productPropertys = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->specialOffer = new \Doctrine\Common\Collections\ArrayCollection();
         $this->productQuestions = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * Set name
@@ -267,6 +267,29 @@ class Product
     }
 
     /**
+     * Set salesPrice
+     *
+     * @param float $salesPrice
+     * @return Product
+     */
+    public function setSalesPrice($salesPrice)
+    {
+        $this->salesPrice = $salesPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get salesPrice
+     *
+     * @return float 
+     */
+    public function getSalesPrice()
+    {
+        return $this->salesPrice;
+    }
+
+    /**
      * Set category
      *
      * @param integer $category
@@ -346,29 +369,6 @@ class Product
     }
 
     /**
-     * Set specialOffer
-     *
-     * @param \Frontend\ProductBundle\Entity\SpecialOffers $specialOffer
-     * @return Product
-     */
-    public function setSpecialOffer(\Frontend\ProductBundle\Entity\SpecialOffers $specialOffer = null)
-    {
-        $this->specialOffer = $specialOffer;
-
-        return $this;
-    }
-
-    /**
-     * Get specialOffer
-     *
-     * @return \Frontend\ProductBundle\Entity\SpecialOffers 
-     */
-    public function getSpecialOffer()
-    {
-        return $this->specialOffer;
-    }
-
-    /**
      * Add productImages
      *
      * @param \Frontend\ProductBundle\Entity\ProductImages $productImages
@@ -435,6 +435,39 @@ class Product
     }
 
     /**
+     * Add specialOffer
+     *
+     * @param \Frontend\ProductBundle\Entity\SpecialOffers $specialOffer
+     * @return Product
+     */
+    public function addSpecialOffer(\Frontend\ProductBundle\Entity\SpecialOffers $specialOffer)
+    {
+        $this->specialOffer[] = $specialOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove specialOffer
+     *
+     * @param \Frontend\ProductBundle\Entity\SpecialOffers $specialOffer
+     */
+    public function removeSpecialOffer(\Frontend\ProductBundle\Entity\SpecialOffers $specialOffer)
+    {
+        $this->specialOffer->removeElement($specialOffer);
+    }
+
+    /**
+     * Get specialOffer
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSpecialOffer()
+    {
+        return $this->specialOffer;
+    }
+
+    /**
      * Add productQuestions
      *
      * @param \Frontend\ProductBundle\Entity\ProductQuestions $productQuestions
@@ -490,29 +523,7 @@ class Product
         return $this->categorys;
     }
 
-    /**
-     * Set salesPrice
-     *
-     * @param float $salesPrice
-     * @return Product
-     */
-    public function setSalesPrice($salesPrice)
-    {
-        $this->salesPrice = $salesPrice;
 
-        return $this;
-    }
-
-    /**
-     * Get salesPrice
-     *
-     * @return float 
-     */
-    public function getSalesPrice()
-    {
-        return $this->salesPrice;
-    }
-    
     public function getRealPrice(){
         if($this->salesPrice > 0){
             return $this->salesPrice; 

@@ -1,4 +1,5 @@
 {% for productProperty in productPropertys %}
+    {% set property = productProperty.getProperty() %}
     <form action="{{path('backend_admin_product_property_edit', {'productId' : productId,'propertyId' : productProperty.getProperty().getId()})}}" method="post" class="property-form">
         <div class="loading"></div>
         <div class="inline-block">            
@@ -6,7 +7,12 @@
                 <input type="text" value="{{ productProperty.getProperty().getName() }}" class="property-name-box" disabled />
             </div>
             <div class="property-value-box">
-                <input type="text" value="{{ productProperty.getValue() }}" oldValue="{{ productProperty.getValue() }}" placeholder="érték...." class="property-value validate[required] " disabled />
+                {% if property.getId() == 27 or property.getId() == 4 or property.getId() == 24 or property.getId() == 6 %}
+                    {% set reuiredClass="validate[required,funcCall[checkPropertyValue]]" %}
+                {% else %}
+                    {% set reuiredClass="validate[required]" %}
+                {% endif %}
+                <input type="text" value="{{ productProperty|propertyConverter }}" oldValue="{{ productProperty|propertyConverter }}" placeholder="érték...." class="property-value {{reuiredClass}}" disabled />
             </div>
             <div class="property-edit-box product_edit_btn">
                 <input type="button"  value="Szerkesztés" class="edit-property-button menu_btn edit_btn"/>

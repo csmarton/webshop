@@ -1,3 +1,6 @@
+/*
+ * Rendelési űrlap validálása
+ */
 OrderValidation = {    
     init: function(){
             this.bindUIActions();
@@ -8,6 +11,9 @@ OrderValidation = {
     },
     
     setFormValidation: function() {
+        /*
+         * Rendelési űrlapra validáció beállítása
+         */
         $("#order_edit_form").validationEngine({
             promptPosition: "centerLeft: -25",
             'custom_error_messages': OrderValidation.customErrorMessages,
@@ -17,7 +23,9 @@ OrderValidation = {
             validationEventTrigger: 'submit'
         });
     },	
-    
+    /*
+     * Hibaüzenetek validáció esetén
+     */
     customErrorMessages: {
         '.name': {
             'required': {

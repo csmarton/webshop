@@ -2,7 +2,8 @@
 Cart = {    
     OLDVALUE : null, //Régi érték tárolása frissítéshez, hibás érték esetén ez íródik vissza
     init: function(){ //Inicializálás
-            this.bindUIActions();            
+            this.bindUIActions();     
+            this.initOrderButtons();
     },
 
     bindUIActions: function(){ 
@@ -35,8 +36,6 @@ Cart = {
          */
         $('body').on("focus", ".change-product-cart-count", function(e){
             e.preventDefault();
-            productId = $(this).attr('productId');
-            $this = $(this);
             Cart.OLDVALUE = $(this).val();
         });
         
@@ -45,7 +44,9 @@ Cart = {
          * 0-a esetén törlődik a termék
          */
         $('body').on("change", ".change-product-cart-count", function(e){
-            if($(this).val() < 0 || $(this).val() === ""){ //ha hibás értéket vagy negatív számot írunk be, a régi érték íródik vissza
+            $this = $(this);
+            productId = $(this).attr('productid');
+            if($(this).val() < 0 || $(this).val() === "" || $(this).val() > 100){ //ha hibás értéket vagy negatív számot írunk be, a régi érték íródik vissza
                $this.val(Cart.OLDVALUE);
             }else{ //darabszám frissítése
                 $.ajax({
@@ -69,7 +70,7 @@ Cart = {
          * Kosárból való törlés eseménye
          * Lekérjük a termék azonosítóját, majd pedig ajax-al elküldjük feldolgozásra
          */
-        $('body').on("click", ".delete-product-from-cart", function(e){ //Rendelés gombra kattintás
+        $('body').on("click", ".delete-product-from-cart", function(e){ //Törlés gombra kattintás
             productId = $(this).attr('productId');
             e.preventDefault();
              $.ajax({
@@ -106,7 +107,8 @@ Cart = {
      * Rendelési gomb inicializálása
      */
     initOrderButtons : function(){
-        $('body').on("click", "#order-button", function(e){ //Rendelés gombra kattintás            
+        $('body').on("click", "#order-button", function(e){ //Rendelés gombra kattintás       
+            
             if($('#order-button').attr('cartCount') == "0"){ //üres kosár esetén modális ablak feldobása
                 $("#modal-empty-cart").reveal();
                 e.preventDefault();

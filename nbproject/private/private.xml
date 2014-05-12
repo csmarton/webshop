@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/header.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/public/js/Product.js</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/sideRecomendedProducts.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Tabs/tabProductInformationOffers.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Entity/Product.php</file>
             <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Compare/compareList.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/sidebar.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Services/ProductServices.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/css/shared_logged.css</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/public/js/Shared.js</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/public/js/Cart.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/User/userNew.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/views/Cart/cartItems.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/UserController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Default/productBox.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/UserBundle/Form/UserType.php</file>
         </group>
     </open-files>
 </project-private>

@@ -1,0 +1,13 @@
+.label-text{
+    display: inline-block;
+    font-weight: bold;
+    width: 200px;
+    overflow: hidden;
+}
+textarea{
+    width:700px;
+}
+.answer{
+    width:700px;
+    height:200px;
+}

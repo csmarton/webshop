@@ -36,11 +36,21 @@ backend_admin_product_select_category_ajax:
     pattern:  /admin/termekek/kategoria/select
     defaults: { _controller: BackendAdminBundle:Product:selectCategoryAjax }           
 #
+# Kérdések
+#
+backend_admin_product_question:
+    pattern:  /admin/termekek/kerdesek
+    defaults: { _controller: BackendAdminBundle:Question:list }
+    
+backend_admin_product_question_edit:
+    pattern:  /admin/termekek/kerdesek/szerkesztes
+    defaults: { _controller: BackendAdminBundle:Question:edit }    
+#
 # kategóriák szerkesztése    
 #
 backend_admin_category:
     pattern:  /admin/kategoria
-    defaults: { _controller: BackendAdminBundle:Category:index }
+    defaults: { _controller: BackendAdminBundle:Category:list }
     
 backend_admin_category_new:
     pattern:  /admin/kategoria/uj

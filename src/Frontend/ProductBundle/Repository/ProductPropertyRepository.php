@@ -31,7 +31,7 @@ class ProductPropertyRepository extends EntityRepository{
         }
         if($second != ""){
              $filtered1 = $filtered1
-                     ->andWhere('pp.value <= :second')
+                     ->andWhere('pp.value < :second')
                      ->setParameter('second',(int)$second*1024*1024);
 
         }
@@ -105,7 +105,7 @@ class ProductPropertyRepository extends EntityRepository{
         }
         if($second != ""){
              $filtered4 = $filtered4
-                     ->andWhere('CAST(pp.value) <= :second')
+                     ->andWhere('CAST(pp.value) < :second')
                      ->setParameter('second',(int)$second);
         }
          $filtered4 = $filtered4->getQuery()->getResult();
@@ -135,7 +135,7 @@ class ProductPropertyRepository extends EntityRepository{
         }
         if($second != ""){
              $filtered5 = $filtered5
-                     ->andWhere('pp.value <= :second')
+                     ->andWhere('pp.value < :second')
                      ->setParameter('second',(int)$second*1024*1024);
         }
         $filtered5 = $filtered5->getQuery()->getResult();

@@ -1,12 +1,12 @@
 <?php
 
 namespace Frontend\ProductBundle\Entity;
-
+use Gregwar\Image\Image;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Product
- *
+ * Product 
+ * @ORM\Entity(repositoryClass="Frontend\ProductBundle\Repository\ProductRepository")
  * @ORM\Table(name="product")
  * @ORM\Entity
  */
@@ -92,4 +92,449 @@ class Product
     private $inStock;
 
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $productImages;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $productPropertys;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $specialOffer;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $productQuestions;
+
+    /**
+     * @var \Frontend\ProductBundle\Entity\Category
+     */
+    private $categorys;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->productPropertys = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->specialOffer = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->productQuestions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Product
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Product
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Product
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Product
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Product
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return Product
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set salesPrice
+     *
+     * @param float $salesPrice
+     * @return Product
+     */
+    public function setSalesPrice($salesPrice)
+    {
+        $this->salesPrice = $salesPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get salesPrice
+     *
+     * @return float 
+     */
+    public function getSalesPrice()
+    {
+        return $this->salesPrice;
+    }
+
+    /**
+     * Set category
+     *
+     * @param integer $category
+     * @return Product
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return integer 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Product
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set inStock
+     *
+     * @param integer $inStock
+     * @return Product
+     */
+    public function setInStock($inStock)
+    {
+        $this->inStock = $inStock;
+
+        return $this;
+    }
+
+    /**
+     * Get inStock
+     *
+     * @return integer 
+     */
+    public function getInStock()
+    {
+        return $this->inStock;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add productImages
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductImages $productImages
+     * @return Product
+     */
+    public function addProductImage(\Frontend\ProductBundle\Entity\ProductImages $productImages)
+    {
+        $this->productImages[] = $productImages;
+
+        return $this;
+    }
+
+    /**
+     * Remove productImages
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductImages $productImages
+     */
+    public function removeProductImage(\Frontend\ProductBundle\Entity\ProductImages $productImages)
+    {
+        $this->productImages->removeElement($productImages);
+    }
+
+    /**
+     * Get productImages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductImages()
+    {
+        return $this->productImages;
+    }
+
+    /**
+     * Add productPropertys
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductProperty $productPropertys
+     * @return Product
+     */
+    public function addProductProperty(\Frontend\ProductBundle\Entity\ProductProperty $productPropertys)
+    {
+        $this->productPropertys[] = $productPropertys;
+
+        return $this;
+    }
+
+    /**
+     * Remove productPropertys
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductProperty $productPropertys
+     */
+    public function removeProductProperty(\Frontend\ProductBundle\Entity\ProductProperty $productPropertys)
+    {
+        $this->productPropertys->removeElement($productPropertys);
+    }
+
+    /**
+     * Get productPropertys
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductPropertys()
+    {
+        return $this->productPropertys;
+    }
+
+    /**
+     * Add specialOffer
+     *
+     * @param \Frontend\ProductBundle\Entity\SpecialOffers $specialOffer
+     * @return Product
+     */
+    public function addSpecialOffer(\Frontend\ProductBundle\Entity\SpecialOffers $specialOffer)
+    {
+        $this->specialOffer[] = $specialOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove specialOffer
+     *
+     * @param \Frontend\ProductBundle\Entity\SpecialOffers $specialOffer
+     */
+    public function removeSpecialOffer(\Frontend\ProductBundle\Entity\SpecialOffers $specialOffer)
+    {
+        $this->specialOffer->removeElement($specialOffer);
+    }
+
+    /**
+     * Get specialOffer
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSpecialOffer()
+    {
+        return $this->specialOffer;
+    }
+
+    /**
+     * Add productQuestions
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductQuestions $productQuestions
+     * @return Product
+     */
+    public function addProductQuestion(\Frontend\ProductBundle\Entity\ProductQuestions $productQuestions)
+    {
+        $this->productQuestions[] = $productQuestions;
+
+        return $this;
+    }
+
+    /**
+     * Remove productQuestions
+     *
+     * @param \Frontend\ProductBundle\Entity\ProductQuestions $productQuestions
+     */
+    public function removeProductQuestion(\Frontend\ProductBundle\Entity\ProductQuestions $productQuestions)
+    {
+        $this->productQuestions->removeElement($productQuestions);
+    }
+
+    /**
+     * Get productQuestions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductQuestions()
+    {
+        return $this->productQuestions;
+    }
+
+    /**
+     * Set categorys
+     *
+     * @param \Frontend\ProductBundle\Entity\Category $categorys
+     * @return Product
+     */
+    public function setCategorys(\Frontend\ProductBundle\Entity\Category $categorys = null)
+    {
+        $this->categorys = $categorys;
+
+        return $this;
+    }
+
+    /**
+     * Get categorys
+     *
+     * @return \Frontend\ProductBundle\Entity\Category 
+     */
+    public function getCategorys()
+    {
+        return $this->categorys;
+    }
+
+
+    public function getRealPrice(){
+        if($this->salesPrice > 0){
+            return $this->salesPrice; 
+        }else{
+            return $this->price;
+        }
+    }
+    
+    public function getNormalProductImage(){
+        foreach($this->getProductImages() as $image)
+            return (Image::open($image->getAbsolutePath())->cropResize(50));
+        return Image::open("images/no_image.jpg")->cropResize(50);
+    }
 }

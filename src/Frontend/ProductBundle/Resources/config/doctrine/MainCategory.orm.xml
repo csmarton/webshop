@@ -5,6 +5,7 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="name" type="string" column="name" length="30" nullable="false"/>
+    <field name="deletedAt" type="datetime" column="deleted_at" nullable="true"/>
     <one-to-many field="category" target-entity="Category" mapped-by="mainCategory" />
     
   </entity>

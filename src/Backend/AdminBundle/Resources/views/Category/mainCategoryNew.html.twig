@@ -42,15 +42,5 @@
             </div>
             {{ form_widget(form._token) }}
         </form> 
-        {% if mainCategoryId is not null %}            
-            <div id="categorys">
-                <h2>Alkategóriák</h2>
-                {% if (categorys|length == 0) %}
-                    Ez a kategória nem tartalmaz alkategóriákat!
-                {% else %}
-                    {% include "BackendAdminBundle:Category:categoryListElement.html.twig" %}
-                {% endif %}
-            </div>
-        {% endif %}
     </div>
 {% endblock %}

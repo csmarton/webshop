@@ -1,23 +1,25 @@
-<h3>Legnépszerűbb termékek</h3>
-<div class="sideRecomendedProducts flexslider">
-    <ul class="slides">
-        {% for product in products %}
-            {% if (product.getSlug() is not null)%}
-                {% set product_link = product.getSlug() %}
-            {% else %}
-                    {% set product_link = product.getId() %}
-            {% endif %}
-            <li>
-                <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
-                    {% if (product.getProductImages()|length != 0 ) %}  
-                        {% set image = product.getProductImages() %}                
-                        <img src=" {{image(image[0].getWebPath()).resize(150,150)}}"/>
-                    {% else %}    
-                        <img src="{{ asset('images/no_image.jpg')}}"/>                    
-                    {% endif %}  
-                    <div class="recomended-product-price">{{product.getRealPrice()|priceFormat}} Ft</div>
-                </a>
-            </li>
-        {% endfor%}
-    </ul>
-</div>
+{% if products|length != 0 %}
+    <h3>Legnépszerűbb termékek</h3>
+    <div class="sideRecomendedProducts flexslider">
+        <ul class="slides">
+            {% for product in products %}
+                {% if (product.getSlug() is not null)%}
+                    {% set product_link = product.getSlug() %}
+                {% else %}
+                        {% set product_link = product.getId() %}
+                {% endif %}
+                <li>
+                    <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
+                        {% if (product.getProductImages()|length != 0 ) %}  
+                            {% set image = product.getProductImages() %}                
+                            <img src=" {{image(image[0].getWebPath()).resize(150,150)}}"/>
+                        {% else %}    
+                            <img src="{{ asset('images/no_image.jpg')}}"/>                    
+                        {% endif %}  
+                        <div class="recomended-product-price">{{product.getRealPrice()|priceFormat}} Ft</div>
+                    </a>
+                </li>
+            {% endfor%}
+        </ul>
+    </div>
+{% endif %}

@@ -88,11 +88,15 @@ ProductValidation = {
 
 //Email cím ellenőrzése
 function checkPropertyValue(field, rules, i, options){    
-    var propertyPattern = new RegExp(/^(\d+)\s*(B|KB|MB|GB|TB)$/);
-
-  if(!propertyPattern.test(field.val())){
-     rules.push('required');
-     return options.allrules.wrongPropertyValue.alertText;
-  }
+    var propertyPattern = new RegExp(/^(\d+)\s*(B|KB|MB|GB|TB)+$/);
+    if(field.val() != ""){
+        if(!propertyPattern.test(field.val())){
+           rules.push('required');
+           return options.allrules.wrongPropertyValue.alertText;
+        }
+    }else{
+        rules.push('required');
+        return options.allrules.required.alertText;
+    }
 }
 

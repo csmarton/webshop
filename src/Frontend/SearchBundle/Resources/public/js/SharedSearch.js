@@ -42,6 +42,16 @@ SharedSearch = {
             }
         });
         
+        /*
+         * Részletes keresésénél az általános fülön a input mező elküldése enter lenyomására 
+         */
+        $('body').on("keyup", "#general-search-string", function(e){
+            e.preventDefault();
+            if(e.keyCode == 13) {
+                $('#general-filter-button').click();
+            }
+        });
+        
         
     },
     

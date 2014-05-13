@@ -17,18 +17,23 @@
             </ul>
                      <ul class="taxonomy"> 
                          {% for category in mc.getCategory() %}                         
-                            
+                            {% if category.getDeletedAt() is null %}
+                                {% if category.getSlug() is not null %}
+                                    {% set slug = category.getSlug() %}
+                                {% else %}
+                                    {% set slug = category.getId() %}
+                                {% endif %}
                                 {% if currentMainCategory is not null and currentCategory is not null and (category.getName()|lower == currentCategory|lower or category.getId() == currentCategory or category.getSlug()|lower == currentCategory|lower) %}
                                     <li class="selected-category">
-                                        <a href="{{path('frontend_product_homepage')}}t/{{category.getMainCategory().getName()}}/{{category.getSlug()}}">{{category.getName()}}</a>
+                                        <a href="{{path('frontend_product_homepage')}}t/{{category.getMainCategory().getName()}}/{{slug}}">{{category.getName()}}</a>
                                     </li>                                
                                 {% else %}
                                     <li>
-                                        <a href="{{path('frontend_product_homepage')}}t/{{category.getMainCategory().getName()}}/{{category.getSlug()}}">{{category.getName()}}</a>
+                                        <a href="{{path('frontend_product_homepage')}}t/{{category.getMainCategory().getName()}}/{{slug}}">{{category.getName()}}</a>
                                     <li>
                                 {% endif %} 
                                 
-                            
+                            {% endif %}
                          {% endfor %}   
                     </ul> 
 

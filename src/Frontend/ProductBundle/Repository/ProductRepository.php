@@ -116,6 +116,7 @@ class ProductRepository extends EntityRepository{
                     ->leftJoin('c.mainCategory','mc')
                     ->where('c.name LIKE :generalSearchString OR p.name LIKE :generalSearchString OR mc.name LIKE :generalSearchString')
                     ->setParameter('generalSearchString', "%".$generalSearchString."%")
+                    ->andWhere('p.isActive = 1')
                     ->getQuery()->getResult();
                
         $filteredProductIds = array(); //Laptopok azonosítói
@@ -132,6 +133,7 @@ class ProductRepository extends EntityRepository{
                 ->leftJoin('p.categorys','c')                         
                 ->leftJoin('c.mainCategory','mc')
                 ->where('p.name LIKE :key OR c.name LIKE :key OR mc.name LIKE :key')
+                ->andWhere('p.isActive = 1')
                 ->setParameter('key', "%".$key."%");
         if($maxResults != null){
               $products = $products
@@ -147,6 +149,7 @@ class ProductRepository extends EntityRepository{
                 ->leftJoin('p.categorys','c')                         
                 ->leftJoin('c.mainCategory','mc')
                 ->where('p.name LIKE :key OR c.name LIKE :key OR mc.name LIKE :key')
+                ->andWhere('p.isActive = 1')
                 ->setParameter('key', "%".$key."%")
                 ->getQuery()->getResult();
     }

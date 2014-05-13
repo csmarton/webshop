@@ -39,7 +39,7 @@
                 <div class="new_product_table">
                     <div class="inline-block">
                         <div class="left-side">
-                            {{ form_label(form.name, 'Terméknév:', { 'label_attr': {'class': 'labelText'}}) }}
+                            {{ form_label(form.name, 'Terméknév*:', { 'label_attr': {'class': 'labelText'}}) }}
                             {{ form_widget(form.name, { 'attr': {'class': 'validate[required] profileName'} } ) }}                            
                         </div>  
                         <div class="right-side">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="inline-block">    
                         <div class="left-side">
-                            {{ form_label(form.price, 'Bruttó ár:', { 'label_attr': {'class': 'labelText'}}) }}       
+                            {{ form_label(form.price, 'Bruttó ár*:', { 'label_attr': {'class': 'labelText'}}) }}       
                             {{ form_widget(form.price, { 'attr': {'class': 'validate[required, custom[number]] grossSalary'} }) }}                           
                         </div>
                         <div class="right-side">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="inline-block">    
                         <div class="left-side">
-                           <label for="main-category-type"> Fő kategória</label>
+                           <label for="main-category-type"> Fő kategória*</label>
                             <select id="main-category-type" href="{{path('backend_admin_product_select_category_ajax')}}" class="validate[required]" name="main-category-type">
                                 <option value=""></option>
                                 {% for mainCategory in mainCategorys %}
@@ -85,7 +85,7 @@
                            {{ form_widget(form.isActive) }}
                         </div>
                          <div class="right-side">
-                            {{ form_label(form.inStock, 'Raktáron(db)', { 'label_attr': {'class': 'labelText'}}) }}
+                            {{ form_label(form.inStock, 'Raktáron(db)*', { 'label_attr': {'class': 'labelText'}}) }}
                             {{ form_widget(form.inStock, { 'attr': {'class': 'validate[required, custom[number]] inStock'} }) }}       
                         </div>
                     </div> 
@@ -96,7 +96,7 @@
                         </div>
                     <div class="inline-block center">
                         <div>
-                                <input type="submit" value="Mentés" class="menu_btn ok_btn">
+                                <input type="submit" value="Mentés" class="menu_btn ok_btn" id="new-product-save-button">
                                 <input type="reset" value="Mégse" class="menu_btn warning_btn cancel_btn">
                         </div>
                     </div>    
@@ -105,21 +105,15 @@
             </form>
         </div>      
         
-        {% if (productId is defined and productId is not null)%}
+        {% if (productId is defined and productId is not null and product is not null)%}
             <div class="product-property-list-box">
                {{ render(controller("BackendAdminBundle:Product:propertyList" , {'productId':productId}))}}
            </div>
             <div class="product-image-box">
                 <h2>Képek</h2>
+                <a href="#productImages" name="productImages"></a>
                 <div class="image_container">
-                    {% for img in product.getProductImages() %}
-                        <div class="imageBox">
-                            <a href="{{image(img.getWebPath())}}"> 
-                                <img src="{{image(img.getWebPath()).resize(60,60)}} " class="product-image"/>
-                            </a>
-                            <img src="{{image('images/close_button.png')}}" image="{{img.getWebPath()}}" productImageId="{{img.getId()}}" class="delete-product-image-x-button" />
-                        </div>
-                    {% endfor %}
+                    {% include 'BackendAdminBundle:Product:productImageList.html.twig' %}  
                 </div>
                 <form class="uploadImageForm" method="POST" enctype="multipart/form-data" action="{{ path('backend_admin_product_upload_image',{'productId':productId}) }} ">            
                     <input type="file" accept="image/*" name="uploadedImage">

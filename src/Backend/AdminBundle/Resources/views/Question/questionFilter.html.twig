@@ -11,7 +11,28 @@
     </div>
     <div class="inline-block">    
         <div class="column-0">    
-            
+            <label for="filterStatus">Státusz:</label>
+            <select id="filterStatus" name="filterStatus">
+                <option value=""></option>
+                {% if filterStatus == "0" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="0" {{selected}}>Megválaszolatlan</option>
+                {% if filterStatus == "1" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="1" {{selected}}>Megválaszolva</option>
+                {% if filterStatus == "2" %}
+                    {% set selected = "selected" %}
+                {% else %}
+                    {% set selected = ""%}
+                {% endif %}
+                <option value="2" {{selected}} >Moderálva</option>
+            </select>
         </div>
         <div class="column-1">
             

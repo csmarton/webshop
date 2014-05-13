@@ -294,4 +294,88 @@ class ProductServices{
         return $output;
     }
     
+    /*
+     * Termék ajánlása megadott termék alapján
+     */
+    function offerProducts($product){
+        $offerProducts = array(); 
+        $categoryId = null;
+        if($product != NULL ){
+            //Ajánlott termékek lekérdezése kategória alapján a kategória-kapcsolat táblálból
+            $categoryId = $product->getCategory();       
+            $categoryRelations = $this->doctrine->getRepository('FrontendProductBundle:CategoryRelationship')->createQueryBuilder('r')
+                    ->select('r')
+                    ->where('r.firstCategoryId = :categoryId or r.secondCategoryId = :categoryId')
+                    ->setParameter('categoryId', $categoryId)
+                    ->getQuery()->getResult();
+            $offerCategoryId = array();
+            foreach((array)$categoryRelations as $categoryRelation){
+                if($categoryRelation->getFirstCategoryId() == $categoryId ){
+                    $offerCategoryId[] = $categoryRelation->getSecondCategoryId();
+                }else{
+                    $offerCategoryId[] = $categoryRelation->getFirstCategoryId();
+                }
+            }
+
+            //Ajánlott termékek a megfelelő kategóriából
+            $offerProducts = $this->doctrine->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p') //TODO: valódi termék ajánlatok 
+                        ->select('p,pi')
+                        ->leftJoin('p.productImages','pi')
+                        ->setMaxResults(10)
+                        ->where('p.category IN (:offerCategoryId)')
+                        ->andWhere('p.id != :productId')
+                        ->setParameter('offerCategoryId',$offerCategoryId)
+                        ->setParameter('productId', $product->getId())
+                        ->getQuery()->getResult();
+        
+            if(count($offerProducts) < 10){ //Ha nincs elegendő termék az előzőek alapján, a termék kategóriájából választunk további termékekeket
+                $productIds = array();
+                foreach($offerProducts as $op){
+                    $productIds = $op->getId();
+                }
+                $moreProductCount = 10-count($offerProducts);
+                $moreOfferProducts = $this->doctrine->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
+                            ->select('p,pi,c,mc')
+                            ->leftJoin('p.categorys','c')
+                            ->leftJoin('c.mainCategory','mc')
+                            ->leftJoin('p.productImages','pi')                        
+                            ->setMaxResults($moreProductCount);
+                if(count($productIds) != 0){
+                    $moreOfferProducts = $moreOfferProducts
+                            ->where('p.id NOT IN (:productIds) ')                        
+                            ->setParameter('productIds',$productIds);
+                }
+                $actualProductMainCategoryId = $product->getCategorys()->getMainCategory()->getId();
+                if($categoryId != null){
+                    $moreOfferProducts = $moreOfferProducts
+                        ->andWhere('mc.id = :categoryId ')                        
+                        ->setParameter('categoryId',$actualProductMainCategoryId);
+                }
+                $moreOfferProducts = $moreOfferProducts->getQuery()->getResult();
+
+                shuffle($moreOfferProducts);
+                $offerProducts = array_merge($offerProducts, $moreOfferProducts);
+            }
+            if(count($offerProducts) < 10){ //Ha ezek alapján sincs meg a megfelelő mennyiségű termék, véletlenül választjuk meg a többit
+                $productIds = array();
+                foreach($offerProducts as $op){
+                    $productIds = $op->getId();
+                }
+                $moreProductCount = 10-count($offerProducts);
+                $moreOfferProducts = $this->doctrine->getRepository('FrontendProductBundle:Product')->createQueryBuilder('p')
+                            ->select('p,pi')
+                            ->leftJoin('p.productImages','pi')
+                            ->setMaxResults($moreProductCount);
+                    $moreOfferProducts = $moreOfferProducts
+                        ->andWhere('p.id NOT IN (:productIds) ')                        
+                        ->setParameter('productIds',$productIds)
+                        ->getQuery()->getResult();
+
+                shuffle($moreOfferProducts);
+                $offerProducts = array_merge($offerProducts, $moreOfferProducts);
+            }
+        }
+        return $offerProducts;
+    }
+    
 }

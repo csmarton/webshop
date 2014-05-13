@@ -6,6 +6,7 @@
     </id>
     <field name="name" type="string" column="name" length="30" nullable="false"/>
     <field name="slug" type="string" column="slug" length="30" nullable="false"/>
+    <field name="deletedAt" type="datetime" column="deleted_at" nullable="true"/>
     <many-to-one field="mainCategory" target-entity="MainCategory" inversed-by="category">
       <join-columns>
         <join-column name="main_category_id" referenced-column-name="id"/>

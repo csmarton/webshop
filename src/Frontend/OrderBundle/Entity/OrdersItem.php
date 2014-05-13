@@ -36,11 +36,25 @@ class OrdersItem
     private $productId;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="product_name", type="string", length=100, nullable=false)
+     */
+    private $productName;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="unit_quantity", type="integer", nullable=false)
      */
     private $unitQuantity;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="unit_price", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $unitPrice;
 
 
     /**
@@ -101,6 +115,29 @@ class OrdersItem
     }
 
     /**
+     * Set productName
+     *
+     * @param string $productName
+     * @return OrdersItem
+     */
+    public function setProductName($productName)
+    {
+        $this->productName = $productName;
+
+        return $this;
+    }
+
+    /**
+     * Get productName
+     *
+     * @return string 
+     */
+    public function getProductName()
+    {
+        return $this->productName;
+    }
+
+    /**
      * Set unitQuantity
      *
      * @param integer $unitQuantity
@@ -121,6 +158,29 @@ class OrdersItem
     public function getUnitQuantity()
     {
         return $this->unitQuantity;
+    }
+
+    /**
+     * Set unitPrice
+     *
+     * @param float $unitPrice
+     * @return OrdersItem
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get unitPrice
+     *
+     * @return float 
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
     }
 
     /**

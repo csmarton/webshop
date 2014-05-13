@@ -111,7 +111,12 @@ class ProductController extends Controller
         
         if($pageCount == 0)
             $pageCount = 1;
-        $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findAll();
+        $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->createQueryBuilder('c') //Kategóriák a szűréshez
+                ->select('c')
+                ->orderBy('c.mainCategory', 'asc')
+                ->addOrderBy('c.name', 'asc')
+                ->getQuery()->getResult();
+        
         $products = $products
                 ->setFirstResult($page*$maxResult - $maxResult)
                 ->setMaxResults($maxResult)
@@ -158,20 +163,25 @@ class ProductController extends Controller
             $product = new Product();
         }else{//termék szerkesztése
             $product = $this->getDoctrine()->getRepository('FrontendProductBundle:Product')->findOneById($productId);
-            $oldProduct = array(
-                'name' => $product->getName(),
-                'slug' => $product->getSlug(),
-                'description' => $product->getDescription(),
-                'price' => $product->getPrice(),
-                'category' => $product->getCategory(),
-                'isActive' => $product->getIsActive(),
-                'inStock' => $product->getInStock(),
-                'salesPrice' => $product->getSalesPrice(),
-            );
-            $currentCategoryId = $product->getCategory();
-            $currentMainCategory = $product->getCategorys()->getMainCategory();
-            $currentMainCategoryId = $currentMainCategory->getId();
-            $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($currentMainCategory);
+            $categorys = null;            
+            $currentCategoryId = null;
+            $currentMainCategoryId = null;    
+            if($product != null){
+                $oldProduct = array(
+                    'name' => $product->getName(),
+                    'slug' => $product->getSlug(),
+                    'description' => $product->getDescription(),
+                    'price' => $product->getPrice(),
+                    'category' => $product->getCategory(),
+                    'isActive' => $product->getIsActive(),
+                    'inStock' => $product->getInStock(),
+                    'salesPrice' => $product->getSalesPrice(),
+                );
+                $currentCategoryId = $product->getCategory();
+                $currentMainCategory = $product->getCategorys()->getMainCategory();
+                $currentMainCategoryId = $currentMainCategory->getId();
+                $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->findByMainCategory($currentMainCategory);                
+            }
         }
         
         $form = $this->createForm(new ProductType(),$product);
@@ -289,7 +299,17 @@ class ProductController extends Controller
             $em->persist($log);
             $em->flush();
             
+            $productImages = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductImages')->findByProduct($product);
+            $productPropertys = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductProperty')->findByProduct($product);
             $em = $this->getDoctrine()->getEntityManager();
+            foreach($productImages as $image){
+                unlink($image->getAbsolutePath());
+                $em->remove($image);                
+            }
+            foreach($productPropertys as $property){
+                $em->remove($property);
+            }
+            
             $em->remove($product);
             $em->flush();
     
@@ -321,7 +341,8 @@ class ProductController extends Controller
         }
         $propertys = $this->getDoctrine()->getRepository('FrontendProductBundle:Propertys')->createQueryBuilder('pp')
                 ->select('pp')
-                ->where('pp.mainCategory = :mainCategory')                
+                ->where('pp.deletedAt is NULL')
+                ->andWhere('pp.mainCategory = :mainCategory')                
                 ->setParameter('mainCategory', $mainCategory);
         if(count($havingProductPropertyId) != 0){
             $propertys = $propertys

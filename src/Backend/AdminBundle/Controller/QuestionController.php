@@ -47,12 +47,13 @@ class QuestionController extends Controller
                 ->select('p');
         $filterId = "";
         $filterProductId = "";
+        $filterStatus = "";
         $parameters = "";
         //Szűrés
         if ($request->getMethod() == 'GET') {
             $filterId = $request->query->get('filterId');
             $filterProductId = $request->query->get('filterProductId');
-            
+            $filterStatus = $request->query->get('filterStatus');
             $parameters .= "&filterId=";
             if($filterId!= ""){ //Azonosító alapján
                 $productQuestions = $productQuestions
@@ -66,6 +67,13 @@ class QuestionController extends Controller
                     ->andWhere('p.productId = :productId')
                     ->setParameter('productId', $filterProductId);
                 $parameters .= $filterProductId;
+            }
+            $parameters .= "&filterStatus=";
+            if($filterStatus!= ""){ //Név alapján
+                $productQuestions = $productQuestions
+                    ->andWhere('p.status = :status')
+                    ->setParameter('status', (int)$filterStatus);
+                $parameters .= $filterStatus;
             }
             
         }
@@ -97,7 +105,8 @@ class QuestionController extends Controller
             //'form' => $form->createView(),
             'productQuestions' => $productQuestions,
             'filterId'=> $filterId,
-            'filterProductId'=> $filterProductId,            
+            'filterProductId'=> $filterProductId,   
+            'filterStatus'=> $filterStatus,
             'actualPage' => $page,
             'pageCount' => $pageCount,
             'parameters' => $parameters,
@@ -139,7 +148,7 @@ class QuestionController extends Controller
                         ->setTo($productQuestion->getEmail())
                         ->setBody(
                             $this->renderView(
-                                'BackendAdminBundle:Question:answer.html.twig',
+                                'BackendAdminBundle:Question:questionAnswer.html.twig',
                                 array('productQuestion' => $productQuestion)
                             ),
                             "text/html"

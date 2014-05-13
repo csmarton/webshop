@@ -26,6 +26,13 @@ Product = {
                 console.error('HIBA KELETKEZETT A KÜLDÉS SORÁN :' + thrownError);
             });
         });
+        
+        $('body').on('keyup', '.new_product_table input:text, .new_product_table input[type="number"]', function(e){
+            e.preventDefault();
+            if(e.keyCode == 13) {
+                $('#new-product-save-button').click();
+            }
+        });
         /*
          * Szövegszerkesztő termék leírásának szerkesztésére
          */
@@ -134,6 +141,7 @@ Product = {
                     $('#modal-delete-property .exit-reveal-modal').attr('value','Kilépés');
                     $('.new-property-list').prepend(data.html);
                     form.remove();
+                    ProductValidation.setFormValidation();
                 } else {							  
                         console.error('HIBA a szervertől:' + data.err);
                 }

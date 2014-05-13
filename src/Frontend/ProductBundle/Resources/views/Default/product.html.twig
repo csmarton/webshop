@@ -32,7 +32,7 @@
                 {{parent()}}       
             {% endblock %}
         <div class="container">
-            {% if product is not null %}
+            {% if product is not null and product.isActive %}
                 {% if (product.getSalesPrice() is not null and product.getSalesPrice() > 0) %}
                     {% set classes = "sales" %}
                 {% else %}
@@ -108,6 +108,8 @@
                         </div>
                     </div>
                 </div>
+            {% elseif (product is not null and not product.isActive) %}
+                A termék jelenleg inaktív állapotban van!
             {% else %}
                 A termék nem található!
             {% endif %}

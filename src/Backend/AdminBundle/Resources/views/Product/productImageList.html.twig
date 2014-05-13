@@ -1,0 +1,8 @@
+{% for img in product.getProductImages() %}
+    <div class="imageBox">
+        <a href="{{image(img.getWebPath())}}"> 
+            <img src="{{image(img.getWebPath()).resize(60,60)}} " class="product-image"/>
+        </a>
+        <img src="{{image('images/close_button.png')}}" image="{{img.getWebPath()}}" productImageId="{{img.getId()}}" class="delete-product-image-x-button" />
+    </div>
+{% endfor %}

@@ -2,3 +2,16 @@
     display:block;
 }
 
+.inline-block{
+    padding:5px;
+}
+
+.inline-block .categoryName{
+    height: 30px;
+    width: 400px;
+    padding: 5px;
+}
+
+.newCategory td{
+    padding: 5px;
+}

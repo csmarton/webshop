@@ -40,7 +40,9 @@ class PropertyController extends Controller
         }
         
         $propertys = $this->getDoctrine()->getRepository('FrontendProductBundle:Propertys')->createQueryBuilder('p')
-                ->select('p');
+                ->select('p')
+                ->where('p.deletedAt is NULL ');
+        
         
         $filterId = "";
         $filterName = "";
@@ -169,9 +171,10 @@ class PropertyController extends Controller
             
             $property = $this->getDoctrine()->getRepository('FrontendProductBundle:Propertys')->findOneById($propertyId);
             $propertyName = $property->getName();
-            
+            $now = new \DateTime("now"); 
+            $property->setDeletedAt($now);
             $em = $this->getDoctrine()->getEntityManager();
-            $em->remove($property);
+            $em->persist($property);
             $em->flush();
             
             return new JsonResponse(array('success' => true,'propertyName' => $propertyName));

@@ -81,6 +81,7 @@ class DefaultController extends Controller
     public function sidebarAction($currentMainCategory = null, $currentCategory = null){
         $main_catergory = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->createQueryBuilder('mc')
                 ->select('mc,c')
+                ->where('mc.deletedAt is NULL')
                 ->leftJoin('mc.category','c')
                 ->getQuery()->getResult();
         

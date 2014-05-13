@@ -7,6 +7,7 @@
     <field name="name" type="string" column="name" length="60" nullable="false"/>
     <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
     <field name="updatedAt" type="datetime" column="updated_at" nullable="false"/>
+    <field name="deletedAt" type="datetime" column="deleted_at" nullable="true"/>
     <many-to-one field="mainCategory" target-entity="MainCategory" inversed-by="category">
       <join-columns>
         <join-column name="main_category" referenced-column-name="id"/>

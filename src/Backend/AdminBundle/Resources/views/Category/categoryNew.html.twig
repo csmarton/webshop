@@ -12,10 +12,14 @@
             });
     </script>
 {% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/backendadmin/css/Category.css') }}"/>
+{% endblock %} 
  
 {% block main %} 
     <div class="main">        
         <form action="{{ path('backend_admin_category_new',{'categoryId':categoryId})}}" method="post" {{ form_enctype(form) }} name="newCategory"  class="newCategory">
+            <h2>Kategória szerkesztése/új kategória</h2>
             <table class="new_product_table">
                 <tbody>
                     <tr>

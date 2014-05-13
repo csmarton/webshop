@@ -57,13 +57,11 @@ class ImageController extends Controller
                         $em->persist($log);
                         $em->flush();
 
-                        return $this->redirect($this->generateUrl('backend_admin_product_new',array('productId' => $productId)));
+                        
                 }
-                return new JsonResponse(array('success' => false));
-            }       
-            
+            }                   
         }
-        return new JsonResponse(array('success' => false));
+        return $this->redirect($this->generateUrl('backend_admin_product_new',array('productId' => $productId)) . "#productImages");
     }
     
     /*
@@ -80,6 +78,7 @@ class ImageController extends Controller
             
             $productImage = $this->getDoctrine()->getRepository('FrontendProductBundle:ProductImages')->findOneById($productImageId);
             
+            $product = $productImage->getProduct();
             $user = $this->get('security.context')->getToken()->getUser();
 
             $changedData = "<div class=\"label-text\">Kép törlése: </div><div class='content-box'>". $productImage->getId() ."</div>";
@@ -100,7 +99,11 @@ class ImageController extends Controller
             $em->remove($productImage);
             $em->flush();
             
-            return new JsonResponse(array('success' => true));               
+            
+            $html = $this->renderView('BackendAdminBundle:Product:productImageList.html.twig', array(
+                'product' => $product
+                    ));
+            return new JsonResponse(array('success' => true, 'html' => $html));               
         }
         return new JsonResponse(array('success' => false));
     }

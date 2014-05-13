@@ -6,7 +6,13 @@
                 <input type="text" value="{{property.getName()}}" disabled/>
             </div>
             <div class="property-value-box">
-                <input type="text" placeholder="érték...." class="property-value validate[required] ">
+                {% if property.getId() == 27 or property.getId() == 4 or property.getId() == 24 or property.getId() == 6 %}
+                    {% set reuiredClass="validate[required,funcCall[checkPropertyValue]]" %}
+                {% else %}
+                    {% set reuiredClass="validate[required]" %}
+                {% endif %}
+                <input type="text" placeholder="érték...." class="property-value {{reuiredClass}}" />
+            
             </div>
             <div class="property-edit-box product_edit_btn">
                 <input type="submit" value="Mentés" class="save-property-button menu_btn ok_btn">

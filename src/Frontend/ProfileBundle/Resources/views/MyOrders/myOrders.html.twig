@@ -27,123 +27,154 @@
             
             <div class="container">
                 <div class="page-title">Rendeléseim</div>
-                <table id="my-order-table">
-                    <thead>
-                        <th>Rendelési azonosító</th>
-                        <th>Rendelés dátuma</th>
-                        <th>Ár</th>
-                        <th>Teljesítés</th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        {% for myOrder in myOrders %}
-                            <tr>
-                                <td>
-                                    {{myOrder.getId()}}
-                                </td>
-                                <td>
-                                    {{myOrder.getOrderedAt|date('Y-m-d')}}
-                                </td>
-                                <td>
-                                    {{myOrder.getItemsTotalPrice|priceFormat}}Ft
-                                </td>
-                                <td>
-                                    {% if myOrder.getPerformedAt == NULL %}
-                                        Feldolgozás alatt
-                                    {% else %}
-                                        Teljesítve
-                                    {% endif %}
-                                </td>
-                                <td><input type="button" class="ok-button" value="+"></td>    
-                            </tr>
-                            <tr class="more-information hide">
-                                <td colspan="5">
-                                        <div class="order-items">
-                                            <div class="order-information">                                                    
-                                                <div class="information-box">
-                                                    <div class="label-text">Fizetési mód</div>
-                                                    <div class="information-text">
-                                                        {{myOrder.getPaymentOption().getName()}}
-                                                    </div>
-                                                </div>
-
-                                                <div class="information-box">
-                                                    <div class="label-text">Szállítási mód</div>
-                                                    <div class="information-text">
-                                                        {{myOrder.getShippingOption().getName()}}
-                                                    </div>
-                                                </div>
-
-                                                <div class="information-box">
-                                                    <div class="label-text">Teljesítés</div>
-                                                    <div class="information-text">
-                                                        {% if myOrder.getPerformedAt() == NULL %}
-                                                            Feldolgozás alatt
-                                                        {% else %}
-                                                            Teljesítve
-                                                        {% endif %}
-                                                    </div>    
-                                                </div>
-                                                <div class="information-box">
-                                                    <div class="label-text">Megjegyzés</div>
-                                                    <div class="information-text">
-                                                        {% if myOrder.getComment() == NULL %}
-                                                            -
-                                                        {% else %}
-                                                            {{myOrder.getComment()}}
-                                                        {% endif %}
-                                                    </div>    
-                                                </div>
-                                            </div>
-                                            {% for orderItem in myOrder.getOrderItems() %}                                                
-                                                {% set product = orderItem.getProduct() %}
-                                                    {% if (product.getSlug() is not null)%}
-                                                            {% set product_link = product.getSlug() %}
-                                                    {% else %}
-                                                            {% set product_link = product.getId() %}
-                                                    {% endif %}
-                                                <div class="cart-item">
-                                                    <div class="column-0">
-                                                                {% if ( product.getProductImages()|length != 0 ) %}
-                                                                    <img src="{{image( product.getProductImages()[0].getWebPath()).resize(100,100)}}"/>
-                                                                {% else %}     
-                                                                    <img src="{{ asset('images/no_image.jpg')}}"/>
-                                                                {% endif %}
-                                                    </div>
-                                                    <div class="column-1">
-                                                        <div class="product-information">
-                                                            <div class="product-name">
-                                                                <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
-                                                                    {{ product.getName() }}
-                                                                </a>
-                                                            </div>
-                                                            <div class="product-propertys">
-                                                                <ul>
-                                                                    {% for productProperty in product.getProductPropertys()%}
-                                                                        <li>{{productProperty.getProperty().getName()}} : <span class="bold">{{productProperty.getValue()}}</span></li>
-                                                                    {% endfor %}   
-                                                                </ul>
-                                                            </div>
-                                                        </div>                                
-                                                    </div>
-                                                    <div class="column-2">
-                                                        {{ product.getRealPrice()|priceFormat}} Ft
-                                                        <div class="column-3">
-                                                            <div class="product-cart-count">{{ orderItem.getUnitQuantity() }} db</div>
+                {% if myOrders|length != 0%}
+                    <table id="my-order-table">
+                        <thead>
+                            <th>Rendelési azonosító</th>
+                            <th>Rendelés dátuma</th>
+                            <th>Ár</th>
+                            <th>Teljesítés</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            {% for myOrder in myOrders %}
+                                <tr>
+                                    <td>
+                                        {{myOrder.getId()}}
+                                    </td>
+                                    <td>
+                                        {{myOrder.getOrderedAt|date('Y-m-d')}}
+                                    </td>
+                                    <td>
+                                        {{myOrder.getItemsTotalPrice|priceFormat}}Ft
+                                    </td>
+                                    <td>
+                                        {% if myOrder.getPerformedAt == NULL %}
+                                            Feldolgozás alatt
+                                        {% else %}
+                                            Teljesítve
+                                        {% endif %}
+                                    </td>
+                                    <td><input type="button" class="ok-button" value="+"></td>    
+                                </tr>
+                                <tr class="more-information hide">
+                                    <td colspan="5">
+                                            <div class="order-items">
+                                                <div class="order-information">                                                    
+                                                    <div class="information-box">
+                                                        <div class="label-text">Fizetési mód</div>
+                                                        <div class="information-text">
+                                                            {{myOrder.getPaymentOption().getName()}}
                                                         </div>
                                                     </div>
-                                                    
+
+                                                    <div class="information-box">
+                                                        <div class="label-text">Szállítási mód</div>
+                                                        <div class="information-text">
+                                                            {{myOrder.getShippingOption().getName()}}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="information-box">
+                                                        <div class="label-text">Teljesítés</div>
+                                                        <div class="information-text">
+                                                            {% if myOrder.getPerformedAt() == NULL %}
+                                                                Feldolgozás alatt
+                                                            {% else %}
+                                                                Teljesítve
+                                                            {% endif %}
+                                                        </div>    
+                                                    </div>
+                                                    <div class="information-box">
+                                                        <div class="label-text">Megjegyzés</div>
+                                                        <div class="information-text">
+                                                            {% if myOrder.getComment() == NULL %}
+                                                                -
+                                                            {% else %}
+                                                                {{myOrder.getComment()}}
+                                                            {% endif %}
+                                                        </div>    
+                                                    </div>
                                                 </div>
-                                            {% endfor %}
-                                        </div>
-                                        <div class="cart-sum">
-                                            Összesen: <span class="bold">{{myOrder.getItemsTotal()}}</span> termék, ára: <span class="bold">{{myOrder.getItemsTotalPrice()|priceFormat}} Ft</span>
-                                        </div>  
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                                                {% for orderItem in myOrder.getOrderItems() %}                                                
+                                                    {% set product = orderItem.getProduct() %}
+                                                    {% if product is not null %}
+                                                        {% if (product.getSlug() is not null)%}
+                                                                {% set product_link = product.getSlug() %}
+                                                        {% else %}
+                                                                {% set product_link = product.getId() %}
+                                                        {% endif %}
+                                                        <div class="cart-item">
+                                                            <div class="column-0">
+                                                                        {% if ( product.getProductImages()|length != 0 ) %}
+                                                                            <img src="{{image( product.getProductImages()[0].getWebPath()).resize(100,100)}}"/>
+                                                                        {% else %}     
+                                                                            <img src="{{ image('images/no_image.jpg').resize(100,100)}}"/>
+                                                                        {% endif %}
+                                                            </div>
+                                                            <div class="column-1">
+                                                                <div class="product-information">
+                                                                    <div class="product-name">
+                                                                        <a href="{{path('frontend_product_homepage')}}p/{{product_link}}">
+                                                                            {{ product.getName() }}
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="product-propertys">
+                                                                        <ul>
+                                                                            {% for productProperty in product.getProductPropertys()%}
+                                                                                <li>{{productProperty.getProperty().getName()}} : <span class="bold">{{productProperty.getValue()}}</span></li>
+                                                                            {% endfor %}   
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>                                
+                                                            </div>
+                                                            <div class="column-2">
+                                                                {{ product.getRealPrice()|priceFormat}} Ft
+                                                                <div class="column-3">
+                                                                    <div class="product-cart-count">{{ orderItem.getUnitQuantity() }} db</div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="cart-item">
+                                                           <div class="column-0">   
+                                                               <img src="{{ image('images/no_image.jpg').resize(100,100)}}"/>
+                                                           </div>
+                                                           <div class="column-1">
+                                                               <div class="product-information">
+                                                                   <div class="product-name">  
+                                                                           {{ orderItem.getProductName() }}
+                                                                   </div>
+                                                                   <div class="product-propertys">
+                                                                       <ul>
+                                                                           <li>A termék továbbá nem elérhető az adatbázisban! </li>
+                                                                       </ul>
+                                                                   </div>
+                                                               </div>                                
+                                                           </div>
+                                                           <div class="column-2">
+                                                               {{ orderItem.getUnitPrice()|priceFormat}} Ft
+                                                               <div class="column-3">
+                                                                   <div class="product-cart-count">{{ orderItem.getUnitQuantity() }} db</div>
+                                                               </div>
+                                                           </div>
+
+                                                       </div>
+                                                    {% endif %}                                                
+                                                {% endfor %}
+                                            </div>
+                                            <div class="cart-sum">
+                                                Összesen: <span class="bold">{{myOrder.getItemsTotal()}}</span> termék, ára: <span class="bold">{{myOrder.getItemsTotalPrice()|priceFormat}} Ft</span>
+                                            </div>  
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    Jelenleg nincsenek rendeléseid!
+                {% endif %}                
             </div>
 	</div>	
 {% endblock %}

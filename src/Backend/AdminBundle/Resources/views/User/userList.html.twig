@@ -23,7 +23,6 @@
                 {% include "BackendAdminBundle:User:userFilter.html.twig"%}
             </div>
             <div class="right-side">                
-                <a href="{{path('backend_admin_user_new')}}" class="menu_btn">Új Felhasználó</a>
             </div>
             <div class="pages-box">
                 {% include "BackendLayoutBundle:Default:pages.html.twig"%}
@@ -108,8 +107,8 @@
         </div>
         <div class="bottomSection">
             <div class="inputs">
-                <input type="button" class="delete-user-button" value="Törlés" href="{{path('backend_admin_user_remove')}}">
-                <input type="button" class="cancel exit-reveal-modal" value="Mégse">                        
+                <input type="button" class="delete-user-button  menu_btn warning_btn delete_btn" value="Törlés" href="{{path('backend_admin_user_remove')}}">
+                <input type="button" class="cancel exit-reveal-modal menu_btn" value="Mégse">                        
             </div>
         </div>
     </div>

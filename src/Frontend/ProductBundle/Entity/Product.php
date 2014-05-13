@@ -82,7 +82,7 @@ class Product
      *
      * @ORM\Column(name="is_active", type="boolean", nullable=false)
      */
-    private $isActive;
+    private $isActive = true;
 
     /**
      * @var integer

@@ -44,7 +44,8 @@ class CategoryController extends Controller
         }
         
         $categorys = $this->getDoctrine()->getRepository('FrontendProductBundle:Category')->createQueryBuilder('c')
-                ->select('c');
+                ->select('c')
+                ->where('c.deletedAt is NULL');
         $filterId = "";
         $filterName = "";
         $filterMainCategory = "";
@@ -181,7 +182,7 @@ class CategoryController extends Controller
                     
                     $log->setAction(1);
                 }else{//Új adat 
-                    $changedData = "<div class=\"label-text\">Új kategória: </div><div class='content-box'>". $productProperty->getId() ."</div>";
+                    $changedData = "<div class=\"label-text\">Új kategória: </div><div class='content-box'>". $category->getId() ."</div>";
                     $log->setAction(0);
                 }
 
@@ -234,8 +235,10 @@ class CategoryController extends Controller
             $em->persist($log);
             $em->flush();
             
+            $now = new \DateTime("now"); 
+            $category->setDeletedAt($now);
             $em = $this->getDoctrine()->getEntityManager();
-            $em->remove($category);
+            $em->persist($category);
             $em->flush();
             
             return new JsonResponse(array('success' => true,'categoryName' => $categoryName));
@@ -251,7 +254,10 @@ class CategoryController extends Controller
         if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false) { //Csak admin férhet hozzá a tartalmakhoz
             return $this->redirect($this->generateUrl('backend_admin'));
         }
-        $mainCategorys = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->findAll();
+        $mainCategorys = $this->getDoctrine()->getRepository('FrontendProductBundle:MainCategory')->createQueryBuilder('mc')
+                ->select('mc')
+                ->where('mc.deletedAt is NULL')
+                ->getQuery()->getResult();
         return $this->render('BackendAdminBundle:Category:mainCategoryList.html.twig', array(
             'mainCategorys' => $mainCategorys
         ));
@@ -296,7 +302,7 @@ class CategoryController extends Controller
                 if($edit){//Szerkesztés
                     $changedData = "";
                     if($mainCategory->getName() != $oldMainCategory['name']){                            
-                        $changedData = "<div class=\"label-text\">Név: </div><div class='content-box'><div class=\"old-value\">".$oldMainCategory['name'] . "</div><div class=\"new-value\"> " .$oldMainCategory->getName(). "</div></div>";
+                        $changedData = "<div class=\"label-text\">Név: </div><div class='content-box'><div class=\"old-value\">".$oldMainCategory['name'] . "</div><div class=\"new-value\"> " .$mainCategory->getName(). "</div></div>";
                     }
                     $log->setAction(1);
                 }else{//Új adat 
@@ -358,9 +364,11 @@ class CategoryController extends Controller
             $em = $this->getDoctrine()->getEntityManager(); 
             $em->persist($log);
             $em->flush();
-                
+             
+            $now = new \DateTime("now"); 
+            $mainCategory->setDeletedAt($now);
             $em = $this->getDoctrine()->getEntityManager();
-            $em->remove($mainCategory);
+            $em->persist($mainCategory);
             $em->flush();
             
             return new JsonResponse(array('success' => true,'mainCategoryName' => $mainCategoryName));

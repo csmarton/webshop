@@ -14,7 +14,9 @@ ImageUpload = {
     /*
     ** Termékek képeinek törlésénél feljövő modális ablak
     */
-    deleteProductImageModalInit : function(productImageId){        
+    deleteProductImageModalInit : function(productImageId){  
+        $('.modal-content h2').html("Biztosan törölni szeretnéd ezt a képet?");
+        $('#modal-delete-product-image .delete-product-image-button').show();
         $('#modal-delete-product-image').reveal();
         $('body').on('click', '.exit-reveal-modal', function(){ //Kilépés gombra a modális ablak bezárása
                 $("#modal-delete-product-image").trigger('reveal:close');
@@ -30,9 +32,7 @@ ImageUpload = {
                     $('.modal-content h2').html("Sikeresen töröltük ezt a képet!");
                     $('#modal-delete-product-image .delete-product-image-button').hide();
                     $('#modal-delete-product-image .exit-reveal-modal').attr('value','Kilépés');
-                    $('body').on('click', '.exit-reveal-modal', function(){
-                        location.reload();
-                    }); 
+                    $('.product-image-box .image_container').html(data.html);
                 } else {							  
                         console.error('HIBA a szervertől:' + data.err);
                 }

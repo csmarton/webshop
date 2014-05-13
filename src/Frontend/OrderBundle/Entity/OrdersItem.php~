@@ -36,11 +36,25 @@ class OrdersItem
     private $productId;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="product_name", type="string", length=100, nullable=false)
+     */
+    private $productName;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="unit_quantity", type="integer", nullable=false)
      */
     private $unitQuantity;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="unit_price", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $unitPrice;
 
 
 }

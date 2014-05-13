@@ -6,7 +6,9 @@
     </id>
     <field name="orderId" type="integer" column="order_id" nullable="false"/>
     <field name="productId" type="integer" column="product_id" nullable="false"/>
+    <field name="productName" type="string" column="product_name" length="100" nullable="false"/>
     <field name="unitQuantity" type="integer" column="unit_quantity" nullable="false"/>
+    <field name="unitPrice" type="float" column="unit_price" nullable="false"/>
     <many-to-one field="product" target-entity="Frontend\ProductBundle\Entity\Product">
         <join-columns>
           <join-column name="product_id" referenced-column-name="id"/>

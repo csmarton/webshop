@@ -22,8 +22,13 @@
                         {{ form_widget(form.property, { 'attr': {'class': 'validate[required] ] propertyName'} }) }}
                     </div> 
                     <div class="right-side">
+                        {% if property.getId() == 27 or property.getId() == 4 or property.getId() == 24 or property.getId() == 6 %}
+                    {% set reuiredClass="validate[required,funcCall[checkPropertyValue]]" %}
+                {% else %}
+                    {% set reuiredClass="validate[required]" %}
+                {% endif %}
                         {{ form_label(form.value, 'Tulajdonság értéke:', { 'label_attr': {'class': 'labelText'}}) }}
-                        {{ form_widget(form.value, { 'attr': {'class': 'validate[required] ] propertyValue'} }) }}
+                        {{ form_widget(form.value, { 'attr': {'class': 'validate[required] ] propertyValue '{{reuiredClass}}} }) }}
                     </div>
                 </div>
                 <div class="inline-block">

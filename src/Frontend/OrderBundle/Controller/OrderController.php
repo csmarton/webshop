@@ -105,6 +105,8 @@ class OrderController extends Controller
                    $ordersItem->setOrders($order);
                    $ordersItem->setProduct($productsAssoc[$key]);
                    $ordersItem->setUnitQuantity($value);
+                   $ordersItem->setUnitPrice($productsAssoc[$key]->getRealPrice());
+                   $ordersItem->setProductName($productsAssoc[$key]->getName());
                    $em = $this->getDoctrine()->getManager();
                    $em->persist($ordersItem);          
                    $em->flush();

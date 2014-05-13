@@ -79,7 +79,16 @@
                         <td>{{productQuestion.getEmail()}}</td>
                         <td>{{productQuestion.getQuestion()}}</td>
                         <td>{{productQuestion.getAnswer()}}</td>
-                        <td>{{productQuestion.getStatus()}}</td>
+                        <td>
+                            {% set status = productQuestion.getStatus() %}
+                            {% if status == "1" %}
+                                Megválaszolva
+                            {% elseif status == "2" %}
+                                Moderálva
+                            {% else %}
+                                Megválaszolatlan
+                            {% endif %}
+                        </td>
                         <td class="product_edit_btn">
                             <a href="{{path('backend_admin_product_question_edit',{'productQuestionId':productQuestion.getId()}) }}" class="menu_btn edit_btn">Bővebben</a>
                         </td>

@@ -90,19 +90,23 @@
                         {% set product = orderItem.getProduct() %}
                         <tr>
                             <td>
-                                <a href="{{path('backend_admin_product_new', {'productId':product.getId()})}}">{{product.getId()}}</a>
+                                {% if product is not null %}
+                                    <a href="{{path('backend_admin_product_new', {'productId':product.getId()})}}">{{product.getId()}}</a>
+                                {% else %}
+                                    -
+                                {% endif %}
                              </td>
                             <td>
-                                {{product.getName()}}
+                                {{orderItem.getProductName()}}                                
                             </td>
                             <td>
-                                {{product.getRealPrice()|priceFormat}}
+                                {{orderItem.getUnitPrice()|priceFormat}}
                             </td>
                             <td>
                                 {{orderItem.getUnitQuantity()}}
                             </td>
                             <td>
-                                {{(product.getRealPrice()*orderItem.getUnitQuantity())|priceFormat}}
+                                {{(orderItem.getUnitQuantity()*orderItem.getUnitQuantity())|priceFormat}}
                             </td>
                         </tr>
                     {% endfor %}

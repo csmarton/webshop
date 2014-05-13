@@ -158,31 +158,32 @@ class OrderController extends Controller
             $cantFullfillOrderItems = array();
 
             //megnézzük, hogy teljesíthető -e a rendelés, a raktáron van -e elegendő mennyiség minden termékből
-            foreach($orderItems as $orderItem){
-                if($orderItem->getProduct()->getInStock() < $orderItem->getUnitQuantity()){
-                    $cantFullfillOrderItems[] = $orderItem;
-                    $canFulfill = false;
-                }
-            }
-            $em = $this->getDoctrine()->getEntityManager();
-            if($canFulfill){//Teljesíthető
-                //Levonjuk a raktárkészletből 
                 foreach($orderItems as $orderItem){
-                    $product = $orderItem->getProduct();
-                    $inStock = $product->getInStock();
-                    $product->setInStock($inStock - $orderItem->getUnitQuantity());         
-                    $em->persist($product);
+                    if($orderItem->getProduct()->getInStock() < $orderItem->getUnitQuantity()){
+                        $cantFullfillOrderItems[] = $orderItem;
+                        $canFulfill = false;
+                    }
                 }
-                $now = new \DateTime('now');
-                $order->setPerformedAt($now);
-                $em->persist($order);
-                $em->flush();
-            }
-            
-            $html = $this->renderView('BackendAdminBundle:Order:cantFullfillOrderProduct.html.twig', array(
-                'cantFullfillOrderItems' => $cantFullfillOrderItems
-             ));
-            
+
+                $em = $this->getDoctrine()->getEntityManager();
+                if($canFulfill){//Teljesíthető
+                    //Levonjuk a raktárkészletből 
+                    foreach($orderItems as $orderItem){
+                        $product = $orderItem->getProduct();
+                        $inStock = $product->getInStock();
+                        $product->setInStock($inStock - $orderItem->getUnitQuantity());         
+                        $em->persist($product);
+                    }
+                    $now = new \DateTime('now');
+                    $order->setPerformedAt($now);
+                    $em->persist($order);
+                    $em->flush();
+                }
+
+                $html = $this->renderView('BackendAdminBundle:Order:cantFullfillOrderProduct.html.twig', array(
+                    'cantFullfillOrderItems' => $cantFullfillOrderItems
+                 ));
+                
             return new JsonResponse(array('success' => true,'canFulfill'=>$canFulfill, 'html' => $html ));
          }else{
              return new JsonResponse(array('success' => false));

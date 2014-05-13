@@ -30,8 +30,10 @@ Order = {
                 if (data.success) {                    
                     if(data.canFulfill){//Teljesíthető -e a rendelés
                         $('#modal-fulfill-order h2').html("Rendelés sikeresen teljesítve!");
-                        $('#modal-fulfill-order .modal-information').html("");
-                        
+                        $('#modal-fulfill-order .modal-information').html(""); 
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000);
                     }
                     else{
                         $('#modal-fulfill-order h2').html("Rendelés nem teljesíthető");
@@ -39,6 +41,8 @@ Order = {
                     }
                     $('#modal-fulfill-order .first-inputs').hide();
                     $('#modal-fulfill-order .second-inputs').show();
+                    
+                    
                      
                 } else {							  
                     console.error('HIBA a szervertől:' + data.err);

@@ -18,7 +18,7 @@ Product = {
                 if (data.success) {    
                     $('.compareProductsDropDownContent').html(data.html); //Összehasonlítandó termékek listájának módosítása
                     Shared.qtipCompareInit();
-                    console.log(data.html);
+                    //console.log(data.html);
                     var i = $('.compare-product-button').index( $this );
                     $('#compare-products-button').effect('transfer',{ to: $( ".compare-product-button" ).eq( i ), className: "ui-effects-transfer" }, 500); //Effekt a kattintás után
                 } else {							  

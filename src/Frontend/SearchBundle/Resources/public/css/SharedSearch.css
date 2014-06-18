@@ -14,7 +14,7 @@
     position: relative;
 }
 #searcher-form .loading{
-    background: url("/Shop/web/images/loading_small.gif") center right no-repeat;
+    background: url("/marcitech.hu/web/images/loading_small.gif") center right no-repeat;
 }
 
 .search-header-content-box{
@@ -27,7 +27,7 @@
 }
 
 .search-button{
-    background: url("/Shop/web/bundles/frontendlayout/images/search.png") center no-repeat !important;
+    background: url("/marcitech.hu/web/bundles/frontendlayout/images/search.png") center no-repeat !important;
     border: 1px solid #CCCCCC;
     box-shadow: 1px 1px 0 #fff;
     cursor: pointer;
@@ -73,7 +73,7 @@
     border-top: 3px solid #CBD4DF;
     font-weight: bold;
     font-size: 1.2em;
-    /*background: url("/Shop/web/images/search-mini.png") top center no-repeat !important;*/       
+    /*background: url("/marcitech.hu/web/images/search-mini.png") top center no-repeat !important;*/       
 }
 #searcher #search-toggle-button-content{
     display: inline-block;

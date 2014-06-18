@@ -84,6 +84,10 @@ Shared = {
             position: {
                 my: 'top center',  // Position my top left...
                 at: 'bottom center', // at the bottom right of...
+                adjust: {
+                    y: 0,
+                    x: 0,
+                }
             },
             show: {
                 event: 'click',
@@ -94,7 +98,11 @@ Shared = {
             },
             style: { 
                 classes: 'compareProductsDropDownQTip profileDropDownQTip',
-                width:1000
+                width:1000,
+                tip: {
+                    corner: true,
+                    offset: 180
+                 }
             }
         });
         

@@ -405,8 +405,8 @@ SharedSearch = {
             }
         }).data("ui-autocomplete")._renderItem = function (ul, item) { //Adatok megjelenítése
             var name = "";
-            if(item.name.length > 20){ //Levágjuk a neveket, ha hosszabbak mint 20 karakter
-               name = item.name.substring(0,20) + "...";
+            if(item.name.length > 21){ //Levágjuk a neveket, ha hosszabbak mint 20 karakter
+               name = item.name.substring(0,18) + "...";
             }else{
                name = item.name;
             }

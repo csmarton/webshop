@@ -3,13 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Repository/ProductPropertyRepository.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Compare/compareList.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/config/services.yml</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Services/ProductServices.php</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/CartBundle/Resources/views/Cart/cartItems.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/propertyList.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Twig/PropertyConverterExtension.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Product/productList.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProductBundle/Resources/views/Tabs/tabQuestions.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Category/CategoryList.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/SearchBundle/Resources/views/Default/mainSearch.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Category/mainCategoryNew.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/OrderController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Category/categoryNew.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/public/css/Category.css</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Controller/CategoryController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/public/js/Order.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/OrderBundle/Resources/views/Order/order.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/web/js/jquery.reveal.js</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/ProfileBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Property/propertyList.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/User/userNew.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Frontend/LayoutBundle/Resources/views/Default/layout.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Shop/src/Backend/AdminBundle/Resources/views/Category/categoryListElement.html.twig</file>
         </group>
     </open-files>
 </project-private>

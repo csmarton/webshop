@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/src/Frontend/SearchBundle/Resources/public/js/SharedSearch.js</file>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/src/Frontend/SearchBundle/Resources/views/Default/mainSearch.html.twig</file>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/src/Frontend/LayoutBundle/Resources/public/css/shared_logged.css</file>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/src/Frontend/ProductBundle/Entity/ProductImages.php</file>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/web/.htaccess</file>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/src/Frontend/ProductBundle/Resources/public/css/product.css</file>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/src/Frontend/SearchBundle/Resources/public/css/SharedSearch.css</file>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/src/Frontend/ProductBundle/Resources/views/Default/productBox.html.twig</file>
+            <file>file:/C:/xampp/htdocs/marcitech.hu/src/Frontend/ProductBundle/Entity/Product.php</file>
+        </group>
     </open-files>
 </project-private>

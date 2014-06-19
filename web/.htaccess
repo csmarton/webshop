@@ -11,6 +11,6 @@
     # Change below before deploying to production
     #RewriteRule ^(.*)$ app.php [QSA,L]
     RewriteRule ^(.*)$ app_dev.php [QSA,L]
-    RewriteCond %{THE_REQUEST} ^(GET|HEAD)\ /web/
-    RewriteRule ^(.*)$ /$1 [L,R=301]
+    #RewriteCond %{THE_REQUEST} ^(GET|HEAD)\ /web/
+    #RewriteRule ^(.*)$ /$1 [L,R=301]
 </IfModule>

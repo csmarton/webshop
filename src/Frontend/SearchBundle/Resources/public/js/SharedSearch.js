@@ -411,7 +411,7 @@ SharedSearch = {
                name = item.name;
             }
 
-            var inner_html = '<a><img src="'+ item.image +'" class="search-product-image"/><div class="search-product-information"><div class="search-product-name">' + name +'</div><div class="search-product-price">' + accounting.formatNumber(item.price,0," ") + ' Ft' + '</div></div></a>';
+            var inner_html = '<a><img src="/'+ item.image +'" class="search-product-image"/><div class="search-product-information"><div class="search-product-name">' + name +'</div><div class="search-product-price">' + accounting.formatNumber(item.price,0," ") + ' Ft' + '</div></div></a>';
             return $("<li></li>")
                     .data("item.autocomplete", item)
                     .append(inner_html)
